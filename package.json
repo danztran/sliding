@@ -1,0 +1,37 @@
+{
+	"name": "presenta",
+	"author": "Roboku",
+	"version": "0.0.0",
+	"description": "SEP 2019 - VLU K22T - Roboku",
+	"engines": {
+		"node": "10.16.0"
+	},
+	"scripts": {
+		"postinstall": "npm run setup",
+		"start": "npm run server",
+		"server": "cd server && npm start",
+		"setup": "concurrently 'npm:setup:*'",
+		"setup:server": "cd server && npm install",
+		"lint": "concurrently 'npm:lint:*'",
+		"lint:server": "cd server && npm run lint",
+		"git:add": "git add ."
+	},
+	"pre-commit": [
+		"lint",
+		"git:add"
+	],
+	"dependencies": {
+		"concurrently": "^4.1.0"
+	},
+	"devDependencies": {
+		"pre-commit": "^1.2.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/danztran/presenta.git"
+	},
+	"bugs": {
+		"url": "https://github.com/danztran/presenta/issues"
+	},
+	"homepage": "https://github.com/danztran/presenta#readme"
+}
