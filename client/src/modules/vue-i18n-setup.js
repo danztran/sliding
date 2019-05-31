@@ -9,7 +9,9 @@ const defLocale = process.env.VUE_APP_DEFAULT_LOCALE || 'en';
 Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
-	fallbackLocale: defLocale
+	fallbackLocale: defLocale,
+	silentTranslationWarn: process.env.NODE_ENV === 'production',
+	missing: () => ''
 });
 
 const loadedLanguages = [];

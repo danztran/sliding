@@ -9,10 +9,11 @@
 		}
 	},
 	"messages": {
+		"FOR_A_PURPOSE": " ",
 		"welcome": "Chào mừng bạn đến với Presenta !",
 		"loginFormTitle": "Đăng nhập",
-		"lbUsername": "Tài khoản",
-		"plhUsername": "Tài khoản",
+		"lbUsername": "Kí danh",
+		"plhUsername": "Kí danh",
 		"lbPassword": "Mật khẩu",
 		"plhPassword": "Nhập mật khẩu",
 		"requireField": "Không bỏ trống trường này",

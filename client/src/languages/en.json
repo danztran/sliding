@@ -9,6 +9,7 @@
 		}
 	},
 	"messages": {
+		"FOR_A_PURPOSE": " ",
 		"welcome": "Welcome to Presenta !",
 		"loginFormTitle": "Log in",
 		"lbUsername": "Username",

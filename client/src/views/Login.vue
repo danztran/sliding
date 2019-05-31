@@ -1,5 +1,6 @@
 <template>
 	<v-content class="imgBg">
+		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-container  fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
 				<v-flex xs12 sm9 md7 lg4>
@@ -18,7 +19,7 @@
 									v-model="username.value"
 									:rules="[() => !!username.value || 'This field is required']"
 									:error-messages="username.message"
-									label="Username"
+									:label="$t('lbUsername')"
 									required>
 								</v-text-field>
 								<v-text-field
@@ -28,7 +29,7 @@
 									v-model="password.value"
 									:rules="[() => !!password.value || 'This field is required']"
 									:error-messages="password.message"
-									label="Password"
+									:label="$t('lbPassword')"
 									required>
 								</v-text-field>
 							</v-card-text>
