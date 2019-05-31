@@ -6,6 +6,8 @@ process.env.SUB_NAME = process.env.SUB_NAME || 'dev';
 process.env.MAIN_JS = process.env.MAIN_JS || './bin/www';
 process.env.PM2_INSTANCES = process.env.PM2_INSTANCES || 1;
 process.env.PM2_MMR = process.env.PM2_MMR || undefined;
+process.env.PG_MAXPOOL = process.env.PG_MAXPOOL || 1;
+process.env.DEFAULT_LOCALE = process.env.DEFAULT_LOCALE || 'en';
 
 const envConfig = {
 	production: {

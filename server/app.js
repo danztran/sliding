@@ -2,11 +2,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
 const compression = require('compression');
+const requireDirectory = require('require-dir');
 
-global.__rootdir = `${__dirname}\\`;
 global.requireWrp = p => require(path.resolve(__dirname, p));
+global.requireDir = p => requireDirectory(path.resolve(__dirname, p));
 
+const session = requireWrp('modules/session-custom');
 const router = requireWrp('router');
 
 const production = process.env.NODE_ENV === 'production';
@@ -21,6 +24,11 @@ if (development) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// passport - session
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 // router
 app.use(compression());

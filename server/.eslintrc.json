@@ -24,11 +24,16 @@
 		"no-underscore-dangle": "off",
 		"no-unused-vars": ["error", { "args": "none" }],
 		"object-curly-newline": "off",
-		"no-restricted-syntax": "off"
+		"no-restricted-syntax": "off",
+		"dot-notation": "off",
+		"camelcase": "off",
+		"no-throw-literal": "off",
+		"consistent-return": "off"
 	},
 	"parser": "babel-eslint",
 	"globals": {
 		"requireWrp": true,
+		"requireDir": true,
 		"__rootdir": true
 	}
 }

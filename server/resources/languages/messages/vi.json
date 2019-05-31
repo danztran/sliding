@@ -1,0 +1,13 @@
+{
+	"hello": "Chào bạn !",
+	"usernameNotFound": "Không tìm thấy tài khoản này",
+	"passwordIncorrect": "Mật khẩu không chính xác",
+	"sessionExpired": "Phiên truy cập của bạn đã hết hạn. Vui lòng đăng nhập lại nhé.",
+	"alreadyLoggedIn": "Bạn đã đăng nhập trước đó",
+	"somethingWrong": "Ôi không! Hệ thống gặp sự cố. Xin lỗi bạn, hãy thữ lại sau nhé.",
+	"successLoggedIn": "Bạn đã đăng nhập thành công",
+	"successLoggedOut": "Bạn đã đăng xuất thành công",
+	"usernameTaken": "Kí danh đã tồn tại",
+	"emailTaken": "Email này đã liên kết với tài khoản khác",
+	"successSignUp": "Tạo tài khoản mới thành công"
+}

@@ -1,0 +1,13 @@
+{
+	"hello": "Hello friend !",
+	"usernameNotFound": "Username is not found",
+	"passwordIncorrect": "Password is incorrect",
+	"sessionExpired": "Your session has expired. Please log in again.",
+	"alreadyLoggedIn": "You have already logged in",
+	"somethingWrong": "Oh no! Something went wrong. Please try again later.",
+	"successLoggedIn": "You have successfully logged in",
+	"successLoggedOut": "You have logged out",
+	"usernameTaken": "This username have been taken",
+	"emailTaken": "This email have been used on other account",
+	"successSignUp": "Your new account has been created"
+}
