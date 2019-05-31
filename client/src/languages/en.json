@@ -9,6 +9,13 @@
 		}
 	},
 	"messages": {
-		"welcome": "Welcome to Presenta !"
+		"welcome": "Welcome to Presenta !",
+		"loginFormTitle": "Log in",
+		"lbUsername": "Username",
+		"plhUsername": "Enter your username",
+		"lbPassword": "Password",
+		"plhPassword": "Your password",
+		"requireField": "Field is required",
+		"accountSetting": "Account setting"
 	}
 }

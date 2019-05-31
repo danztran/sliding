@@ -9,6 +9,13 @@
 		}
 	},
 	"messages": {
-		"welcome": "Chào mừng bạn đến với Presenta !"
+		"welcome": "Chào mừng bạn đến với Presenta !",
+		"loginFormTitle": "Đăng nhập",
+		"lbUsername": "Tài khoản",
+		"plhUsername": "Tài khoản",
+		"lbPassword": "Mật khẩu",
+		"plhPassword": "Nhập mật khẩu",
+		"requireField": "Không bỏ trống trường này",
+		"accountSetting": "Cài đặt tài khoản"
 	}
 }
