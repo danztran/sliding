@@ -9,5 +9,6 @@
 	"successLoggedOut": "You have logged out",
 	"usernameTaken": "This username have been taken",
 	"emailTaken": "This email have been used on other account",
-	"successSignUp": "Your new account has been created"
+	"successSignUp": "Your new account has been created",
+	"unauthenticated": "Sorry. You have to login again."
 }

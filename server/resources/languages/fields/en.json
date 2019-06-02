@@ -1,5 +1,9 @@
 {
 	"name": "Name",
 	"username": "Username",
-	"password": "Password"
+	"password": "Password",
+	"require_auth": "Require authentication",
+	"allow_search": "Show in search result",
+	"start_at": "Date start",
+	"end_at": "Date end"
 }

@@ -31,7 +31,35 @@ const _cm = {
 		for (const key of Object.keys(args)) {
 			text = text.replace(new RegExp(`${s + key + e}`, 'g'), `${rs + args[key].toString() + re}`);
 		}
-		return str;
+		return text;
+	},
+	/*
+		@function generate next string follow bone template
+		@param str: string as original string
+		@return string
+	*/
+	nextStringOf(str, bone) {
+		const bonelen = bone.length;
+		const strlen = str.length;
+		let array = str.split('');
+		let replaceIndex = strlen - 1;
+		while (true) {
+			const replaceCharacter = str[replaceIndex];
+			const index = bone.indexOf(replaceCharacter);
+			if (index === bonelen - 1) {
+				replaceIndex--;
+				if (replaceIndex === -1) {
+					array = array.map(e => bone[0]);
+					array.push(bone[0]);
+					break;
+				}
+			}
+			else {
+				array[replaceIndex] = bone[index + 1];
+				break;
+			}
+		}
+		return array.join('');
 	}
 };
 

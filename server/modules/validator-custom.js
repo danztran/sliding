@@ -1,11 +1,14 @@
 const Validatorjs = require('validatorjs');
-const { varToText } = requireWrp('modules/common');
-const packs = requireDir('resources/languages/fields/');
+const fieldPacks = requireDir('resources/languages/fields/');
+const validatePacks = requireDir('resources/languages/validates/');
 
 const defLocale = process.env.DEFAULT_LOCALE;
 
-// set fall back field name
-Validatorjs.setAttributeFormatter(field => varToText(field));
+for (const locale of Object.keys(validatePacks)) {
+	let messages = Validatorjs.getMessages(locale);
+	messages = { ...messages, ...validatePacks[locale] };
+	Validatorjs.setMessages(locale, messages);
+}
 
 function Validator(locale = defLocale, req = {}, res = {}) {
 	Validatorjs.useLang(locale);
@@ -19,7 +22,7 @@ function Validator(locale = defLocale, req = {}, res = {}) {
 			const rules = _rules;
 			const data = _data || this._data;
 			const validation = new Validatorjs(data, rules);
-			validation.setAttributeNames(packs[locale] || packs[defLocale]);
+			validation.setAttributeNames(fieldPacks[locale] || fieldPacks[defLocale]);
 			validation.fails(() => {
 				if (this._res) {
 					this._res.status(422).send({

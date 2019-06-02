@@ -8,22 +8,34 @@ class Model {
 		// re = -1: return result,
 		// re = 0: return rows,
 		// re = 1: return rows[0]
-		this.re = -1;
+		this.rowReturn = -1;
 	}
 
-	find(object, select = '*') {
+	// @objects can be object or array of objects
+	find(objects, select = '*') {
 		this.query = `
 			SELECT ${select}
 			FROM ${this.name}
-			WHERE ${qh.toWhereClause(object)}
+			WHERE ${qh.toWhereClause(objects)}
 		`;
-		this.re = 0;
+		this.rowReturn = 0;
 		return this;
 	}
 
-	findOne(object, select = '*') {
-		this.query = `${this.find(object, select).query}LIMIT 1`;
-		this.re = 1;
+	findOne(object, select) {
+		this.query = `${this.find(object, select).query} LIMIT 1`;
+		this.rowReturn = 1;
+		return this;
+	}
+
+	findLastOf(column, select = '*') {
+		this.query = `
+			SELECT ${select}
+			FROM ${this.name}
+			ORDER BY ${column} DESC
+			LIMIT 1
+		`;
+		this.rowReturn = 1;
 		return this;
 	}
 
@@ -34,7 +46,7 @@ class Model {
 			${select ? `RETURNING ${select}` : ''}
 		`;
 		if (select) {
-			this.re = 1;
+			this.rowReturn = 1;
 		}
 		return this;
 	}
@@ -47,7 +59,7 @@ class Model {
 			${select ? `RETURNING ${select}` : ''}
 		`;
 		if (select) {
-			this.re = 0;
+			this.rowReturn = 0;
 		}
 		return this;
 	}
@@ -61,16 +73,17 @@ class Model {
 			${select ? `RETURNING ${select}` : ''}
 		`;
 		if (select) {
-			this.re = 1;
+			this.rowReturn = 1;
 		}
 		return this;
 	}
 
-	exec() {
+	exec(rowReturn) {
 		return new Promise((resolve, reject) => {
+			this.rowReturn = rowReturn || this.rowReturn;
 			pool.query(this.query)
 				.then((result) => {
-					switch (this.re) {
+					switch (this.rowReturn) {
 						case 1: return resolve(result.rows[0]);
 						case 0: return resolve(result.rows);
 						default: return resolve(result);

@@ -1,0 +1,4 @@
+{
+	"required": ":attribute is required",
+	"after": ":attribute must after :after"
+}

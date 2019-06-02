@@ -4,8 +4,12 @@ const Validator = requireWrp('modules/validator-custom');
 module.exports = (req, res, next) => {
 	// set translate function
 	const locale = `${req.headers['accept-language']}`;
-	res.$t = new Translator(locale).$t;
-	res.$v = new Validator(locale, req, res).$v;
+	const translator = new Translator(locale);
+	const validator = new Validator(locale, req, res);
+
+	res.$t = translator.$t;
+	res.$d = translator.$d;
+	res.$v = validator.$v;
 
 	// set message state
 	res.messages = {};

@@ -28,7 +28,9 @@
 		"dot-notation": "off",
 		"camelcase": "off",
 		"no-throw-literal": "off",
-		"consistent-return": "off"
+		"consistent-return": "off",
+		"no-plusplus": "off",
+		"no-await-in-loop": "off"
 	},
 	"parser": "babel-eslint",
 	"globals": {
