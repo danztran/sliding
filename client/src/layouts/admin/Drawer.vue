@@ -52,8 +52,9 @@
 
 <script>
 export default {
+	name: 'Drawer',
 	data: () => ({
-		drawer: true,
+		drawer: false,
 		links: [
 			{
 				to: '/dashboard',
@@ -66,7 +67,12 @@ export default {
 				text: 'Event'
 			}
 		]
-	})
+	}),
+	mounted() {
+		this.$root.$on('toggle-drawer', () => {
+			this.drawer = !this.drawer;
+		});
+	}
 };
 </script>
 

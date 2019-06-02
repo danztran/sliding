@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
+const cors = require('cors');
 const compression = require('compression');
 const requireDirectory = require('require-dir');
 
@@ -19,6 +20,7 @@ const app = express();
 
 if (development) {
 	app.use(logger('dev'));
+	app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
 }
 
 app.use(express.json());

@@ -15,9 +15,8 @@
 									autofocus
 									type="text"
 									prepend-icon="person"
-									ref="username.value"
 									v-model="username.value"
-									:rules="[() => !!username.value || 'This field is required']"
+									:rules="[rules.required]"
 									:error-messages="username.message"
 									:label="$t('lbUsername')"
 									required>
@@ -25,9 +24,8 @@
 								<v-text-field
 									type="password"
 									prepend-icon="lock"
-									ref="password.value"
 									v-model="password.value"
-									:rules="[() => !!password.value || 'This field is required']"
+									:rules="[rules.required]"
 									:error-messages="password.message"
 									:label="$t('lbPassword')"
 									required>
@@ -38,7 +36,7 @@
 								<v-spacer></v-spacer>
 								<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
 							</v-card-actions>
-							<loading-linear :show="loading"/>
+							<loading-linear :loading="loading"/>
 						</v-form>
 					</v-card>
 				</v-flex>
@@ -57,6 +55,9 @@ export default {
 	},
 	data: () => ({
 		loading: false,
+		rules: {
+			required: value => !!value || 'Field is required'
+		},
 		username: {
 			value: '',
 			message: ''
@@ -67,8 +68,17 @@ export default {
 		},
 		errorMessage: ''
 	}),
+	computed: {},
 	methods: {
-		handleLogin() {}
+		handleLogin() {
+			const userData = {
+				username: this.username.value,
+				password: this.password.value
+			};
+
+			this.$store.dispatch('auth/login', userData);
+			this.loading = true;
+		}
 	}
 };
 </script>
