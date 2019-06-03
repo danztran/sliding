@@ -1,5 +1,5 @@
 <template>
-	<v-container fluid>
+	<div>
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-layout row justify-space-between>
 			<div>Active</div>
@@ -13,7 +13,7 @@
 				</v-btn>
 			</div>
 		</v-layout>
-	</v-container>
+	</div>
 </template>
 
 <script>

@@ -8,9 +8,9 @@
 				<v-list-tile-content>
 					<span class="body-2">
 						<v-icon  size="20" v-html="'$vuetify.icons.user'" />
-						{{ user.username }}
+						{{ user.email }}
 					</span>
-					<span class="caption">{{ user.rule }}</span>
+					<span class="caption">{{ user.name }}</span>
 				</v-list-tile-content>
 			</v-toolbar-title>
 
@@ -70,14 +70,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	components: {},
 	data() {
 		return {
-			user: {
-				username: 'administrator@gmail.com',
-				rule: 'Administrator'
-			},
+			// user: {
+			// 	username: 'administrator@gmail.com',
+			// 	rule: 'Administrator'
+			// },
 			notifications: [
 				'You have 5 new tasks',
 				'You\'re now a friend with Andrew',
@@ -90,6 +92,11 @@ export default {
 				{ name: 'analytics', url: '/admin/analytics' }
 			]
 		};
+	},
+	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		})
 	},
 	methods: {
 		toggleDrawer() {

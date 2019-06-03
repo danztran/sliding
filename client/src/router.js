@@ -1,8 +1,12 @@
 import Router from 'vue-router';
+// eslint-disable-next-line
 import authMdw from './middlewares/auth-middleware';
 
 import About from './views/About.vue';
 import Login from './views/Login.vue';
+
+// Page Layout
+import Page from './layouts/Page.vue';
 
 // Admin
 import AdminLayout from './layouts/admin/index.vue';
@@ -21,81 +25,88 @@ const router = new Router({
 	base: process.env.BASE_URL,
 	routes: [
 		{
-			path: '/about',
-			name: 'about',
-			component: About,
-			meta: {
-				title: 'About'
-			}
-		},
-		{
-			path: '/login',
-			name: 'login',
-			component: Login,
-			meta: {
-				title: 'Login'
-			}
-		},
-		{
-			path: '/admin',
-			component: AdminLayout,
-			beforeEnter: authMdw.guard,
-			redirect: '/admin/events',
+			path: '/',
+			component: Page,
 			children: [
 				{
-					path: '/admin/events',
-					name: 'events',
-					component: Events,
+					path: '/about',
+					name: 'about',
+					component: About,
 					meta: {
-						title: 'Events'
+						title: 'About'
 					}
 				},
 				{
-					path: '/admin/team',
-					name: 'team',
-					component: Team,
+					path: '/login',
+					name: 'login',
+					component: Login,
 					meta: {
-						title: 'Team'
+						title: 'Login'
 					}
 				},
 				{
-					path: '/admin/analytics',
-					name: 'dashboard',
-					component: Analytics,
-					meta: {
-						title: 'Analytics'
-					}
-				}
-			]
-		},
-		{
-			path: '/anonymous',
-			component: AnonymousLayout,
-			redirect: '/anonymous/questions',
-			children: [
-				{
-					path: '/anonymous/questions',
-					name: 'questions',
-					component: Questions,
-					meta: {
-						title: 'Questions'
-					}
+					path: '/',
+					component: AdminLayout,
+					beforeEnter: authMdw.guard,
+					name: 'admin',
+					redirect: '/admin/events',
+					children: [
+						{
+							path: '/admin/events',
+							name: 'events',
+							component: Events,
+							meta: {
+								title: 'Events'
+							}
+						},
+						{
+							path: '/admin/team',
+							name: 'team',
+							component: Team,
+							meta: {
+								title: 'Team'
+							}
+						},
+						{
+							path: '/admin/analytics',
+							name: 'dashboard',
+							component: Analytics,
+							meta: {
+								title: 'Analytics'
+							}
+						}
+					]
 				},
 				{
-					path: '/anonymous/polls',
-					name: 'polls',
-					component: Polls,
-					meta: {
-						title: 'Polls'
-					}
-				},
-				{
-					path: '/anonymous/ideas',
-					name: 'ideas',
-					component: Ideas,
-					meta: {
-						title: 'Ideas'
-					}
+					path: '/anonymous',
+					component: AnonymousLayout,
+					redirect: '/anonymous/questions',
+					children: [
+						{
+							path: '/anonymous/questions',
+							name: 'questions',
+							component: Questions,
+							meta: {
+								title: 'Questions'
+							}
+						},
+						{
+							path: '/anonymous/polls',
+							name: 'polls',
+							component: Polls,
+							meta: {
+								title: 'Polls'
+							}
+						},
+						{
+							path: '/anonymous/ideas',
+							name: 'ideas',
+							component: Ideas,
+							meta: {
+								title: 'Ideas'
+							}
+						}
+					]
 				}
 			]
 		}

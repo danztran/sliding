@@ -3,24 +3,26 @@
 		<navbar />
 		<drawer />
 		<v-content>
-			<v-slide-x-transition mode="out-in">
-				<router-view />
-			</v-slide-x-transition>
+			<v-container fluid>
+				<v-slide-x-transition mode="out-in">
+					<router-view />
+				</v-slide-x-transition>
+			</v-container>
 		</v-content>
-		<create-event-dialog />
+		<event-dialog />
 	</v-app>
 </template>
 
 <script>
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
-import CreateEventDialog from '@/components/dials/Event.vue';
+import EventDialog from '@/components/dials/EventDialog.vue';
 
 export 	default {
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
-		'create-event-dialog': CreateEventDialog
+		'event-dialog': EventDialog
 	}
 };
 </script>
