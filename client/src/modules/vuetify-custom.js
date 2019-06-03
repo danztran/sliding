@@ -13,7 +13,9 @@ const theme = {
 
 const icons = {
 	user: 'how_to_reg',
-	setting: 'settings'
+	anonymous: 'person',
+	setting: 'settings',
+	search: 'search'
 };
 
 Vue.use(Vuetify, {

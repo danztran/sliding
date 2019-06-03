@@ -46,7 +46,16 @@
 		"no-unused-vars": ["error", { "args": "none" }],
 		"object-curly-newline": "off",
 		"no-restricted-syntax": "off",
-		"no-tabs": 0
+		"no-tabs": 0,
+		"no-param-reassign": [2, { "props": false }]
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"paths": ["src"],
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		}
 	},
 	"parserOptions": {
 		"parser": "babel-eslint"

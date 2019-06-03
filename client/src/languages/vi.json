@@ -10,13 +10,30 @@
 	},
 	"messages": {
 		"FOR_A_PURPOSE": " ",
-		"welcome": "Chào mừng bạn đến với Presenta !",
+		"welcome": "Chào mừng bạn đến với Presenta !.",
 		"loginFormTitle": "Đăng nhập",
 		"lbUsername": "Kí danh",
 		"plhUsername": "Kí danh",
 		"lbPassword": "Mật khẩu",
 		"plhPassword": "Nhập mật khẩu",
-		"requireField": "Không bỏ trống trường này",
-		"accountSetting": "Cài đặt tài khoản"
+		"requireField": "Không bỏ trống trường này.",
+		"accountSetting": "Cài đặt tài khoản",
+		"events": "Sự kiện",
+		"team": "Nhóm",
+		"analytics": "Thống kê",
+		"search": "Tìm kiếm",
+		"questions": "Câu hỏi",
+		"ideas": "Ý tưởng",
+		"polls": "Bầu chọn",
+		"create-event": "Tạo sự kiện",
+		"event-name": "Tên sự kiện",
+		"event-start-date": "Ngày bắt đầu sự kiện",
+		"event-start-time": "Giờ bắt đầu",
+		"event-end-date": "Ngày kết thúc sự kiện",
+		"event-end-time": "Giờ kết thúc",
+		"event-attendees-info": "Người tham dự có thể tham gia sự kiện của bạn trong những ngày bạn chọn.",
+		"cancel-btn": "Hủy bỏ",
+		"save-btn": "Lưu",
+		"create-btn": "Tạo"
 	}
 }
