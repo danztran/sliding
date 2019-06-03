@@ -1,24 +1,32 @@
-const packs = requireDir('resources/languages/messages/');
+const moment = require('moment');
+const messagePacks = requireDir('resources/languages/messages/');
+const datePacks = requireDir('resources/languages/dates/');
 const { varToText, replaceVars } = requireWrp('modules/common');
 
 const defLocale = process.env.DEFAULT_LOCALE;
-const defPack = packs[defLocale];
+const defMessagePack = messagePacks[defLocale];
+const defDatePack = datePacks[defLocale];
 
 function Translator(locale) {
 	// set locale
 	this.locale = locale || defLocale;
 
 	// language pack
-	this.pack = packs[this.locale] || defPack;
+	this.messagePack = messagePacks[this.locale] || defMessagePack;
 
 	// translate
 	this.$t = (key, args) => {
-		let text = this.pack[key] || defPack[key] || varToText(key);
+		let text = this.messagePack[key] || defMessagePack[key] || varToText(key);
 		if (args) {
 			text = replaceVars(text, args, { s: '{', e: '}' });
 		}
 		return text;
 	};
+
+	this.datePack = datePacks[this.locale] || defDatePack;
+
+	// formatting
+	this.$d = (date = new Date(), option = 'short') => moment(date).format(this.datePack.date[option]);
 }
 
 module.exports = Translator;

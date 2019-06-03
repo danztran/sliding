@@ -28,24 +28,25 @@ const ctrl = {
 		const { username, email } = req.body;
 		const result = {};
 		try {
-			let user = await User.findOne({ username }).exec();
-			if (user) {
+			const checkExistUsername = await User.findOne({ username }).exec();
+			if (checkExistUsername) {
 				res.status(409);
 				throw { username: res.$t('usernameTaken') };
 			}
 
-			user = await User.findOne({ email }).exec();
-			if (user) {
+			const checkExistEmail = await User.findOne({ email }).exec();
+			if (checkExistEmail) {
 				res.status(409);
-				throw { username: res.$t('emailTaken') };
+				throw { email: res.$t('emailTaken') };
 			}
 
-			user = await User.create(req.body).exec();
+			const user = await User.create(req.body).exec();
 			res.messages['auth.signup'] = res.$t('successSignUp');
 
 			req.login(user, (err) => {
 				if (err) throw err;
 				result.user = ctrl.getSafeInfo(user);
+				User.setLastAccessed(user).exec();
 				return res.sendwm(result);
 			});
 		}
@@ -80,7 +81,6 @@ const ctrl = {
 				return res.sendwm();
 			}
 
-			console.log(333333);
 			req.logIn(user, (error) => {
 				if (error) return next(error);
 

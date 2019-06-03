@@ -6,11 +6,22 @@ const queryHelper = {
 				states.push(`"${key}"='${object[key]}'`);
 			}
 		}
-		const query = states.join(symbol);
-		return query;
+		const clause = states.join(symbol);
+		return clause;
 	},
-	toWhereClause(object) {
-		return this.toClause(object, ' AND ');
+	toWhereClause(data) {
+		let clause = '';
+		if (Array.isArray(data)) {
+			const array = [];
+			for (const object of data) {
+				array.push(`(${this.toClause(object, ' AND ')})`);
+			}
+			clause = array.join(' OR ');
+		}
+		else {
+			clause = this.toClause(data, ' AND ');
+		}
+		return clause;
 	},
 	toSetClause(object) {
 		return this.toClause(object, ', ');

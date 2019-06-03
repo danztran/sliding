@@ -1,0 +1,5 @@
+{
+	"required": ":attribute không được bỏ trống",
+	"after": ":attribute phải sau :after",
+	"after_or_equal": ":attribute phải cùng hoặc sau :after_or_equal"
+}

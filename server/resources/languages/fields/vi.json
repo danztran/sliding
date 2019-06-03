@@ -1,5 +1,9 @@
 {
 	"name": "Tên",
 	"username": "Kí danh",
-	"password": "Mật khẩu"
+	"password": "Mật khẩu",
+	"require_auth": "Yêu cầu đăng nhập",
+	"allow_search": "Cho phép tìm kiếm",
+	"start_at": "Ngày bắt đầu",
+	"end_at": "Ngày kết thúc"
 }
