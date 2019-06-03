@@ -6,13 +6,13 @@ class EventUser extends Model {
 		super('_.event_user');
 	}
 
-	findByUserId(uid, select = '*') {
-		return this.find({ user_id: uid }, select);
+	findByUserId(uid) {
+		return this.find({ user_id: uid });
 	}
 
-	findEventsByUserId(uid, select = '*') {
+	findEventsByUserId(uid) {
 		this.query = `
-			SELECT ${select}
+			SELECT *
 			FROM _.event
 			WHERE id IN (
 				${this.findByUserId(uid, 'event_id').query}
@@ -21,13 +21,13 @@ class EventUser extends Model {
 		return this;
 	}
 
-	findByEventId(eid, select = '*') {
-		return this.find({ event_id: eid }, select);
+	findByEventId(eid) {
+		return this.find({ event_id: eid });
 	}
 
-	findUsersByEventId(eid, select = '*') {
+	findUsersByEventId(eid) {
 		this.query = `
-			SELECT ${select}
+			SELECT *
 			FROM _.user
 			WHERE id IN (
 				${this.findByEventId(eid, 'user_id').query}
@@ -36,11 +36,11 @@ class EventUser extends Model {
 		return this;
 	}
 
-	create(object) {
+	create(info) {
 		return this.createOne({
-			user_id: object.user_id,
-			event_id: object.event_id,
-			role: object.role
+			user_id: info.user_id,
+			event_id: info.event_id,
+			role: info.role
 		}, '*');
 	}
 }

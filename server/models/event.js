@@ -7,15 +7,15 @@ class Event extends Model {
 		super('_.event');
 	}
 
-	findById(id, select = '*') {
-		return this.findOne({ id }, select);
+	findById(id, opt) {
+		return this.findOne({ id }, opt);
 	}
 
-	findByCode(code, select = '*') {
-		return this.findOne({ code }, select);
+	findByCode(code, opt) {
+		return this.findOne({ code }, opt);
 	}
 
-	create(event) {
+	create(event, opt) {
 		return this.createOne({
 			code: event.code,
 			name: event.name,
@@ -26,7 +26,7 @@ class Event extends Model {
 			end_at: new Date(event.end_at).toISOString(),
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
-		}, '*');
+		}, opt);
 	}
 }
 

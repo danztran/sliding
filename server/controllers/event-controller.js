@@ -5,6 +5,7 @@ const codeStart = 'aaa';
 const { nextStringOf } = requireWrp('modules/common');
 
 const ctrl = {
+
 	async create(req, res, next) {
 		const rules = {
 			name: 'string|required|max:100',

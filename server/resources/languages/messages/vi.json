@@ -1,6 +1,6 @@
 {
 	"hello": "Chào bạn !",
-	"usernameNotFound": "Không tìm thấy tài khoản này",
+	"usernameNotFound": "Không tìm thấy tài khoản khớp kí danh này",
 	"passwordIncorrect": "Mật khẩu không chính xác",
 	"sessionExpired": "Phiên truy cập của bạn đã hết hạn. Vui lòng đăng nhập lại nhé.",
 	"alreadyLoggedIn": "Bạn đã đăng nhập trước đó",

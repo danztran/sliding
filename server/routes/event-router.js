@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const authMdw = requireWrp('middlewares/auth-middleware');
-const eventCtrl = requireWrp('controllers/event-controller');
+const AuthMdw = requireWrp('middlewares/auth-middleware');
+const EventCtlr = requireWrp('controllers/event-controller');
 
-router.use(authMdw.authen);
-router.post('/create', eventCtrl.create);
+router.use(AuthMdw.authen);
+router.post('/create', EventCtlr.create);
 
 module.exports = router;

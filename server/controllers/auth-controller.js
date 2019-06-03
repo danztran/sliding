@@ -19,10 +19,10 @@ const ctrl = {
 
 	async signup(req, res, next) {
 		const rules = {
-			name: 'string|required|max:100',
+			name: 'string|required|min:3|max:100',
 			email: 'email|required|max:320',
-			username: 'string|required|max:50',
-			password: 'string|required|max:50'
+			username: 'alpha_num|required|min:6|max:50',
+			password: 'string|required|min:6|max:50'
 		};
 		if (!res.$v.rif(rules)) return;
 		const { username, email } = req.body;
@@ -66,17 +66,19 @@ const ctrl = {
 			password: 'string|required'
 		};
 		if (!res.$v.rif(rules)) return;
-		passport.authenticate('local', (err, user, field, messageCode) => {
+		passport.authenticate('local', (err, user, field, info) => {
 			const result = {};
 			if (err) return next(err);
 
 			if (!user) {
 				res.status(401);
-				if (field && messageCode) {
-					res.messages[field] = res.$t(messageCode);
+				if (typeof field === 'object') {
+					for (const key of Object.keys(field)) {
+						res.messages[key] = res.$t(field[key]);
+					}
 				}
 				else if (field) {
-					res.messages['field'] = user;
+					res.messages['authen'] = info;
 				}
 				return res.sendwm();
 			}

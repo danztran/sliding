@@ -36,6 +36,7 @@
 	"globals": {
 		"requireWrp": true,
 		"requireDir": true,
-		"__rootdir": true
+		"__rootdir": true,
+		"$io": true
 	}
 }

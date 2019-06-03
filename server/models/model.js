@@ -5,45 +5,52 @@ class Model {
 	constructor(name) {
 		this.name = name;
 		this.query = '';
-		// re = -1: return result,
-		// re = 0: return rows,
-		// re = 1: return rows[0]
-		this.rowReturn = -1;
+		this.rowReturn = -1; // [-1, 0, 1] => result, rows, rows[0]
 	}
 
-	// @objects can be object or array of objects
-	find(objects, select = '*') {
+	// @info can be Object or Array of objects
+	find(info, {
+		select = '*',
+		order,
+		limit,
+		offset
+	} = {}) {
 		this.query = `
 			SELECT ${select}
 			FROM ${this.name}
-			WHERE ${qh.toWhereClause(objects)}
+			${qh.toWhereClause(info)}
+			${qh.toOrderClause(order)}
+			${qh.toLimitClause(limit)}
+			${qh.toOffsetClause(offset)}
 		`;
 		this.rowReturn = 0;
 		return this;
 	}
 
-	findOne(object, select) {
-		this.query = `${this.find(object, select).query} LIMIT 1`;
+	findOne(object, { select } = {}) {
+		this.query = this.find(object, {
+			select,
+			limit: 1
+		}).query;
 		this.rowReturn = 1;
 		return this;
 	}
 
-	findLastOf(column, select = '*') {
-		this.query = `
-			SELECT ${select}
-			FROM ${this.name}
-			ORDER BY ${column} DESC
-			LIMIT 1
-		`;
+	findLastOf(column, { select } = {}) {
+		this.query = this.find(null, {
+			select,
+			order: `-${column}`,
+			limit: 1
+		}).query;
 		this.rowReturn = 1;
 		return this;
 	}
 
-	createOne(object, select) {
+	createOne(object, { select } = {}) {
 		this.query = `
 			INSERT INTO ${this.name}
 			${qh.toInsertClause(object)}
-			${select ? `RETURNING ${select}` : ''}
+			${qh.toReturningClause(select)}
 		`;
 		if (select) {
 			this.rowReturn = 1;
@@ -51,26 +58,17 @@ class Model {
 		return this;
 	}
 
-	update(object, newInfo, select) {
-		this.query = `
-			UPDATE ${this.name}
-			SET ${qh.toSetClause(newInfo)}
-			WHERE ${qh.toWhereClause(object)}
-			${select ? `RETURNING ${select}` : ''}
-		`;
-		if (select) {
-			this.rowReturn = 0;
-		}
-		return this;
-	}
-
-	updateOne(object, newInfo, select) {
+	updateOne(object, newInfo, { select } = {}) {
 		const column = Object.keys(object)[0];
 		this.query = `
 			UPDATE ${this.name}
-			SET ${qh.toSetClause(newInfo)}
-			WHERE ${column} in (${this.findOne(object, column).query})
-			${select ? `RETURNING ${select}` : ''}
+			${qh.toSetClause(newInfo)}
+			WHERE ${column} in (
+					${this.findOne(object, {
+		select: column
+	}).query}
+				)
+			${qh.toReturningClause(select)}
 		`;
 		if (select) {
 			this.rowReturn = 1;

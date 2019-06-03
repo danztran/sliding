@@ -43,7 +43,7 @@ const _cm = {
 		const strlen = str.length;
 		let array = str.split('');
 		let replaceIndex = strlen - 1;
-		while (true) {
+		for (let i = 0; i < strlen; i++) {
 			const replaceCharacter = str[replaceIndex];
 			const index = bone.indexOf(replaceCharacter);
 			if (index === bonelen - 1) {

@@ -20,13 +20,13 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(
 	((username, password, done) => {
-		User.findOne({ username }).exec()
+		User.findByUsername(username).exec()
 			.then((user) => {
 				if (!user) {
-					return done(null, false, 'username', 'usernameNotFound');
+					return done(null, false, { username: 'usernameNotFound' });
 				}
 				if (crypto.dec(user.password) !== password) {
-					return done(null, false, 'password', 'passwordIncorrect');
+					return done(null, false, { password: 'passwordIncorrect' });
 				}
 				return done(null, user);
 			})

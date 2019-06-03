@@ -7,11 +7,15 @@ class User extends Model {
 		super('_.user');
 	}
 
-	findById(id, select = '*') {
-		return this.findOne({ id });
+	findById(id, opt) {
+		return this.findOne({ id }, opt);
 	}
 
-	create(user) {
+	findByUsername(username, opt) {
+		return this.findOne({ username }, opt);
+	}
+
+	create(user, opt) {
 		return this.createOne({
 			name: user.name,
 			email: user.email,
@@ -19,7 +23,7 @@ class User extends Model {
 			password: crypto.enc(user.password),
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
-		}, '*');
+		}, opt);
 	}
 
 	setLastAccessed(user) {
