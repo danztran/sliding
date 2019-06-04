@@ -30,7 +30,9 @@
 		"no-throw-literal": "off",
 		"consistent-return": "off",
 		"no-plusplus": "off",
-		"no-await-in-loop": "off"
+		"no-await-in-loop": "off",
+		"func-names": "off",
+		"no-console": ["error", { "allow": ["warn", "error"] }]
 	},
 	"parser": "babel-eslint",
 	"globals": {

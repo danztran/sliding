@@ -4,7 +4,7 @@ const pool = new Pool({
 });
 
 pool.query('SELECT NOW()', (err, res) => {
-	console.log(err || res.rows[0].now);
+	console.warn(err || res.rows[0].now);
 });
 
 module.exports = pool;
