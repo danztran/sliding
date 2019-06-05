@@ -1,5 +1,5 @@
 {
-  "name": "presenta-server",
+  "name": "sliding-server",
   "private": true,
   "scripts": {
     "start": "npm run server && npm run logs",
