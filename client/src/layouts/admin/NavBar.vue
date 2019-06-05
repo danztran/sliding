@@ -40,11 +40,11 @@
 				</template>
 
 				<v-card>
-					<v-list dense>
+					<v-list dense primary>
 						<v-list-tile
-							v-for="notification in notifications"
-							:key="notification">
-							<v-list-tile-title v-text="notification" color="primary"/>
+							v-for="(action, i) in actions"
+							:key="i">
+							<v-list-tile-title v-text="action.name"/>
 						</v-list-tile>
 					</v-list>
 				</v-card>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+
 export default {
 	data() {
 		return {
@@ -77,8 +78,8 @@ export default {
 				email: '',
 				name: ''
 			},
-			notifications: [
-				'Another One'
+			actions: [
+				{ name: 'Some actions' }
 			],
 			tabs: [
 				{ name: 'events', url: '/admin/events' },

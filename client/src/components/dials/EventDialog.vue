@@ -16,13 +16,7 @@
 						<v-container grid-list-md>
 							<v-layout wrap>
 								<v-flex xs12>
-									<v-text-field
-										autofocus
-										type="text"
-										v-model="field.eventName"
-										:label="$t('event-name')"
-										:rules= "[field.rules.required]"
-										required/>
+									<text-field :field="field.eventname" />
 								</v-flex>
 
 								<!-- DATE START PICKER -->
@@ -214,9 +208,12 @@ export default {
 	data: () => ({
 		modalCreate: false,
 		field: {
-			eventName: '',
-			rules: {
-				required: eventName => !!eventName || 'Field is required'
+			eventname: {
+				value: '',
+				label: 'event-name',
+				type: 'text',
+				required: true,
+				autofocus: true
 			}
 		},
 		currentDate: null,

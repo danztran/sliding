@@ -8,6 +8,7 @@ import { i18n } from './modules/vue-i18n-setup';
 import cookies from './modules/vue-cookies-custom';
 import _cm from './modules/common-methods';
 import axios from './modules/axios-custom';
+import api from './api';
 import Vuetify from './modules/vuetify-custom';
 
 Vue.config.productionTip = false;
@@ -19,6 +20,7 @@ Vue.use(Vuetify);
 // Custom proptotype
 Vue.prototype.$env = process.env;
 Vue.prototype.$axios = axios;
+Vue.prototype.$api = api;
 Vue.prototype.$cookies = cookies;
 Vue.prototype._cm = _cm;
 

@@ -7,22 +7,31 @@
 		<v-container  fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
 				<v-flex flex xs12 sm9 md8 lg6>
-					<v-card class="elevation-20">
+					<v-card class="elevation-20 pa-3">
 						<v-form @submit.prevent="handleLogin">
-							<v-toolbar dark color="primary">
-								<v-toolbar-title v-t="'loginFormTitle'"></v-toolbar-title>
-								<v-spacer></v-spacer>
-							</v-toolbar>
+							<v-layout align-center justify-center row fill-height>
+								<v-card-title primary-title>
+									<div class="text-xs-center">
+										<div class="headline font-weight-regular" v-t="'loginFormTitle'"></div>
+										<span class="grey--text" v-t="'or'">{{"&nbsp;  "}}</span>
+										<a href="/register" class="primary--text body-2 hyper-link" v-t="'signUp'"></a>
+									</div>
+								</v-card-title>
+							</v-layout>
 
 							<v-card-text>
 								<text-field :field="form.username" />
 								<text-field :field="form.password" />
 							</v-card-text>
 
-							<v-card-actions>
-								<div class="caption pl-3 font-weight-medium">{{errorMessage}}</div>
-								<v-spacer></v-spacer>
-								<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
+							<div class="caption error--text text-xs-center">
+								{{errorMessages}}
+							</div>
+
+							<v-card-actions class="px-3 py-2">
+								<v-layout align-center justify-center column fill-height>
+									<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
+								</v-layout>
 							</v-card-actions>
 
 							<loading-linear :loading="loading"/>
@@ -52,13 +61,13 @@ export default {
 			password: {
 				value: '',
 				label: 'lbPassword',
-				type: 'text',
+				type: 'password',
 				required: true,
 				prepend: 'lock',
 				errmsg: ''
 			}
 		},
-		errorMessage: ''
+		errorMessages: ''
 	}),
 	methods: {
 		handleLogin() {
@@ -80,5 +89,8 @@ $backgroundUrl: 'https://images.unsplash.com/photo-1504275107627-0c2ba7a43dba?ix
 .imgBg {
 	background: url($backgroundUrl) no-repeat center;
 	background-size: cover;
+}
+.hyper-link {
+	text-decoration: none;
 }
 </style>
