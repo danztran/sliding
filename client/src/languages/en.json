@@ -32,8 +32,10 @@
 		"event-end-date": "End date",
 		"event-end-time": "Time end",
 		"event-attendees-info": "Attendees are able to join your event within dates you select.",
+		"event-status": "Active",
 		"cancel-btn": "Cancel",
 		"save-btn": "Save",
-		"create-btn": "Create"
+		"create-btn": "Create",
+		"action-tooltip": "Action"
 	}
 }

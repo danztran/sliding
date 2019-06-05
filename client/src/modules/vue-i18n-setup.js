@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import axios from 'axios';
-import cookies from '@/modules/vue-cookies-custom';
+import cookies from './vue-cookies-custom';
 
 const locale = cookies.get('_lang') || window.navigator.language || 'en';
 const defLocale = process.env.VUE_APP_DEFAULT_LOCALE || 'en';

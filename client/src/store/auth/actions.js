@@ -1,21 +1,27 @@
-import cookies from '@/modules/vue-cookies-custom';
+import api from '@/api';
+import router from '@/router';
 import axios from '@/modules/axios-custom';
 import _cm from '@/modules/common-methods';
-import router from '@/router';
+import cookies from '@/modules/vue-cookies-custom';
 
 const login = (context, userData) => {
-	axios.post('/auth/login', userData)
+	axios.post(api.auth.login, userData)
 		.then((res) => {
 			context.commit('SET_CURRENT_USER', res.data);
 			cookies.set('user', res.data.user);
 			router.push({ name: 'admin' });
 		})
-		// eslint-disable-next-line
-		.catch(err => console.log(err));
+		.catch((err) => {
+			// eslint-disable-next-line
+			console.log(err);
+			router.push({ name: 'login' });
+		});
 };
 
 const checkAuth = (context) => {
-	_cm.notEmpty(cookies.get('user'));
+	if (!_cm.notEmpty(cookies.get('user'))) {
+		router.push({ name: 'login' });
+	}
 };
 
 export default {

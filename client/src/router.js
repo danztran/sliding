@@ -9,16 +9,16 @@ import Login from './views/Login.vue';
 import Page from './layouts/Page.vue';
 
 // Admin
-import AdminLayout from './layouts/admin/index.vue';
+import UserLayout from './layouts/admin/index.vue';
 import Events from './views/admin/Events.vue';
 import Team from './views/admin/Team.vue';
 import Analytics from './views/admin/Analytics.vue';
 
-// Anonymous
-import AnonymousLayout from './layouts/anonymous/index.vue';
-import Questions from './views/anonymous/Questions.vue';
-import Polls from './views/anonymous/Polls.vue';
-import Ideas from './views/anonymous/Ideas.vue';
+// Guest
+import GuestLayout from './layouts/guest/index.vue';
+import Questions from './views/guest/Questions.vue';
+import Polls from './views/guest/Polls.vue';
+import Ideas from './views/guest/Ideas.vue';
 
 const router = new Router({
 	mode: 'history',
@@ -46,7 +46,7 @@ const router = new Router({
 				},
 				{
 					path: '/',
-					component: AdminLayout,
+					component: UserLayout,
 					beforeEnter: authMdw.guard,
 					name: 'admin',
 					redirect: '/admin/events',
@@ -79,7 +79,7 @@ const router = new Router({
 				},
 				{
 					path: '/anonymous',
-					component: AnonymousLayout,
+					component: GuestLayout,
 					redirect: '/anonymous/questions',
 					children: [
 						{

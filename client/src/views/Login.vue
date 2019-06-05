@@ -6,7 +6,12 @@
 
 		<v-container  fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex xs12 sm9 md7 lg4>
+				<v-flex
+					flex
+					xs12
+					sm9
+					md8
+					lg6>
 					<v-card class="elevation-20">
 						<v-form @submit.prevent="handleLogin">
 							<v-toolbar dark color="primary">

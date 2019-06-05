@@ -32,8 +32,10 @@
 		"event-end-date": "Ngày kết thúc sự kiện",
 		"event-end-time": "Giờ kết thúc",
 		"event-attendees-info": "Người tham dự có thể tham gia sự kiện của bạn trong những ngày bạn chọn.",
+		"event-status": "Đang hoạt động",
 		"cancel-btn": "Hủy bỏ",
 		"save-btn": "Lưu",
-		"create-btn": "Tạo"
+		"create-btn": "Tạo",
+		"action-tooltip": "Hành động"
 	}
 }

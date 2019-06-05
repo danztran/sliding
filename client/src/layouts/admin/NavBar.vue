@@ -10,7 +10,7 @@
 						<v-icon  size="20" v-html="'$vuetify.icons.user'" />
 						{{ user.email }}
 					</span>
-					<span class="caption">{{ user.name }}</span>
+					<span class="caption text-capitalize">{{ user.name }}</span>
 				</v-list-tile-content>
 			</v-toolbar-title>
 
@@ -70,20 +70,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
-	components: {},
 	data() {
 		return {
-			// user: {
-			// 	username: 'administrator@gmail.com',
-			// 	rule: 'Administrator'
-			// },
+			user: {
+				email: '',
+				name: ''
+			},
 			notifications: [
-				'You have 5 new tasks',
-				'You\'re now a friend with Andrew',
-				'Another Notification',
 				'Another One'
 			],
 			tabs: [
@@ -93,10 +87,8 @@ export default {
 			]
 		};
 	},
-	computed: {
-		...mapGetters({
-			user: 'auth/user'
-		})
+	created() {
+		this.user = this.$cookies.get('user');
 	},
 	methods: {
 		toggleDrawer() {

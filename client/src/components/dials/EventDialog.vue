@@ -4,7 +4,7 @@
 			<span v-show="false">
 				{{ $t('FOR_A_PURPOSE') }}
 			</span>
-			<v-dialog v-model="modalCreate" persistent max-width="400px">
+			<v-dialog v-model="modalCreate" max-width="400px" no-click-animation>
 				<v-card>
 					<v-card-title>
 						<span class="headline">
@@ -33,7 +33,8 @@
 										:return-value.sync="start.defaultDate"
 										width="290px"
 										lazy
-										full-width>
+										full-width
+										no-click-animation>
 										<template v-slot:activator="{ on }">
 											<v-text-field
 												v-model="start.defaultDate"
@@ -74,7 +75,8 @@
 										:return-value.sync="end.defaultDate"
 										width="290px"
 										lazy
-										full-width>
+										full-width
+										no-click-animation>
 										<template v-slot:activator="{ on }">
 											<v-text-field
 												v-model="end.defaultDate"
@@ -112,10 +114,10 @@
 										ref="dialogTimeStart"
 										v-model="dialogTimeStart"
 										:return-value.sync="start.defaultTime"
-										persistent
 										lazy
 										full-width
-										width="290px">
+										width="290px"
+										no-click-animation>
 										<template v-slot:activator="{ on }">
 											<v-text-field
 												v-model="start.defaultTime"
@@ -147,10 +149,10 @@
 										ref="dialogTimeEnd"
 										v-model="dialogTimeEnd"
 										:return-value.sync="end.defaultTime"
-										persistent
 										lazy
 										full-width
-										width="290px">
+										width="290px"
+										no-click-animation>
 										<template v-slot:activator="{ on }">
 											<v-text-field
 												v-model="end.defaultTime"
@@ -217,7 +219,7 @@ export default {
 				required: eventName => !!eventName || 'Field is required'
 			}
 		},
-		currentDate: new Date().toISOString(),
+		currentDate: null,
 		start: {
 			defaultDate: null,
 			defaultTime: null
@@ -233,6 +235,17 @@ export default {
 	}),
 	methods: {
 		createEvent() {}
+	},
+	created() {
+		const date = new Date();
+		const dayTime = 1000 * 3600 * 24;
+		this.currentDate = date.toISOString().substr(0, 10);
+		this.start.defaultDate = date.toISOString().substr(0, 10);
+		this.start.defaultTime = date.toLocaleTimeString().substr(0, 5);
+		// 3 days next
+		this.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
+			.toISOString().substr(0, 10);
+		this.end.defaultTime = date.toLocaleTimeString().substr(0, 5);
 	},
 	mounted() {
 		this.$root.$on('create-new-event', () => {

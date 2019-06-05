@@ -21,6 +21,9 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$cookies = cookies;
 Vue.prototype._cm = _cm;
 
+// Check authen
+store.dispatch('auth/checkAuth');
+
 new Vue({
 	i18n,
 	router,
