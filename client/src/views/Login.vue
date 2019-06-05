@@ -6,12 +6,7 @@
 
 		<v-container  fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex
-					flex
-					xs12
-					sm9
-					md8
-					lg6>
+				<v-flex flex xs12 sm9 md8 lg6>
 					<v-card class="elevation-20">
 						<v-form @submit.prevent="handleLogin">
 							<v-toolbar dark color="primary">
@@ -20,26 +15,8 @@
 							</v-toolbar>
 
 							<v-card-text>
-								<v-text-field
-									autofocus
-									type="text"
-									prepend-icon="person"
-									v-model="username.value"
-									:rules="[fieldRequired(username)]"
-									:error-messages="username.message"
-									:label="$t('lbUsername')"
-									required>
-								</v-text-field>
-
-								<v-text-field
-									type="password"
-									prepend-icon="lock"
-									v-model="password.value"
-									:rules="[fieldRequired(password)]"
-									:error-messages="password.message"
-									:label="$t('lbPassword')"
-									required>
-								</v-text-field>
+								<text-field :field="form.username" />
+								<text-field :field="form.password" />
 							</v-card-text>
 
 							<v-card-actions>
@@ -59,35 +36,42 @@
 
 <script>
 import LoadingLinear from '@/components/LoadingLinear.vue';
+import TextField from '@/components/TextField.vue';
 
 export default {
 	name: 'Login',
 	components: {
-		'loading-linear': LoadingLinear
+		'loading-linear': LoadingLinear,
+		'text-field': TextField
 	},
 	data: () => ({
 		loading: false,
-		// rules: {
-		// 	required: value => !!value || 'Field is required'
-		// },
-		username: {
-			value: '',
-			message: ''
-		},
-		password: {
-			value: '',
-			message: ''
+		form: {
+			username: {
+				value: '',
+				label: 'lbUsername',
+				type: 'text',
+				required: true,
+				prepend: 'person',
+				autofocus: true,
+				errmsg: ''
+			},
+			password: {
+				value: '',
+				label: 'lbPassword',
+				type: 'text',
+				required: true,
+				prepend: 'lock',
+				errmsg: ''
+			}
 		},
 		errorMessage: ''
 	}),
 	methods: {
-		fieldRequired(field) {
-			return !!field.value || this.$t('requireField');
-		},
 		handleLogin() {
 			const userData = {
-				username: this.username.value,
-				password: this.password.value
+				username: this.form.username.value,
+				password: this.form.password.value
 			};
 
 			this.$store.dispatch('auth/login', userData);
