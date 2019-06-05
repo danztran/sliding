@@ -11,6 +11,12 @@
 	</v-text-field>
 </template>
 
+<style scoped>
+.v-text-field {
+	height: 67px;
+}
+</style>
+
 <script>
 export default {
 	name: 'TextField',
