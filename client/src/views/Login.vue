@@ -25,7 +25,7 @@
 									type="text"
 									prepend-icon="person"
 									v-model="username.value"
-									:rules="[rules.required]"
+									:rules="[fieldRequired(username)]"
 									:error-messages="username.message"
 									:label="$t('lbUsername')"
 									required>
@@ -35,7 +35,7 @@
 									type="password"
 									prepend-icon="lock"
 									v-model="password.value"
-									:rules="[rules.required]"
+									:rules="[fieldRequired(password)]"
 									:error-messages="password.message"
 									:label="$t('lbPassword')"
 									required>
@@ -67,9 +67,9 @@ export default {
 	},
 	data: () => ({
 		loading: false,
-		rules: {
-			required: value => !!value || 'Field is required'
-		},
+		// rules: {
+		// 	required: value => !!value || 'Field is required'
+		// },
 		username: {
 			value: '',
 			message: ''
@@ -80,8 +80,10 @@ export default {
 		},
 		errorMessage: ''
 	}),
-	computed: {},
 	methods: {
+		fieldRequired(field) {
+			return !!field.value || this.$t('requireField');
+		},
 		handleLogin() {
 			const userData = {
 				username: this.username.value,
