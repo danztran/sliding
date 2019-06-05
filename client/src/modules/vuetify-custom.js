@@ -1,8 +1,10 @@
-import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
-import 'vuetify/dist/vuetify.min.css';
 
+import TextField from '@/components/pieces/TextField.vue';
+import LoadingLinear from '@/components/pieces/LoadingLinear.vue';
+
+// theme
 const theme = {
 	primary: '#3595BE',
 	secondary: '#5282BD',
@@ -10,6 +12,7 @@ const theme = {
 	error: '#832800'
 };
 
+// icons
 const icons = {
 	user: 'how_to_reg',
 	anonymous: 'person',
@@ -21,9 +24,23 @@ const icons = {
 	'more-vert': 'more_vert'
 };
 
-Vue.use(Vuetify, {
-	iconfont: 'md',
-	size: 20,
-	theme,
-	icons
-});
+// custom components
+const components = {
+	'text-field': TextField,
+	'loading-linear': LoadingLinear
+};
+
+export default {
+	install(Vue, options) {
+		for (const cpnName of Object.keys(components)) {
+			Vue.component(cpnName, components[cpnName]);
+		}
+
+		Vue.use(Vuetify, {
+			iconfont: 'md',
+			size: 20,
+			theme,
+			icons
+		});
+	}
+};

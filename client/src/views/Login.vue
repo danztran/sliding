@@ -35,15 +35,8 @@
 </template>
 
 <script>
-import LoadingLinear from '@/components/LoadingLinear.vue';
-import TextField from '@/components/TextField.vue';
-
 export default {
 	name: 'Login',
-	components: {
-		'loading-linear': LoadingLinear,
-		'text-field': TextField
-	},
 	data: () => ({
 		loading: false,
 		form: {
