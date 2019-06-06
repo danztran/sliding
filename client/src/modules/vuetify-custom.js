@@ -6,7 +6,7 @@ import LoadingLinear from '@/components/pieces/LoadingLinear.vue';
 
 // theme
 const theme = {
-	primary: '#3595BE',
+	primary: '#3da4b5',
 	secondary: '#5282BD',
 	accent: '#8c9eff',
 	error: '#832800'

@@ -10,12 +10,15 @@ import _cm from './modules/common-methods';
 import axios from './modules/axios-custom';
 import api from './api';
 import Vuetify from './modules/vuetify-custom';
+import VueMixins from './modules/vue-mixins-custom';
+import './assets/style/main.scss';
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = true;
 
 // Plugins
 Vue.use(VueRouter);
 Vue.use(Vuetify);
+Vue.use(VueMixins);
 
 // Custom proptotype
 Vue.prototype.$env = process.env;
@@ -23,9 +26,6 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$api = api;
 Vue.prototype.$cookies = cookies;
 Vue.prototype._cm = _cm;
-
-// Check authen
-store.dispatch('auth/checkAuth');
 
 new Vue({
 	i18n,

@@ -5,22 +5,27 @@
 		:prepend-icon="field.prepend"
 		v-model="field.value"
 		:rules="[fieldRequired(field)]"
-		:error-messages="field.errmsg"
 		:label="$t(field.label)"
-		required>
+		:readonly="field.readonly"
+		:validate-on-blur="true"
+		:error-messages="field.errmsg"
+		@input="onInput"
+		:disabled="disabled">
 	</v-text-field>
 </template>
-
 <style scoped>
 .v-text-field {
 	height: 67px;
 }
 </style>
-
 <script>
 export default {
 	name: 'TextField',
 	props: {
+		disabled: {
+			type: Boolean,
+			default: false
+		},
 		field: {
 			type: Object,
 			default() {
@@ -39,6 +44,9 @@ export default {
 	methods: {
 		fieldRequired(field) {
 			return !!this.field.value || !this.field.required || this.$t('requireField');
+		},
+		onInput() {
+			this.field.errmsg = '';
 		}
 	}
 };
