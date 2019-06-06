@@ -42,7 +42,7 @@
 				<v-card>
 					<v-list dense primary>
 						<v-list-tile
-							v-for="(action, i) in actions"
+							v-for="(action, i) of actions"
 							:key="i">
 							<v-list-tile-title v-text="action.name"/>
 						</v-list-tile>
@@ -56,7 +56,7 @@
 					<v-tabs-slider color="yellow" />
 
 					<v-tab
-						v-for="(tab, i) in tabs"
+						v-for="(tab, i) of tabs"
 						:key="i"
 						fixed-tabs
 						:to="tab.url">
@@ -82,14 +82,17 @@ export default {
 				{ name: 'Some actions' }
 			],
 			tabs: [
-				{ name: 'events', url: '/admin/events' },
-				{ name: 'team', url: '/admin/team' },
-				{ name: 'analytics', url: '/admin/analytics' }
+				{ name: 'my-events', url: '/dashboard/my-events' },
+				{ name: 'coop-events', url: '/dashboard/coop-events' },
+				{ name: 'activity-logs', url: '/dashboard/activity-logs' }
 			]
 		};
 	},
 	created() {
 		this.user = this.$cookies.get('user');
+		this.tabs.forEach((e) => {
+			e.name = this.$t(e.name);
+		});
 	},
 	methods: {
 		toggleDrawer() {

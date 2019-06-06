@@ -71,7 +71,7 @@ const ctrl = {
 			await EventUser.create({
 				user_id: req.user.id,
 				event_id: event.id,
-				role: 'master'
+				role: 'host'
 			}).exec();
 			result.code = event.code;
 		}

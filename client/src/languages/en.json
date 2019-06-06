@@ -38,6 +38,9 @@
 		"cancel-btn": "Cancel",
 		"save-btn": "Save",
 		"create-btn": "Create",
-		"action-tooltip": "Action"
+		"action-tooltip": "Action",
+		"my-events": "My Events",
+		"coop-events": "Co.op Events",
+		"activity-logs": "Activity Logs"
 	}
 }

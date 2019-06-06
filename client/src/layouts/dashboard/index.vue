@@ -1,0 +1,48 @@
+<template>
+	<v-app>
+		<navbar />
+		<drawer />
+		<v-content class="my-3">
+			<v-slide-x-transition mode="out-in">
+				<router-view />
+			</v-slide-x-transition>
+		</v-content>
+		<event-dialog />
+	</v-app>
+</template>
+
+<script>
+import NavBar from './NavBar.vue';
+import Drawer from './Drawer.vue';
+import EventDialog from '@/components/dials/EventDialog.vue';
+
+export 	default {
+	components: {
+		navbar: NavBar,
+		drawer: Drawer,
+		'event-dialog': EventDialog
+	}
+};
+</script>
+
+<style lang="css">
+.v-content,
+.v-toolbar__content,
+.v-toolbar__extension  {
+	padding: 0 20% !important;
+}
+@media only screen and (max-width: 1280px) {
+	.v-content,
+	.v-toolbar__content,
+	.v-toolbar__extension  {
+		padding: 0 10% !important;
+	}
+}
+@media only screen and (max-width: 960px) {
+	.v-content,
+	.v-toolbar__content,
+	.v-toolbar__extension  {
+		padding: 0 10px !important;
+	}
+}
+</style>

@@ -38,6 +38,9 @@
 		"cancel-btn": "Hủy bỏ",
 		"save-btn": "Lưu",
 		"create-btn": "Tạo",
-		"action-tooltip": "Hành động"
+		"action-tooltip": "Hành động",
+		"my-events": "Sự kiện",
+		"coop-events": "Sự kiện hợp tác",
+		"activity-logs": "Lịch sử hoạt động"
 	}
 }

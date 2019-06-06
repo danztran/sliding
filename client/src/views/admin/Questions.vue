@@ -1,10 +1,10 @@
 <template>
-	<div>This is Admin Analytics page</div>
+	<div>This is Admin Questions page</div>
 </template>
 
 <script>
 export default {
-	name: 'Admin Analytics'
+	name: 'Admin Questions'
 };
 </script>
 

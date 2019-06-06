@@ -8,17 +8,24 @@ import Login from './views/Login.vue';
 // Page Layout
 import Page from './layouts/Page.vue';
 
+// Dashboard
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './layouts/dashboard');
+const MyEvents = () => import(/* webpackChunkName: "my-events" */ './views/dashboard/MyEvents.vue');
+const CoopEvents = () => import(/* webpackChunkName: "coop-events" */ './views/dashboard/CoopEvents.vue');
+const ActivityLogs = () => import(/* webpackChunkName: "activity-logs" */ './views/dashboard/ActivityLogs.vue');
+
 // Admin
-import UserLayout from './layouts/admin/index.vue';
-import Events from './views/admin/Events.vue';
-import Team from './views/admin/Team.vue';
-import Analytics from './views/admin/Analytics.vue';
+const AdminLayout = () => import(/* webpackChunkName: "admin" */ './layouts/admin');
+const AdminQuestions = () => import(/* webpackChunkName: "admin-questions" */ './views/admin/Questions.vue');
+const AdminIdeas = () => import(/* webpackChunkName: "admin-ideas" */ './views/admin/Ideas.vue');
+const AdminPolls = () => import(/* webpackChunkName: "admin-polls" */ './views/admin/Polls.vue');
+const AdminAnalytics = () => import(/* webpackChunkName: "admin-analytics" */ './views/admin/Analytics.vue');
 
 // Guest
-import GuestLayout from './layouts/guest/index.vue';
-import Questions from './views/guest/Questions.vue';
-import Polls from './views/guest/Polls.vue';
-import Ideas from './views/guest/Ideas.vue';
+const GuestLayout = () => import(/* webpackChunkName: "guest" */ './layouts/guest');
+const GuestQuestions = () => import(/* webpackChunkName: "guest-questions" */ './views/guest/Questions.vue');
+const GuestIdeas = () => import(/* webpackChunkName: "guest-ideas" */ './views/guest/Ideas.vue');
+const GuestPolls = () => import(/* webpackChunkName: "guest-polls" */ './views/guest/Polls.vue');
 
 const router = new Router({
 	mode: 'history',
@@ -29,7 +36,7 @@ const router = new Router({
 			component: Page,
 			children: [
 				{
-					path: '/about',
+					path: 'about',
 					name: 'about',
 					component: About,
 					meta: {
@@ -37,7 +44,7 @@ const router = new Router({
 					}
 				},
 				{
-					path: '/login',
+					path: 'login',
 					name: 'login',
 					component: Login,
 					meta: {
@@ -45,32 +52,71 @@ const router = new Router({
 					}
 				},
 				{
-					path: '/',
-					component: UserLayout,
+					path: 'dashboard',
+					name: 'dashboard',
+					component: Dashboard,
 					beforeEnter: authMdw.guard,
-					name: 'admin',
-					redirect: '/admin/events',
+					redirect: { name: 'my-events' },
 					children: [
 						{
-							path: '/admin/events',
-							name: 'events',
-							component: Events,
+							path: 'my-events',
+							name: 'my-events',
+							component: MyEvents,
 							meta: {
-								title: 'Events'
+								title: 'My Events'
 							}
 						},
 						{
-							path: '/admin/team',
-							name: 'team',
-							component: Team,
+							path: 'coop-events',
+							name: 'coop-events',
+							component: CoopEvents,
 							meta: {
-								title: 'Team'
+								title: 'Co-op Events'
 							}
 						},
 						{
-							path: '/admin/analytics',
-							name: 'dashboard',
-							component: Analytics,
+							path: 'activity-logs',
+							name: 'activity-logs',
+							component: ActivityLogs,
+							meta: {
+								title: 'Activity Logs'
+							}
+						}
+					]
+				},
+				{
+					path: 'admin/event/:code',
+					component: AdminLayout,
+					redirect: { name: 'admin-questions' },
+					children: [
+						{
+							path: 'questions',
+							name: 'admin-questions',
+							component: AdminQuestions,
+							meta: {
+								title: 'Questions'
+							}
+						},
+						{
+							path: 'polls',
+							name: 'admin-polls',
+							component: AdminPolls,
+							meta: {
+								title: 'Polls'
+							}
+						},
+						{
+							path: 'ideas',
+							name: 'admin-ideas',
+							component: AdminIdeas,
+							meta: {
+								title: 'Ideas'
+							}
+						},
+						{
+							path: 'analytics',
+							name: 'admin-analytics',
+							component: AdminAnalytics,
 							meta: {
 								title: 'Analytics'
 							}
@@ -78,30 +124,30 @@ const router = new Router({
 					]
 				},
 				{
-					path: '/anonymous',
+					path: 'guest/event/:code',
 					component: GuestLayout,
-					redirect: '/anonymous/questions',
+					redirect: { name: 'guest-questions' },
 					children: [
 						{
-							path: '/anonymous/questions',
-							name: 'questions',
-							component: Questions,
+							path: 'questions',
+							name: 'guest-questions',
+							component: GuestQuestions,
 							meta: {
 								title: 'Questions'
 							}
 						},
 						{
-							path: '/anonymous/polls',
-							name: 'polls',
-							component: Polls,
+							path: 'polls',
+							name: 'guest-polls',
+							component: GuestPolls,
 							meta: {
 								title: 'Polls'
 							}
 						},
 						{
-							path: '/anonymous/ideas',
-							name: 'ideas',
-							component: Ideas,
+							path: 'ideas',
+							name: 'guest-ideas',
+							component: GuestIdeas,
 							meta: {
 								title: 'Ideas'
 							}

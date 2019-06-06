@@ -6,7 +6,7 @@
 
 		<v-container fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex flex xs12 sm8 md7 lg6>
+				<v-flex flex xs12 sm6 md4 lg3>
 					<v-card class="elevation-20 pa-3">
 						<loading-linear :loading="loading"/>
 
@@ -55,7 +55,7 @@
 }
 @media only screen and (max-width: 960px) {
 	.fluid, .v-card {
-		padding: 0 !important;
+		padding: 5px !important;
 	}
 }
 </style>
@@ -97,7 +97,7 @@ export default {
 				.post(this.$api.auth.login, loginFormData)
 				.then((res) => {
 					this.$store.dispatch('auth/setAuth', res.data.user);
-					this.$router.push({ name: 'admin' });
+					this.$router.push({ name: 'my-events' });
 				})
 				.catch(err => this.handleErrorMessages(err.messages))
 				.then(() => {
