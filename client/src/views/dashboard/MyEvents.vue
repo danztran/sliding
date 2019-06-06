@@ -11,12 +11,12 @@
 				{{ $t('create-event') }}
 			</v-btn>
 		</v-layout>
-		<v-card class="list-event">
+		<div class="list-event">
 			<bouncy-loader v-show="loading"/>
-			<template v-for="(event, i) in events">
-				<event-card  :key="i" :field="event"/>
+			<template v-for="(event) in events">
+				<event-card  :key="event.code" :field="event"/>
 			</template>
-		</v-card>
+		</div>
 	</div>
 </template>
 
@@ -75,5 +75,6 @@ export default {
 	height: 600px;
 	max-height: 600px;
 	overflow-y: scroll;
+	background-color: transparent;
 }
 </style>

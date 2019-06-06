@@ -14,7 +14,7 @@ export default {};
 <script lang="css">
 :root {
 	--color: #3da4b5;
-	--size: 40px;
+	--size: 43px;
 }
 
 .wrapper {
