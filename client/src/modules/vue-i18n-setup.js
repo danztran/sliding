@@ -2,15 +2,15 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import axios from 'axios';
 import cookies from './vue-cookies-custom';
-
-const locale = cookies.get('_lang') || window.navigator.language || 'en';
-const defLocale = process.env.VUE_APP_DEFAULT_LOCALE || 'en';
+const { VUE_APP_CK_LANG, VUE_APP_DEFAULT_LOCALE, NODE_ENV } = process.env;
+const locale = cookies.get(VUE_APP_CK_LANG) || window.navigator.language || 'en';
+const defLocale = VUE_APP_DEFAULT_LOCALE || 'en';
 
 Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
 	fallbackLocale: defLocale,
-	silentTranslationWarn: process.env.NODE_ENV === 'production',
+	silentTranslationWarn: NODE_ENV === 'production',
 	missing: () => ''
 });
 
@@ -25,7 +25,7 @@ function setI18nLanguage(lang) {
 
 export function loadLanguageAsync(lang) {
 	if (i18n.locale !== lang) {
-		cookies.set('_lang', lang);
+		cookies.set(VUE_APP_CK_LANG, lang);
 		if (!loadedLanguages.includes(lang)) {
 			return import(/* webpackChunkName: "lang" */ `@/languages/${lang}`).then((pack) => {
 				i18n.setDateTimeFormat(lang, pack.dateTimeFormat);

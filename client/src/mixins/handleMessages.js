@@ -2,10 +2,10 @@ export default {
 	name: 'handleMessage',
 	created() {
 		if (this.flashMessage !== undefined) {
-			const message = this.$cookies.get('_fm');
+			const message = this.$cookies.get(this.$env.VUE_APP_CK_FLASH_MESSAGE);
 			if (message) {
 				this.flashMessage = message;
-				this.$cookies.remove('_fm');
+				this.$cookies.remove(this.$env.VUE_APP_CK_FLASH_MESSAGE);
 			}
 		}
 	},

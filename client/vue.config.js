@@ -1,6 +1,6 @@
 
 module.exports = {
-	outputDir: '../server/vue-dist',
+	outputDir: process.env.OUTPUT_DIR || 'dist',
 	devServer: {
 		port: process.env.PORT || 8080
 	},

@@ -3,20 +3,6 @@ import cookies from '@/modules/vue-cookies-custom';
 import router from '@/router';
 
 const authMdw = {
-	// async guard(to, from, next) {
-	// 	if (store.state.auth.loggedIn) {
-	// 		return next();
-	// 	}
-	// 	await store.dispatch('auth/checkAuth');
-
-	// 	if (store.state.auth.loggedIn) {
-	// 		next();
-	// 	}
-	// 	else {
-	// 		return router.push({ name: 'login' });
-	// 	}
-	// 	return next();
-	// }
 	guard(to, from, next) {
 		if (!authMdw.isAuthenticated()) {
 			return router.push({ name: 'login' });
@@ -25,7 +11,7 @@ const authMdw = {
 	},
 
 	isAuthenticated(to, from, next) {
-		return Boolean(cookies.get('user'));
+		return Boolean(cookies.get(process.env.VUE_APP_CK_USER));
 	}
 };
 export default authMdw;

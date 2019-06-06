@@ -1,5 +1,6 @@
 <template>
 	<div id="home-page">
+		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<h1>This is Home page</h1>
 		<router-link :to="{ name: 'login' }">
 			<h2 v-t="'loginFormTitle'" />

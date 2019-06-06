@@ -41,10 +41,8 @@
 
 				<v-card>
 					<v-list dense primary>
-						<v-list-tile
-							v-for="(action, i) of actions"
-							:key="i">
-							<v-list-tile-title v-text="action.name"/>
+						<v-list-tile class="hover">
+							<v-list-tile-title v-t="'logout'" @click="callLogout" />
 						</v-list-tile>
 					</v-list>
 				</v-card>
@@ -78,9 +76,6 @@ export default {
 				email: '',
 				name: ''
 			},
-			actions: [
-				{ name: 'Some actions' }
-			],
 			tabs: [
 				{ name: 'my-events', url: '/dashboard/my-events' },
 				{ name: 'coop-events', url: '/dashboard/coop-events' },
@@ -89,12 +84,15 @@ export default {
 		};
 	},
 	created() {
-		this.user = this.$cookies.get('user');
+		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 		this.tabs.forEach((e) => {
 			e.name = this.$t(e.name);
 		});
 	},
 	methods: {
+		callLogout() {
+			this.$store.dispatch('auth/logout');
+		},
 		toggleDrawer() {
 			this.$root.$emit('toggle-drawer');
 		}

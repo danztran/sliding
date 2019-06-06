@@ -1,3 +1,7 @@
 html, body {
 	overflow-y: auto;
 }
+
+.no-underline, .no-undeline a {
+	text-decoration: none;
+}

@@ -27,6 +27,8 @@
 							</v-card-text>
 
 							<div class="error--text text-xs-center">
+								{{ flashMessage }}
+								<br>
 								{{ errorMessage }}
 							</div>
 
@@ -65,6 +67,7 @@ export default {
 	data: () => ({
 		loading: false,
 		errorMessage: '',
+		flashMessage: '',
 		form: {
 			username: {
 				value: '',

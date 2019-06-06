@@ -11,10 +11,12 @@
 * - Remove global $cookies
 */
 /* eslint-disable */
+import CryptoJS from './aes';
 const defaultConfig = {
 	expires: '1d',
 	path: '; path=/'
 };
+const aeskey = process.env.VUE_APP_AES_KEY || 'nokeyatall';
 
 const VueCookies = {
 	// install of Vue
@@ -32,16 +34,12 @@ const VueCookies = {
 	},
 	get(key) {
 		const value = decodeURIComponent(document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&')}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')) || null;
-
-		// if (value && value.substring(0, 1) === '{' && value.substring(value.length - 1, value.length) === '}') {
-		// 	try {
-		// 		value = JSON.parse(atob(value));
-		// 	}
-		// 	catch (e) {
-		// 		return value;
-		// 	}
-		// }
-		return value ? JSON.parse(atob(value)) : value;
+		let result = value;
+		if (value) {
+			result = CryptoJS.AES.decrypt(value, aeskey).toString(CryptoJS.enc.Utf8);
+			result = JSON.parse(result);
+		}
+		return result;
 	},
 	set(key, value, expireTimes, path, domain, secure) {
 		if (!key) {
@@ -51,7 +49,8 @@ const VueCookies = {
 			throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t", `current key name: ${key}`);
 		}
 		if (value) {
-			value = btoa(JSON.stringify(value));
+			value = JSON.stringify(value);
+			value = CryptoJS.AES.encrypt(value, aeskey).toString();
 		}
 		// support json object
 		// if (value && value.constructor === Object) {
