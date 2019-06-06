@@ -1,10 +1,12 @@
 export default {
 	name: 'handleMessage',
 	created() {
-		const message = this.$cookies.get('_fm');
-		if (message) {
-			this.flashMessage = message;
-			this.$cookies.remove('_fm');
+		if (this.flashMessage !== undefined) {
+			const message = this.$cookies.get('_fm');
+			if (message) {
+				this.flashMessage = message;
+				this.$cookies.remove('_fm');
+			}
 		}
 	},
 	methods: {
@@ -17,7 +19,7 @@ export default {
 					this.$root.$emit('notifyErrorMessage', dataMsg);
 				}
 			}
-			else {
+			else if (typeof dataMsg === 'object') {
 				const messages = [];
 				for (const key of Object.keys(dataMsg)) {
 					if (this.form) {
