@@ -53,6 +53,7 @@
 						</template>
 						<v-list>
 							<v-list-tile
+								class="iconAction"
 								v-for="(item, index) in items"
 								:key="index">
 								<v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -106,10 +107,10 @@ export default {
 	}),
 	methods: {
 		calDateStart(date) {
-			return new Date(date).getDate();
+			return new Date(date).toGMTString().substr(0, 7).replace(',', '');
 		},
 		calDateEnd(date) {
-			return new Date(date).toGMTString().substr(5, 11);
+			return new Date(date).toGMTString().substr(0, 16);
 		}
 	}
 };
