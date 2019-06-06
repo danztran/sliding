@@ -1,8 +1,8 @@
 import api from '@/api';
 import axios from '@/modules/axios-custom';
 
-const queryEvent = (context, queryOptions) => {
-	axios.get(api.event.query, queryOptions)
+const queryEvent = (context, queryParams) => {
+	axios.get(`${api.event.query}?${queryParams}`)
 		.then((res) => {
 			context.commit('QUERY_EVENT', res.data);
 		})
@@ -10,6 +10,11 @@ const queryEvent = (context, queryOptions) => {
 		.catch(err => console.log(err));
 };
 
+const createEvent = (context, newEvent) => {
+	context.commit('CREATE_EVENT', newEvent);
+};
+
 export default {
-	queryEvent
+	queryEvent,
+	createEvent
 };

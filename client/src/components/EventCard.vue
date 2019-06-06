@@ -1,6 +1,6 @@
 <template>
 	<v-hover>
-		<v-card class="card-hover py-2 my-2" slot-scope="{ hover }" to="#">
+		<v-card class="card-hover py-3 my-2" slot-scope="{ hover }" to="#">
 			<v-layout class="mt-2" row wrap align-center>
 				<!-- ICON -->
 				<v-flex xs2 sm1 class="text-xs-center">

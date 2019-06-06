@@ -1,8 +1,10 @@
 <template>
-	<div class="wrapper">
-		<div class="ring"></div>
-		<div class="ball"></div>
-	</div>
+	<v-layout align-center justify-center fill-height>
+		<div class="wrapper">
+			<div class="ring"></div>
+			<div class="ball"></div>
+		</div>
+	</v-layout>
 </template>
 
 <script>
@@ -11,8 +13,8 @@ export default {};
 
 <script lang="css">
 :root {
-	--color: #e2e8ef;
-	--size: 150px;
+	--color: #3da4b5;
+	--size: 40px;
 }
 
 .wrapper {

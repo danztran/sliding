@@ -26,7 +26,7 @@
 								<text-field :field="form.password" />
 							</v-card-text>
 
-							<div class="error--text text-lg-center">
+							<div class="error--text text-xs-center">
 								{{ errorMessage }}
 							</div>
 

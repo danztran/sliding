@@ -7,6 +7,6 @@ export default {
 	},
 	event: {
 		query: '/event/query',
-		add: '/event/create'
+		create: '/event/create'
 	}
 };

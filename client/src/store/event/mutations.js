@@ -1,8 +1,12 @@
 const QUERY_EVENT = (state, result) => {
 	state.events = result.events;
-	state.loading = false;
+};
+
+const CREATE_EVENT = (state, newEvent) => {
+	state.events = [newEvent, ...state.events];
 };
 
 export default {
-	QUERY_EVENT
+	QUERY_EVENT,
+	CREATE_EVENT
 };
