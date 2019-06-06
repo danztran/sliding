@@ -64,11 +64,18 @@
 			</template>
 		</v-toolbar>
 	</div>
-
 </template>
-
+<style lang="css" scoped>
+.my-toolbar {
+	width: 80%;
+	left:  10%;
+}
+.hover {
+	cursor: pointer;
+	opacity: .8;
+}
+</style>
 <script>
-
 export default {
 	data() {
 		return {
@@ -99,14 +106,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="css">
-.my-toolbar {
-	width: 80%;
-	left:  10%;
-}
-.hover {
-	cursor: pointer;
-	opacity: .8;
-}
-</style>

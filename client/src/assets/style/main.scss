@@ -5,3 +5,16 @@ html, body {
 .no-underline, .no-undeline a {
 	text-decoration: none;
 }
+
+.scrollbar-primary {
+	&::-webkit-scrollbar {
+		width: 7px;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: #3da4b5;
+	}
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: grey;
+	}
+}

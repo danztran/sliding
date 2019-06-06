@@ -3,10 +3,15 @@ const QUERY_EVENT = (state, result) => {
 };
 
 const CREATE_EVENT = (state, newEvent) => {
-	state.events = [newEvent, ...state.events];
+	state.events.unshift(newEvent);
+};
+
+const RESET = (state) => {
+	state.events = [];
 };
 
 export default {
 	QUERY_EVENT,
+	RESET,
 	CREATE_EVENT
 };

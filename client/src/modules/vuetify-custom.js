@@ -4,6 +4,7 @@ import 'vuetify/src/stylus/app.styl';
 import TextField from '@/components/pieces/TextField.vue';
 import TextArea from '@/components/pieces/TextArea.vue';
 import LoadingLinear from '@/components/pieces/LoadingLinear.vue';
+import BouncyBallLoader from '@/components/pieces/BouncyBallLoader.vue';
 
 // theme
 const theme = {
@@ -29,7 +30,8 @@ const icons = {
 const components = {
 	'text-field': TextField,
 	'text-area': TextArea,
-	'loading-linear': LoadingLinear
+	'loading-linear': LoadingLinear,
+	'bouncy-loader': BouncyBallLoader
 };
 
 export default {

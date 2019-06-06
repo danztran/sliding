@@ -10,5 +10,11 @@ export default new Vuex.Store({
 	modules: {
 		auth: authModule,
 		event: eventModule
+	},
+	actions: {
+		resetAll({ commit }) {
+			commit('auth/RESET');
+			commit('event/RESET');
+		}
 	}
 });

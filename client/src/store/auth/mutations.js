@@ -5,7 +5,7 @@ const SET_CURRENT_USER = (state, user) => {
 	state.userData = user;
 };
 
-const CLEAR_CURRENT_USER = (state) => {
+const RESET = (state) => {
 	state.loggedIn = false;
 	state.userData = null;
 };
@@ -15,12 +15,12 @@ const CHECK_AUTH = (state, user) => {
 		SET_CURRENT_USER(state, user);
 	}
 	else {
-		CLEAR_CURRENT_USER(state);
+		RESET(state);
 	}
 };
 
 export default {
 	SET_CURRENT_USER,
-	CLEAR_CURRENT_USER,
+	RESET,
 	CHECK_AUTH
 };
