@@ -2,11 +2,14 @@ import Router from 'vue-router';
 // eslint-disable-next-line
 import authMdw from './middlewares/auth-middleware';
 
-import About from './views/About.vue';
-import Login from './views/Login.vue';
-
 // Page Layout
 import Page from './layouts/Page.vue';
+
+// Home
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
+const PageNotFound = () => import(/* webpackChunkName: "pagenotfound" */ './views/PageNotFound.vue');
+const About = () => import(/* webpackChunkName: "about" */ './views/About.vue');
 
 // Dashboard
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './layouts/dashboard');
@@ -34,7 +37,16 @@ const router = new Router({
 		{
 			path: '/',
 			component: Page,
+			redirect: { name: 'home' },
 			children: [
+				{
+					path: '/',
+					name: 'home',
+					component: Home,
+					meta: {
+						title: 'Sliding - Event Supporter'
+					}
+				},
 				{
 					path: 'about',
 					name: 'about',
@@ -153,6 +165,14 @@ const router = new Router({
 							}
 						}
 					]
+				},
+				{
+					path: '*',
+					name: 'page-not-found',
+					component: PageNotFound,
+					meta: {
+						title: 'Page Not Found'
+					}
 				}
 			]
 		}

@@ -41,6 +41,9 @@
 		"action-tooltip": "Hành động",
 		"my-events": "Sự kiện",
 		"coop-events": "Sự kiện hợp tác",
-		"activity-logs": "Lịch sử hoạt động"
+		"activity-logs": "Lịch sử hoạt động",
+		"page-not-found": "Trang này không được tìm thấy",
+		"back-to": "Trở về",
+		"home-page": "Trang chủ"
 	}
 }

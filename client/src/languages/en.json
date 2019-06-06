@@ -41,6 +41,9 @@
 		"action-tooltip": "Action",
 		"my-events": "My Events",
 		"coop-events": "Co.op Events",
-		"activity-logs": "Activity Logs"
+		"activity-logs": "Activity Logs",
+		"page-not-found": "Page not found",
+		"back-to": "Back to",
+		"home-page": "Home page"
 	}
 }
