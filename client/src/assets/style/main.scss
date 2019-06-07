@@ -1,3 +1,5 @@
+$primary-color: #3da4b5;
+
 html, body {
 	overflow-y: auto;
 }
@@ -12,9 +14,16 @@ html, body {
 	}
 	&::-webkit-scrollbar-thumb {
 		border-radius: 5px;
-		background-color: #3da4b5;
+		background-color: $primary-color;
 	}
 	&::-webkit-scrollbar-thumb:hover {
 		background-color: grey;
+	}
+}
+
+#home-page .v-parallax .v-parallax__content {
+	background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ) !important;
+	.v-text-field__prefix {
+		color: $primary-color;
 	}
 }

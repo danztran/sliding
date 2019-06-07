@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="home-page">
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
@@ -9,8 +9,22 @@
 				<v-toolbar-title class="mx-0">Sliding</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<section>
-					<v-btn flat small round>LOGIN</v-btn>
-					<v-btn flat small round class="primary">SIGN UP</v-btn>
+					<span
+						:class="{ langActive: this.$i18n.locale === 'vi' }"
+						class="changeLang"
+						@click="changeLocale">
+						VI
+					</span> /
+					<span
+						:class="{ langActive: this.$i18n.locale === 'en' }"
+						class="changeLang"
+						@click="changeLocale">
+						EN
+					</span>
+					<v-btn to="login" flat medium>LOGIN</v-btn>
+					<v-btn to="signup" flat medium class="primary" color="white">
+						SIGN UP
+					</v-btn>
 				</section>
 			</v-layout>
 		</v-toolbar>
@@ -25,7 +39,7 @@
 					<v-container grid-list-xs>
 						<!-- SOLOGAN -->
 						<v-flex xs12 text-xs-center class="mb-5">
-							<h1 class="headline font-weight-regular text-capitalize mb-3" v-t="'sologan'"></h1>
+							<h1 class="display-3 font-weight-regular text-capitalize mb-3" v-t="'sologan'"></h1>
 							<span class="font-weight-light headline" v-t="'sub-sologan'"></span>
 						</v-flex>
 
@@ -40,7 +54,7 @@
 									prefix="#">
 								</v-text-field>
 								<v-btn color="primary">
-									<span v-t="'btnJoin'"></span>
+									<span v-t="'btn-join'"></span>
 								</v-btn>
 							</div>
 							<div class="mx-4 pt-3 hidden-sm-and-down">
@@ -51,7 +65,7 @@
 									outline
 									dark
 									class="w-3 h-6 ma-0"
-									v-t="'btnJoin'"
+									v-t="'btn-intro-sigup'"
 									:to="inputEventCode">
 								</v-btn>
 							</div>
@@ -79,7 +93,7 @@
 
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout>
+							<v-layout row wrap>
 								<template v-for="card in cards">
 									<v-flex xs12 md4 :key="card.id">
 										<v-card>
@@ -107,21 +121,25 @@
 					align-center>
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout>
+							<v-layout row wrap>
 								<v-flex xs12 sm6>
 									<v-img :src="phone.urlImg" aspect-ratio="1.2" contain></v-img>
 								</v-flex>
 								<v-flex xs12 sm6>
 									<h1 class="headline font-weight-regular mb-3" v-t="phone.title"></h1>
 									<p class="font-weight-light subheading" v-t="phone.description"></p>
-									<div>
-										<v-btn depressed large color="primary" class="mx-0">
-											<span v-t="'phone-intro-start-btn'"></span>
-										</v-btn>
-										<v-btn depressed large color="primary" flat>
-											<span class="underline" v-t="'phone-intro-findout-btn'"></span>
-										</v-btn>
-									</div>
+									<v-layout row wrap>
+										<v-flex xs6>
+											<v-btn depressed large color="primary" class="mx-0">
+												<span v-t="'phone-intro-start-btn'"></span>
+											</v-btn>
+										</v-flex>
+										<v-flex xs6>
+											<v-btn depressed large color="primary" flat>
+												<span class="underline" v-t="'phone-intro-findout-btn'"></span>
+											</v-btn>
+										</v-flex>
+									</v-layout>
 
 								</v-flex>
 							</v-layout>
@@ -146,7 +164,7 @@
 					</v-flex>
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout>
+							<v-layout row align-center justify-center>
 								<template v-for="partner in partners">
 									<v-flex :key="partner.id" xs6 sm3>
 										<v-img
@@ -190,12 +208,13 @@
 			<!-- FOOTER -->
 			<section class="white-bg">
 				<v-layout
+					id="footer"
 					row
 					wrap
 					class="py-4">
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout>
+							<v-layout row wrap>
 								<!-- PRODUCTS -->
 								<v-flex xs6 sm3>
 									<ul>
@@ -252,58 +271,72 @@
 		</v-content>
 	</div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 	$primary: #3da4b5;
-	$navColor: #ffffffc7;
+	$navColor: #ffffffe6;
 	$black: #000000de;
-	.nav-transparent {
-		background-color: $navColor !important;
-	}
-	.nav-colored {
-		background-color: #999;
-	}
-	.w-3 {
-		width: 300px;
-	}
-	.h-6 {
-		height: 60px;
-	}
-	.my-input-code {
-		position: relative;
-		z-index: 10;
-		right: 0;
-		> .v-btn {
-			position: absolute;
-			top: .1em;
-			right: -.2em;
-			height: 45px;
+	#home-page {
+		#my-navbar {
+			color: $black;
 		}
-		input[type="text"] {
-			max-width: 50% !important;
+		.nav-transparent {
+			background-color: $navColor !important;
 		}
-		.v-text-field__prefix {
+		.v-parallax .v-parallax__content {
+			background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
+		}
+		.w-3 {
+			width: 300px;
+		}
+		.h-6 {
+			height: 60px;
+		}
+		.my-input-code {
+			position: relative;
+			z-index: 10;
+			right: 0;
+			.v-btn {
+				position: absolute;
+				top: .1em;
+				right: -.2em;
+				height: 45px;
+			}
+			input[type="text"] {
+				max-width: 50% !important;
+			}
+		}
+		.white-bg {
+			background-color: #fff;
+		}
+		.underline {
+			text-decoration: underline;
+		}
+		#primary-bg {
+			background-color: $primary;
+		}
+		ul {
+			list-style: none;
+		}
+		.footer {
+			a {
+				text-decoration: none;
+				color: $black !important;
+			}
+		}
+		.changeLang {
+			&:hover {
+				color: $primary;
+				cursor: pointer;
+			}
+		}
+		.langActive {
 			color: $primary;
-			font-size: 1.6em;
 		}
-	}
-	.white-bg {
-		background-color: #fff;
-	}
-	.underline {
-		text-decoration: underline;
-	}
-	#primary-bg {
-		background-color: $primary;
-	}
-	ul {
-		list-style: none;
-	}
-	a {
-		text-decoration: none;
-		color: $black !important;
 	}
 </style>
 <script>
+import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+
 export default {
 	name: 'Home',
 	data: () => ({
@@ -367,6 +400,12 @@ export default {
 			{ title: 'footer-about-item2', url: '/' },
 			{ title: 'footer-about-item3', url: '/' }
 		]
-	})
+	}),
+	methods: {
+		changeLocale() {
+			loadLanguageAsync(this.$i18n.locale === 'en' ? 'vi' : 'en');
+			this.locale = this.$i18n.locale;
+		}
+	}
 };
 </script>

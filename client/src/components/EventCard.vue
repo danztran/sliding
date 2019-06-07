@@ -44,6 +44,7 @@
 							<v-tooltip top>
 								<template #activator="{ on: tooltip }">
 									<v-icon
+										class="iconAction"
 										:size="iconSize"
 										v-on="{ ...tooltip, ...menu }"
 										v-html="'$vuetify.icons.more-vert'" />
