@@ -30,7 +30,8 @@ const ctrl = {
 		const rules = {
 			limit: 'integer|between:0,50',
 			offset: 'integer|min:0',
-			order: 'alpha_dash'
+			order: 'alpha_dash',
+			role: 'alpha|in:host,moderator,guest'
 		};
 		if (!res.$v.rif(rules)) return;
 
@@ -40,7 +41,8 @@ const ctrl = {
 			const events = await EventUser.findEventsByUserId(req.user.id, {
 				order: opt.order,
 				limit: Number(opt.limit || 10),
-				offset: Number(opt.offset || 0)
+				offset: Number(opt.offset || 0),
+				role: opt.role
 			}).exec();
 			result.events = events;
 		}

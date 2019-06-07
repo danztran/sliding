@@ -36,8 +36,14 @@ const VueCookies = {
 		const value = decodeURIComponent(document.cookie.replace(new RegExp(`(?:(?:^|.*;)\\s*${encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&')}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')) || null;
 		let result = value;
 		if (value) {
-			result = CryptoJS.AES.decrypt(value, aeskey).toString(CryptoJS.enc.Utf8);
-			result = JSON.parse(result);
+			try {
+				result = CryptoJS.AES.decrypt(value, aeskey).toString(CryptoJS.enc.Utf8);
+				result = JSON.parse(result);
+			}
+			catch (error) {
+				result = null;
+				this.remove(key);
+			}
 		}
 		return result;
 	},

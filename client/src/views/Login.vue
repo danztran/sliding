@@ -6,7 +6,7 @@
 
 		<v-container fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex xs12 sm6 md5 lg4 xl3>
+				<v-flex xs12 sm6 md5 lg3 xl3>
 					<v-card class="elevation-20 pa-3">
 						<loading-linear :loading="loading"/>
 

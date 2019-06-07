@@ -53,7 +53,8 @@ export default {
 		queryOpt: {
 			offset: 0,
 			limit: 0,
-			order: '-created_at'
+			order: '-created_at',
+			role: 'host'
 		},
 		isEmpty: false,
 		loading: false
