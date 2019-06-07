@@ -8,6 +8,12 @@ class EventUser extends Model {
 		super('_.event_user');
 	}
 
+	findRole(info) {
+		return this.findOne(info, {
+			select: 'role'
+		});
+	}
+
 	findEventsByUserId(uid, {
 		select = '*',
 		order,
@@ -19,12 +25,7 @@ class EventUser extends Model {
 			SELECT ${select}
 			FROM ${Event.getName()}
 			WHERE id IN (
-				${this.find({
-		user_id: uid,
-		role
-	}, {
-		select: 'event_id'
-	}).getQuery()}
+				${this.find({ user_id: uid, role }, { select: 'event_id' }).getQuery()}
 			)
 			${qh.toOrderClause(order)}
 			${qh.toLimitClause(limit)}

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-	name: 'Admin Analytics'
+	name: 'AdminAnalytics'
 };
 </script>
 

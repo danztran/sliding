@@ -4,7 +4,7 @@
 
 <script>
 export default {
-	name: 'Admin Questions'
+	name: 'AdminQuestions'
 };
 </script>
 

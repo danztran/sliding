@@ -14,7 +14,9 @@
 		<v-card class="list-event scrollbar-primary">
 			<bouncy-loader v-show="loading"/>
 			<template v-for="event of events">
-				<event-card  :key="event.code" :field="event"/>
+				<div @click="toEventLive(event.code)" :key="event.code">
+					<event-card :field="event"/>
+				</div>
 			</template>
 			<div class="empty-state" v-if="isEmpty">
 				<h2 class="empty-state-title">No event found. Create one !</h2>
@@ -79,6 +81,9 @@ export default {
 	methods: {
 		createEvent() {
 			this.$root.$emit('create-new-event');
+		},
+		toEventLive(code) {
+			this.$router.push({ name: 'admin-event', params: { code } });
 		}
 	}
 };

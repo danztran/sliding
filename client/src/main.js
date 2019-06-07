@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import io from 'socket.io-client';
+import VueSocketio from 'vue-socket.io-extended';
 import router from './router';
 import App from './App.vue';
 import store from './store';
@@ -13,12 +15,14 @@ import Vuetify from './modules/vuetify-custom';
 import VueMixins from './modules/vue-mixins-custom';
 import './assets/style/main.scss';
 
+
 Vue.config.productionTip = true;
 
 // Plugins
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 Vue.use(VueMixins);
+Vue.use(VueSocketio, io(process.env.VUE_APP_BASE_URL_SOCKET, { autoConnect: false }));
 
 // Custom proptotype
 Vue.prototype.$env = process.env;

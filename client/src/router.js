@@ -98,6 +98,7 @@ const router = new Router({
 				},
 				{
 					path: 'admin/event/:code',
+					name: 'admin-event',
 					component: AdminLayout,
 					redirect: { name: 'admin-questions' },
 					children: [
