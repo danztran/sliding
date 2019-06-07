@@ -4,9 +4,11 @@
 			<navbar />
 			<drawer />
 			<v-content class="my-3">
-				<v-slide-x-transition mode="out-in">
-					<router-view />
-				</v-slide-x-transition>
+				<v-slide-y-transition mode="out-in">
+					<keep-alive>
+						<router-view />
+					</keep-alive>
+				</v-slide-y-transition>
 			</v-content>
 			<event-dialog />
 		</v-app>

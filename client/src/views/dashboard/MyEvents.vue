@@ -12,22 +12,24 @@
 			</v-btn>
 		</v-layout>
 		<v-card class="list-event scrollbar-primary">
-			<bouncy-loader v-show="loading"/>
 			<template v-for="event of events">
 				<div @click="toEventLive(event.code)" :key="event.code">
 					<event-card :field="event"/>
 				</div>
 			</template>
-			<div class="empty-state" v-if="isEmpty">
+		</v-card>
+		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
+			<bouncy-loader v-show="loading" />
+			<div class="empty-state" v-show="isEmpty">
 				<h2 class="empty-state-title">No event found. Create one !</h2>
 			</div>
-		</v-card>
+		</div>
 	</div>
 </template>
 <style lang="scss">
 #my-events-page {
 	.list-event {
-		height: 75vh;
+		max-height: 75vh;
 		overflow-y: auto;
 		box-shadow: 0 3px 10px rgba(0,0,0,.1);;
 	}

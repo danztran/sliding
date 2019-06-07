@@ -5,7 +5,9 @@
 		<v-content>
 			<v-container>
 				<v-slide-x-transition mode="out-in">
-					<router-view />
+					<keep-alive>
+						<router-view />
+					</keep-alive>
 				</v-slide-x-transition>
 			</v-container>
 		</v-content>

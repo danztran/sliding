@@ -1,0 +1,6 @@
+.theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot {
+	border: 2px solid rgba(0, 0, 0, .2);
+	&:hover {
+		border: 2px solid rgba(0, 0, 0, .3);
+	}
+}

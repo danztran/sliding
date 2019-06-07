@@ -10,6 +10,10 @@
 $color: #3da4b5;
 $size: 50px;
 .bouncy-ball-loader {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+
 	.wrapper {
 		width: $size;
 		height: $size;

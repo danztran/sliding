@@ -1,5 +1,6 @@
 import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
+import '@/assets/style/vuetify-override.scss';
 
 import TextField from '@/components/pieces/TextField.vue';
 import TextArea from '@/components/pieces/TextArea.vue';
