@@ -1,17 +1,17 @@
 <template>
 	<div id="home-page">
-		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<h1>This is Home page</h1>
-		<router-link :to="{ name: 'login' }">
-			<h2 v-t="'loginFormTitle'" />
-		</router-link>
+		<v-toolbar class="">
+			<v-toolbar-title class="mx-0">Sliding</v-toolbar-title>
+			<p>Beta</p>
+			<v-spacer></v-spacer>
+			<v-toolbar-items>
+				<v-btn flat>Open jobs</v-btn>
+				<v-btn flat class="primary">Sign In</v-btn>
+			</v-toolbar-items>
+		</v-toolbar>
 	</div>
 </template>
 <style scoped>
-#home-page {
-	text-align: center;
-	margin-top: 10%;
-}
 </style>
 <script>
 export default {

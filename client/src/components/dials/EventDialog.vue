@@ -6,7 +6,7 @@
 		<v-dialog v-model="modalCreate" max-width="400px" no-click-animation>
 			<v-card>
 				<loading-linear :loading="loading"/>
-				<v-card-title class="pb-0 pl-4" primary-title>
+				<v-card-title class="pb-0 ml-3" primary-title>
 					<div class="headline">
 						{{ $t('create-event') }}
 					</div>
@@ -17,7 +17,7 @@
 						<v-layout wrap>
 							<v-flex xs12>
 								<text-field :field="form.name" />
-								<text-area class="pt-2" :field="form.description"/>
+								<text-area class="pt-2" :field="form.description" outline/>
 							</v-flex>
 
 							<!-- DATE START PICKER -->
@@ -256,11 +256,11 @@ export default {
 		const dayTime = 1000 * 3600 * 24;
 		this.currentDate = date.toISOString().substr(0, 10);
 		this.form.start.defaultDate = date.toISOString().substr(0, 10);
-		this.form.start.defaultTime = date.toLocaleTimeString().substr(0, 4);
+		this.form.start.defaultTime = date.toLocaleTimeString().substr(0, 5);
 		// 3 days next
 		this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
 			.toISOString().substr(0, 10);
-		this.form.end.defaultTime = date.toLocaleTimeString().substr(0, 4);
+		this.form.end.defaultTime = date.toLocaleTimeString().substr(0, 5);
 	},
 	mounted() {
 		this.$root.$on('create-new-event', () => {

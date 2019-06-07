@@ -7,7 +7,8 @@
 		:rules="[fieldRequired(field)]"
 		:error-messages="field.errmsg"
 		:label="$t(field.label)"
-		:rows="field.row || 2"
+		:rows="field.row || 3"
+		:outline="outline"
 		required>
 	</v-textarea>
 </template>
@@ -30,6 +31,10 @@ export default {
 					required: false
 				};
 			}
+		},
+		outline: {
+			type: Boolean,
+			default: false
 		}
 	},
 	methods: {
