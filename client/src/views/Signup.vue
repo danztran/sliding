@@ -1,5 +1,5 @@
 <template>
-	<div id='signup-page'>
+	<div id="signup-page">
 		<loading-linear :loading="loading"/>
 
 		<v-form @submit.prevent="handleSignup">

@@ -8,7 +8,7 @@
 				color="success"
 				dark small
 				@click.stop="createEvent">
-				{{ $t('create-event') }}
+				{{ $t('btn-create-event') }}
 			</v-btn>
 		</v-layout>
 		<v-card class="list-event scrollbar-primary">

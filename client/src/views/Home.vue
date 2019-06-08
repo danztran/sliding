@@ -34,7 +34,7 @@
 						medium
 						class="primary"
 						color="white"
-						v-t="'signUp'">
+						v-t="'btn-signup'">
 					</v-btn>
 				</section>
 			</v-layout>
@@ -59,6 +59,7 @@
 							<div class="my-input-code w-3">
 								<v-text-field
 									height="60"
+									autofocus
 									solo
 									:label="$t('plhEnterCode')"
 									v-model = "inputEventCode"
@@ -177,9 +178,10 @@
 							<h2 class="headline font-weight-regular text-uppercase" v-t="'partner-title'"></h2>
 						</div>
 					</v-flex>
+
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout row align-center justify-center>
+							<v-layout row wrap align-center justify-center>
 								<template v-for="partner in partners">
 									<v-flex :key="partner.id" xs6 sm3>
 										<v-img

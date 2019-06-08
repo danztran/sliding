@@ -33,7 +33,6 @@
 					<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
 				</v-layout>
 			</v-card-actions>
-
 		</v-form>
 	</div>
 </template>

@@ -8,7 +8,7 @@
 				<loading-linear :loading="loading"/>
 				<v-card-title class="pb-0 ml-3" primary-title>
 					<div class="headline">
-						{{ $t('create-event') }}
+						{{ $t('btn-create-event') }}
 					</div>
 				</v-card-title>
 
@@ -50,13 +50,13 @@
 											flat
 											color="primary"
 											@click="dialogDateStart = false">
-											{{ $t('cancel-btn') }}
+											{{ $t('btn-cancel') }}
 										</v-btn>
 										<v-btn
 											flat
 											color="primary"
 											@click="$refs.dialogDateStart.save(form.start.defaultDate)">
-											{{ $t('create-btn') }}
+											{{ $t('btn-create') }}
 										</v-btn>
 									</v-date-picker>
 								</v-dialog>
@@ -91,13 +91,13 @@
 											flat
 											color="primary"
 											@click="dialogDateEnd = false">
-											{{ $t('cancel-btn') }}
+											{{ $t('btn-cancel') }}
 										</v-btn>
 										<v-btn
 											flat
 											color="primary"
 											@click="$refs.dialogDateEnd.save(form.end.defaultDate)">
-											{{ $t('save-btn') }}
+											{{ $t('btn-save') }}
 										</v-btn>
 									</v-date-picker>
 								</v-dialog>
@@ -126,13 +126,13 @@
 										full-width>
 										<v-spacer></v-spacer>
 										<v-btn flat color="primary" @click="dialogTimeStart = false">
-											{{ $t('cancel-btn') }}
+											{{ $t('btn-cancel') }}
 										</v-btn>
 										<v-btn
 											flat
 											color="primary"
 											@click="$refs.dialogTimeStart.save(form.start.defaultTime)">
-											{{ $t('save-btn') }}
+											{{ $t('btn-save') }}
 										</v-btn>
 									</v-time-picker>
 								</v-dialog>
@@ -164,13 +164,13 @@
 											flat
 											color="primary"
 											@click="dialogTimeEnd = false">
-											{{ $t('cancel-btn') }}
+											{{ $t('btn-cancel') }}
 										</v-btn>
 										<v-btn
 											flat
 											color="primary"
 											@click="$refs.dialogTimeEnd.save(form.end.defaultTime)">
-											{{ $t('create-btn') }}
+											{{ $t('btn-create') }}
 										</v-btn>
 									</v-time-picker>
 								</v-dialog>
@@ -195,10 +195,10 @@
 				<v-card-actions>
 					<v-spacer></v-spacer>
 					<v-btn color="primary" flat @click="modalCreate = false" >
-						{{ $t('cancel-btn') }}
+						{{ $t('btn-cancel') }}
 					</v-btn>
 					<v-btn color="primary" :disabled="loading" @click="createEvent">
-						{{ $t('create-btn') }}
+						{{ $t('btn-create') }}
 					</v-btn>
 				</v-card-actions>
 			</v-card>
