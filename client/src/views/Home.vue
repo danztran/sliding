@@ -8,7 +8,7 @@
 			<v-layout align-center row>
 				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
 				<v-spacer></v-spacer>
-				<section>
+				<section class="nav-btn">
 					<span style="font-weight: bold;">
 						<span
 							:class="{ langActive: locale === 'vi' }"
@@ -49,7 +49,11 @@
 				<v-layout align-center justify-center row>
 					<v-container grid-list-xs>
 						<!-- SOLOGAN -->
-						<v-flex xs12 text-xs-center class="mb-5">
+						<v-flex
+							xs12
+							text-xs-center
+							class="mb-5"
+							style="text-shadow: 0.2em 0.4em 9em #000000de">
 							<h1 class="display-3 font-weight-regular text-capitalize mb-3" v-t="'sologan'"></h1>
 							<span class="font-weight-light headline" v-t="'sub-sologan'"></span>
 						</v-flex>
@@ -65,7 +69,7 @@
 									v-model = "inputEventCode"
 									prefix="#">
 								</v-text-field>
-								<v-btn color="primary">
+								<v-btn color="primary" :to="inputEventCode">
 									<span v-t="'btn-join'"></span>
 								</v-btn>
 							</div>
@@ -78,7 +82,7 @@
 									dark
 									class="w-3 h-6 ma-0"
 									v-t="'btn-intro-sigup'"
-									:to="inputEventCode">
+									to="/signup">
 								</v-btn>
 							</div>
 						</v-layout>
@@ -274,9 +278,13 @@
 								<!-- CONTACT -->
 								<v-flex xs6 sm3>
 									<ul>
-										<span class="subheading pb-2 font-weight-medium" v-t="'footer-contact'">
+										<span
+											class="display-1 pb-2 font-weight-medium"
+											v-t="'app-name'">
 										</span>
+										<li class="subheading font-weight-medium" v-t="'footer-contact'"></li>
 										<li>(+84) 123 456 789</li>
+										<li>sliding@sli.com</li>
 									</ul>
 								</v-flex>
 							</v-layout>
@@ -284,7 +292,6 @@
 					</v-flex>
 				</v-layout>
 			</section>
-
 		</v-content>
 	</div>
 </template>
@@ -318,9 +325,6 @@
 				right: -.2em;
 				height: 45px;
 			}
-			input[type="text"] {
-				max-width: 50% !important;
-			}
 		}
 		.white-bg {
 			background-color: #fff;
@@ -348,6 +352,11 @@
 		}
 		.langActive {
 			color: $primary;
+		}
+		@media only screen and (max-width: 600px) {
+			.nav-btn .v-btn{
+				margin: 0;
+			}
 		}
 	}
 </style>
