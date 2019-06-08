@@ -1,5 +1,6 @@
 const passport = requireWrp('modules/passport-custom');
 const User = requireWrp('models/user');
+const nameRegExp = 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g';
 
 const ctrl = {
 	getSafeInfo(user) {
@@ -19,10 +20,11 @@ const ctrl = {
 
 	async signup(req, res, next) {
 		const rules = {
-			name: 'string|required|min:3|max:100',
+			name: ['required', 'min:3', 'max:100', nameRegExp],
 			email: 'email|required|max:320',
-			username: 'alpha_num|required|min:6|max:50',
-			password: 'string|required|min:6|max:50'
+			username: 'alpha_num|required|min:6|max:50|regex:/^[a-z][a-z0-9]*$/g',
+			password: 'string|required|min:6|max:50',
+			rePassword: 'string|required|min:6|max:50|same:password'
 		};
 		if (!res.$v.rif(rules)) return;
 		const { username, email } = req.body;
@@ -40,15 +42,10 @@ const ctrl = {
 				throw { email: res.$t('emailTaken') };
 			}
 
-			const user = await User.create(req.body).exec();
+			await User.create(req.body).exec();
 			res.messages['auth.signup'] = res.$t('successSignUp');
 
-			req.login(user, (err) => {
-				if (err) throw err;
-				result.user = ctrl.getSafeInfo(user);
-				User.setLastAccessed(user).exec();
-				return res.sendwm(result);
-			});
+			return res.sendwm(result);
 		}
 		catch (error) {
 			res.messages = { ...res.messages, ...error };
