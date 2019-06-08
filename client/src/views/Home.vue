@@ -9,17 +9,19 @@
 				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
 				<v-spacer></v-spacer>
 				<section>
-					<span
-						:class="{ langActive: this.$i18n.locale === 'vi' }"
-						class="changeLang"
-						@click="changeLocale">
-						VI
-					</span> /
-					<span
-						:class="{ langActive: this.$i18n.locale === 'en' }"
-						class="changeLang"
-						@click="changeLocale">
-						EN
+					<span style="font-weight: bold;">
+						<span
+							:class="{ langActive: locale === 'vi' }"
+							class="changeLang"
+							@click="changeLocale('vi')">
+							VI
+						</span> |
+						<span
+							:class="{ langActive: locale === 'en' }"
+							class="changeLang"
+							@click="changeLocale('en')">
+							EN
+						</span>
 					</span>
 					<v-btn
 						to="login"
@@ -414,10 +416,14 @@ export default {
 			{ title: 'footer-about-item3', url: '/' }
 		]
 	}),
+	computed: {
+		locale() {
+			return this.$i18n.locale;
+		}
+	},
 	methods: {
-		changeLocale() {
-			loadLanguageAsync(this.$i18n.locale === 'en' ? 'vi' : 'en');
-			this.locale = this.$i18n.locale;
+		changeLocale(locale) {
+			loadLanguageAsync(locale);
 		}
 	}
 };

@@ -7,11 +7,13 @@ import Page from './layouts/Page.vue';
 
 // Home
 import Home from './views/Home.vue';
-import Login from './views/Login.vue';
-import Signup from './views/Signup.vue';
+
+// Authentication
+const AuthLayout = () => import(/* webpackChunkName: "auth-layout" */ './layouts/auth');
+const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
+const Signup = () => import(/* webpackChunkName: "signup" */ './views/Signup.vue');
 
 const PageNotFound = () => import(/* webpackChunkName: "pagenotfound" */ './views/PageNotFound.vue');
-const About = () => import(/* webpackChunkName: "about" */ './views/About.vue');
 
 // Dashboard
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ './layouts/dashboard');
@@ -50,28 +52,28 @@ const router = new Router({
 					}
 				},
 				{
-					path: 'about',
-					name: 'about',
-					component: About,
-					meta: {
-						title: 'About'
-					}
-				},
-				{
-					path: 'login',
-					name: 'login',
-					component: Login,
-					meta: {
-						title: 'Login'
-					}
-				},
-				{
-					path: 'signup',
-					name: 'signup',
-					component: Signup,
-					meta: {
-						title: 'Signup'
-					}
+					path: '/',
+					name: 'auth',
+					component: AuthLayout,
+					redirect: { name: 'login' },
+					children: [
+						{
+							path: 'login',
+							name: 'login',
+							component: Login,
+							meta: {
+								title: 'Login'
+							}
+						},
+						{
+							path: 'signup',
+							name: 'signup',
+							component: Signup,
+							meta: {
+								title: 'Signup'
+							}
+						}
+					]
 				},
 				{
 					path: 'dashboard',
