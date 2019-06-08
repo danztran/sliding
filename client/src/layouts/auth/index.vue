@@ -28,10 +28,10 @@ export default {};
 	.page-enter-active, .page-leave-active {
 		transition: all .5s ease-out;
 		overflow: hidden;
-		max-height: 630px;
+		max-height: 590px;
 	}
 	.page-enter, .page-leave-to {
-		max-height: 400px;
+		max-height: 350px;
 		transform: translateY(-15px);
 		opacity: 0;
 	}
