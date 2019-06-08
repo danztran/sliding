@@ -3,10 +3,13 @@ import VueI18n from 'vue-i18n';
 import axios from 'axios';
 import cookies from './vue-cookies-custom';
 const { VUE_APP_CK_LANG, VUE_APP_DEFAULT_LOCALE, NODE_ENV } = process.env;
-const locale = cookies.get(VUE_APP_CK_LANG) || window.navigator.language || 'en';
-const defLocale = VUE_APP_DEFAULT_LOCALE || 'en';
+const defLocale = VUE_APP_DEFAULT_LOCALE || 'vi';
+let locale = cookies.get(VUE_APP_CK_LANG) || window.navigator.language || defLocale;
 
 Vue.use(VueI18n);
+if (!['vi', 'en'].includes(locale)) {
+	locale = defLocale;
+}
 
 export const i18n = new VueI18n({
 	fallbackLocale: defLocale,

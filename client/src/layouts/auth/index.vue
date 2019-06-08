@@ -7,9 +7,11 @@
 			<v-layout align-center justify-center row>
 				<v-flex xs12 sm6 md5 lg3 xl3>
 					<v-card class="elevation-20 pa-3">
-						<v-slide-y-transition mode="out-in">
+						<!-- <v-slide-y-transition mode="out-in"> -->
+						<transition name="page" mode="out-in">
 							<router-view />
-						</v-slide-y-transition>
+						</transition>
+						<!-- </v-slide-y-transition> -->
 					</v-card>
 				</v-flex>
 			</v-layout>
@@ -23,6 +25,16 @@ export default {};
 
 <style lang="scss">
 #auth-page {
+	.page-enter-active, .page-leave-active {
+		transition: all .5s ease-out;
+		overflow: hidden;
+		max-height: 570px;
+	}
+	.page-enter, .page-leave-to {
+		max-height: 340px;
+		transform: translateY(-15px);
+		opacity: 0;
+	}
 	background: rgb(61,164,181);
 	background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
 	background-size: cover;
