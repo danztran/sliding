@@ -5,5 +5,7 @@
 	"require_auth": "Yêu cầu đăng nhập",
 	"allow_search": "Cho phép tìm kiếm",
 	"start_at": "Ngày bắt đầu",
-	"end_at": "Ngày kết thúc"
+	"end_at": "Ngày kết thúc",
+	"email": "Email",
+	"rePassword": "Nhập lại mật khẩu"
 }

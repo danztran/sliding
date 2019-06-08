@@ -3,7 +3,7 @@ const queryHelper = {
 		const states = [];
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
-				states.push(`"${key}"='${object[key]}'`);
+				states.push(`"${key}"=$$${object[key]}$$`);
 			}
 		}
 		const clause = states.join(symbol);
@@ -45,7 +45,7 @@ const queryHelper = {
 		for (const key in info) {
 			if (Object.prototype.hasOwnProperty.call(info, key)) {
 				keys.push(`"${key}"`);
-				values.push(`'${info[key]}'`);
+				values.push(`$$${info[key]}$$`);
 			}
 		}
 		return `(${keys.join(',')}) VALUES (${values.join(',')})`;
@@ -79,14 +79,14 @@ const queryHelper = {
 	// e.g.: limit = 3
 	// => LIMIT 3
 	toLimitClause(limit) {
-		return limit ? `LIMIT ${limit}` : '';
+		return limit ? `LIMIT $$${limit}$$` : '';
 	},
 
 	// @offset: Integer
 	// e.g.: offset = 4
 	// => OFFSET 4
 	toOffsetClause(offset) {
-		return offset ? `OFFSET ${offset}` : '';
+		return offset ? `OFFSET $$${offset}$$` : '';
 	}
 };
 
