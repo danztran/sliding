@@ -35,6 +35,11 @@
 				</v-layout>
 			</v-card-actions>
 
+			<!-- BACKHOME -->
+			<div class="mt-4 body-1 text-xs-center">
+				<span v-t="'home-back-title'">&nbsp;</span>
+				<a href="/" class="font-weight-medium" v-t="'btn-join-here'"></a>
+			</div>
 		</v-form>
 	</div>
 </template>

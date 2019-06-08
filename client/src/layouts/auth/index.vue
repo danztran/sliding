@@ -35,8 +35,9 @@ export default {};
 		transform: translateY(-15px);
 		opacity: 0;
 	}
-	background: rgb(61,164,181);
-	background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
+	// background: rgb(61,164,181);
+	// background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
+	background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0.5, 0.3)), url("https://cdn.vuetifyjs.com/images/parallax/material.jpg");
 	background-size: cover;
 	background-repeat:no-repeat;
 	.hyper-link {
