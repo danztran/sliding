@@ -5,14 +5,16 @@
 		</span>
 		<v-container fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex xs12 sm6 md5 lg4 xl3 class="pb-5">
+				<v-flex xs12 sm6 md5 lg3 xl3 class="pb-5">
 					<v-card class="elevation-20 pa-3">
 						<transition name="page" mode="out-in">
 							<router-view />
 						</transition>
 						<div class="my-2 text-xs-center">
+							<span></span>
 							<router-link class="body-1 font-weight-medium hyper-link" to="/">
-								<span v-text="'<'"></span> {{ $t('btn-back-home') }}
+								<span>&#60; </span>
+								<span>{{ $t('btn-back-home') }}</span>
 							</router-link>
 						</div>
 					</v-card>
@@ -31,10 +33,10 @@ export default {};
 	.page-enter-active, .page-leave-active {
 		transition: all .5s ease-out;
 		overflow: hidden;
-		max-height: 610px;
+		max-height: 580px;
 	}
 	.page-enter, .page-leave-to {
-		max-height: 380px;
+		max-height: 320px;
 		transform: translateY(-15px);
 		opacity: 0;
 	}

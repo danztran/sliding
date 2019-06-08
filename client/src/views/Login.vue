@@ -31,7 +31,7 @@
 
 			<v-card-actions class="px-3 py-2">
 				<v-layout align-center justify-center column fill-height>
-					<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
+					<v-btn color="primary" type="submit">{{ $t('loginFormTitle') }}</v-btn>
 				</v-layout>
 			</v-card-actions>
 			<slot></slot>

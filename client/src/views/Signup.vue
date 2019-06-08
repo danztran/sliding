@@ -37,11 +37,7 @@
 					justify-center
 					column
 					fill-height>
-					<v-btn
-						color="primary"
-						v-t="'signUp'"
-						type="submit">
-					</v-btn>
+					<v-btn color="primary" type="submit">{{ $t('signUp') }}</v-btn>
 				</v-layout>
 			</v-card-actions>
 			<slot></slot>

@@ -24,12 +24,12 @@
 						</span>
 					</span>
 					<v-btn
-						to="login"
+						to="/login"
 						flat medium
 						v-t="'loginFormTitle'">
 					</v-btn>
 					<v-btn
-						to="signup"
+						to="/signup"
 						flat
 						medium
 						class="primary"
