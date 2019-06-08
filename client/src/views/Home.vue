@@ -25,16 +25,17 @@
 					</span>
 					<v-btn
 						to="/login"
-						flat medium
-						v-t="'loginFormTitle'">
+						flat medium>
+						<router-link class="no-underline" to='/login' v-t="'loginFormTitle'" />
 					</v-btn>
 					<v-btn
 						to="/signup"
 						flat
 						medium
-						class="primary"
+						class="primary no-underline"
 						color="white"
 						v-t="'btn-signup'">
+						<router-link to='/signup' v-t="'signUp'" />
 					</v-btn>
 				</section>
 			</v-layout>
