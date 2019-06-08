@@ -25,10 +25,11 @@ const logout = (context) => {
 		});
 };
 
-const signup = (context, messages) => {
+const signup = (context, data) => {
+	context.commit('FILL_LOGIN_AFTER_SIGNUP', data);
 	cookies.set(
 		VUE_APP_CK_FLASH_MESSAGE,
-		messages['auth.signup']
+		data.messages['auth.signup']
 	);
 	router.push({ name: 'login' });
 };

@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
 	name: 'Login',
 	data: () => ({
@@ -72,6 +73,17 @@ export default {
 			}
 		}
 	}),
+	computed: {
+		...mapGetters({
+			fillInfo: 'auth/fillInfo'
+		})
+	},
+	created() {
+		if (this.fillInfo.username !== '') {
+			this.form.username.value = this.fillInfo.username;
+			this.form.password.value = this.fillInfo.password;
+		}
+	},
 	methods: {
 		handleLogin() {
 			this.loading = true;

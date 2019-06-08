@@ -19,8 +19,14 @@ const CHECK_AUTH = (state, user) => {
 	}
 };
 
+const FILL_LOGIN_AFTER_SIGNUP = (state, user) => {
+	state.fillInfo.username = user.username;
+	state.fillInfo.password = user.password;
+};
+
 export default {
 	SET_CURRENT_USER,
 	RESET,
-	CHECK_AUTH
+	CHECK_AUTH,
+	FILL_LOGIN_AFTER_SIGNUP
 };

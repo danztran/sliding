@@ -8,7 +8,11 @@ import mutations from './mutations';
 
 const state = {
 	loggedIn: false,
-	userData: null
+	userData: null,
+	fillInfo: {
+		username: '',
+		password: ''
+	}
 };
 
 export default {

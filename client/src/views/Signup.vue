@@ -132,7 +132,7 @@ export default {
 			this.$axios
 				.post(this.$api.auth.signup, signupFormData)
 				.then((res) => {
-					this.$store.dispatch('auth/signup', res.data.messages);
+					this.$store.dispatch('auth/signup', Object.assign(signupFormData, res.data));
 				})
 				.catch(err => this.handleErrorMessages(err.messages))
 				.then(() => {
