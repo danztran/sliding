@@ -5,8 +5,8 @@
 		</span>
 		<v-container fluid fill-height pt-0 pb-5>
 			<v-layout align-center justify-center row>
-				<v-flex xs12 sm6 md5 lg3 xl3>
-					<v-card class="elevation-20 pa-3 fix-m">
+				<v-flex xs12 sm6 md5 lg4 xl3 class="pb-5">
+					<v-card class="elevation-20 pa-3">
 						<transition name="page" mode="out-in">
 							<router-view />
 						</transition>
@@ -31,10 +31,10 @@ export default {};
 	.page-enter-active, .page-leave-active {
 		transition: all .5s ease-out;
 		overflow: hidden;
-		max-height: 550px;
+		max-height: 610px;
 	}
 	.page-enter, .page-leave-to {
-		max-height: 320px;
+		max-height: 380px;
 		transform: translateY(-15px);
 		opacity: 0;
 	}
