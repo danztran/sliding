@@ -6,7 +6,7 @@
 			<v-layout align-center justify-center row fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
-						<div class="headline font-weight-regular" v-t="'loginFormTitle'"></div>
+						<div class="headline font-weight-regular">{{ $t('loginFormTitle') }}</div>
 						<span class="grey--text" v-t="'or'">
 							&nbsp;
 						</span>
@@ -22,9 +22,10 @@
 				<text-field :field="form.password" />
 			</v-card-text>
 
-			<div class="error--text text-xs-center">
+			<div class="warning--text text-xs-center">
 				{{ flashMessage }}
-				<br>
+			</div>
+			<div class="error--text text-xs-center">
 				{{ errorMessage }}
 			</div>
 
@@ -33,6 +34,12 @@
 					<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
 				</v-layout>
 			</v-card-actions>
+
+			<!-- BACKHOME -->
+			<div class="mt-4 body-1 text-xs-center">
+				<span v-t="'home-back-title'">&nbsp;</span>
+				<a href="/" class="font-weight-medium" v-t="'btn-join-here'"></a>
+			</div>
 		</v-form>
 	</div>
 </template>

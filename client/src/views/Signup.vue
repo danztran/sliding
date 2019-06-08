@@ -6,7 +6,8 @@
 			<v-layout align-center justify-center row fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
-						<div class="headline font-weight-regular" v-t="'signUp'">
+						<div class="headline font-weight-regular">
+							{{ $t('signUp') }}
 						</div>
 						<span class="grey--text" v-t="'or'">
 							&nbsp;
@@ -45,7 +46,11 @@
 					</v-btn>
 				</v-layout>
 			</v-card-actions>
-
+			<!-- BACKHOME -->
+			<div class="mt-4 body-1 text-xs-center">
+				<span v-t="'home-back-title'">&nbsp;</span>
+				<a href="/" class="font-weight-medium" v-t="'btn-join-here'"></a>
+			</div>
 		</v-form>
 	</div>
 </template>
