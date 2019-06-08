@@ -16,7 +16,7 @@
 									<div class="text-xs-center">
 										<div class="headline font-weight-regular" v-t="'loginFormTitle'"></div>
 										<span class="grey--text" v-t="'or'">{{"&nbsp;  "}}</span>
-										<a href="/register" class="primary--text body-2 hyper-link" v-t="'signUp'"></a>
+										<a href="/signup" class="primary--text body-2 hyper-link" v-t="'signUp'"></a>
 									</div>
 								</v-card-title>
 							</v-layout>
@@ -45,22 +45,7 @@
 		</v-container>
 	</v-content>
 </template>
-<style scoped>
-#login-page {
-	background: rgb(61,164,181);
-	background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
-	background-size: cover;
-	background-repeat:no-repeat;
-}
-.hyper-link {
-	text-decoration: none;
-}
-@media only screen and (max-width: 960px) {
-	.fluid, .v-card {
-		padding: 5px !important;
-	}
-}
-</style>
+
 <script>
 export default {
 	name: 'Login',
@@ -71,7 +56,7 @@ export default {
 		form: {
 			username: {
 				value: '',
-				label: 'lbUsername',
+				label: 'lb-username',
 				type: 'text',
 				required: true,
 				prepend: 'person',
@@ -80,7 +65,7 @@ export default {
 			},
 			password: {
 				value: '',
-				label: 'lbPassword',
+				label: 'lb-password',
 				type: 'password',
 				required: true,
 				prepend: 'lock',
@@ -110,3 +95,20 @@ export default {
 	}
 };
 </script>
+
+<style scoped>
+#login-page {
+	background: rgb(61,164,181);
+	background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
+	background-size: cover;
+	background-repeat:no-repeat;
+}
+.hyper-link {
+	text-decoration: none;
+}
+@media only screen and (max-width: 960px) {
+	.fluid, .v-card {
+		padding: 5px !important;
+	}
+}
+</style>

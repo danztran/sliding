@@ -6,7 +6,7 @@
 		<!-- NAVBAR -->
 		<v-toolbar id="my-navbar" fixed class="nav-transparent">
 			<v-layout align-center row>
-				<v-toolbar-title class="mx-0">Sliding</v-toolbar-title>
+				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
 				<v-spacer></v-spacer>
 				<section>
 					<span
@@ -21,9 +21,18 @@
 						@click="changeLocale">
 						EN
 					</span>
-					<v-btn to="login" flat medium>LOGIN</v-btn>
-					<v-btn to="signup" flat medium class="primary" color="white">
-						SIGN UP
+					<v-btn
+						to="login"
+						flat medium
+						v-t="'loginFormTitle'">
+					</v-btn>
+					<v-btn
+						to="signup"
+						flat
+						medium
+						class="primary"
+						color="white"
+						v-t="'signUp'">
 					</v-btn>
 				</section>
 			</v-layout>
@@ -82,11 +91,15 @@
 					class="py-4"
 					justify-center
 					align-center>
-					<v-flex xs12 sm4 class="my-3">
+					<v-flex xs12 sm6 class="my-3">
 						<div class="text-xs-center">
-							<h2 class="headline text-uppercase">The best way to share your amazing stuff</h2>
-							<span class="subheading">
-								No more restrictions, no more limits
+							<h2
+								class="headline text-uppercase"
+								v-t="'card-header-title'">
+							</h2>
+							<span
+								class="subheading"
+								v-t="'card-subheader-title'">
 							</span>
 						</div>
 					</v-flex>
@@ -317,7 +330,7 @@
 		ul {
 			list-style: none;
 		}
-		.footer {
+		#footer {
 			a {
 				text-decoration: none;
 				color: $black !important;

@@ -25,8 +25,17 @@ const logout = (context) => {
 		});
 };
 
+const signup = (context, messages) => {
+	cookies.set(
+		VUE_APP_CK_FLASH_MESSAGE,
+		messages['auth.signup']
+	);
+	router.push({ name: 'login' });
+};
+
 export default {
 	setAuth,
+	checkAuth,
 	logout,
-	checkAuth
+	signup
 };

@@ -8,6 +8,8 @@ import Page from './layouts/Page.vue';
 // Home
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
+import Signup from './views/Signup.vue';
+
 const PageNotFound = () => import(/* webpackChunkName: "pagenotfound" */ './views/PageNotFound.vue');
 const About = () => import(/* webpackChunkName: "about" */ './views/About.vue');
 
@@ -61,6 +63,14 @@ const router = new Router({
 					component: Login,
 					meta: {
 						title: 'Login'
+					}
+				},
+				{
+					path: 'signup',
+					name: 'signup',
+					component: Signup,
+					meta: {
+						title: 'Signup'
 					}
 				},
 				{
