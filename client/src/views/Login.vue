@@ -34,13 +34,7 @@
 					<v-btn color="primary" v-t="'loginFormTitle'" type="submit"></v-btn>
 				</v-layout>
 			</v-card-actions>
-
-			<!-- BACKHOME -->
-			<div class="mt-1 body-1 text-xs-center">
-				<router-link class="caption font-weight-medium" to="/">
-					{{ $t('btn-back-home') }}
-				</router-link>
-			</div>
+			<slot></slot>
 		</v-form>
 	</div>
 </template>

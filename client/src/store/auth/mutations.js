@@ -8,6 +8,8 @@ const SET_CURRENT_USER = (state, user) => {
 const RESET = (state) => {
 	state.loggedIn = false;
 	state.userData = null;
+	state.fillInfo.username = '';
+	state.fillInfo.password = '';
 };
 
 const CHECK_AUTH = (state, user) => {
