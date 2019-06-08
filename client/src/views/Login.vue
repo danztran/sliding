@@ -75,6 +75,8 @@ export default {
 	methods: {
 		handleLogin() {
 			this.loading = true;
+			this.errorMessage = '';
+			this.flashMessage = '';
 			const loginFormData = {
 				username: this.form.username.value,
 				password: this.form.password.value

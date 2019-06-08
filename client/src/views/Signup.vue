@@ -28,8 +28,6 @@
 			</v-card-text>
 
 			<div class="error--text text-xs-center">
-				{{ flashMessage }}
-				<br>
 				{{ errorMessage }}
 			</div>
 
@@ -104,7 +102,6 @@ export default {
 	data: () => ({
 		loading: false,
 		errorMessage: '',
-		flashMessage: '',
 		form: initForm()
 	}),
 	watch: {
@@ -122,13 +119,15 @@ export default {
 	},
 	methods: {
 		handleSignup() {
+			this.errorMessage = '';
 			this.loading = true;
 			const { form } = this;
 			const signupFormData = {
-				name: form.name.value,
-				email: form.email.value,
-				username: form.username.value,
-				password: form.password.value
+				name: form.name.value.trim(),
+				email: form.email.value.trim(),
+				username: form.username.value.trim(),
+				password: form.password.value.trim(),
+				rePassword: form.rePassword.value.trim()
 			};
 			this.$axios
 				.post(this.$api.auth.signup, signupFormData)
