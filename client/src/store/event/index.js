@@ -7,7 +7,8 @@ import getters from './getters';
 import mutations from './mutations';
 
 const state = {
-	events: []
+	events: [],
+	currentEvent: {}
 };
 
 export default {

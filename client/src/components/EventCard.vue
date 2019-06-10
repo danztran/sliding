@@ -66,23 +66,7 @@
 		</v-card>
 	</v-hover>
 </template>
-<style lang="scss" scoped>
-.v-card {
-	margin: 0 !important;
-	border: 1px solid rgba(0,0,0,.1);
-	box-shadow: none;
-	&.py-3 {
-		padding: 7px 0 12px 0 !important;
-	}
-}
-.card-hover:hover {
-	cursor: pointer;
-	background-color: #f5f5f5;
-}
-.iconAction.material-icons.theme--light:hover {
-	color: #3595BE;
-}
-</style>
+
 <script>
 export default {
 	name: 'EventCard',
@@ -116,3 +100,21 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.v-card {
+	margin: 0 !important;
+	border: 1px solid rgba(0,0,0,.1);
+	box-shadow: none;
+	&.py-3 {
+		padding: 7px 0 12px 0 !important;
+	}
+}
+.card-hover:hover {
+	cursor: pointer;
+	background-color: #f5f5f5;
+}
+.iconAction.material-icons.theme--light:hover {
+	color: #3595BE;
+}
+</style>

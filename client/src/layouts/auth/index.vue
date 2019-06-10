@@ -12,7 +12,7 @@
 						</transition>
 						<div class="my-2 text-xs-center">
 							<span></span>
-							<router-link class="body-1 font-weight-medium hyper-link" to="/">
+							<router-link class="body-1 font-weight-medium no-underline" to="/">
 								<span>&#60; </span>
 								<span>{{ $t('btn-back-home') }}</span>
 							</router-link>
@@ -45,9 +45,6 @@ export default {};
 	background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0.5, 0.3)), url("https://cdn.vuetifyjs.com/images/parallax/material.jpg");
 	background-size: cover;
 	background-repeat:no-repeat;
-	.hyper-link {
-		text-decoration: none;
-	}
 	@media only screen and (max-width: 960px) {
 		.fluid, .v-card {
 			padding: 5px !important;

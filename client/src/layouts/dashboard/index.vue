@@ -14,6 +14,21 @@
 		</v-app>
 	</div>
 </template>
+
+<script>
+import NavBar from './NavBar.vue';
+import Drawer from './Drawer.vue';
+import EventDialog from '@/components/dials/EventDialog.vue';
+
+export 	default {
+	components: {
+		navbar: NavBar,
+		drawer: Drawer,
+		'event-dialog': EventDialog
+	}
+};
+</script>
+
 <style lang="scss">
 #dashboard-layout {
 	.v-content {
@@ -40,16 +55,3 @@
 	}
 }
 </style>
-<script>
-import NavBar from './NavBar.vue';
-import Drawer from './Drawer.vue';
-import EventDialog from '@/components/dials/EventDialog.vue';
-
-export 	default {
-	components: {
-		navbar: NavBar,
-		drawer: Drawer,
-		'event-dialog': EventDialog
-	}
-};
-</script>

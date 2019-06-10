@@ -12,7 +12,10 @@ const theme = {
 	primary: '#3da4b5',
 	secondary: '#5282BD',
 	accent: '#8c9eff',
-	error: '#832800'
+	error: '#832800',
+	grey: '#f2f2f2',
+	yellow: '#f9cd8b',
+	red: '#e54731'
 };
 
 // icons
@@ -24,7 +27,10 @@ const icons = {
 	event: 'event_available',
 	'web-slide-event': 'slideshow',
 	'mobile-slide-event': 'mobile_screen_share',
-	'more-vert': 'more_vert'
+	'more-vert': 'more_vert',
+	'arrow-left': 'keyboard_arrow_left',
+	signout: 'power_settings_new',
+	'switch-event': 'compare_arrows'
 };
 
 // custom components

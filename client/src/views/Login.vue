@@ -10,7 +10,7 @@
 						<span class="grey--text" v-t="'or'">
 							&nbsp;
 						</span>
-						<router-link tag='a' class="primary--text body-2 hyper-link" to="/signup">
+						<router-link tag='a' class="primary--text body-2 no-underline" to="/signup">
 							{{ $t('signUp') }}
 						</router-link>
 					</div>

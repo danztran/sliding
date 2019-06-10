@@ -12,7 +12,7 @@
 						<span class="grey--text" v-t="'or'">
 							&nbsp;
 						</span>
-						<router-link tag='a' class="primary--text body-2 hyper-link" to="/login">
+						<router-link tag='a' class="primary--text body-2 no-underline" to="/login">
 							{{ $t('loginFormTitle') }}
 						</router-link>
 					</div>

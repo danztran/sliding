@@ -4,33 +4,31 @@
 		<v-toolbar color="primary" dark tabs>
 			<v-toolbar-side-icon class="hidden-md-and-up" @click="toggleDrawer" />
 
-			<v-toolbar-title class="white--text">
+			<v-list-tile>
+				<v-list-tile-avatar size="35" color="white">
+					<router-link to="/dashboard/my-events" class="no-underline">
+						<v-icon color="primary" v-html="'$vuetify.icons.arrow-left'"></v-icon>
+					</router-link>
+				</v-list-tile-avatar>
+
 				<v-list-tile-content>
 					<span class="body-2">
-						<v-icon  size="20" v-html="'$vuetify.icons.user'" />
-						{{ user.email }}
+						{{ loading ? eventInfo.name : 'loading' }}
 					</span>
-					<span class="caption text-capitalize">{{ user.name }}</span>
+					<span class="caption text-uppercase">
+						{{ loading ? eventInfo.code : 'loading' }}
+					</span>
 				</v-list-tile-content>
-			</v-toolbar-title>
+			</v-list-tile>
 
 			<v-spacer></v-spacer>
-
-			<v-text-field
-				flat
-				solo-inverted
-				:prepend-inner-icon="'$vuetify.icons.search'"
-				:label="$t('search')"
-				class="hidden-sm-and-down mt-2 pr-3">
-			</v-text-field>
 
 			<v-menu
 				transition="slide-y-transition"
 				bottom
 				left
 				offset-y
-				content-class="dropdown-menu"
-				class="hidden-md-and-down">
+				content-class="dropdown-menu">
 				<template v-slot:activator="{ on }">
 					<v-avatar :size="35" class="hover" v-on="on">
 						<img
@@ -67,22 +65,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-	data() {
-		return {
-			user: {
-				email: '',
-				name: ''
-			},
-			tabs: [
-				{ name: 'my-events', url: '/dashboard/my-events' },
-				{ name: 'coop-events', url: '/dashboard/coop-events' },
-				{ name: 'activity-logs', url: '/dashboard/activity-logs' }
-			]
-		};
+	name: 'NavBar',
+	data: () => ({
+		date: '',
+		loading: false,
+		tabs: [
+			{ name: 'questions', url: 'questions' },
+			{ name: 'polls', url: 'polls' },
+			{ name: 'ideas', url: 'ideas' },
+			{ name: 'analytics', url: 'analytics' }
+		]
+	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'event/infoCurrentEvent'
+		})
+	},
+	watch: {
+		eventInfo(val) {
+			this.loading = true;
+		}
 	},
 	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 		this.tabs.forEach((e) => {
 			e.name = this.$t(e.name);
 		});
@@ -98,13 +104,5 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.my-toolbar {
-	width: 80%;
-	left:  10%;
-}
-.hover {
-	cursor: pointer;
-	opacity: .8;
-}
+<style>
 </style>
