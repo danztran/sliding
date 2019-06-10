@@ -295,71 +295,7 @@
 		</v-content>
 	</div>
 </template>
-<style lang="scss" scoped>
-	$primary: #3da4b5;
-	$navColor: #ffffffe6;
-	$black: #000000de;
-	#home-page {
-		#my-navbar {
-			color: $black;
-		}
-		.nav-transparent {
-			background-color: $navColor !important;
-		}
-		.v-parallax .v-parallax__content {
-			background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
-		}
-		.w-3 {
-			width: 300px;
-		}
-		.h-6 {
-			height: 60px;
-		}
-		.my-input-code {
-			position: relative;
-			z-index: 10;
-			right: 0;
-			.v-btn {
-				position: absolute;
-				top: .1em;
-				right: -.2em;
-				height: 45px;
-			}
-		}
-		.white-bg {
-			background-color: #fff;
-		}
-		.underline {
-			text-decoration: underline;
-		}
-		#primary-bg {
-			background-color: $primary;
-		}
-		ul {
-			list-style: none;
-		}
-		#footer {
-			a {
-				text-decoration: none;
-				color: $black !important;
-			}
-		}
-		.changeLang {
-			&:hover {
-				color: $primary;
-				cursor: pointer;
-			}
-		}
-		.langActive {
-			color: $primary;
-		}
-		@media only screen and (max-width: 600px) {
-			.nav-btn .v-btn{
-				margin: 0;
-			}
-		}
-	}
-</style>
+
 <script>
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
@@ -432,6 +368,11 @@ export default {
 			return this.$i18n.locale;
 		}
 	},
+	watch: {
+		inputEventCode: function toUpc(val) {
+			this.inputEventCode = val.toUpperCase();
+		}
+	},
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
@@ -439,3 +380,69 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+	$primary: #3da4b5;
+	$navColor: #ffffffe6;
+	$black: #000000de;
+	#home-page {
+		#my-navbar {
+			color: $black;
+		}
+		.nav-transparent {
+			background-color: $navColor !important;
+		}
+		.v-parallax .v-parallax__content {
+			background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
+		}
+		.w-3 {
+			width: 300px;
+		}
+		.h-6 {
+			height: 60px;
+		}
+		.my-input-code {
+			position: relative;
+			z-index: 10;
+			right: 0;
+			.v-btn {
+				position: absolute;
+				top: .1em;
+				right: -.2em;
+				height: 45px;
+			}
+		}
+		.white-bg {
+			background-color: #fff;
+		}
+		.underline {
+			text-decoration: underline;
+		}
+		#primary-bg {
+			background-color: $primary;
+		}
+		ul {
+			list-style: none;
+		}
+		#footer {
+			a {
+				text-decoration: none;
+				color: $black !important;
+			}
+		}
+		.changeLang {
+			&:hover {
+				color: $primary;
+				cursor: pointer;
+			}
+		}
+		.langActive {
+			color: $primary;
+		}
+		@media only screen and (max-width: 600px) {
+			.nav-btn .v-btn{
+				margin: 0;
+			}
+		}
+	}
+</style>

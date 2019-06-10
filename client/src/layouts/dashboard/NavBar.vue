@@ -10,7 +10,9 @@
 						<v-icon  size="20" v-html="'$vuetify.icons.user'" />
 						{{ user.email }}
 					</span>
-					<span class="caption text-capitalize">{{ user.name }}</span>
+					<span class="caption text-capitalize">
+						{{ user.name }}
+					</span>
 				</v-list-tile-content>
 			</v-toolbar-title>
 

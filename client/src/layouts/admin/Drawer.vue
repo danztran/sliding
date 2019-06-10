@@ -3,7 +3,8 @@
 		v-model="drawer"
 		absolute
 		temporary
-		app>
+		app
+		id="admin-navbar">
 		<v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
 			<v-layout pa-2 column fill-height class="lightbox white--text">
 				<v-spacer></v-spacer>
@@ -30,7 +31,7 @@
 				v-for="(link, i) in links"
 				:key="i"
 				:to="link.to"
-				active-class="grey"
+				active-class="active-tab"
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
@@ -102,19 +103,27 @@ export default {
 		callLogout() {
 			this.$store.dispatch('auth/logout');
 		},
-		switchEvent() {}
+		switchEvent() {
+			this.$router.push({ name: 'my-events' });
+		}
 	}
 };
 </script>
 
-<style>
-.v-navigation-drawer {
-	transition: all .8s;
-    -webkit-transition: all .8s;
-}
+<style lang="scss">
+	#admin-navbar {
+		.v-navigation-drawer {
+			transition: all .8s;
+			-webkit-transition: all .8s;
+		}
 
-.lightbox {
-	box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
-	background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 80px);
-}
+		.active-tab {
+			background-color: #f3f3f3;
+		};
+
+		.lightbox {
+			box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
+			background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 80px);
+		}
+	}
 </style>

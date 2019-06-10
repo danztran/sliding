@@ -13,7 +13,7 @@ const theme = {
 	secondary: '#5282BD',
 	accent: '#8c9eff',
 	error: '#832800',
-	grey: '#f2f2f2',
+	grey: '#777',
 	yellow: '#f9cd8b',
 	red: '#e54731'
 };
@@ -21,7 +21,7 @@ const theme = {
 // icons
 const icons = {
 	user: 'how_to_reg',
-	anonymous: 'person',
+	person: 'person',
 	setting: 'settings',
 	search: 'search',
 	event: 'event_available',
@@ -30,7 +30,12 @@ const icons = {
 	'more-vert': 'more_vert',
 	'arrow-left': 'keyboard_arrow_left',
 	signout: 'power_settings_new',
-	'switch-event': 'compare_arrows'
+	ideas: 'new_releases',
+	analytics: 'poll',
+	polls: 'sort',
+	questions: 'question_answer',
+	'switch-event': 'compare_arrows',
+	home: 'home'
 };
 
 // custom components

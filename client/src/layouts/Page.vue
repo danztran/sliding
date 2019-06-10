@@ -1,8 +1,6 @@
 <template>
 	<v-app>
-		<v-slide-x-transition>
-			<router-view />
-		</v-slide-x-transition>
+		<router-view />
 	</v-app>
 </template>
 <script>
