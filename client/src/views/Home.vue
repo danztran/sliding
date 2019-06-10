@@ -64,7 +64,6 @@
 							<div class="my-input-code w-3">
 								<v-text-field
 									height="60"
-									autofocus
 									solo
 									:label="$t('plhEnterCode')"
 									v-model = "inputEventCode"

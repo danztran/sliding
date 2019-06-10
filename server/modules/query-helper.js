@@ -1,9 +1,26 @@
+const dollarQuotedLength = 10;
+
 const queryHelper = {
+	randomString(len) {
+		const p = '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const plen = p.length;
+		return [...Array(len)].reduce(a => a + p[Math.floor((Math.random() * plen))], '');
+	},
+
+	randomDollarQuoted() {
+		return `$q${this.randomString(dollarQuotedLength)}$`;
+	},
+
+	toDollarQuoted(str) {
+		const rdq = this.randomDollarQuoted();
+		return rdq + str + rdq;
+	},
+
 	toClause(object, symbol = ' ') {
 		const states = [];
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
-				states.push(`"${key}"=$$${object[key]}$$`);
+				states.push(`"${key}"=${this.toDollarQuoted(object[key])}`);
 			}
 		}
 		const clause = states.join(symbol);
@@ -45,7 +62,7 @@ const queryHelper = {
 		for (const key in info) {
 			if (Object.prototype.hasOwnProperty.call(info, key)) {
 				keys.push(`"${key}"`);
-				values.push(`$$${info[key]}$$`);
+				values.push(this.toDollarQuoted(info[key]));
 			}
 		}
 		return `(${keys.join(',')}) VALUES (${values.join(',')})`;
@@ -79,14 +96,14 @@ const queryHelper = {
 	// e.g.: limit = 3
 	// => LIMIT 3
 	toLimitClause(limit) {
-		return limit ? `LIMIT $$${limit}$$` : '';
+		return limit ? `LIMIT ${this.toDollarQuoted(limit)}` : '';
 	},
 
 	// @offset: Integer
 	// e.g.: offset = 4
 	// => OFFSET 4
 	toOffsetClause(offset) {
-		return offset ? `OFFSET $$${offset}$$` : '';
+		return offset ? `OFFSET ${this.toDollarQuoted(offset)}` : '';
 	}
 };
 
