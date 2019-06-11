@@ -14,12 +14,7 @@ const createEvent = (context, newEvent) => {
 	context.commit('CREATE_EVENT', newEvent);
 };
 
-const getCurrentEvent = (context, event) => {
-	context.commit('GET_CURRENT_EVENT', event);
-};
-
 export default {
 	queryEvent,
-	createEvent,
-	getCurrentEvent
+	createEvent
 };

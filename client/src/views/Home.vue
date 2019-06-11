@@ -66,10 +66,11 @@
 									height="60"
 									solo
 									:label="$t('plhEnterCode')"
-									v-model = "inputEventCode"
+									v-model="inputEventCode"
+									@keydown="handleInputCode"
 									prefix="#">
 								</v-text-field>
-								<v-btn color="primary" :to="inputEventCode">
+								<v-btn color="primary" :to="linkToEventCode">
 									<span v-t="'btn-join'"></span>
 								</v-btn>
 							</div>
@@ -366,16 +367,17 @@ export default {
 	computed: {
 		locale() {
 			return this.$i18n.locale;
-		}
-	},
-	watch: {
-		inputEventCode: function toUpc(val) {
-			this.inputEventCode = val.toUpperCase();
+		},
+		linkToEventCode() {
+			return this.inputEventCode.toLocaleLowerCase();
 		}
 	},
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
+		},
+		handleInputCode(e) {
+			this.inputEventCode = e.target.value.toUpperCase();
 		}
 	}
 };

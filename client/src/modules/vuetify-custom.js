@@ -35,7 +35,8 @@ const icons = {
 	polls: 'sort',
 	questions: 'question_answer',
 	'switch-event': 'compare_arrows',
-	home: 'home'
+	home: 'home',
+	add: 'add'
 };
 
 // custom components

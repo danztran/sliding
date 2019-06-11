@@ -48,7 +48,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			events: 'event/events'
+			events: 'dashboard/events'
 		})
 	},
 	watch: {
@@ -60,7 +60,7 @@ export default {
 	mounted() {
 		if (this.events.length === 0) {
 			this.loading = true;
-			this.$store.dispatch('event/queryEvent', this.queryOpt);
+			this.$store.dispatch('dashboard/queryEvent', this.queryOpt);
 		}
 	},
 	methods: {

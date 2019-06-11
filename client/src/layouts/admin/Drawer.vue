@@ -10,8 +10,12 @@
 				<v-spacer></v-spacer>
 				<v-layout align-center justify-space-between row shrink>
 					<div class="d-inline-block w-100">
-						<div class="body-2">event name</div>
-						<div class="caption">date - event code</div>
+						<div class="body-2">
+							{{ loading ? eventInfo.name : 'loading' }}
+						</div>
+						<div class="caption text-uppercase">
+							{{ loading ? eventInfo.code : 'loading' }}
+						</div>
 					</div>
 					<v-tooltip top>
 						<template v-slot:activator="{ on }">
@@ -63,10 +67,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
 	name: 'Drawer',
 	data: () => ({
 		drawer: false,
+		loading: false,
 		links: [
 			{
 				to: 'questions',
@@ -94,6 +100,16 @@ export default {
 			}
 		]
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/infoCurrentEvent'
+		})
+	},
+	watch: {
+		eventInfo(val) {
+			this.loading = true;
+		}
+	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = !this.drawer;

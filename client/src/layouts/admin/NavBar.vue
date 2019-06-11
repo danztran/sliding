@@ -2,49 +2,37 @@
 	<div>
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-toolbar color="primary" dark tabs>
-			<v-toolbar-side-icon class="hidden-md-and-up" @click="toggleDrawer" />
+			<v-layout align-center justify-space-between row fill-height>
+				<v-toolbar-side-icon
+					v-if="hiddenXS"
+					@click="toggleDrawer" />
 
-			<v-list-tile>
-				<v-list-tile-avatar size="35" color="white">
-					<router-link to="/dashboard/my-events" class="no-underline">
-						<v-icon color="primary" v-html="'$vuetify.icons.arrow-left'"></v-icon>
-					</router-link>
-				</v-list-tile-avatar>
+				<v-list-tile>
+					<v-list-tile-avatar v-if="!hiddenXS" size="35" color="white">
+						<router-link to="/dashboard/my-events" class="no-underline pt-1">
+							<v-icon size="25" color="primary" v-html="'$vuetify.icons.arrow-left'"></v-icon>
+						</router-link>
+					</v-list-tile-avatar>
 
-				<v-list-tile-content>
-					<span class="body-2">
-						{{ loading ? eventInfo.name : 'loading' }}
-					</span>
-					<span class="caption text-uppercase">
-						{{ loading ? eventInfo.code : 'loading' }}
-					</span>
-				</v-list-tile-content>
-			</v-list-tile>
+					<v-list-tile-content>
+						<div class="body-2">
+							{{ loading ? eventInfo.name : 'loading' }}
+						</div>
+						<div
+							class="caption text-uppercase hidden-xs-only">
+							{{ loading ? eventInfo.code : 'loading' }}
+						</div>
+					</v-list-tile-content>
+				</v-list-tile>
 
-			<v-spacer></v-spacer>
+				<v-spacer class="hidden-xs-only" />
+				<v-list-tile>
+					<div></div>
+				</v-list-tile>
 
-			<v-menu
-				transition="slide-y-transition"
-				bottom
-				left
-				offset-y
-				content-class="dropdown-menu">
-				<template v-slot:activator="{ on }">
-					<v-avatar :size="35" class="hover" v-on="on">
-						<img
-							src="https://cdn.vuetifyjs.com/images/john.jpg"
-							alt="John">
-					</v-avatar>
-				</template>
-
-				<v-card>
-					<v-list dense primary>
-						<v-list-tile class="hover">
-							<v-list-tile-title v-t="'logout'" @click="callLogout" />
-						</v-list-tile>
-					</v-list>
-				</v-card>
-			</v-menu>
+				<!-- USER DROPDOWN ACTIONS -->
+				<user-actions-avatar />
+			</v-layout>
 
 			<!-- TAB SLIDER -->
 			<template v-slot:extension>
@@ -66,8 +54,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import UserActionsAvatar from '@/components/UserActionsAvatar.vue';
+
 export default {
 	name: 'NavBar',
+	components: {
+		'user-actions-avatar': UserActionsAvatar
+	},
 	data: () => ({
 		date: '',
 		loading: false,
@@ -79,8 +72,11 @@ export default {
 		]
 	}),
 	computed: {
+		hiddenXS() {
+			return this.$vuetify.breakpoint.xs;
+		},
 		...mapGetters({
-			eventInfo: 'event/infoCurrentEvent'
+			eventInfo: 'admin/infoCurrentEvent'
 		})
 	},
 	watch: {
