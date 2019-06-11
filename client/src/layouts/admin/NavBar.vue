@@ -82,6 +82,7 @@ export default {
 	watch: {
 		eventInfo(val) {
 			this.loading = true;
+			this.$root.$emit('hide-loading-overlay');
 		}
 	},
 	created() {

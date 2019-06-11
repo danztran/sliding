@@ -24,9 +24,6 @@ export default {
 		navbar: NavBar,
 		drawer: Drawer
 	},
-	data: () => ({
-		eventData: ''
-	}),
 	sockets: {
 		connect() {
 			console.warn('connected');
@@ -35,6 +32,9 @@ export default {
 			console.warn(data);
 			this.$store.dispatch('admin/getCurrentEvent', data);
 		}
+	},
+	beforeCreate() {
+		this.$root.$emit('show-loading-overlay');
 	},
 	mounted() {
 		this.$socket.connect();

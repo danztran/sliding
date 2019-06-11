@@ -1,8 +1,14 @@
 <template>
 	<v-app>
+		<loading-overlay />
 		<router-view />
 	</v-app>
 </template>
 <script>
-export default {};
+import LoadingOverlay from '@/components/LoadingOverlay.vue';
+export default {
+	components: {
+		'loading-overlay': LoadingOverlay
+	}
+};
 </script>
