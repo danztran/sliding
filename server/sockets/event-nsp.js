@@ -6,7 +6,6 @@ const nsp = (io) => {
 		socket.on('join-event', (code) => {
 			// join to room
 			socket.join(`event#${code}`);
-			EventLiveCtlr.emitEventData({ io, socket, code });
 
 			// leave the room
 			socket.on('leave', () => {
@@ -16,8 +15,8 @@ const nsp = (io) => {
 				socket.leave(`event#${code}`);
 			});
 
-			// send event data
-			// socket.emit('eventData', result);
+			// send event and role data to client
+			EventLiveCtlr.emitEventData({ io, socket, code });
 		});
 	});
 };

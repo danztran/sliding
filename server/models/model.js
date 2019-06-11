@@ -70,9 +70,7 @@ class Model {
 			${qh.toInsertClause(object)}
 			${qh.toReturningClause(select)}
 		`;
-		if (select) {
-			this._rowReturn = 1;
-		}
+		this._rowReturn = 1;
 		return this;
 	}
 

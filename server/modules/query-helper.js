@@ -43,7 +43,7 @@ const queryHelper = {
 		else {
 			clause = this.toClause(info, ' AND ');
 		}
-		return `WHERE ${clause}`;
+		return clause ? `WHERE ${clause}` : '';
 	},
 
 	// @info: Object
