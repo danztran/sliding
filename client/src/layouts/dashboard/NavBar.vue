@@ -49,7 +49,7 @@
 			<!-- TAB SLIDER -->
 			<template v-slot:extension>
 				<v-tabs
-					v-if="hiddenXS"
+					v-if="!hiddenXS"
 					v-model="activeTab"
 					color="primary">
 					<v-tabs-slider color="yellow" />
