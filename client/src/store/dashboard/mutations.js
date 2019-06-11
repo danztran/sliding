@@ -10,13 +10,8 @@ const RESET = (state) => {
 	state.events = [];
 };
 
-const GET_CURRENT_EVENT = (state, event) => {
-	state.currentEvent = event;
-};
-
 export default {
 	QUERY_EVENT,
 	RESET,
-	CREATE_EVENT,
-	GET_CURRENT_EVENT
+	CREATE_EVENT
 };

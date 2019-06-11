@@ -2,19 +2,21 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import authModule from './auth';
-import eventModule from './event';
+import dashboardModule from './dashboard';
+import adminModule from './admin';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	modules: {
 		auth: authModule,
-		event: eventModule
+		dashboard: dashboardModule,
+		admin: adminModule
 	},
 	actions: {
 		resetAll({ commit }) {
 			commit('auth/RESET');
-			commit('event/RESET');
+			commit('dashboard/RESET');
 		}
 	}
 });
