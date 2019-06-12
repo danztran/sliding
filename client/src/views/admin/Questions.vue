@@ -4,7 +4,15 @@
 
 <script>
 export default {
-	name: 'AdminQuestions'
+	name: 'AdminQuestions',
+	sockets: {
+		event_questions(data) {
+			console.warn(data);
+		}
+	},
+	created() {
+		this.$socket.emit('get-questions');
+	}
 };
 </script>
 

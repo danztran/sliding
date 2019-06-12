@@ -9,7 +9,7 @@ const defDatePack = datePacks[defLocale];
 
 function Translator(locale) {
 	// set locale
-	this.locale = locale || defLocale;
+	this.locale = messagePacks[locale] ? locale : defLocale;
 
 	// language pack
 	this.messagePack = messagePacks[this.locale] || defMessagePack;

@@ -82,7 +82,7 @@ const ctrl = {
 
 			req.logIn(user, (error) => {
 				if (error) return next(error);
-
+				req.session.user = req.user;
 				res.messages['auth.login'] = res.$t('successLoggedIn');
 				result.user = ctrl.getSafeInfo(user);
 				User.setLastAccessed(user).exec();

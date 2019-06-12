@@ -1,6 +1,6 @@
 const io = require('socket.io')();
-const eventNsp = requireWrp('sockets/event-nsp');
+const EventNsp = require('./event');
 
-eventNsp(io.of('event'));
+EventNsp(io.of('event'));
 
 module.exports = io;

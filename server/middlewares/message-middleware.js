@@ -3,7 +3,7 @@ const Validator = requireWrp('modules/validator-custom');
 
 module.exports = (req, res, next) => {
 	// set translate function
-	const locale = `${req.headers['accept-language']}`;
+	const locale = req.headers['accept-language'];
 	const translator = new Translator(locale);
 	const validator = new Validator(locale, req, res);
 

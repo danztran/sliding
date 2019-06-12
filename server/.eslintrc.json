@@ -12,7 +12,6 @@
 		"semi": [1, "always"],
 		"space-before-function-paren": ["error", "never"],
 		"comma-dangle": ["error", "never"],
-		"no-unused-vars": "error",
 		"no-var": "error",
 		"one-var": "off",
 		"import/no-dynamic-require": "off",
@@ -22,7 +21,7 @@
 		"global-require": "off",
 		"no-tabs": "off",
 		"no-underscore-dangle": "off",
-		"no-unused-vars": ["error", { "args": "none" }],
+		"no-unused-vars": ["warn", { "args": "none" }],
 		"object-curly-newline": "off",
 		"no-restricted-syntax": "off",
 		"dot-notation": "off",
@@ -30,15 +29,16 @@
 		"no-throw-literal": "off",
 		"consistent-return": "off",
 		"no-plusplus": "off",
-		"no-await-in-loop": "off",
 		"func-names": "off",
-		"no-console": ["error", { "allow": ["warn", "error"] }]
+		"no-console": ["error", { "allow": ["warn", "error"] }],
+		"no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["socket"] }]
 	},
 	"parser": "babel-eslint",
 	"globals": {
 		"requireWrp": true,
 		"requireDir": true,
 		"__rootdir": true,
-		"$io": true
+		"$io": true,
+		"arguments": true
 	}
 }

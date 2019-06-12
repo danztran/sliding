@@ -1,6 +1,6 @@
 {
 	"name": "host",
 	"permissions": {
-
+		"seeAllQuestions": true
 	}
 }

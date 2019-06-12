@@ -3,7 +3,7 @@
 		<v-app>
 			<navbar />
 			<drawer />
-			<v-content class="my-3">
+			<v-content class="my-3" v-if="ready">
 				<v-slide-y-transition mode="out-in">
 					<keep-alive>
 						<router-view />
@@ -20,6 +20,9 @@ import Drawer from './Drawer.vue';
 
 export default {
 	name: 'AdminLayout',
+	data: () => ({
+		ready: false
+	}),
 	components: {
 		navbar: NavBar,
 		drawer: Drawer
@@ -31,7 +34,12 @@ export default {
 		event_data(data) {
 			console.warn(data);
 			this.$store.dispatch('admin/getCurrentEvent', data);
+			this.ready = true;
 		}
+	},
+	beforeRouteLeave(to, from, next) {
+		this.$socket.emit('leave-event');
+		next();
 	},
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');

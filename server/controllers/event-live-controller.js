@@ -2,37 +2,44 @@ const Event = requireWrp('models/event');
 const EventUser = requireWrp('models/event-user');
 const Roles = requireDir('resources/roles/');
 
-const ctlr = {
-	async emitEventData({ socket, code, io }) {
+module.exports = {
+	async emitEventData({ io, socket, code }) {
 		const result = {};
+
 		try {
-			const uid = socket.request.session.passport.user;
+			// find event
 			const event = await Event.findByCode(code).exec();
 			if (!event) {
-				throw { event: 'event not found' };
+				throw { expected: socket.$fn.$t('eventNotFound') };
 			}
-
-			const eventUser = await EventUser.findRole({
-				event_id: event.id,
-				user_id: uid
-			}).exec();
-
 			result.event = event;
-			result.role = Roles[eventUser.role];
 
-			if (['host', 'moderator'].includes(eventUser.role)) {
-				socket.join(`admin/event#${code}`);
+			// check user role
+			if (socket.$state.user) {
+				const eventUser = await EventUser.findRole({
+					event_id: event.id,
+					user_id: socket.$state.user.id
+				}).exec();
+				result.role = Roles[eventUser ? eventUser.role : 'guest'];
 			}
 			else {
-				socket.join(`guest/event#${code}`);
+				result.role = Roles.guest;
+			}
+			socket.$state.role = result.role;
+			socket.$state.event = result.event;
+
+			// join role room
+			if (['host', 'moderator'].includes(result.role.name)) {
+				socket.join(`event/${code}/admin`);
+			}
+			else {
+				socket.join(`event/${code}/guest`);
 			}
 		}
 		catch (error) {
-			console.warn(error);
+			return socket.$fn.$err(error);
 		}
 
 		return socket.emit('event_data', result);
 	}
 };
-
-module.exports = ctlr;
