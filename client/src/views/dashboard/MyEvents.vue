@@ -1,8 +1,11 @@
 <template>
 	<div id="my-events-page">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-layout row justify-space-between align-center>
+		<v-layout class="mx-3" row justify-space-between align-center>
+			<!-- EVENTS ACTIVE STATUS -->
 			<div v-t="'event-status'"></div>
+
+			<!-- CREATE EVENT -->
 			<v-btn
 				round
 				color="success"
@@ -11,6 +14,8 @@
 				{{ $t('btn-create-event') }}
 			</v-btn>
 		</v-layout>
+
+		<!-- EVENT CARD -->
 		<v-card class="list-event scrollbar-primary">
 			<template v-for="event of events">
 				<div @click="toEventLive(event.code)" :key="event.code">
@@ -18,6 +23,8 @@
 				</div>
 			</template>
 		</v-card>
+
+		<!-- EMPTY EVENTS -->
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
 			<div class="empty-state" v-show="isEmpty">
@@ -65,7 +72,7 @@ export default {
 	},
 	methods: {
 		createEvent() {
-			this.$root.$emit('create-new-event');
+			this.$root.$emit('dialog-create-new-event');
 		},
 		toEventLive(code) {
 			this.$router.push({ name: 'admin-event', params: { code } });
@@ -79,7 +86,7 @@ export default {
 	.list-event {
 		max-height: 75vh;
 		overflow-y: auto;
-		box-shadow: 0 3px 10px rgba(0,0,0,.1);;
+		box-shadow: 0 3px 10px rgba(0,0,0,.1);
 	}
 	.empty-state {
 		text-align: center;

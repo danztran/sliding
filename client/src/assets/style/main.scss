@@ -9,6 +9,11 @@ html, body {
 	text-decoration: none;
 }
 
+.no-shadow {
+	border-bottom: .5px solid rgb(224, 224, 224) !important;
+	box-shadow: none;
+}
+
 .scrollbar-primary {
 	&::-webkit-scrollbar {
 		width: 7px;
@@ -32,5 +37,11 @@ html, body {
 	.my-input-code input[type="text"] {
 		max-width: 55% !important;
 		font-size: 1.2em;
+		text-transform: uppercase;
+	}
+}
+#admin-question {
+	.v-input--switch label {
+		font-size: 14px !important;
 	}
 }

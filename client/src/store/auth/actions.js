@@ -20,6 +20,7 @@ const logout = (context) => {
 	axios.get(api.auth.logout)
 		.then((res) => {
 			context.dispatch('resetAll', {}, { root: true });
+			cookies.remove(VUE_APP_CK_USER);
 			cookies.set(VUE_APP_CK_FLASH_MESSAGE, res.data.messages['auth.logout']);
 			router.push({ name: 'login' });
 		});

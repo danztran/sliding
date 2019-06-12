@@ -3,7 +3,7 @@
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
-		<v-dialog v-model="modalCreate" max-width="400px" no-click-animation>
+		<v-dialog v-model="dialogCreate" max-width="400px" no-click-animation>
 			<v-card>
 				<loading-linear :loading="loading"/>
 				<v-card-title class="pb-0 ml-3" primary-title>
@@ -194,7 +194,7 @@
 				<!-- ACTION BTN -->
 				<v-card-actions>
 					<v-spacer></v-spacer>
-					<v-btn color="primary" flat @click="modalCreate = false" >
+					<v-btn color="primary" flat @click="dialogCreate = false" >
 						{{ $t('btn-cancel') }}
 					</v-btn>
 					<v-btn color="primary" :disabled="loading" @click="createEvent">
@@ -235,7 +235,7 @@ const initForm = () => ({
 export default {
 	name: 'EventDialog',
 	data: () => ({
-		modalCreate: false,
+		dialogCreate: false,
 		loading: false,
 		form: initForm(),
 		currentDate: null,
@@ -263,8 +263,8 @@ export default {
 		this.form.end.defaultTime = date.toLocaleTimeString().substr(0, 4);
 	},
 	mounted() {
-		this.$root.$on('create-new-event', () => {
-			this.modalCreate = true;
+		this.$root.$on('dialog-create-new-event', () => {
+			this.dialogCreate = true;
 		});
 	},
 	methods: {
@@ -283,7 +283,7 @@ export default {
 				.then((res) => {
 					const { code } = res.data;
 					this.$store.dispatch('event/createEvent', Object.assign(eventFormData, { code }));
-					this.modalCreate = false;
+					this.dialogCreate = false;
 				})
 				.catch((err) => {
 					this.handleErrorMessages(err.messages);

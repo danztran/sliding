@@ -28,6 +28,7 @@
 				</v-layout>
 			</v-layout>
 		</v-img>
+
 		<v-layout
 			class="fill-height"
 			column>
@@ -42,18 +43,20 @@
 					<v-icon :color="link.color">{{ link.icon }}</v-icon>
 				</v-list-tile-action>
 
-				<v-list-tile-title v-text="link.text"/>
+				<v-list-tile-title v-text="link.name"/>
 			</v-list-tile>
 
+			<!-- SWITCH EVENT -->
 			<v-divider/>
 			<v-list-tile @click="switchEvent">
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.switch-event'"></v-icon>
+					<v-icon v-html="'$vuetify.icons.switch_event'"></v-icon>
 				</v-list-tile-action>
 
 				<v-list-tile-title v-t="'btn-switch-event'"/>
 			</v-list-tile>
 
+			<!-- LOGOUT -->
 			<v-list-tile @click="callLogout">
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
@@ -77,25 +80,25 @@ export default {
 			{
 				to: 'questions',
 				icon: 'question_answer',
-				text: 'Questions',
+				name: 'questions',
 				color: 'yellow'
 			},
 			{
 				to: 'polls',
 				icon: 'sort',
-				text: 'Polls',
+				name: 'polls',
 				color: 'primary'
 			},
 			{
 				to: 'ideas',
 				icon: 'new_releases',
-				text: 'Ideas',
+				name: 'ideas',
 				color: 'secondary'
 			},
 			{
 				to: 'analytics',
 				icon: 'poll',
-				text: 'Analytics',
+				name: 'analytics',
 				color: 'red'
 			}
 		]
@@ -104,6 +107,11 @@ export default {
 		...mapGetters({
 			eventInfo: 'admin/infoCurrentEvent'
 		})
+	},
+	created() {
+		this.links.forEach((e) => {
+			e.name = this.$t(e.name);
+		});
 	},
 	watch: {
 		eventInfo(val) {

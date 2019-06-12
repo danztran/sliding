@@ -1,11 +1,9 @@
 <template>
-	<div>This is Team display</div>
+	<div>Co-op events here</div>
 </template>
 
 <script>
-export default {
-	name: 'Team'
-};
+export default {};
 </script>
 
 <style>
