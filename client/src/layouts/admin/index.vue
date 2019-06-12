@@ -10,6 +10,8 @@
 					</keep-alive>
 				</v-slide-y-transition>
 			</v-content>
+			<event-dialog />
+			<reply-question-dialog />
 		</v-app>
 	</div>
 </template>
@@ -17,6 +19,8 @@
 <script>
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
+import EventDialog from '@/components/dials/EventDialog.vue';
+import ReplyQuestionDialog from '@/components/dials/ReplyQuestion.vue';
 
 export default {
 	name: 'AdminLayout',
@@ -25,7 +29,9 @@ export default {
 	}),
 	components: {
 		navbar: NavBar,
-		drawer: Drawer
+		drawer: Drawer,
+		'event-dialog': EventDialog,
+		'reply-question-dialog': ReplyQuestionDialog
 	},
 	sockets: {
 		connect() {

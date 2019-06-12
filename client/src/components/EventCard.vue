@@ -1,6 +1,6 @@
 <template>
 	<v-hover>
-		<v-card class="card-hover py-3 my-2" slot-scope="{ hover }" to="#">
+		<v-card class="card-hover py-3 my-2" slot-scope="{ hover }">
 			<v-layout class="mt-2" row wrap align-center>
 				<!-- ICON -->
 				<v-flex xs2 sm1 class="text-xs-center">
@@ -28,11 +28,11 @@
 							<v-icon
 								class="iconAction"
 								:size="iconSize"
-								v-html="'$vuetify.icons.web-slide-event'"/>
+								v-html="'$vuetify.icons.web_slide_event'"/>
 							<v-icon
 								class="iconAction"
 								:size="iconSize"
-								v-html="'$vuetify.icons.mobile-slide-event'"/>
+								v-html="'$vuetify.icons.mobile_slide_event'"/>
 						</div>
 					</v-layout>
 				</v-flex>
@@ -47,7 +47,7 @@
 										class="iconAction"
 										:size="iconSize"
 										v-on="{ ...tooltip, ...menu }"
-										v-html="'$vuetify.icons.more-vert'" />
+										v-html="'$vuetify.icons.more_vert'" />
 								</template>
 								<span v-t="'action-tooltip'"></span>
 							</v-tooltip>

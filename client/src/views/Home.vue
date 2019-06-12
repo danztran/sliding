@@ -8,8 +8,8 @@
 			<v-layout align-center row>
 				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
 				<v-spacer></v-spacer>
-				<section class="nav-btn">
-					<span style="font-weight: bold;">
+				<section class="nav-btn body-2">
+					<template v-if="!user">
 						<span
 							:class="{ langActive: locale === 'vi' }"
 							class="changeLang"
@@ -22,21 +22,33 @@
 							@click="changeLocale('en')">
 							EN
 						</span>
-					</span>
-					<v-btn
-						to="/login"
-						flat medium>
-						<router-link class="no-underline" to='/login' v-t="'loginFormTitle'" />
-					</v-btn>
-					<v-btn
-						to="/signup"
-						flat
-						medium
-						class="primary no-underline"
-						color="white"
-						v-t="'btn-signup'">
-						<router-link to='/signup' v-t="'signUp'" />
-					</v-btn>
+						<v-btn
+							to="/login"
+							flat medium>
+							<router-link class="no-underline" to='/login' v-t="'loginFormTitle'" />
+						</v-btn>
+						<v-btn
+							to="/signup"
+							flat
+							medium
+							class="primary no-underline"
+							color="white"
+							v-t="'btn-signup'">
+							<router-link to='/signup' v-t="'signUp'" />
+						</v-btn>
+					</template>
+					<template v-else>
+						<span v-t="'hello'"></span>
+						<span class="text-capitalize">&nbsp;{{ user.name }}</span>
+						<v-btn
+							@click="callLogout"
+							flat
+							medium
+							class="primary no-underline"
+							color="white"
+							v-t="'logout'">
+						</v-btn>
+					</template>
 				</section>
 			</v-layout>
 		</v-toolbar>
@@ -67,10 +79,9 @@
 									solo
 									:label="$t('plhEnterCode')"
 									v-model="inputEventCode"
-									@keydown="handleInputCode"
 									prefix="#">
 								</v-text-field>
-								<v-btn color="primary" :to="linkToEventCode">
+								<v-btn color="primary" :to="inputEventCode">
 									<span v-t="'btn-join'"></span>
 								</v-btn>
 							</div>
@@ -303,6 +314,10 @@ import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 export default {
 	name: 'Home',
 	data: () => ({
+		user: {
+			email: '',
+			name: ''
+		},
 		inputEventCode: '',
 		backgroundNav: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
 		cards: [
@@ -367,17 +382,17 @@ export default {
 	computed: {
 		locale() {
 			return this.$i18n.locale;
-		},
-		linkToEventCode() {
-			return this.inputEventCode.toLocaleLowerCase();
 		}
+	},
+	created() {
+		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 	},
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
 		},
-		handleInputCode(e) {
-			this.inputEventCode = e.target.value.toUpperCase();
+		callLogout() {
+			this.$store.dispatch('auth/logout');
 		}
 	}
 };
@@ -412,6 +427,9 @@ export default {
 				top: .1em;
 				right: -.2em;
 				height: 45px;
+			}
+			input[type="text"] {
+				text-transform: uppercase;
 			}
 		}
 		.white-bg {

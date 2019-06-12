@@ -78,6 +78,11 @@ export default {
 			this.form.password.value = this.fillInfo.password;
 		}
 	},
+	mounted() {
+		if ((this.$cookies.get(process.env.VUE_APP_CK_USER))) {
+			this.$router.push({ name: 'dashboard' });
+		}
+	},
 	methods: {
 		handleLogin() {
 			this.loading = true;

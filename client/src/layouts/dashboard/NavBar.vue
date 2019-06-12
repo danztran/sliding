@@ -7,7 +7,7 @@
 					v-if="$vuetify.breakpoint.xs"
 					@click="toggleDrawer" />
 
-				<v-toolbar-title class="white--text">
+				<v-toolbar-title class="white--text ml-0">
 					<v-list-tile-content>
 						<div class="hidden-xs-only">
 							<div class="body-2">
@@ -36,7 +36,6 @@
 
 				<v-list-tile class="hidden-sm-and-up">
 					<v-icon
-						class="pa-0"
 						color="whilte"
 						size="20">
 						search

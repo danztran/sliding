@@ -135,7 +135,7 @@ export default {
 		},
 		editProfile() {},
 		toggleModalCreateEvent() {
-			this.$root.$emit('create-new-event');
+			this.$root.$emit('dialog-create-new-event');
 		}
 	}
 };
