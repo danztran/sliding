@@ -33,6 +33,15 @@ export default {
 		'event-dialog': EventDialog,
 		'reply-question-dialog': ReplyQuestionDialog
 	},
+	beforeCreate() {
+		this.$root.$emit('show-loading-overlay');
+		this.$socket.connect();
+		this.$socket.emit('join-event', this.$route.params.code);
+	},
+	beforeRouteLeave(to, from, next) {
+		this.$socket.emit('leave-event');
+		next();
+	},
 	sockets: {
 		connect() {
 			console.warn('connected');
@@ -42,17 +51,6 @@ export default {
 			this.$store.dispatch('admin/getCurrentEvent', data);
 			this.ready = true;
 		}
-	},
-	beforeRouteLeave(to, from, next) {
-		this.$socket.emit('leave-event');
-		next();
-	},
-	beforeCreate() {
-		this.$root.$emit('show-loading-overlay');
-	},
-	mounted() {
-		this.$socket.connect();
-		this.$socket.emit('join-event', this.$route.params.code);
 	}
 };
 </script>

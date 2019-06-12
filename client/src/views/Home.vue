@@ -38,14 +38,16 @@
 						</v-btn>
 					</template>
 					<template v-else>
-						<span v-t="'hello'"></span>
-						<span class="text-capitalize">&nbsp;{{ user.name }}</span>
+						<v-btn class="text-capitalize">
+							<router-link class="no-underline" :to="{ name: 'dashboard' }">
+								{{ $t('hello') }}&nbsp;{{ user.name }}
+							</router-link>
+						</v-btn>
 						<v-btn
 							@click="callLogout"
 							flat
 							medium
-							class="primary no-underline"
-							color="white"
+							class="no-underline"
 							v-t="'logout'">
 						</v-btn>
 					</template>

@@ -1,6 +1,6 @@
 import Router from 'vue-router';
 // eslint-disable-next-line
-import authMdw from './middlewares/auth-middleware';
+import AuthMdw from './middlewares/auth-middleware';
 
 // Page Layout
 import Page from './layouts/Page.vue';
@@ -55,6 +55,7 @@ const router = new Router({
 					path: '/',
 					name: 'auth',
 					component: AuthLayout,
+					beforeEnter: AuthMdw.beforeEnterLogin,
 					redirect: { name: 'login' },
 					children: [
 						{
@@ -79,7 +80,7 @@ const router = new Router({
 					path: 'dashboard',
 					name: 'dashboard',
 					component: Dashboard,
-					beforeEnter: authMdw.guard,
+					beforeEnter: AuthMdw.guard,
 					redirect: { name: 'my-events' },
 					children: [
 						{
