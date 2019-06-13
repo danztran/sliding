@@ -34,6 +34,9 @@ export default {
 				if (messages.length > 0) {
 					this.$root.$emit('notifyErrorMessage', messages.join('\n\r'));
 				}
+				if (dataMsg.redirect) {
+					this.$router.push(dataMsg.redirect);
+				}
 			}
 		}
 	}
