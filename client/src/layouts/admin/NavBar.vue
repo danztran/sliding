@@ -36,14 +36,17 @@
 
 			<!-- TAB SLIDER -->
 			<template v-slot:extension>
-				<v-tabs color="primary">
-					<v-tabs-slider color="yellow" />
+				<v-tabs
+					light
+					color="white">
+					<v-tabs-slider color="primary" />
 
 					<v-tab
 						v-for="(tab, i) of tabs"
 						:key="i"
-						fixed-tabs
-						:to="tab.url">
+						:to="tab.url"
+						class="font-weight-medium"
+						active-class="primary--text font-weight-bold">
 						{{ tab.name }}
 					</v-tab>
 				</v-tabs>
@@ -76,7 +79,7 @@ export default {
 			return this.$vuetify.breakpoint.xs;
 		},
 		...mapGetters({
-			eventInfo: 'admin/infoCurrentEvent'
+			eventInfo: 'admin/event/infoCurrentEvent'
 		})
 	},
 	watch: {

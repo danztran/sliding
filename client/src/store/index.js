@@ -3,7 +3,10 @@ import Vuex from 'vuex';
 
 import authModule from './auth';
 import dashboardModule from './dashboard';
-import adminModule from './admin';
+
+// Admin manage current event
+import eventModule from './admin/events';
+import questionModule from './admin/questions';
 
 Vue.use(Vuex);
 
@@ -11,7 +14,13 @@ export default new Vuex.Store({
 	modules: {
 		auth: authModule,
 		dashboard: dashboardModule,
-		admin: adminModule
+		admin: {
+			namespaced: true,
+			modules: {
+				event: eventModule,
+				questions: questionModule
+			}
+		}
 	},
 	actions: {
 		resetAll({ commit }) {

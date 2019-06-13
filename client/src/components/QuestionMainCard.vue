@@ -11,9 +11,11 @@
 
 					<!-- INFO USER -->
 					<v-list-tile-content>
-						<span class="body-2">Username</span>
+						<span class="body-2">
+							{{ question.user.name }}
+						</span>
 						<span class="body-1 grey--text font-weight-light">
-							<span>0 </span>
+							<span>{{ question.likes.length }} </span>
 							<v-icon :size="icon.xs" v-html="'$vuetify.icons.like'"/>
 							• Date time
 						</span>
@@ -140,9 +142,7 @@
 				<p
 					:class="{'mb-0': !moderator}"
 					class="body-1">
-					Lorem ipsum dolor sit amet
-					consectetur adipisicing elit
-					Odio dignissimos nulla nemo ab qui sit.
+					{{ question.content }}
 				</p>
 			</v-card-title>
 
@@ -173,8 +173,9 @@
 							color="grey lighten-1"
 							flat
 							small
-							@click="replyQuestion">
+							@click="replyQuestion(question)">
 							<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
+							<span>{{ question.count_replies }}</span>
 							<span class="caption" v-t="'btn-reply'"></span>
 						</v-btn>
 
@@ -246,6 +247,22 @@ export default {
 		moderator: {
 			type: Boolean,
 			default: false
+		},
+		question: {
+			type: Object,
+			default: () => ({
+				content: '',
+				count_replies: null,
+				id: null,
+				likes: [],
+				user: {
+					type: Object,
+					default: () => ({
+						id: null,
+						name: ''
+					})
+				}
+			})
 		}
 	},
 	data: () => ({
@@ -256,8 +273,8 @@ export default {
 		}
 	}),
 	methods: {
-		replyQuestion() {
-			this.$root.$emit('dialog-reply-question');
+		replyQuestion(question) {
+			this.$root.$emit('dialog-reply-question', question);
 		},
 		restoreQuestion() {},
 		highlightQuestion() {},

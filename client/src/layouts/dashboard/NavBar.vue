@@ -50,14 +50,17 @@
 				<v-tabs
 					v-if="!hiddenXS"
 					v-model="activeTab"
-					color="primary">
-					<v-tabs-slider color="yellow" />
+					light
+					color="white">
+					<v-tabs-slider color="primary" />
 
 					<v-tab
 						v-for="(tab) of tabs"
 						:key="tab.id"
+						:to="tab.url"
 						fixed-tabs
-						:to="tab.url">
+						class="font-weight-medium"
+						active-class="primary--text font-weight-bold">
 						{{ tab.name }}
 					</v-tab>
 				</v-tabs>

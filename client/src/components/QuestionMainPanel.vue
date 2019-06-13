@@ -33,7 +33,7 @@
 					</v-icon>
 				</v-btn>
 
-				<v-btn class="ma-0" icon>
+				<v-btn v-if="currentTab === 0" class="ma-0" icon>
 					<v-icon
 						color="grey darken-1"
 						:size="icon.small"
@@ -52,11 +52,11 @@
 		</v-layout>
 
 		<!-- CONTENT -->
-		<v-tabs-items v-model="currentTab">
+		<v-tabs-items v-model="currentTab" class="w-100 elevation-2">
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
-				<v-card class="w-100 card-parent list-scroll scrollbar-primary">
+				<v-card class="card-parent list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
 							<!-- CARD MESSAGE PASSING HERE -->
@@ -69,7 +69,7 @@
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
-				<v-card class="w-100 card-parent list-scroll scrollbar-primary">
+				<v-card class="card-parent list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
 							<slot name="archive-tab"></slot>

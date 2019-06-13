@@ -48,7 +48,7 @@ export default {
 		},
 		event_data(data) {
 			console.warn(data);
-			this.$store.dispatch('admin/getCurrentEvent', data);
+			this.$store.dispatch('admin/event/getCurrentEvent', data);
 			this.ready = true;
 		}
 	}

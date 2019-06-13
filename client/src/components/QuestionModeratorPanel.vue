@@ -50,7 +50,7 @@
 			</div>
 		</v-layout>
 
-		<v-card class="w-100 card-parent list-scroll scrollbar-primary">
+		<v-card class="w-100 card-parent list-scroll scrollbar-primary elevation-2">
 			<v-layout row wrap>
 				<v-flex xs12>
 					<!-- CARD MESSAGE PASSING HERE -->

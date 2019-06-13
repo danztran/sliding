@@ -13,7 +13,11 @@
 
 			<!-- CONTENT -->
 			<section class="wrapper-card">
-				<question-card />
+				<template v-for="question in questions">
+					<question-card
+						:key="question.id"
+						:question="question"/>
+				</template>
 			</section>
 
 			<!-- ACTIONS -->
@@ -55,7 +59,9 @@ export default {
 		icon: {
 			small: 20
 		},
-		form: initForm()
+		form: initForm(),
+		questions: '',
+		replies: ''
 	}),
 	computed: {
 		notEmpty() {
@@ -69,7 +75,8 @@ export default {
 		}
 	},
 	mounted() {
-		this.$root.$on('dialog-reply-question', () => {
+		this.$root.$on('dialog-reply-question', (question) => {
+			this.questions = [question];
 			this.dialogReplyQuestion = true;
 		});
 	},

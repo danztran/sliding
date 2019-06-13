@@ -5,19 +5,22 @@
 			<!-- MODERATOR CHECK QUESTIONS VIEW -->
 			<v-flex class="pr-1" xs12 sm6>
 				<question-moderator-panel>
-					<question-main-card moderator/>
+					<!-- <question-main-card moderator/> -->
 				</question-moderator-panel>
 			</v-flex>
 
 			<!-- MAIN QUESTION VIEW -->
 			<v-flex class="pl-1" xs12 sm6>
 				<question-main-panel>
-					<template slot="live-tab">
-						<question-main-card reply/>
+					<template slot="live-tab" v-for="question in questions">
+						<question-main-card
+							:key="question.id"
+							:question="question"
+							reply/>
 					</template>
 
 					<template slot="archive-tab">
-						<question-main-card archive/>
+						<!-- <question-main-card archive/> -->
 					</template>
 				</question-main-panel>
 			</v-flex>
@@ -26,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import QuestionModeratorPanel from '@/components/QuestionModeratorPanel.vue';
 import QuestionMainPanel from '@/components/QuestionMainPanel.vue';
 // import QuestionModeratorCard from '@/components/QuestionModeratorCard.vue';
@@ -42,7 +46,13 @@ export default {
 	sockets: {
 		event_questions(data) {
 			console.warn(data);
+			this.$store.dispatch('admin/questions/getQuestions', data);
 		}
+	},
+	computed: {
+		...mapGetters({
+			questions: 'admin/questions/questions'
+		})
 	},
 	created() {
 		this.$socket.emit('get-questions');

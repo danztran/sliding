@@ -45,6 +45,7 @@
 		"event-allow-search": "Allow search event",
 		"event-attendees-info": "Attendees are able to join your event within dates you select.",
 		"event-status": "Active",
+		"empty-archive": "You can archive questions in the Live tab after they were answered or are no longer relevant.",
 		"action-tooltip": "Action",
 		"my-events": "My Events",
 		"coop-events": "Co.op Events",

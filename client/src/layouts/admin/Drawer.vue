@@ -105,7 +105,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/infoCurrentEvent'
+			eventInfo: 'admin/event/infoCurrentEvent'
 		})
 	},
 	created() {
