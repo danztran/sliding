@@ -42,6 +42,20 @@
 				<v-divider></v-divider>
 
 				<v-list class="pa-0">
+					<!-- HOMEPAGE -->
+					<v-list-tile to="/">
+						<v-list-tile-action>
+							<v-icon
+								class="pl-1"
+								color="secondary"
+								size="20"
+								v-html="'$vuetify.icons.home'">
+							</v-icon>
+						</v-list-tile-action>
+
+						<v-list-tile-title v-t="'home-page'"/>
+					</v-list-tile>
+
 					<!-- EVENTS -->
 					<v-list-tile to="/dashboard/my-events">
 						<v-list-tile-action>
@@ -49,7 +63,7 @@
 								class="pl-1"
 								color="primary"
 								size="20"
-								v-html="'$vuetify.icons.home'">
+								v-html="'$vuetify.icons.event'">
 							</v-icon>
 						</v-list-tile-action>
 

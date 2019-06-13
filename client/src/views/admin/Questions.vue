@@ -2,25 +2,36 @@
 	<div id="admin-question">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-layout row wrap>
-			<!-- MODERATOR CHECK QUESTIONS VIEW -->
-			<v-flex class="pr-1" xs12 sm6>
+			<!--
+				@desc: check question Panel Moderator view
+				@hidden panel in XS-SM
+			-->
+			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
 				<question-moderator-panel>
-					<!-- <question-main-card moderator/> -->
+					<!-- <question-card moderator/> -->
 				</question-moderator-panel>
 			</v-flex>
 
-			<!-- MAIN QUESTION VIEW -->
-			<v-flex class="pl-1" xs12 sm6>
+			<!--
+				@desc: tab question live/archive panel
+				@show tab moderator in XS-SM
+			-->
+			<v-flex class="pl-1" xs12 md6>
 				<question-main-panel>
+					<template v-if="showSMnXS" slot="for-review-moderator-tab">
+						<!-- <question-card moderator/> -->
+						<p>for review</p>
+					</template>
+
 					<template slot="live-tab" v-for="question in questions">
-						<question-main-card
+						<question-card
 							:key="question.id"
 							:question="question"
 							reply/>
 					</template>
 
 					<template slot="archive-tab">
-						<!-- <question-main-card archive/> -->
+						<!-- <question-card archive/> -->
 					</template>
 				</question-main-panel>
 			</v-flex>
@@ -32,16 +43,14 @@
 import { mapGetters } from 'vuex';
 import QuestionModeratorPanel from '@/components/QuestionModeratorPanel.vue';
 import QuestionMainPanel from '@/components/QuestionMainPanel.vue';
-// import QuestionModeratorCard from '@/components/QuestionModeratorCard.vue';
-import QuestionMainCard from '@/components/QuestionMainCard.vue';
+import QuestionCard from '@/components/QuestionCard.vue';
 
 export default {
 	name: 'AdminQuestions',
 	components: {
 		'question-moderator-panel': QuestionModeratorPanel,
 		'question-main-panel': QuestionMainPanel,
-		// 'question-moderator-card': QuestionModeratorCard,
-		'question-main-card': QuestionMainCard
+		'question-card': QuestionCard
 	},
 	sockets: {
 		event_questions(data) {
@@ -50,6 +59,9 @@ export default {
 		}
 	},
 	computed: {
+		showSMnXS() {
+			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		},
 		...mapGetters({
 			questions: 'admin/questions/questions'
 		})

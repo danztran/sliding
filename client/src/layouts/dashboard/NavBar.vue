@@ -4,7 +4,7 @@
 		<v-toolbar color="primary" dark tabs>
 			<v-layout align-center justify-space-between row fill-height>
 				<v-toolbar-side-icon
-					v-if="$vuetify.breakpoint.xs"
+					v-if="hiddenXS"
 					@click="toggleDrawer" />
 
 				<v-toolbar-title class="white--text ml-0">
@@ -18,7 +18,7 @@
 								{{ user.name }}
 							</div>
 						</div>
-						<div v-if="$vuetify.breakpoint.xs" class="text-xs-center">
+						<div v-if="hiddenXS" class="text-xs-center">
 							Tabname
 						</div>
 					</v-list-tile-content>

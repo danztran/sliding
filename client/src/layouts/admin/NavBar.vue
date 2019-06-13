@@ -10,7 +10,7 @@
 				<v-list-tile>
 					<v-list-tile-avatar v-if="!hiddenXS" size="35" color="white">
 						<router-link to="/dashboard/my-events" class="no-underline pt-1" id="btn-back">
-							<v-icon size="25" color="primary" v-html="'$vuetify.icons.arrow-left'"></v-icon>
+							<v-icon size="25" color="primary" v-html="'$vuetify.icons.arrow_left'"></v-icon>
 						</router-link>
 					</v-list-tile-avatar>
 

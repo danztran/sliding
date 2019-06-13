@@ -14,6 +14,10 @@ html, body {
 	box-shadow: none;
 }
 
+.w-100 {
+	width: 100%;
+}
+
 .scrollbar-primary {
 	&::-webkit-scrollbar {
 		width: 7px;

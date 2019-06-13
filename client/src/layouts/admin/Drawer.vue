@@ -46,8 +46,18 @@
 				<v-list-tile-title v-text="link.name"/>
 			</v-list-tile>
 
-			<!-- SWITCH EVENT -->
+			<!-- HOMEPAGE -->
 			<v-divider/>
+			<v-list-tile to="/">
+				<v-list-tile-action>
+					<v-icon v-html="'$vuetify.icons.home'">
+					</v-icon>
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'home-page'"/>
+			</v-list-tile>
+
+			<!-- SWITCH EVENT -->
 			<v-list-tile @click="switchEvent">
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.switch_event'"></v-icon>

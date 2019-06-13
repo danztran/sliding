@@ -45,9 +45,19 @@
 
 				<v-list-tile-title v-text="link.name"/>
 			</v-list-tile>
-
 			<v-divider/>
 
+			<!-- HOMEPAGE -->
+			<v-list-tile to="/">
+				<v-list-tile-action>
+					<v-icon v-html="'$vuetify.icons.home'">
+					</v-icon>
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'home-page'"/>
+			</v-list-tile>
+
+			<!-- PROFILE -->
 			<v-list-tile>
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.user'"></v-icon>
@@ -56,6 +66,7 @@
 				<v-list-tile-title v-t="'btn-your-profile'"/>
 			</v-list-tile>
 
+			<!-- LOGOUT -->
 			<v-list-tile @click="callLogout">
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
@@ -76,7 +87,7 @@ export default {
 		links: [
 			{
 				to: 'my-events',
-				icon: 'home',
+				icon: 'event',
 				name: 'my-events',
 				color: 'primary'
 			},

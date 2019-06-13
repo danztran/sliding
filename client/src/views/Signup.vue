@@ -1,7 +1,9 @@
 <template>
 	<div id="signup-page">
 		<loading-linear :loading="loading"/>
-
+		<!--
+			@desc: form title
+		-->
 		<v-form @submit.prevent="handleSignup">
 			<v-layout align-center justify-center row fill-height>
 				<v-card-title primary-title>
@@ -19,6 +21,10 @@
 				</v-card-title>
 			</v-layout>
 
+			<!--
+				@desc: input field
+				@contains: name, email, username, pw, re-pw
+			-->
 			<v-card-text>
 				<text-field :field="form.name" />
 				<text-field :field="form.email" />
@@ -27,10 +33,16 @@
 				<text-field :field="form.rePassword" />
 			</v-card-text>
 
+			<!--
+				@desc: show errorr messange
+			-->
 			<div class="error--text text-xs-center">
 				{{ errorMessage }}
 			</div>
 
+			<!--
+				@desc: button submit
+			-->
 			<v-card-actions class="px-3 py-2">
 				<v-layout
 					align-center

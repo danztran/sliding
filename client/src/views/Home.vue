@@ -3,7 +3,10 @@
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
-		<!-- NAVBAR -->
+		<!--
+			@desc: Header navigator bar
+			@contains: username, change language, login, logout, signup
+		-->
 		<v-toolbar id="my-navbar" fixed class="nav-transparent">
 			<v-layout align-center row>
 				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
@@ -55,7 +58,10 @@
 			</v-layout>
 		</v-toolbar>
 		<v-content>
-			<!-- INTRODUCTION AND JOIN EVENT -->
+			<!--
+				@desc: Main picture introduce, input event code
+				@contains: sologan, signup btn, input event code
+			-->
 			<v-parallax
 				class="pa-0"
 				dark
@@ -63,7 +69,9 @@
 				:src="backgroundNav">
 				<v-layout align-center justify-center row>
 					<v-container grid-list-xs>
-						<!-- SOLOGAN -->
+						<!--
+							@desc: sologan
+						-->
 						<v-flex
 							xs12
 							text-xs-center
@@ -73,7 +81,9 @@
 							<span class="font-weight-light headline" v-t="'sub-sologan'"></span>
 						</v-flex>
 
-						<!-- INPUT CODE -->
+						<!--
+							@desc: Input code
+						-->
 						<v-layout justify-center row>
 							<div class="my-input-code w-3">
 								<v-text-field
@@ -104,7 +114,9 @@
 				</v-layout>
 			</v-parallax>
 
-			<!-- CARDS -->
+			<!--
+				@desc: 3 card introduce product
+			-->
 			<section class="white-bg">
 				<v-layout
 					row
@@ -146,7 +158,9 @@
 				</v-layout>
 			</section>
 
-			<!-- PHONE -->
+			<!--
+				@desc: intro reponsive device
+			-->
 			<section>
 				<v-layout
 					row
@@ -154,6 +168,7 @@
 					class="py-4"
 					align-center>
 					<v-flex xs12>
+
 						<v-container grid-list-xl>
 							<v-layout row wrap>
 								<v-flex xs12 sm6>
@@ -174,16 +189,17 @@
 											</v-btn>
 										</v-flex>
 									</v-layout>
-
 								</v-flex>
 							</v-layout>
 						</v-container>
-					</v-flex>
 
+					</v-flex>
 				</v-layout>
 			</section>
 
-			<!-- PARTNER -->
+			<!--
+				@desc: partner
+			-->
 			<section class="white-bg">
 				<v-layout
 					row
@@ -216,7 +232,9 @@
 				</v-layout>
 			</section>
 
-			<!-- EXPERIENCES -->
+			<!--
+				@desc: title uses product
+			-->
 			<section id="primary-bg">
 				<v-layout
 					row
@@ -240,7 +258,10 @@
 				</v-layout>
 			</section>
 
-			<!-- FOOTER -->
+			<!--
+				@desc: footer
+				@contains: advertise product/customer/about/contact
+			-->
 			<section class="white-bg">
 				<v-layout
 					id="footer"
@@ -250,7 +271,9 @@
 					<v-flex xs12>
 						<v-container grid-list-xl>
 							<v-layout row wrap>
-								<!-- PRODUCTS -->
+								<!--
+									@desc: advertise products
+								-->
 								<v-flex xs6 sm3>
 									<ul>
 										<span class="subheading pb-2 font-weight-medium" v-t="'footer-product'">
@@ -263,7 +286,9 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!-- CUSTOMERS -->
+								<!--
+									@desc: customer
+								-->
 								<v-flex xs6 sm3>
 									<ul>
 										<span class="subheading pb-2 font-weight-medium" v-t="'footer-customer'">
@@ -276,7 +301,9 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!-- ABOUT US -->
+								<!--
+									@desc: about us
+								-->
 								<v-flex xs6 sm3>
 									<ul>
 										<span class="subheading pb-2 font-weight-medium" v-t="'footer-about'">
@@ -289,7 +316,9 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!-- CONTACT -->
+								<!--
+									@desc: contact
+								-->
 								<v-flex xs6 sm3>
 									<ul>
 										<span

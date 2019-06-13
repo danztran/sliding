@@ -28,7 +28,7 @@ const icons = {
 	more_vert: 'more_vert',
 	web_slide_event: 'slideshow',
 	mobile_slide_event: 'mobile_screen_share',
-	'arrow-left': 'keyboard_arrow_left',
+	arrow_left: 'keyboard_arrow_left',
 	signout: 'power_settings_new',
 	ideas: 'new_releases',
 	analytics: 'poll',

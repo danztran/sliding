@@ -1,6 +1,6 @@
-/* ------------------ *
- *	Auth Module
- * ------------------ */
+/* -----------------------*
+@desc: get info user
+ * -----------------------*/
 
 import actions from './actions';
 import getters from './getters';

@@ -13,6 +13,12 @@
 				slider-color="primary"
 				right>
 				<v-tab
+					v-if="showSMnXS"
+					active-class="primary--text font-weight-medium">
+					{{ $t('moderator-view-title') }}
+				</v-tab>
+
+				<v-tab
 					active-class="primary--text font-weight-medium">
 					{{ $t('btn-live') }}
 				</v-tab>
@@ -25,7 +31,7 @@
 
 			<!-- ACTIONS SORT/SEARCH/ -->
 			<div>
-				<v-btn class="ma-0" icon>
+				<v-btn v-if="!showSMnXS" class="ma-0" icon>
 					<v-icon
 						color="grey darken-1"
 						:size="icon.small"
@@ -33,7 +39,7 @@
 					</v-icon>
 				</v-btn>
 
-				<v-btn v-if="currentTab === 0" class="ma-0" icon>
+				<v-btn v-if="currentTab === 0 && !showSMnXS" class="ma-0" icon>
 					<v-icon
 						color="grey darken-1"
 						:size="icon.small"
@@ -53,6 +59,22 @@
 
 		<!-- CONTENT -->
 		<v-tabs-items v-model="currentTab" class="w-100 elevation-2">
+			<!-- LIVE TAB -->
+			<v-tab-item
+				v-if="showSMnXS"
+				:transition="false"
+				:reverse-transition="false">
+				<v-card class="card-parent list-scroll scrollbar-primary">
+					<v-layout row wrap>
+						<v-flex xs12>
+							<!-- CARD MESSAGE PASSING HERE -->
+							<slot name="for-review-moderator-tab"></slot>
+						</v-flex>
+					</v-layout>
+				</v-card>
+			</v-tab-item>
+
+			<!-- LIVE TAB -->
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
@@ -66,6 +88,7 @@
 				</v-card>
 			</v-tab-item>
 
+			<!-- ARCHIVE TAB -->
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
@@ -93,6 +116,11 @@ export default {
 			small: 20
 		}
 	}),
+	computed: {
+		showSMnXS() {
+			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		}
+	},
 	methods: {
 		replyQuestion() {
 			this.$root.$emit('dialog-reply-question');

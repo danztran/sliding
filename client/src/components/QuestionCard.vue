@@ -234,7 +234,7 @@
 
 <script>
 export default {
-	name: 'QuestionMainCard',
+	name: 'QuestionCard',
 	props: {
 		reply: {
 			type: Boolean,

@@ -295,10 +295,4 @@ export default {
 </script>
 
 <style lang="scss">
-	.w100 {
-		width: 100%;
-	}
-	.v-dialog.v-dialog--active {
-		margin: 5px !important;
-	}
 </style>

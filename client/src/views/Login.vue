@@ -3,6 +3,9 @@
 		<loading-linear :loading="loading"/>
 
 		<v-form @submit.prevent="handleLogin">
+			<!--
+				@desc: form title, and link to signup
+			-->
 			<v-layout align-center justify-center row fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
@@ -17,11 +20,18 @@
 				</v-card-title>
 			</v-layout>
 
+			<!--
+				@desc: input username/password
+			-->
 			<v-card-text>
 				<text-field :field="form.username" />
 				<text-field :field="form.password" />
 			</v-card-text>
 
+			<!--
+				@desc: show error message, flash message
+				@example: username wrong, pass wrong, logout msg
+			-->
 			<div class="warning--text text-xs-center">
 				{{ flashMessage }}
 			</div>
@@ -29,6 +39,9 @@
 				{{ errorMessage }}
 			</div>
 
+			<!--
+				@desc: button submit
+			-->
 			<v-card-actions class="px-3 py-2">
 				<v-layout align-center justify-center column fill-height>
 					<v-btn color="primary" type="submit">{{ $t('loginFormTitle') }}</v-btn>

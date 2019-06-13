@@ -1,6 +1,6 @@
-/* ------------------ *
- *	Event Module
- * ------------------ */
+/* ------------------------------------------------------ *
+@desc: Dashboard view all events (active, pass)
+ * ------------------------------------------------------ */
 
 import actions from './actions';
 import getters from './getters';

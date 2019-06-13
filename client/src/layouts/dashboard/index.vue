@@ -31,9 +31,6 @@ export 	default {
 
 <style lang="scss">
 #dashboard-layout {
-	.w-100 {
-		width: 100%;
-	}
 	.v-content {
 		margin: 5px 0 !important;
 	}

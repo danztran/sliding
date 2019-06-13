@@ -1,6 +1,6 @@
-/* ------------------ *
- *	Event Module
- * ------------------ */
+/* ------------------------------------ *
+  @desc: get current info event
+ * ------------------------------------*/
 
 import actions from './actions';
 import getters from './getters';
