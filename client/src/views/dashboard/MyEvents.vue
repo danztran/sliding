@@ -2,26 +2,23 @@
 	<div id="my-events-page">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-layout class="mx-3" row justify-space-between align-center>
-			<!--
-				@desc: event being activated
-			-->
-			<div v-t="'event-status'"></div>
+			<template v-if="hidden">
+				<!-- @desc: event being activated -->
+				<div v-t="'event-status'"></div>
 
-			<!--
-				@desc: button create event
-			-->
-			<v-btn
-				round
-				color="success"
-				dark small
-				@click.stop="createEvent">
-				{{ $t('btn-create-event') }}
-			</v-btn>
+				<!-- @desc: button create event -->
+				<v-btn
+					class="px-3"
+					color="success lighten--2"
+					round
+					dark small
+					@click.stop="createEvent">
+					{{ $t('btn-create-event') }}
+				</v-btn>
+			</template>
 		</v-layout>
 
-		<!--
-			@desc: list events
-		-->
+		<!-- @desc: list events -->
 		<v-card class="list-event scrollbar-primary">
 			<template v-for="event of events">
 				<div @click="toEventLive(event.code)" :key="event.code">
@@ -30,14 +27,11 @@
 			</template>
 		</v-card>
 
-		<!--
-			@desc: message empty event
-		-->
+		<!-- @desc: message empty event -->
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
-			<div class="empty-state" v-show="isEmpty">
-				<span class="empty-state-title headline" v-t="'no-event-found'">
-				</span>
+			<div class="empty-state mt-3" v-show="isEmpty">
+				<empty-event />
 			</div>
 		</div>
 	</div>
@@ -46,10 +40,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import EventCard from '@/components/EventCard.vue';
+import EmptyEvent from '@/components/empty/Event.vue';
+
 export default {
 	name: 'Events',
 	components: {
-		'event-card': EventCard
+		'event-card': EventCard,
+		'empty-event': EmptyEvent
 	},
 	data: () => ({
 		queryOpt: {
@@ -58,6 +55,7 @@ export default {
 			order: '-created_at',
 			role: 'host'
 		},
+		hidden: false,
 		isEmpty: false,
 		loading: false
 	}),
@@ -70,6 +68,7 @@ export default {
 		events(val) {
 			this.loading = false;
 			this.isEmpty = val.length === 0;
+			this.hidden = !this.isEmpty;
 		}
 	},
 	mounted() {

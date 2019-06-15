@@ -78,6 +78,9 @@ export default {
 		.v-toolbar__extension  {
 			padding: 0 10px !important;
 		}
+		.v-tabs__container.v-tabs__container--right {
+			height: 40px !important;
+		}
 	}
 }
 </style>

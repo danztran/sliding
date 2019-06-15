@@ -1,5 +1,5 @@
 const QUERY_EVENT = (state, result) => {
-	state.events = result.events;
+	state.events = result;
 };
 
 const CREATE_EVENT = (state, newEvent) => {

@@ -1,0 +1,54 @@
+<template>
+	<v-layout row wrap align-center>
+		<v-flex xs12 md7 order-md2>
+			<v-img
+				aspect-ratio="1.7"
+				contain
+				:src="require('@/assets/welcome.svg')"/>
+		</v-flex>
+		<v-flex
+			class="text-md-left text-xs-center"
+			xs12
+			md5
+			order-md1>
+			<div
+				:class="{'headline mt-3': showSMnXS}"
+				class="display-1 font-weight-light"
+				v-t="'welcome'">
+			</div>
+			<div
+				:class="{'mt-2 subheading': showSMnXS, 'mt-4': !showSMnXS}"
+				class="title font-weight-light"
+				v-t="'event-welcome'">
+			</div>
+			<v-btn
+				class="px-4 ma-0 mt-3"
+				color="success lighten--2"
+				v-t="'btn-create-event'"
+				round
+				dark
+				medium
+				@click.stop="toggleCreateEventDialog">
+			</v-btn>
+		</v-flex>
+	</v-layout>
+</template>
+
+<script>
+export default {
+	name: 'EmptyEvent',
+	computed: {
+		showSMnXS() {
+			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		}
+	},
+	methods: {
+		toggleCreateEventDialog() {
+			this.$root.$emit('dialog-create-new-event');
+		}
+	}
+};
+</script>
+
+<style lang="css" scoped>
+</style>

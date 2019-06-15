@@ -4,7 +4,7 @@ import axios from '@/modules/axios-custom';
 const queryEvent = (context, queryOpt) => {
 	axios.get(api.event.query, { params: queryOpt })
 		.then((res) => {
-			context.commit('QUERY_EVENT', res.data);
+			context.commit('QUERY_EVENT', res.data.events);
 		})
 		// eslint-disable-next-line
 		.catch(err => console.log(err));

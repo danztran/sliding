@@ -49,7 +49,6 @@
 			<!-- TAB SLIDER -->
 			<template v-slot:extension>
 				<v-tabs
-					v-if="!hiddenXS"
 					v-model="activeTab"
 					light
 					color="white">
