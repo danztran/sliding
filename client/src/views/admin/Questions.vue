@@ -7,8 +7,10 @@
 				@hidden panel in XS-SM
 			-->
 			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
-				<question-moderator-panel>
-					<!-- <question-card moderator/> -->
+				<question-moderator-panel
+					:emptyQuestion=true
+					:onModerator="onModerator">
+					<question-card-for-moderator />
 				</question-moderator-panel>
 			</v-flex>
 
@@ -16,21 +18,31 @@
 				@desc: tab question live/archive panel
 				@show tab moderator in XS-SM
 			-->
-			<v-flex class="pl-1" xs12 md6>
-				<question-main-panel>
-					<template v-if="showSMnXS" slot="for-review-moderator-tab">
-						<!-- <question-card moderator/> -->
-						<p>for review</p>
+			<v-flex
+				:class="{'pl-1': !showSMnXS}"
+				xs12
+				md6>
+				<question-main-panel
+					:onModerator="onModerator"
+					:emptyLive="Boolean(questions.length)"
+					:emptyArchive=true>
+					<template
+						v-if="showSMnXS"
+						slot="for-review-moderator-tab">
+						<!-- <question-card-for-moderator /> -->
 					</template>
 
-					<template slot="live-tab" v-for="question in questions">
+					<template
+						slot="live-tab"
+						v-for="question in questions">
 						<question-card
 							:key="question.id"
 							:question="question"
 							reply/>
 					</template>
 
-					<template slot="archive-tab">
+					<template
+						slot="archive-tab">
 						<!-- <question-card archive/> -->
 					</template>
 				</question-main-panel>
@@ -41,17 +53,22 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import QuestionModeratorPanel from '@/components/QuestionModeratorPanel.vue';
-import QuestionMainPanel from '@/components/QuestionMainPanel.vue';
-import QuestionCard from '@/components/QuestionCard.vue';
+import QuestionModeratorPanel from '@/components/panels/QuestionModerator.vue';
+import QuestionMainPanel from '@/components/panels/QuestionMain.vue';
+import QuestionCard from '@/components/questions/QuestionCard.vue';
+import QuestionModeratorCard from '@/components/questions/QuestionModeratorCard.vue';
 
 export default {
 	name: 'AdminQuestions',
 	components: {
 		'question-moderator-panel': QuestionModeratorPanel,
 		'question-main-panel': QuestionMainPanel,
-		'question-card': QuestionCard
+		'question-card': QuestionCard,
+		'question-card-for-moderator': QuestionModeratorCard
 	},
+	data: () => ({
+		onModerator: false
+	}),
 	sockets: {
 		get_questions(data) {
 			console.warn(data);
@@ -68,6 +85,11 @@ export default {
 	},
 	created() {
 		this.$socket.emit('get-questions');
+	},
+	mounted() {
+		this.$root.$on('toggle-mode-moderation', () => {
+			this.onModerator = !this.onModerator;
+		});
 	}
 };
 </script>
@@ -79,7 +101,7 @@ export default {
 			max-height: 75vh;
 			height: 75vh;
 			overflow-y: auto;
-			box-shadow: 0 3px 10px rgba(0,0,0,.1);
+			box-shadow: 0 3px 10px rgba(0,0,0,.1) !important;
 		}
 		.v-input--switch label {
 			font-size: 14px !important;

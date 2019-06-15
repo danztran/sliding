@@ -26,6 +26,8 @@ export default new Vuex.Store({
 		resetAll({ commit }) {
 			commit('auth/RESET');
 			commit('dashboard/RESET');
+			commit('admin/event/RESET');
+			commit('admin/questions/RESET');
 		}
 	}
 });

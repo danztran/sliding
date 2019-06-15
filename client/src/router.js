@@ -113,7 +113,6 @@ const router = new Router({
 					path: 'admin/event/:code',
 					name: 'admin-event',
 					component: AdminLayout,
-					beforeEnter: AuthMdw.guard,
 					redirect: { name: 'admin-questions' },
 					children: [
 						{

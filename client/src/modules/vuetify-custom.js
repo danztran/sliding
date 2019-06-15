@@ -29,7 +29,7 @@ const icons = {
 	web_slide_event: 'slideshow',
 	mobile_slide_event: 'mobile_screen_share',
 	arrow_left: 'keyboard_arrow_left',
-	signout: 'power_settings_new',
+	signout: 'exit_to_app',
 	ideas: 'new_releases',
 	analytics: 'poll',
 	polls: 'sort',
@@ -38,7 +38,7 @@ const icons = {
 	home: 'home',
 	add: 'add',
 	options_dot: 'more_horiz',
-	archive_all: 'archive',
+	archive_all: 'save_alt',
 	approve: 'check_circle_outline',
 	dismiss: 'highlight_off',
 	star_border: 'star_border',
@@ -51,7 +51,8 @@ const icons = {
 	send: 'send',
 	export: 'present_to_all',
 	delete: 'delete_outline',
-	edit: 'edit'
+	edit: 'edit',
+	question_mark: 'help_outline'
 };
 
 // custom components

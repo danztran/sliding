@@ -1,18 +1,33 @@
+<!--
+	@desc:
+		*including questions posted from the audience
+		*questions posted are approved first, and then move question to live tabs
+	@contains:
+		*question moderation card
+		*XS-SM: merge tab to main panel
+-->
 <template>
 	<v-layout row wrap>
-		<!-- HEADER -->
-		<v-layout class="px-3 py-2" align-center justify-space-between row fill-height>
-			<!-- TITLE -->
+		<!-- @desc: header - actions -->
+		<v-layout
+			class="pl-3 py-2"
+			align-center
+			justify-space-between
+			row
+			fill-height>
+			<!-- @desc: title -->
 			<div class="pt-1 body-1 grey--text"  v-t="'moderator-view-title'"></div>
-			<!-- ACTIONS -->
+			<!-- @desc: actions active moderator mode/sorting -->
 			<div class="d-flex">
 				<v-switch
 					class="ma-0 pt-2"
 					color="primary"
 					:label="$t('moderator-view-stt')"
 					hide-details
-					v-model="onModerator">
+					:input-value="onModerator"
+					v-on:change="toggleModeModeration">
 				</v-switch>
+
 				<v-menu bottom nudge-bottom offset-y left>
 					<template v-slot:activator="{ on }">
 						<v-btn
@@ -50,32 +65,64 @@
 			</div>
 		</v-layout>
 
-		<v-card class="w-100 card-parent list-scroll scrollbar-primary elevation-2">
-			<v-layout row wrap>
+		<v-card
+			:class="{'bg-grey': !onModerator}"
+			class="w-100 card-parent list-scroll scrollbar-primary list-scroll">
+			<v-layout
+				v-if="onModerator && !emptyQuestion"
+				row
+				wrap>
 				<v-flex xs12>
-					<!-- CARD MESSAGE PASSING HERE -->
 					<slot></slot>
 				</v-flex>
 			</v-layout>
+
+			<empty-question
+				:onModerator="onModerator"
+				:emptyQuestion="emptyQuestion"/>
 		</v-card>
-
 	</v-layout>
-
 </template>
 
 <script>
+import EmptyModerator from '@/components/empty/ModeratorQuestion.vue';
+
 export default {
 	name: 'QuestionModeratorPanel',
+	components: {
+		'empty-question': EmptyModerator
+	},
+	props: {
+		emptyQuestion: {
+			type: Boolean,
+			default: false
+		},
+		onModerator: {
+			type: Boolean,
+			default: false
+		}
+	},
 	data: () => ({
-		onModerator: false,
 		icon: {
 			xs: 20,
 			sm: 30,
 			lg: 35
 		}
-	})
+	}),
+	methods: {
+		toggleModeModeration() {
+			this.$root.$emit('toggle-mode-moderation');
+		}
+	}
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+	.bg-grey {
+		background-color: #efefef !important;
+	}
+	.emptyQuestion {
+		height: 112px;
+		width: 192px;
+	}
 </style>

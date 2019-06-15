@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import QuestionCard from '../QuestionCard.vue';
+import QuestionCard from '../questions/QuestionCard.vue';
 
 const initForm = () => ({
 	answer: {

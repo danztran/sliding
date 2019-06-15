@@ -20,7 +20,7 @@
 						</div>
 						<div
 							class="caption text-uppercase hidden-xs-only">
-							{{ loading ? eventInfo.code : 'loading' }}
+							{{ loading ? `#${eventInfo.code}` : 'loading' }}
 						</div>
 					</v-list-tile-content>
 				</v-list-tile>

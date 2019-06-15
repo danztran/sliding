@@ -7,7 +7,10 @@ const { VUE_APP_CK_USER, VUE_APP_CK_FLASH_MESSAGE } = process.env;
 
 const setAuth = (context, userData) => {
 	context.commit('SET_CURRENT_USER', userData);
-	cookies.set(VUE_APP_CK_USER, userData);
+	cookies.set(
+		VUE_APP_CK_USER,
+		userData
+	);
 };
 
 const checkAuth = (context) => {
@@ -21,7 +24,10 @@ const logout = (context) => {
 		.then((res) => {
 			context.dispatch('resetAll', {}, { root: true });
 			cookies.remove(VUE_APP_CK_USER);
-			cookies.set(VUE_APP_CK_FLASH_MESSAGE, res.data.messages['auth.logout']);
+			cookies.set(
+				VUE_APP_CK_FLASH_MESSAGE,
+				res.data.messages['auth.logout']
+			);
 			router.push({ name: 'login' });
 		});
 };
