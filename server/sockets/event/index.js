@@ -1,6 +1,7 @@
+const EventSocketMdw = requireWrp('middlewares/event-socket-middleware');
 const EventLive = require('./event-live');
 const QuestionLive = require('./question-live');
-const EventSocketMdw = requireWrp('middlewares/event-socket-middleware');
+const QuestionReplyLive = require('./question-reply-live');
 
 module.exports = (io) => {
 	io.on('connection', (socket) => {
@@ -9,7 +10,13 @@ module.exports = (io) => {
 		// join event
 		socket.on('join-event', (code) => {
 			// join to room
-			socket.join(`event/${code}`);
+			const room = `event/${code}`;
+			socket.join(room);
+			socket.$state.rooms = {
+				eventRoom: room,
+				adminRoom: `${room}/admin`,
+				guestRoom: `${room}/guest`
+			};
 
 			// leave the room
 			socket.on('leave-event', () => {
@@ -20,7 +27,8 @@ module.exports = (io) => {
 			});
 
 			EventLive({ io, socket, code });
-			QuestionLive({ io, socket, code });
+			QuestionLive({ io, socket });
+			QuestionReplyLive({ io, socket });
 		});
 	});
 };

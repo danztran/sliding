@@ -1,7 +1,7 @@
 const Question = requireWrp('models/question');
 
 module.exports = {
-	async emitQuestions({ io, socket, code }) {
+	async emitQuestions({ socket }) {
 		let result = [];
 		const query = {
 			event_id: socket.$state.event.id

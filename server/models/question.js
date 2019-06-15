@@ -40,7 +40,9 @@ class Question extends Model {
 			event_id: info.event_id,
 			user_id: info.user_id,
 			content: info.content,
-			stage: info.stage || 'private'
+			stage: info.stage || 'private',
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
 		}, '*');
 	}
 }

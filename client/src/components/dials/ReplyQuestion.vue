@@ -104,8 +104,8 @@ export default {
 			small: 20
 		},
 		form: initForm(),
-		questions: '',
-		replies: ''
+		questions: [],
+		replies: []
 	}),
 	computed: {
 		checkReply() {
@@ -125,7 +125,13 @@ export default {
 		this.$root.$on('dialog-reply-question', (question) => {
 			this.questions = [question];
 			this.dialogReplyQuestion = true;
+			this.$socket.emit('get-question-replies', question.id);
 		});
+	},
+	sockets: {
+		get_question_replies(replies) {
+			console.warn(replies);
+		}
 	},
 	methods: {
 		sendReply() {},

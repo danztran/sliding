@@ -30,10 +30,10 @@ module.exports = {
 
 			// join role room
 			if (['host', 'moderator'].includes(result.role.name)) {
-				socket.join(`event/${code}/admin`);
+				socket.join(socket.$state.rooms.admin);
 			}
 			else {
-				socket.join(`event/${code}/guest`);
+				socket.join(socket.$state.rooms.guest);
 			}
 		}
 		catch (error) {
