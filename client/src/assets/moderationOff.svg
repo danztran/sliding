@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Illustration</title>
+	<desc>Created with Sketch.</desc>
+	<defs>
+		<path id="a" d="M8 52h176c4.42 0 8 3.58 8 8v44c0 4.42-3.58 8-8 8H8c-4.42 0-8-3.58-8-8V60c0-4.42 3.58-8 8-8z"></path>
+	</defs>
+	<g fill="none">
+		<g>
+			<g>
+				<g transform="translate(0 0)">
+					<path id="Rectangle" fill="#000" d="M12 0h168c4.42 0 8 3.58 8 8v44c0 4.42-3.58 8-8 8H12c-4.42 0-8-3.58-8-8V8c0-4.42 3.58-8 8-8z" opacity=".04"></path>
+					<circle id="Oval" cx="28" cy="24" r="8" fill="#000" opacity=".16"></circle>
+					<path id="Rectangle" fill="#000" d="M46 22h20c1.1 0 2 .9 2 2s-.9 2-2 2H46c-1.1 0-2-.9-2-2s.9-2 2-2zM22 40h148c1.1 0 2 .9 2 2s-.9 2-2 2H22c-1.1 0-2-.9-2-2s.9-2 2-2z" opacity=".16"></path>
+					<g id="Rectangle">
+						<use fill="#fff" xlink:href="#a"></use>
+						<use fill="#3da4b5" fill-opacity=".24" xlink:href="#a"></use>
+					</g>
+					<circle cx="24" cy="76" r="8" fill="#FBFBFB"></circle>
+					<path fill="#FBFBFB" d="M42 74h20c1.1 0 2 .9 2 2s-.9 2-2 2H42c-1.1 0-2-.9-2-2s.9-2 2-2zM18 92h156c1.1 0 2 .9 2 2s-.9 2-2 2H18c-1.1 0-2-.9-2-2s.9-2 2-2z"></path>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>

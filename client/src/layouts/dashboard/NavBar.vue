@@ -28,6 +28,7 @@
 
 				<v-text-field
 					v-if="!hiddenXS"
+					class="pt-2"
 					flat
 					solo-inverted
 					:prepend-inner-icon="'$vuetify.icons.search'"

@@ -14,7 +14,7 @@
 							{{ loading ? eventInfo.name : 'loading' }}
 						</div>
 						<div class="caption text-uppercase">
-							{{ loading ? eventInfo.code : 'loading' }}
+							{{ loading ? `#${eventInfo.code}` : 'loading' }}
 						</div>
 					</div>
 					<v-tooltip top>
