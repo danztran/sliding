@@ -131,10 +131,16 @@ export default {
 	sockets: {
 		get_question_replies(replies) {
 			console.warn(replies);
+		},
+		add_question_reply({ bool, reply }) {
+			// bool: Boolean result, true if success
+			// reply: Object, new reply added.
 		}
 	},
 	methods: {
-		sendReply() {},
+		sendReply() {
+			// this.$socket.emit('add-question-reply', replyInfo);
+		},
 		editQuestion() {},
 		deleteQuestion() {},
 		archiveQuestion() {}

@@ -36,6 +36,6 @@ module.exports = {
 			return socket.$fn.$err(e);
 		}
 
-		return socket.emit('add_question_reply_result', result);
+		return socket.emit('add_question_reply', result);
 	}
 };

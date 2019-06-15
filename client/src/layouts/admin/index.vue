@@ -46,7 +46,7 @@ export default {
 		connect() {
 			console.warn('connected');
 		},
-		event_data(data) {
+		get_event(data) {
 			console.warn(data);
 			this.$store.dispatch('admin/event/getCurrentEvent', data);
 			this.ready = true;

@@ -3,7 +3,7 @@ const EventUser = requireWrp('models/event-user');
 const Roles = requireDir('resources/roles/');
 
 module.exports = {
-	async emitEventData({ io, socket, code }) {
+	async getEvent({ io, socket, code }) {
 		const result = {};
 
 		try {
@@ -40,6 +40,6 @@ module.exports = {
 			return socket.$fn.$err(error);
 		}
 
-		return socket.emit('event_data', result);
+		return socket.emit('get_event', result);
 	}
 };

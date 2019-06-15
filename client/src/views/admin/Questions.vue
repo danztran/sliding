@@ -53,7 +53,7 @@ export default {
 		'question-card': QuestionCard
 	},
 	sockets: {
-		event_questions(data) {
+		get_questions(data) {
 			console.warn(data);
 			this.$store.dispatch('admin/questions/getQuestions', data);
 		}
