@@ -27,4 +27,19 @@ module.exports = (socket) => {
 		console.error(error);
 		return socket.emit('event_errmsg', errmsg);
 	};
+	// role & permission
+	socket.$state.role = {
+		name: '',
+		permissions: {}
+	};
+	socket.$fn.$cannot = (permission) => {
+		if (socket.$state.role.permissions[permission]) {
+			return false;
+		}
+		const message = socket.$fn.$t('noPermissionTo', {
+			permission: socket.$fn.$t(permission)
+		});
+		socket.$fn.$err({ expected: message });
+		return true;
+	};
 };

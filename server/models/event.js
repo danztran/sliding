@@ -8,11 +8,11 @@ class Event extends Model {
 	}
 
 	findById(id, opt) {
-		return this.findOne({ id }, opt);
+		return this.findOne({ id, is_deleted: false }, opt);
 	}
 
 	findByCode(code, opt) {
-		return this.findOne({ code }, opt);
+		return this.findOne({ code, is_deleted: false }, opt);
 	}
 
 	create(event, opt) {
