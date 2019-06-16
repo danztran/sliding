@@ -1,6 +1,4 @@
-<!--
-	@desc: question card in live/archive tabs
--->
+<!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
 		<v-card class="no-shadow card-question" slot-scope="{ hover }">
@@ -103,9 +101,7 @@
 				</v-list-tile>
 			</v-list>
 
-			<!--
-				@desc: message content
-			-->
+			<!-- @desc: message content -->
 			<v-card-title class="py-0 px-4">
 				<p class="body-1 mb-0">
 					{{ question.content }}
@@ -147,7 +143,7 @@
 							@click="replyQuestion(question)">
 							<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
 							<span>
-								{{ question.count_replies }}
+								{{ question.replies ? question.replies.length : question.count_replies }}
 							</span>
 							<span
 								class="caption"
@@ -232,7 +228,8 @@ export default {
 				user: {
 					id: null,
 					name: ''
-				}
+				},
+				replies: []
 			})
 		}
 	},
@@ -246,6 +243,9 @@ export default {
 	methods: {
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
+			if (this.question.replies === undefined) {
+				this.$socket.emit('get-question-replies', question.id);
+			}
 		},
 		restoreQuestion() {},
 		highlightQuestion() {},

@@ -1,8 +1,8 @@
 <template>
 	<div id="my-events-page">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-layout class="mx-3" row justify-space-between align-center>
-			<template v-if="hidden">
+		<v-layout class="ml-3 mb-1" row justify-space-between align-center>
+			<template v-if="show">
 				<!-- @desc: event being activated -->
 				<div v-t="'event-status'"></div>
 
@@ -55,7 +55,7 @@ export default {
 			order: '-created_at',
 			role: 'host'
 		},
-		hidden: false,
+		show: false,
 		isEmpty: false,
 		loading: false
 	}),
@@ -68,7 +68,7 @@ export default {
 		events(val) {
 			this.loading = false;
 			this.isEmpty = val.length === 0;
-			this.hidden = !this.isEmpty;
+			this.show = !this.isEmpty;
 		}
 	},
 	mounted() {

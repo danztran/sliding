@@ -80,7 +80,7 @@ export default {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
 		},
 		...mapGetters({
-			questions: 'admin/questions/questions'
+			questions: 'admin/questions/getQuestions'
 		})
 	},
 	created() {

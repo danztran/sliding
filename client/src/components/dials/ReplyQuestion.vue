@@ -49,25 +49,26 @@
 			</v-card-title>
 			<v-divider />
 
-			<!--
-				@desc: Replies message content
-			-->
+			<!-- @desc: Replies message content -->
 			<div class="test">
 				<div class="wrapper-card">
-					<template v-for="question in questions">
-						<question-card
-							:key="question.id"
-							:question="question"/>
+					<question-card :question="question"/>
+
+					<template v-for="reply in replies">
+						<reply-card :key="reply.id" :replyData="reply"/>
 					</template>
 				</div>
 
-				<!--
-					@desc: textarea for reply
-				-->
+				<!-- @desc: textarea for reply -->
 				<v-divider />
 				<v-card-actions>
-					<text-area :field="form.answer"/>
-					<v-btn flat icon color="primary" :disabled="checkReply">
+					<text-area :field="form.reply"/>
+					<v-btn
+						flat
+						icon
+						color="primary"
+						:disabled="checkReply"
+						@click="sendReply">
 						<v-icon v-html="'$vuetify.icons.send'"/>
 					</v-btn>
 				</v-card-actions>
@@ -79,9 +80,10 @@
 
 <script>
 import QuestionCard from '../questions/QuestionCard.vue';
+import QuestionReply from '../questions/QuestionReply.vue';
 
 const initForm = () => ({
-	answer: {
+	reply: {
 		label: 'lb-reply',
 		value: '',
 		prepend: 'person',
@@ -96,7 +98,8 @@ const initForm = () => ({
 export default {
 	name: 'ReplyQuestionDialog',
 	components: {
-		'question-card': QuestionCard
+		'question-card': QuestionCard,
+		'reply-card': QuestionReply
 	},
 	data: () => ({
 		dialogReplyQuestion: false,
@@ -104,18 +107,27 @@ export default {
 			small: 20
 		},
 		form: initForm(),
-		questions: [],
+		question: {
+			content: '',
+			count_replies: null,
+			id: null,
+			likes: [],
+			user: {
+				id: null,
+				name: ''
+			}
+		},
 		replies: []
 	}),
 	computed: {
 		checkReply() {
-			const { answer } = this.form;
-			if (answer.value.length > answer.counter) {
-				answer.errmsg = this.$t('err-limit');
+			const { reply } = this.form;
+			if (reply.value.length > reply.counter) {
+				reply.errmsg = this.$t('err-limit');
 				return true;
 			}
-			return !this._cm.notEmpty(answer.value)
-				|| answer.value.length > answer.counter;
+			return !this._cm.notEmpty(reply.value)
+				|| reply.value.length > reply.counter;
 		},
 		showSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -123,23 +135,50 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('dialog-reply-question', (question) => {
-			this.questions = [question];
+			this.question = question;
 			this.dialogReplyQuestion = true;
-			this.$socket.emit('get-question-replies', question.id);
 		});
 	},
 	sockets: {
 		get_question_replies(replies) {
 			console.warn(replies);
+			this.replies = replies;
+			const data = {
+				id: this.question.id,
+				replies
+			};
+			this.$store.dispatch('admin/questions/getQuestionReplies', data);
 		},
 		add_question_reply({ bool, reply }) {
 			// bool: Boolean result, true if success
 			// reply: Object, new reply added.
+			if (!bool) {
+				this.form.reply.errmsg = this.$t('err-reply');
+				this.$store.dispatch('admin/questions/removeErrorQuestionReply', this.question.id);
+			}
 		}
 	},
 	methods: {
 		sendReply() {
-			// this.$socket.emit('add-question-reply', replyInfo);
+			const user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
+			const replyId = this.replies.length > 0
+				? parseInt(this.replies[this.replies.length - 1].id, 10) + 1
+				: 1;
+			const replyInfo = {
+				id: this.question.id,
+				data: {
+					id: replyId,
+					content: this.form.reply.value,
+					question_id: this.question.id,
+					user: {
+						id: user.id,
+						name: user.name
+					}
+				}
+			};
+			this.$store.dispatch('admin/questions/sendQuestionReply', replyInfo);
+			this.$socket.emit('add-question-reply', replyInfo.data);
+			this.form.reply.value = '';
 		},
 		editQuestion() {},
 		deleteQuestion() {},

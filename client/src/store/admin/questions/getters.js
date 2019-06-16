@@ -1,5 +1,5 @@
-const questions = state => state.questions;
+const getQuestions = state => state.questions;
 
 export default {
-	questions
+	getQuestions
 };
