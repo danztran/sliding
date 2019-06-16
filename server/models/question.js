@@ -1,10 +1,14 @@
 const Model = requireWrp('models/model');
-const User = requireWrp('models/user');
-const QuestionReply = requireWrp('models/question-reply');
-const QuestionLike = requireWrp('models/question-like');
+const UserModel = requireWrp('models/user');
+const QuestionReplyModel = requireWrp('models/question-reply');
+const QuestionLikeModel = requireWrp('models/question-like');
 const qh = requireWrp('modules/query-helper');
 
-class Question extends Model {
+const User = new UserModel();
+const QuestionReply = new QuestionReplyModel();
+const QuestionLike = new QuestionLikeModel();
+
+class QuestionModel extends Model {
 	constructor() {
 		super('_.question');
 	}
@@ -44,8 +48,10 @@ class Question extends Model {
 			stage: info.stage || 'private',
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
-		}, '*');
+		}, {
+			select: '"id", "event_id", "content", "stage", "created_at"'
+		});
 	}
 }
 
-module.exports = new Question();
+module.exports = QuestionModel;

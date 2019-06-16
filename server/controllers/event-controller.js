@@ -1,10 +1,10 @@
-const Event = requireWrp('models/event');
-const EventUser = requireWrp('models/event-user');
+const EventModel = requireWrp('models/event');
+const EventRoleModel = requireWrp('models/event-role');
 const { nextStringOf } = requireWrp('modules/common');
 
 // generate new event code
 let getEventCode;
-Event.findLastOf('id', { select: 'code' })
+new EventModel().findLastOf('id', { select: 'code' })
 	.exec()
 	.then((lastEvent) => {
 		console.warn(`Last event code: ${lastEvent.code}`);
@@ -38,7 +38,8 @@ const ctrl = {
 		const opt = req.query;
 		const result = {};
 		try {
-			const events = await EventUser.findEventsByUserId(req.user.id, {
+			const EventRole = new EventRoleModel();
+			const events = await EventRole.findEventsByUserId(req.user.id, {
 				order: opt.order,
 				limit: Number(opt.limit || 10),
 				offset: Number(opt.offset || 0),
@@ -66,11 +67,13 @@ const ctrl = {
 		const info = req.body;
 		const result = {};
 		try {
+			const Event = new EventModel();
+			const EventRole = new EventRoleModel();
 			// generate new code
 			info.code = getEventCode.next().value;
 
 			const event = await Event.create(info).exec(1);
-			await EventUser.create({
+			await EventRole.create({
 				user_id: req.user.id,
 				event_id: event.id,
 				role: 'host'

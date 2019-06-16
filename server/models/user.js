@@ -1,8 +1,7 @@
-// const pool = requireWrp('modules/postgresql');
-const crypto = requireWrp('modules/crypto-custom');
 const Model = requireWrp('models/model');
+const crypto = requireWrp('modules/crypto-custom');
 
-class User extends Model {
+class UserModel extends Model {
 	constructor() {
 		super('_.user');
 	}
@@ -33,4 +32,4 @@ class User extends Model {
 	}
 }
 
-module.exports = new User();
+module.exports = UserModel;

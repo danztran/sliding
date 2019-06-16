@@ -1,11 +1,14 @@
 const Model = requireWrp('models/model');
-const Event = requireWrp('models/event');
-const User = requireWrp('models/user');
+const EventModel = requireWrp('models/event');
+const UserModel = requireWrp('models/user');
 const qh = requireWrp('modules/query-helper');
 
-class EventUser extends Model {
+const Event = new EventModel();
+const User = new UserModel();
+
+class EventRoleModel extends Model {
 	constructor() {
-		super('_.event_user');
+		super('_.event_role');
 	}
 
 	findRole(info) {
@@ -68,4 +71,4 @@ class EventUser extends Model {
 	}
 }
 
-module.exports = new EventUser();
+module.exports = EventRoleModel;

@@ -3,7 +3,7 @@ const passport = require('passport');
 
 // load up the user model
 const crypto = requireWrp('modules/crypto-custom');
-const User = requireWrp('models/user');
+const UserModel = requireWrp('models/user');
 // const User = new UserModel();
 
 // used to serialize the user for the session
@@ -13,6 +13,7 @@ passport.serializeUser((user, done) => {
 
 // used to deserialize the user
 passport.deserializeUser((id, done) => {
+	const User = new UserModel();
 	User.findById(id).exec()
 		.then(user => done(null, user))
 		.catch(error => done(error));
@@ -20,6 +21,7 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(
 	((username, password, done) => {
+		const User = new UserModel();
 		User.findByUsername(username).exec()
 			.then((user) => {
 				if (!user) {
