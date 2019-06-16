@@ -4,7 +4,8 @@ module.exports = {
 	async getQuestions({ socket }) {
 		let result = [];
 		const query = {
-			event_id: socket.$state.event.id
+			event_id: socket.$state.event.id,
+			is_deleted: false
 		};
 		if (!socket.$state.role.permissions.seeAllQuestions) {
 			query.stage = 'public';

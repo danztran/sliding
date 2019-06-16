@@ -33,6 +33,28 @@ class QuestionReply extends Model {
 			updated_at: new Date().toISOString()
 		}, '*');
 	}
+
+	update(info, opt) {
+		return this.updateOne({
+			id: info.id
+		}, {
+			content: info.content,
+			updated_at: new Date().toISOString()
+		}, {
+			select: '"id", "content", "updated_at"'
+		});
+	}
+
+	setDeleted(info, opt) {
+		return this.updateOne({
+			id: info.id
+		}, {
+			is_deleted: true,
+			updated_at: new Date().toISOString()
+		}, {
+			select: '"id"'
+		});
+	}
 }
 
 module.exports = new QuestionReply();

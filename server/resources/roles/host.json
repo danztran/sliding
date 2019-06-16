@@ -1,6 +1,9 @@
 {
 	"name": "host",
 	"permissions": {
-		"seeAllQuestions": true
+		"seeAllQuestions": true,
+		"addQuestionReply": true,
+		"editQuestionReply": true,
+		"deleteQuestionReply": true
 	}
 }

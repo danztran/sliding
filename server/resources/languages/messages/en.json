@@ -11,5 +11,8 @@
 	"emailTaken": "This email have been used on other account",
 	"successSignUp": "Your new account has been created",
 	"unauthenticated": "Sorry. You have to login again.",
-	"eventNotFound": "Event not found"
+	"eventNotFound": "The event is not exists",
+	"replyNotFound": "The reply is not exists anymore",
+	"noPermissionTo": "You do not have permission to {permission}",
+	"addQuestionReply": "Reply question"
 }
