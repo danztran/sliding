@@ -1,4 +1,4 @@
-const Question = requireWrp('models/question');
+const QuestionModel = requireWrp('models/question');
 
 module.exports = {
 	async getQuestions({ socket }) {
@@ -11,6 +11,7 @@ module.exports = {
 			query.stage = 'public';
 		}
 		try {
+			const Question = new QuestionModel();
 			result = await Question.find(query).exec();
 		}
 		catch (e) {

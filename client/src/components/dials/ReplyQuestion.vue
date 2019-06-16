@@ -152,7 +152,10 @@ export default {
 		add_question_reply({ bool, reply }) {
 			// bool: Boolean result, true if success
 			// reply: Object, new reply added.
-			// console.log(reply);
+			if (!bool) {
+				this.form.reply.errmsg = this.$t('err-reply');
+				this.$store.dispatch('admin/questions/removeErrorQuestionReply', this.question.id);
+			}
 		}
 	},
 	methods: {

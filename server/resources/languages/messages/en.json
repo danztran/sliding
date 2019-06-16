@@ -14,5 +14,7 @@
 	"eventNotFound": "The event is not exists",
 	"replyNotFound": "The reply is not exists anymore",
 	"noPermissionTo": "You do not have permission to {permission}",
-	"addQuestionReply": "Reply question"
+	"addQuestionReply": "Reply question",
+	"editQuestionReply": "Edit question reply",
+	"deleteQuestionReply": "Delete question reply"
 }

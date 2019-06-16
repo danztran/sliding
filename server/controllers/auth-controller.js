@@ -1,5 +1,5 @@
 const passport = requireWrp('modules/passport-custom');
-const User = requireWrp('models/user');
+const UserModel = requireWrp('models/user');
 const nameRegExp = 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g';
 
 const ctrl = {
@@ -30,6 +30,7 @@ const ctrl = {
 		const { username, email } = req.body;
 		const result = {};
 		try {
+			const User = new UserModel();
 			const checkExistUsername = await User.findOne({ username }).exec();
 			if (checkExistUsername) {
 				res.status(409);
@@ -54,6 +55,7 @@ const ctrl = {
 	},
 
 	login(req, res, next) {
+		const User = new UserModel();
 		if (req.user) {
 			res.messages['auth.login'] = res.$t('alreadyLoggedIn');
 			return res.sendwm({ user: ctrl.getSafeInfo(req.user) });

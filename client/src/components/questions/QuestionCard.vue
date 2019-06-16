@@ -143,7 +143,7 @@
 							@click="replyQuestion(question)">
 							<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
 							<span>
-								{{ question.count_replies }}
+								{{ question.replies ? question.replies.length : question.count_replies }}
 							</span>
 							<span
 								class="caption"
@@ -207,8 +207,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 	name: 'QuestionCard',
 	props: {
@@ -230,7 +228,8 @@ export default {
 				user: {
 					id: null,
 					name: ''
-				}
+				},
+				replies: []
 			})
 		}
 	},
@@ -241,18 +240,11 @@ export default {
 			lg: 25
 		}
 	}),
-	computed: {
-		...mapGetters({
-			questions: 'admin/questions/getQuestions'
-		})
-	},
 	methods: {
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
-			for (const ques of this.questions) {
-				if (ques.id === question.id && ques.replies === undefined) {
-					this.$socket.emit('get-question-replies', question.id);
-				}
+			if (this.question.replies === undefined) {
+				this.$socket.emit('get-question-replies', question.id);
 			}
 		},
 		restoreQuestion() {},

@@ -21,6 +21,15 @@ const SEND_QUESTION_REPLY = (state, reply) => {
 	}
 };
 
+const REMOVE_ERROR_QUESTION_REPLY = (state, questionId) => {
+	for (const question of state.questions) {
+		if (question.id === questionId) {
+			question.replies.pop();
+			return;
+		}
+	}
+};
+
 const RESET = (state) => {
 	state.questions = [];
 };
@@ -29,5 +38,6 @@ export default {
 	GET_QUESTION,
 	GET_QUESTION_REPLIES,
 	SEND_QUESTION_REPLY,
+	REMOVE_ERROR_QUESTION_REPLY,
 	RESET
 };

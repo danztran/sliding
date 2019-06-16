@@ -95,6 +95,7 @@
 		"live-view-empty-title-join": "Người tham dự có thể tham gia vào",
 		"live-view-empty-title-joincode": "với mã code:",
 		"err-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép trả lời",
+		"err-reply": "Tin nhắn của bạn chưa được gửi. Xin lỗi, bạn hãy thử lại!",
 		"card-header-title": "Cách tốt nhất để làm cho buổi hỏi đáp của bạn hoàn hảo",
 		"card-subheader-title": "Không còn giới hạn, không giới hạn nữa",
 		"card-intro-title1": "Các buổi họp nhóm",

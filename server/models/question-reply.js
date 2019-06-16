@@ -1,8 +1,10 @@
 const Model = requireWrp('models/model');
-const User = requireWrp('models/user');
+const UserModel = requireWrp('models/user');
 const qh = requireWrp('modules/query-helper');
 
-class QuestionReply extends Model {
+const User = new UserModel();
+
+class QuestionReplyModel extends Model {
 	constructor() {
 		super('_.question_reply');
 	}
@@ -20,7 +22,8 @@ class QuestionReply extends Model {
 					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
 					ON qr."user_id" = u."id"
 			${qh.toWhereClause(info)}
-		`).setRowReturn(0);
+		`);
+		this.setRowReturn(0);
 		return this;
 	}
 
@@ -43,7 +46,7 @@ class QuestionReply extends Model {
 			content: info.content,
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id", "content", "updated_at"'
+			select: '"id", "question_id", "content", "created_at"'
 		});
 	}
 
@@ -54,9 +57,9 @@ class QuestionReply extends Model {
 			is_deleted: true,
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id"'
+			select: '"id", "question_id"'
 		});
 	}
 }
 
-module.exports = new QuestionReply();
+module.exports = QuestionReplyModel;
