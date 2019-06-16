@@ -13,9 +13,9 @@ module.exports = (io) => {
 			const room = `event/${code}`;
 			socket.join(room);
 			socket.$state.rooms = {
-				eventRoom: room,
-				adminRoom: `${room}/admin`,
-				guestRoom: `${room}/guest`
+				event: room,
+				admin: `${room}/admin`,
+				guest: `${room}/guest`
 			};
 
 			// leave the room

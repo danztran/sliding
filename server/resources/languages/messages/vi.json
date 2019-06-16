@@ -14,5 +14,7 @@
 	"eventNotFound": "Không tìm thấy sự kiện",
 	"replyNotFound": "Câu trả lời này không còn tồn tại",
 	"noPermissionTo": "Xin lỗi. Bạn không có quyền để {permission}",
-	"addQuestionReply": "Trả lời câu hỏi"
+	"addQuestionReply": "Trả lời câu hỏi",
+	"editQuestionReply": "Sửa câu trả lời",
+	"deleteQuestionReply": "Xóa trả lời"
 }

@@ -21,6 +21,7 @@ class QuestionReply extends Model {
 					ON qr."user_id" = u."id"
 			${qh.toWhereClause(info)}
 		`);
+		this.setRowReturn(0);
 		return this;
 	}
 
@@ -31,7 +32,9 @@ class QuestionReply extends Model {
 			content: info.content,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
-		}, '*');
+		}, {
+			select: '"id", "question_id", "content", "created_at"'
+		});
 	}
 
 	update(info, opt) {
@@ -41,7 +44,7 @@ class QuestionReply extends Model {
 			content: info.content,
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id", "content", "updated_at"'
+			select: '"id", "question_id", "content", "created_at"'
 		});
 	}
 
@@ -52,7 +55,7 @@ class QuestionReply extends Model {
 			is_deleted: true,
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id"'
+			select: '"id", "question_id"'
 		});
 	}
 }

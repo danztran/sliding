@@ -32,6 +32,7 @@ class Question extends Model {
 					ON q."user_id" = u."id"
 			${qh.toWhereClause(info)}
 		`);
+		this.setRowReturn(0);
 		return this;
 	}
 
