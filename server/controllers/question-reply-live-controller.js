@@ -1,4 +1,4 @@
-const QuestionReply = requireWrp('models/question-reply');
+const QuestionReplyModel = requireWrp('models/question-reply');
 
 module.exports = {
 	async getQuestionReplies({ socket }, qid) {
@@ -8,6 +8,7 @@ module.exports = {
 			is_deleted: false
 		};
 		try {
+			const QuestionReply = new QuestionReplyModel();
 			replies = await QuestionReply.find(query).exec();
 		}
 		catch (e) {
@@ -25,6 +26,7 @@ module.exports = {
 			bool: false
 		};
 		try {
+			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.create({
 				...info,
 				user_id: socket.$state.user.id
@@ -53,6 +55,7 @@ module.exports = {
 			bool: false
 		};
 		try {
+			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.findOne({ id: info.id }).exec();
 			if (!reply) {
 				throw {
@@ -83,6 +86,7 @@ module.exports = {
 			bool: false
 		};
 		try {
+			const QuestionReply = new QuestionReplyModel();
 			const deletedReply = await QuestionReply.setDeleted(info).exec();
 			result.reply = deletedReply;
 			socket.to(socket.$state.rooms.event).emit('new_delete_question_reply', result.reply);

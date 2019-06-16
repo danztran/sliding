@@ -1,8 +1,6 @@
-// const pool = requireWrp('modules/postgresql');
 const Model = requireWrp('models/model');
 
-
-class Event extends Model {
+class EventModel extends Model {
 	constructor() {
 		super('_.event');
 	}
@@ -20,8 +18,6 @@ class Event extends Model {
 			code: event.code,
 			name: event.name,
 			description: event.description,
-			allow_search: event.allow_search,
-			require_auth: event.require_auth,
 			start_at: new Date(event.start_at).toISOString(),
 			end_at: new Date(event.end_at).toISOString(),
 			created_at: new Date().toISOString(),
@@ -30,4 +26,4 @@ class Event extends Model {
 	}
 }
 
-module.exports = new Event();
+module.exports = EventModel;

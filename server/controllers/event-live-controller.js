@@ -1,5 +1,5 @@
-const Event = requireWrp('models/event');
-const EventUser = requireWrp('models/event-user');
+const EventModel = requireWrp('models/event');
+const EventRoleModel = requireWrp('models/event-role');
 const Roles = requireDir('resources/roles/');
 
 module.exports = {
@@ -7,6 +7,8 @@ module.exports = {
 		const result = {};
 
 		try {
+			const Event = new EventModel();
+			const EventRole = new EventRoleModel();
 			// find event
 			const event = await Event.findByCode(code).exec();
 			if (!event) {
@@ -16,11 +18,11 @@ module.exports = {
 
 			// check user role
 			if (socket.$state.user) {
-				const eventUser = await EventUser.findRole({
+				const eventRole = await EventRole.findRole({
 					event_id: event.id,
 					user_id: socket.$state.user.id
 				}).exec();
-				result.role = Roles[eventUser ? eventUser.role : 'guest'];
+				result.role = Roles[eventRole ? eventRole.role : 'guest'];
 			}
 			else {
 				result.role = Roles.guest;

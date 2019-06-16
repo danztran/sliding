@@ -1,8 +1,10 @@
 const Model = requireWrp('models/model');
-const User = requireWrp('models/user');
+const UserModel = requireWrp('models/user');
 const qh = requireWrp('modules/query-helper');
 
-class QuestionReply extends Model {
+const User = new UserModel();
+
+class QuestionReplyModel extends Model {
 	constructor() {
 		super('_.question_reply');
 	}
@@ -60,4 +62,4 @@ class QuestionReply extends Model {
 	}
 }
 
-module.exports = new QuestionReply();
+module.exports = QuestionReplyModel;
