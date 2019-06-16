@@ -2,7 +2,7 @@ const passport = requireWrp('modules/passport-custom');
 const UserModel = requireWrp('models/user');
 const nameRegExp = 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g';
 
-const ctrl = {
+const Ctlr = {
 	getSafeInfo(user) {
 		const info = { ...user };
 		delete info.password;
@@ -11,7 +11,7 @@ const ctrl = {
 
 	info(req, res, next) {
 		if (req.user) {
-			return res.sendwm({ user: ctrl.getSafeInfo(req.user) });
+			return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
 		}
 		res.messages['auth.info'] = res.$t('sessionExpired');
 		res.status(440);
@@ -58,7 +58,7 @@ const ctrl = {
 		const User = new UserModel();
 		if (req.user) {
 			res.messages['auth.login'] = res.$t('alreadyLoggedIn');
-			return res.sendwm({ user: ctrl.getSafeInfo(req.user) });
+			return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
 		}
 		const rules = {
 			username: 'string|required',
@@ -86,7 +86,7 @@ const ctrl = {
 				if (error) return next(error);
 				req.session.user = req.user;
 				res.messages['auth.login'] = res.$t('successLoggedIn');
-				result.user = ctrl.getSafeInfo(user);
+				result.user = Ctlr.getSafeInfo(user);
 				User.setLastAccessed(user).exec();
 				return res.sendwm(result);
 			});
@@ -100,4 +100,4 @@ const ctrl = {
 	}
 };
 
-module.exports = ctrl;
+module.exports = Ctlr;

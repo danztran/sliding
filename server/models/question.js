@@ -49,7 +49,39 @@ class QuestionModel extends Model {
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id", "event_id", "content", "stage", "created_at"'
+			select: '*'
+		});
+	}
+
+	update(info, opt) {
+		this.setQuery(`
+			UPDATE ${this.getName()} as q
+			${qh.toSetClause({
+		content: info.content,
+		stage: info.stage,
+		is_star: info.is_star,
+		is_answer: info.is_answer,
+		updated_at: new Date().toISOString()
+	})}
+				FROM
+					( ${this.findOne({ id: info.id }).getQuery()} FOR UPDATE ) AS subq
+				JOIN
+					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
+				ON subq."user_id" = u."id"
+			RETURNING q.*, row_to_json(u) as "user"
+		`);
+		this.setRowReturn(1);
+		return this;
+	}
+
+	setDeleted(info, opt) {
+		return this.updateOne({
+			id: info.id
+		}, {
+			is_deleted: true,
+			updated_at: new Date().toISOString()
+		}, {
+			select: '"id", "event_id"'
 		});
 	}
 }

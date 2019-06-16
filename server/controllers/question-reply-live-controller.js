@@ -18,13 +18,12 @@ module.exports = {
 		return socket.emit('get_question_replies', replies);
 	},
 
-	async addQuestionReply({ io, socket }, info) {
-		if (socket.$fn.$cannot('addQuestionReply')) return;
+	async addQuestionReply({ socket }, info) {
+		const emiter = 'add_question_reply';
+		if (socket.$fn.$cannot('addQuestionReply', emiter)) return;
 		// VALIDATE INFO HERE
 		// ...
-		const result = {
-			bool: false
-		};
+		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.create({
@@ -36,27 +35,28 @@ module.exports = {
 				name: socket.$state.user.name
 			};
 			result.reply = reply;
-			result.bool = true;
 
-			socket.to(socket.$state.rooms.event).emit('new_question_reply', result.reply);
+			socket.to(socket.$state.rooms.event).emit('new_added_question_reply', result.reply);
 		}
 		catch (e) {
-			return socket.$fn.$err(e);
+			return socket.$fn.$err(e, emiter);
 		}
 
-		return socket.emit('add_question_reply', result);
+		return socket.emit(emiter, result);
 	},
 
-	async editQuestionReply({ io, socket }, info) {
-		if (socket.$fn.$cannot('editQuestionReply')) return;
+	async editQuestionReply({ socket }, info) {
+		const emiter = 'edit_question_reply';
+		if (socket.$fn.$cannot('editQuestionReply', emiter)) return;
 		// VALIDATE INFO HERE
 		// ...
-		const result = {
-			bool: false
-		};
+		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
-			const reply = await QuestionReply.findOne({ id: info.id }).exec();
+			const reply = await QuestionReply.findOne({
+				id: info.id,
+				is_deleted: false
+			}).exec();
 			if (!reply) {
 				throw {
 					expected: socket.$fn.$t('replyNotFound')
@@ -64,37 +64,42 @@ module.exports = {
 			}
 
 			const editedReply = await QuestionReply.update(info).exec();
-			editedReply.user = {
-				id: socket.$state.user.id,
-				name: socket.$state.user.name
-			};
 			result.reply = editedReply;
-			socket.to(socket.$state.rooms.event).emit('new_edit_question_reply', result.reply);
+			socket.to(socket.$state.rooms.event).emit('new_edited_question_reply', result.reply);
 		}
 		catch (e) {
-			return socket.$fn.$err(e);
+			return socket.$fn.$err(e, emiter);
 		}
 
-		return socket.emit('edit_question_reply', result);
+		return socket.emit(emiter, result);
 	},
 
-	async deleteQuestionReply({ io, socket }, info) {
-		if (socket.$fn.$cannot('deleteQuestionReply')) return;
+	async deleteQuestionReply({ socket }, info) {
+		const emiter = 'delete_question_reply';
+		if (socket.$fn.$cannot('deleteQuestionReply', emiter)) return;
 		// VALIDATE INFO HERE
 		// ...
-		const result = {
-			bool: false
-		};
+		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
+			const reply = await QuestionReply.findOne({
+				id: info.id,
+				is_deleted: false
+			}).exec();
+			if (!reply) {
+				throw {
+					expected: socket.$fn.$t('replyNotFound')
+				};
+			}
+
 			const deletedReply = await QuestionReply.setDeleted(info).exec();
 			result.reply = deletedReply;
-			socket.to(socket.$state.rooms.event).emit('new_delete_question_reply', result.reply);
+			socket.to(socket.$state.rooms.event).emit('new_deleted_question_reply', result.reply);
 		}
 		catch (e) {
-			return socket.$fn.$err(e);
+			return socket.$fn.$err(e, emiter);
 		}
 
-		return socket.emit('delete_question_reply', result);
+		return socket.emit(emiter, result);
 	}
 };

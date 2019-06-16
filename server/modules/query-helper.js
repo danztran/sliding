@@ -20,7 +20,9 @@ const queryHelper = {
 		const states = [];
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
-				states.push(`"${key}"=${this.toDollarQuoted(object[key])}`);
+				if (object[key] !== undefined) {
+					states.push(`"${key}"=${this.toDollarQuoted(object[key])}`);
+				}
 			}
 		}
 		const clause = states.join(symbol);

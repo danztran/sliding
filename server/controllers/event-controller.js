@@ -25,7 +25,7 @@ new EventModel().findLastOf('id', { select: 'code' })
 		return process.exit(1);
 	});
 
-const ctrl = {
+module.exports = {
 	async query(req, res, next) {
 		const rules = {
 			limit: 'integer|between:0,50',
@@ -87,5 +87,3 @@ const ctrl = {
 		return res.sendwm(result);
 	}
 };
-
-module.exports = ctrl;

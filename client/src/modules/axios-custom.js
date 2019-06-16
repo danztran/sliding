@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cookies from './vue-cookies-custom';
+import router from '@/router';
 
 const {
 	VUE_APP_CK_USER: user,
@@ -22,7 +23,7 @@ axios.interceptors.response.use(
 				catch (e) {
 					// do nothing
 				}
-				errorResult.redirect = { name: 'login' };
+				router.push({ name: 'login' });
 			}
 			errorResult = { ...errorResult, ...error.response.data };
 		}
