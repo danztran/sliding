@@ -5,7 +5,7 @@
 	}
 }
 
-.v-toolbar__extension {
+.v-toolbar--extended, .v-toolbar__extension {
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
@@ -19,6 +19,34 @@
 		height: 40px !important;
 		.v-tabs__container {
 			height: 40px;
+		}
+	}
+}
+
+.v-toobar-override {
+	.v-content {
+		margin: 5px 0 !important;
+	}
+	.v-content,
+	.v-toolbar__content,
+	.v-toolbar__extension  {
+		padding: 0 17% !important;
+	}
+	@media only screen and (max-width: 1280px) {
+		.v-content,
+		.v-toolbar__content,
+		.v-toolbar__extension  {
+			padding: 0 10% !important;
+		}
+	}
+	@media only screen and (max-width: 960px) {
+		.v-content,
+		.v-toolbar__content,
+		.v-toolbar__extension  {
+			padding: 0 10px !important;
+		}
+		.v-tabs__container.v-tabs__container--right {
+			height: 40px !important;
 		}
 	}
 }

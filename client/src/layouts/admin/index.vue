@@ -1,5 +1,5 @@
 <template>
-	<div id="admin-layout">
+	<div id="admin-layout" class="v-toobar-override">
 		<v-app>
 			<navbar />
 			<drawer />
@@ -57,30 +57,6 @@ export default {
 
 <style lang="scss">
 #admin-layout {
-	.v-content {
-		margin: 5px 0 !important;
-	}
-	.v-content,
-	.v-toolbar__content,
-	.v-toolbar__extension  {
-		padding: 0 20% !important;
-	}
-	@media only screen and (max-width: 1280px) {
-		.v-content,
-		.v-toolbar__content,
-		.v-toolbar__extension  {
-			padding: 0 10% !important;
-		}
-	}
-	@media only screen and (max-width: 960px) {
-		.v-content,
-		.v-toolbar__content,
-		.v-toolbar__extension  {
-			padding: 0 10px !important;
-		}
-		.v-tabs__container.v-tabs__container--right {
-			height: 40px !important;
-		}
-	}
+
 }
 </style>
