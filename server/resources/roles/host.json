@@ -4,6 +4,9 @@
 		"seeAllQuestions": true,
 		"addQuestionReply": true,
 		"editQuestionReply": true,
-		"deleteQuestionReply": true
+		"deleteQuestionReply": true,
+		"addQuestion": false,
+		"editQuestion": true,
+		"deleteQuestion": true
 	}
 }

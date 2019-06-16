@@ -19,7 +19,6 @@ module.exports = (socket) => {
 	socket.$fn.$d = translator.$d;
 	socket.$fn.$err = (error, emiter) => {
 		let errmsg = socket.$fn.$t('somethingWrongs');
-		const result = {};
 		if (error) {
 			if (error.expected) {
 				errmsg = errmsg.expected;

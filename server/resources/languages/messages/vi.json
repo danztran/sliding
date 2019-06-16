@@ -16,5 +16,8 @@
 	"noPermissionTo": "Xin lỗi. Bạn không có quyền để {permission}",
 	"addQuestionReply": "Trả lời câu hỏi",
 	"editQuestionReply": "Sửa câu trả lời",
-	"deleteQuestionReply": "Xóa trả lời"
+	"deleteQuestionReply": "Xóa trả lời",
+	"addQuestion": "Đặt câu hỏi",
+	"editQuestion": "Sửa nội dung câu hỏi",
+	"deleteQuestion": "Xóa câu hỏi"
 }

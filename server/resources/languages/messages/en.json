@@ -16,5 +16,8 @@
 	"noPermissionTo": "You do not have permission to {permission}",
 	"addQuestionReply": "Reply question",
 	"editQuestionReply": "Edit question reply",
-	"deleteQuestionReply": "Delete question reply"
+	"deleteQuestionReply": "Delete question reply",
+	"addQuestion": "Write question",
+	"editQuestion": "Edit question content",
+	"deleteQuestion": "Delete question"
 }
