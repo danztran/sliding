@@ -27,6 +27,10 @@ module.exports = {
 				...info,
 				user_id: socket.$state.user.id
 			}).exec();
+			reply.user = {
+				id: socket.$state.user.id,
+				name: socket.$state.user.name
+			};
 			result.reply = reply;
 			result.bool = true;
 

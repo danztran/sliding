@@ -1,6 +1,4 @@
-<!--
-	@desc: question card in live/archive tabs
--->
+<!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
 		<v-card class="no-shadow card-question" slot-scope="{ hover }">
@@ -103,9 +101,7 @@
 				</v-list-tile>
 			</v-list>
 
-			<!--
-				@desc: message content
-			-->
+			<!-- @desc: message content -->
 			<v-card-title class="py-0 px-4">
 				<p class="body-1 mb-0">
 					{{ question.content }}
@@ -246,6 +242,7 @@ export default {
 	methods: {
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
+			this.$socket.emit('get-question-replies', question.id);
 		},
 		restoreQuestion() {},
 		highlightQuestion() {},
