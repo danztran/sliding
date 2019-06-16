@@ -20,7 +20,7 @@ class QuestionReply extends Model {
 					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
 					ON qr."user_id" = u."id"
 			${qh.toWhereClause(info)}
-		`);
+		`).setRowReturn(0);
 		return this;
 	}
 
@@ -31,7 +31,9 @@ class QuestionReply extends Model {
 			content: info.content,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
-		}, '*');
+		}, {
+			select: '"id", "question_id", "content", "created_at"'
+		});
 	}
 
 	update(info, opt) {

@@ -207,6 +207,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'QuestionCard',
 	props: {
@@ -239,10 +241,19 @@ export default {
 			lg: 25
 		}
 	}),
+	computed: {
+		...mapGetters({
+			questions: 'admin/questions/getQuestions'
+		})
+	},
 	methods: {
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
-			this.$socket.emit('get-question-replies', question.id);
+			for (const ques of this.questions) {
+				if (ques.id === question.id && ques.replies === undefined) {
+					this.$socket.emit('get-question-replies', question.id);
+				}
+			}
 		},
 		restoreQuestion() {},
 		highlightQuestion() {},
