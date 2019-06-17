@@ -17,29 +17,38 @@ module.exports = (socket) => {
 	socket.$fn = {};
 	socket.$fn.$t = translator.$t;
 	socket.$fn.$d = translator.$d;
-	socket.$fn.$err = (error, emiter) => {
+	socket.$fn.$err = (error, callback) => {
+		console.error(error);
+		// check if error caused by system or user
 		let errmsg = socket.$fn.$t('somethingWrong');
 		if (error) {
 			if (error.expected) {
 				errmsg = errmsg.expected;
 			}
 		}
-		console.error(error);
-		return socket.emit(emiter || 'event_errmsg', { errmsg });
+
+		// callback if have
+		if (callback) {
+			if (typeof callback !== 'function') {
+				return callback({ errmsg });
+			}
+			errmsg = 'Callback must be a function!';
+		}
+		return socket.emit('event_errmsg', { errmsg });
 	};
 	// role & permission
 	socket.$state.role = {
 		name: '',
 		permissions: {}
 	};
-	socket.$fn.$cannot = (permission, emiter) => {
+	socket.$fn.$cannot = (permission, callback) => {
 		if (socket.$state.role.permissions[permission]) {
 			return false;
 		}
 		const message = socket.$fn.$t('noPermissionTo', {
 			permission: socket.$fn.$t(permission)
 		});
-		socket.$fn.$err({ expected: message }, emiter);
+		socket.$fn.$err({ expected: message }, callback);
 		return true;
 	};
 };

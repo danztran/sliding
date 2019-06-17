@@ -17,5 +17,6 @@ export default {
 <style lang="scss">
 #logout-page {
 	height: 450px;
+	margin: auto;
 }
 </style>

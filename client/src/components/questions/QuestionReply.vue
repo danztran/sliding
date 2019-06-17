@@ -108,23 +108,20 @@ export default {
 			return this.$vuetify.breakpoint.sm;
 		}
 	},
-	sockets: {
-		delete_question_reply({ reply, errmsg }) {
-			if (errmsg) {
-				// show notify
-				return;
-			}
-			console.warn(reply);
-			this.$root.$emit('delete-reply', reply);
-		}
-	},
 	methods: {
 		editReply() {},
 		deleteReply() {
 			const infoReply = {
 				id: this.replyData.id
 			};
-			return this.$socket.emit('delete-question-reply', infoReply);
+			this.$socket.emit('delete-question-reply', infoReply, ({ reply, errmsg }) => {
+				if (errmsg) {
+					// show notify
+					return;
+				}
+				console.warn(reply);
+				this.$root.$emit('delete-reply', reply);
+			});
 		}
 	}
 };

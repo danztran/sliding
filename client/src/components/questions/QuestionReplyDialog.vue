@@ -6,7 +6,7 @@
 	<v-dialog
 		id="reply-question-dialog"
 		v-model="dialogReplyQuestion"
-		max-width="500px"
+		max-width="550px"
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
@@ -53,15 +53,17 @@
 			<div class="max-height-sm-down">
 				<div class="wrapper-card">
 					<question-card :question="question"/>
-					<bouncy-loader v-show="loading" :loading="loading"/>
-					<template v-for="reply in replies">
-						<reply-card :key="reply.id" :replyData="reply"/>
-					</template>
+					<div class="wrapper-card--reply">
+						<template v-for="reply in replies">
+							<reply-card :key="reply.id" :replyData="reply"/>
+						</template>
+						<bouncy-loader v-if="loading"/>
+					</div>
 				</div>
 
 				<!-- @desc: textarea for reply -->
 				<v-divider />
-				<v-card-actions>
+				<v-card-actions style="padding: 5px 24px;">
 					<text-area class="field-reply" :field="form.reply"/>
 					<v-btn
 						flat
@@ -79,7 +81,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import QuestionCard from './QuestionCard.vue';
 import QuestionReply from './QuestionReply.vue';
 
@@ -141,40 +143,45 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('dialog-reply-question', (question) => {
-			this.loading = this.replies.length < 0;
 			this.question = question;
 			this.dialogReplyQuestion = true;
+			if (this.question.replies === undefined && this.question.count_replies > 0) {
+				this.loading = true;
+				this.emitReplies();
+			}
+			else {
+				this.replies = this.question.replies;
+			}
 		});
 		this.$root.$on('delete-reply', (reply) => {
-			this.$store.dispatch('admin/questions/deleteQuestionReply', reply);
+			this.deleteQReply(reply);
 			this.updateReplies();
 		});
 	},
-	sockets: {
-		get_question_replies(replies) {
-			console.warn(replies);
-			// this.replies = replies;
-			const data = {
-				id: this.question.id,
-				replies
-			};
-			this.$store.dispatch('admin/questions/getQuestionReplies', data);
-			this.updateReplies();
-		},
-		add_question_reply({ reply, errmsg }) {
-			const infoReply = {
-				question_id: this.question.id,
-				temp_id: this.tempReplyID
-			};
-			if (errmsg) {
-				this.form.reply.errmsg = errmsg;
-				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', infoReply);
-			}
-			this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', Object.assign(reply, { temp_id: infoReply.temp_id }));
-			return this.updateReplies();
-		}
-	},
 	methods: {
+		...mapActions({
+			deleteQReply: 'admin/questions/deleteQuestionReply',
+			setQReplies: 'admin/questions/getQuestionReplies',
+			removeErrorQReply: 'admin/questions/removeErrorQuestionReply',
+			mergeQReply: 'admin/questions/replaceSuccessQuestionReply',
+			sendQReply: 'admin/questions/sendQuestionReply'
+		}),
+		emitReplies() {
+			const emiter = 'get-question-replies';
+			this.$socket.emit(emiter, this.question.id, ({ errmsg, replies }) => {
+				this.loading = false;
+				if (errmsg) {
+					// notify
+					return;
+				}
+				const data = {
+					id: this.question.id,
+					replies
+				};
+				this.setQReplies(data);
+				this.updateReplies();
+			});
+		},
 		updateReplies() {
 			this.replies = this.getReplies(this.question.id);
 		},
@@ -195,8 +202,20 @@ export default {
 					}
 				}
 			};
-			this.$store.dispatch('admin/questions/sendQuestionReply', replyInfo);
-			this.$socket.emit('add-question-reply', replyInfo.data);
+			this.sendQReply(replyInfo);
+			const emiter = 'add-question-reply';
+			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
+				const infoReply = {
+					question_id: this.question.id,
+					temp_id: this.tempReplyID
+				};
+				if (errmsg) {
+					this.form.reply.errmsg = errmsg;
+					return this.removeErrorQReply(infoReply);
+				}
+				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
+				return this.updateReplies();
+			});
 			this.form.reply.value = '';
 		},
 		editQuestion() {},
@@ -209,16 +228,19 @@ export default {
 <style lang="scss">
 .wrapper-card {
 	position: relative !important;
-	height: 300px;
-	max-height: 100%;
+	max-height: 80vh;
 	flex: 1;
 	overflow-y: auto;
 	overflow-x: hidden;
+	.wrapper-card--reply {
+		position: relative !important;
+		min-height: 30vh;
+	}
 }
 .field-reply {
 	textarea {
 		max-height: 120px;
-		overflow-y: auto !important;
+		// min-height: 30px;
 	}
 }
 

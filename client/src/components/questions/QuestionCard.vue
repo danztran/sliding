@@ -245,9 +245,6 @@ export default {
 	methods: {
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
-			if (this.question.replies === undefined) {
-				this.$socket.emit('get-question-replies', question.id);
-			}
 		},
 		restoreQuestion() {},
 		highlightQuestion() {},

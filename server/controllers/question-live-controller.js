@@ -1,8 +1,8 @@
 const QuestionModel = requireWrp('models/question');
 
 module.exports = {
-	async getQuestions({ socket }) {
-		let result = [];
+	async getQuestions({ socket }, callback) {
+		const result = {};
 		const query = {
 			event_id: socket.$state.event.id,
 			is_deleted: false
@@ -12,18 +12,17 @@ module.exports = {
 		}
 		try {
 			const Question = new QuestionModel();
-			result = await Question.find(query).exec();
+			result.questions = await Question.find(query).exec();
+
+			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e);
+			return socket.$fn.$err(e, callback);
 		}
-
-		return socket.emit('get_questions', result);
 	},
 
-	async addQuestion({ socket }, info) {
-		const emiter = 'add_question';
-		if (socket.$fn.$cannot('addQuestion', emiter)) return;
+	async addQuestion({ socket }, info, callback) {
+		if (socket.$fn.$cannot('addQuestion', callback)) return;
 		// validate info here
 		// ...
 		const result = {};
@@ -46,17 +45,15 @@ module.exports = {
 			if (question.stage === 'public') {
 				socket.to(socket.$state.rooms.guest).emit('new_added_question', result.question);
 			}
+			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, emiter);
+			return socket.$fn.$err(e, callback);
 		}
-
-		return socket.emit(emiter, result);
 	},
 
-	async editQuestion({ socket }, info) {
-		const emiter = 'edit_question';
-		if (socket.$fn.$cannot('editQuestion', emiter)) return;
+	async editQuestion({ socket }, info, callback) {
+		if (socket.$fn.$cannot('editQuestion', callback)) return;
 		// validate info here
 		// ...
 		const result = {};
@@ -94,17 +91,16 @@ module.exports = {
 			if (guestEvent) {
 				socket.to(socket.$state.rooms.guest).emit(guestEvent, result.question);
 			}
+
+			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, emiter);
+			return socket.$fn.$err(e, callback);
 		}
-
-		return socket.emit(emiter, result);
 	},
 
-	async deleteQuestion({ socket }, info) {
-		const emiter = 'delete_question';
-		if (socket.$fn.$cannot('deleteQuestion', emiter)) return;
+	async deleteQuestion({ socket }, info, callback) {
+		if (socket.$fn.$cannot('deleteQuestion', callback)) return;
 		// VALIDATE INFO HERE
 		// ...
 		const result = {};
@@ -126,12 +122,12 @@ module.exports = {
 			if (question.stage === 'public') {
 				socket.to(socket.$state.rooms.guest).emit('new_deleted_question', result.question);
 			}
+
+			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, emiter);
+			return socket.$fn.$err(e, callback);
 		}
-
-		return socket.emit(emiter, result);
 	}
 
 };

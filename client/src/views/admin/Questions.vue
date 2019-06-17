@@ -69,12 +69,6 @@ export default {
 	data: () => ({
 		onModerator: false
 	}),
-	sockets: {
-		get_questions(data) {
-			// console.warn(data);
-			this.$store.dispatch('admin/questions/getQuestions', data);
-		}
-	},
 	computed: {
 		showSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -84,7 +78,13 @@ export default {
 		})
 	},
 	created() {
-		this.$socket.emit('get-questions');
+		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
+			if (errmsg) {
+				// notify
+				return;
+			}
+			this.$store.dispatch('admin/questions/getQuestions', questions);
+		});
 	},
 	mounted() {
 		this.$root.$on('toggle-mode-moderation', () => {
