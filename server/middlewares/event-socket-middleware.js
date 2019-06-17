@@ -18,14 +18,14 @@ module.exports = (socket) => {
 	socket.$fn.$t = translator.$t;
 	socket.$fn.$d = translator.$d;
 	socket.$fn.$err = (error, emiter) => {
-		let errmsg = socket.$fn.$t('somethingWrongs');
+		let errmsg = socket.$fn.$t('somethingWrong');
 		if (error) {
 			if (error.expected) {
 				errmsg = errmsg.expected;
 			}
 		}
 		console.error(error);
-		return socket.emit(emiter || 'event_errmsg', errmsg);
+		return socket.emit(emiter || 'event_errmsg', { errmsg });
 	};
 	// role & permission
 	socket.$state.role = {

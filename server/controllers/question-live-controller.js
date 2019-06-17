@@ -83,13 +83,13 @@ module.exports = {
 			const newStage = editedQuestion.stage;
 			let guestEvent = false;
 			if (oldStage === newStage && oldStage === 'public') {
-				guestEvent = 'new_edit_question';
+				guestEvent = 'new_edited_question';
 			}
-			else if (oldStage === 'private' && newStage === 'public') {
-				guestEvent = 'new_question';
+			else if (oldStage !== newStage && newStage === 'public') {
+				guestEvent = 'new_added_question';
 			}
-			else if (oldStage === 'public' && newStage === 'archived') {
-				guestEvent = 'new_delete_question';
+			else if (oldStage === 'public' && newStage !== oldStage) {
+				guestEvent = 'new_deleted_question';
 			}
 			if (guestEvent) {
 				socket.to(socket.$state.rooms.guest).emit(guestEvent, result.question);
