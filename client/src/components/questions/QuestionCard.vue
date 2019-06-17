@@ -145,6 +145,7 @@
 								{{ question.replies
 									? `${question.replies.length}&nbsp;`
 									: `${question.count_replies}&nbsp;` }}
+								<!-- {{ `${question.replies.length}&nbsp;` }} -->
 							</span>
 							<span
 								class="caption"

@@ -29,7 +29,12 @@ const REPLACE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 
 const REMOVE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 	const question = state.questions.find(q => q.id === infoErrReply.question_id);
-	question.replies.filter(r => r.id !== infoErrReply.temp_id);
+	question.replies = question.replies.filter(r => r.id !== infoErrReply.temp_id);
+};
+
+const DELETE_QUESTION_REPLY = (state, res) => {
+	const question = state.questions.find(q => q.id === res.question_id);
+	question.replies = question.replies.filter(rl => rl.id !== res.id);
 };
 
 const RESET = (state) => {
@@ -42,5 +47,6 @@ export default {
 	SEND_QUESTION_REPLY,
 	REPLACE_SUCCESS_QUESTION_REPLY,
 	REMOVE_ERROR_QUESTION_REPLY,
+	DELETE_QUESTION_REPLY,
 	RESET
 };

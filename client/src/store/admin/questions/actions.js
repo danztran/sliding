@@ -18,10 +18,15 @@ const removeErrorQuestionReply = (context, questionId) => {
 	context.commit('REMOVE_ERROR_QUESTION_REPLY', questionId);
 };
 
+const deleteQuestionReply = (context, res) => {
+	context.commit('DELETE_QUESTION_REPLY', res);
+};
+
 export default {
 	getQuestions,
 	getQuestionReplies,
 	sendQuestionReply,
 	replaceSuccessQuestionReply,
-	removeErrorQuestionReply
+	removeErrorQuestionReply,
+	deleteQuestionReply
 };

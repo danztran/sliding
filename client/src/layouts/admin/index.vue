@@ -40,6 +40,8 @@ export default {
 	},
 	beforeRouteLeave(to, from, next) {
 		this.$socket.emit('leave-event');
+		this.$store.commit('admin/event/RESET');
+		this.$store.commit('admin/questions/RESET');
 		next();
 	},
 	sockets: {
@@ -55,7 +57,9 @@ export default {
 			console.warn(result);
 		},
 		new_edited_question_reply() {},
-		new_deleted_question_reply() {}
+		new_deleted_question_reply(result) {
+			console.warn(result);
+		}
 	}
 };
 </script>

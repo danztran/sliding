@@ -109,8 +109,13 @@ export default {
 		}
 	},
 	sockets: {
-		delete_question_reply(result) {
-			console.warn(result);
+		delete_question_reply({ reply, errmsg }) {
+			if (errmsg) {
+				// show notify
+				return;
+			}
+			console.warn(reply);
+			this.$root.$emit('delete-reply', reply);
 		}
 	},
 	methods: {

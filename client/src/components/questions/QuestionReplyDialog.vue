@@ -10,7 +10,6 @@
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
-			<loading-linear :loading="loading"/>
 			<!--
 				@desc: header dialog
 				@contain: Title and btn Close
@@ -54,6 +53,7 @@
 			<div class="max-height-sm-down">
 				<div class="wrapper-card">
 					<question-card :question="question"/>
+					<bouncy-loader v-show="loading" :loading="loading"/>
 					<template v-for="reply in replies">
 						<reply-card :key="reply.id" :replyData="reply"/>
 					</template>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import QuestionCard from './QuestionCard.vue';
 import QuestionReply from './QuestionReply.vue';
 
@@ -122,6 +123,9 @@ export default {
 		replies: []
 	}),
 	computed: {
+		...mapGetters({
+			getReplies: 'admin/questions/getReplies'
+		}),
 		checkReply() {
 			const { reply } = this.form;
 			if (reply.value.length > reply.counter) {
@@ -135,27 +139,27 @@ export default {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
 		}
 	},
-	watch: {
-		replies(val) {
-			this.loading = val.length === 0;
-		}
-	},
 	mounted() {
 		this.$root.$on('dialog-reply-question', (question) => {
-			this.loading = this.replies.length <= 0;
+			this.loading = this.replies.length < 0;
 			this.question = question;
 			this.dialogReplyQuestion = true;
+		});
+		this.$root.$on('delete-reply', (reply) => {
+			this.$store.dispatch('admin/questions/deleteQuestionReply', reply);
+			this.updateReplies();
 		});
 	},
 	sockets: {
 		get_question_replies(replies) {
 			console.warn(replies);
-			this.replies = replies;
+			// this.replies = replies;
 			const data = {
 				id: this.question.id,
 				replies
 			};
 			this.$store.dispatch('admin/questions/getQuestionReplies', data);
+			this.updateReplies();
 		},
 		add_question_reply({ reply, errmsg }) {
 			const infoReply = {
@@ -166,10 +170,14 @@ export default {
 				this.form.reply.errmsg = errmsg;
 				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', infoReply);
 			}
-			return this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', Object.assign(reply, { temp_id: infoReply.temp_id }));
+			this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', Object.assign(reply, { temp_id: infoReply.temp_id }));
+			return this.updateReplies();
 		}
 	},
 	methods: {
+		updateReplies() {
+			this.replies = this.getReplies(this.question.id);
+		},
 		sendReply() {
 			// @desc: generator temp id for new reply
 			this.tempReplyID = Math.random().toString(36).substring(7);
@@ -200,32 +208,25 @@ export default {
 
 <style lang="scss">
 .wrapper-card {
+	position: relative !important;
 	height: 300px;
 	max-height: 100%;
 	flex: 1;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+.field-reply {
+	textarea {
+		max-height: 120px;
+		overflow-y: auto !important;
+	}
+}
 
 @media only screen and (max-width: 960px) {
-	.wrapper-card {
-		max-height: 100%;
-		flex: 1;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
 	.max-height-sm-down {
 		height: calc(100vh - 52px);
 		display: flex;
 		flex-direction: column;
-	}
-}
-@media only screen and (min-width: 960px) {
-	.field-reply {
-		textarea {
-			max-height: 120px;
-			overflow-y: auto !important;
-		}
 	}
 }
 </style>
