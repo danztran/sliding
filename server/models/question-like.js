@@ -1,5 +1,5 @@
 const Model = requireWrp('models/model');
-const qh = requireWrp('modules/query-helper');
+// const qh = requireWrp('modules/query-helper');
 
 class QuestionLikeModel extends Model {
 	constructor() {
@@ -11,6 +11,7 @@ class QuestionLikeModel extends Model {
 			SELECT json_agg(ql)
 			FROM ${this.getName()} as "ql"
 			WHERE ql."question_id" = ${qid}
+				AND ql."is_liked" = true
 		`);
 		return this;
 	}

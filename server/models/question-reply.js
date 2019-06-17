@@ -1,6 +1,6 @@
 const Model = requireWrp('models/model');
 const UserModel = requireWrp('models/user');
-const qh = requireWrp('modules/query-helper');
+// const qh = requireWrp('modules/query-helper');
 
 const User = new UserModel();
 
@@ -29,7 +29,9 @@ class QuestionReplyModel extends Model {
 		this.setQuery(`
 			SELECT COUNT(*)
 			FROM ${this.getName()} as reply
-			WHERE reply."question_id"=${qid}
+			WHERE
+				reply."question_id"=${qid}
+				AND reply."is_deleted"= false
 		`);
 		return this;
 	}
