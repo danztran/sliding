@@ -67,7 +67,7 @@
 			</v-list-tile>
 
 			<!-- LOGOUT -->
-			<v-list-tile @click="callLogout">
+			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
 				</v-list-tile-action>
@@ -115,11 +115,6 @@ export default {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = !this.drawer;
 		});
-	},
-	methods: {
-		callLogout() {
-			this.$store.dispatch('auth/logout');
-		}
 	}
 };
 </script>

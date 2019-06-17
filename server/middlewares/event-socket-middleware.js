@@ -1,5 +1,5 @@
 const Translator = requireWrp('modules/translator');
-const Validator = requireWrp('modules/validator-custom');
+// const Validator = requireWrp('modules/validator-custom');
 
 module.exports = (socket) => {
 	if (!socket) return;

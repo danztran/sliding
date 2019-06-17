@@ -10,8 +10,9 @@ import Home from './views/Home.vue';
 
 // Authentication
 const AuthLayout = () => import(/* webpackChunkName: "auth-layout" */ './layouts/auth');
-const Login = () => import(/* webpackChunkName: "login" */ './views/Login.vue');
-const Signup = () => import(/* webpackChunkName: "signup" */ './views/Signup.vue');
+const Login = () => import(/* webpackChunkName: "login" */ './views/auth/Login.vue');
+const Signup = () => import(/* webpackChunkName: "signup" */ './views/auth/Signup.vue');
+const Logout = () => import(/* webpackChunkName: "logout" */ './views/auth/Logout.vue');
 
 const PageNotFound = () => import(/* webpackChunkName: "pagenotfound" */ './views/PageNotFound.vue');
 
@@ -55,12 +56,12 @@ const router = new Router({
 					path: '/',
 					name: 'auth',
 					component: AuthLayout,
-					beforeEnter: AuthMdw.beforeEnterLogin,
 					redirect: { name: 'login' },
 					children: [
 						{
 							path: 'login',
 							name: 'login',
+							beforeEnter: AuthMdw.beforeEnterLogin,
 							component: Login,
 							meta: {
 								title: 'Login'
@@ -69,9 +70,18 @@ const router = new Router({
 						{
 							path: 'signup',
 							name: 'signup',
+							beforeEnter: AuthMdw.beforeEnterLogin,
 							component: Signup,
 							meta: {
 								title: 'Signup'
+							}
+						},
+						{
+							path: 'logout',
+							name: 'logout',
+							component: Logout,
+							meta: {
+								title: 'Logout...'
 							}
 						}
 					]

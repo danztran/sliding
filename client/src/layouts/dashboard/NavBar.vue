@@ -19,7 +19,7 @@
 							</div>
 						</div>
 						<div v-if="hiddenXS" class="text-xs-center">
-							Tabname
+							Sliding
 						</div>
 					</v-list-tile-content>
 				</v-toolbar-title>
@@ -55,7 +55,7 @@
 					<v-tabs-slider color="primary" />
 
 					<v-tab
-						v-for="(tab) of tabs"
+						v-for="tab of tabs"
 						:key="tab.id"
 						:to="tab.url"
 						fixed-tabs
@@ -92,8 +92,7 @@ export default {
 				{
 					id: 1,
 					name: 'logout',
-					icon: 'signout',
-					func: 'callLogout'
+					icon: 'signout'
 				}
 			]
 		};

@@ -16,11 +16,11 @@
 
 					<v-list-tile-content>
 						<div class="body-2">
-							{{ loading ? eventInfo.name : 'loading' }}
+							{{ eventInfo ? eventInfo.name : '' }}
 						</div>
 						<div
 							class="caption text-uppercase hidden-xs-only">
-							{{ loading ? `#${eventInfo.code}` : 'loading' }}
+							{{ eventInfo ? `#${eventInfo.code}` : '' }}
 						</div>
 					</v-list-tile-content>
 				</v-list-tile>
@@ -94,9 +94,6 @@ export default {
 		});
 	},
 	methods: {
-		callLogout() {
-			this.$store.dispatch('auth/logout');
-		},
 		toggleDrawer() {
 			this.$root.$emit('toggle-drawer');
 		}
