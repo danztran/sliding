@@ -10,20 +10,26 @@ class QuestionReplyModel extends Model {
 	}
 
 	find(info, opt) {
-		this.setQuery(`
-			SELECT
+		super.find(info, {
+			mainq: 'qr',
+			select: `
 				qr."id",
 				qr."question_id",
 				qr."content",
-				ROW_TO_JSON(u) AS "user"
-			FROM
-				${this.getName()} AS qr
-				INNER JOIN
-					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
-					ON qr."user_id" = u."id"
-			${qh.toWhereClause(info)}
-		`);
+				( ${User.findAsJsonById('qr."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user"
+			`,
+			...opt
+		});
 		this.setRowReturn(0);
+		return this;
+	}
+
+	getCountByQid(qid) {
+		this.setQuery(`
+			SELECT COUNT(*)
+			FROM ${this.getName()} as reply
+			WHERE reply."question_id"=${qid}
+		`);
 		return this;
 	}
 

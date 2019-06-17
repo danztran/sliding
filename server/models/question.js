@@ -11,36 +11,29 @@ const QuestionLike = new QuestionLikeModel();
 class QuestionModel extends Model {
 	constructor() {
 		super('_.question');
+		this._queryOpt = {
+			mainq: 'q',
+			select: `
+				q."id",
+				q."content",
+				q."created_at",
+				( ${User.findAsJsonById('q."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user",
+				( ${QuestionReply.getCountByQid('q."id"').getQuery()} ) AS "count_replies",
+				( ${QuestionLike.findAsJsonByQid('q."id"').getQuery()} ) AS "likes"
+			`
+		};
 	}
 
 	find(info, opt) {
-		this.setQuery(`
-			SELECT
-				q."id",
-				q."content",
-				ROW_TO_JSON(u) AS "user",
-				(
-					SELECT COUNT(*)
-					FROM ${QuestionReply.getName()}
-					WHERE "question_id" = q."id"
-				) AS "count_replies",
-				(
-					SELECT json_agg(ql)
-					FROM ${QuestionLike.getName()} as ql
-					WHERE "question_id" = q."id"
-				) AS "likes"
-			FROM
-				${this.getName()} AS q
-				INNER JOIN
-					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
-					ON q."user_id" = u."id"
-			${qh.toWhereClause(info)}
-		`);
+		super.find(info, {
+			...this._queryOpt,
+			...opt
+		});
 		this.setRowReturn(0);
 		return this;
 	}
 
-	create(info) {
+	create(info, opt) {
 		return this.createOne({
 			event_id: info.event_id,
 			user_id: info.user_id,
@@ -49,32 +42,29 @@ class QuestionModel extends Model {
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString()
 		}, {
-			select: '*'
+			select: '*',
+			...opt
 		});
 	}
 
 	update(info, opt) {
-		this.setQuery(`
-			UPDATE ${this.getName()} as q
-			${qh.toSetClause({
-		content: info.content,
-		stage: info.stage,
-		is_star: info.is_star,
-		is_answer: info.is_answer,
-		updated_at: new Date().toISOString()
-	})}
-				FROM
-					( ${this.findOne({ id: info.id }).getQuery()} FOR UPDATE ) AS subq
-				JOIN
-					( ${User.find({}, { select: '"id", "name"' }).getQuery()} ) AS u
-				ON subq."user_id" = u."id"
-			RETURNING q.*, row_to_json(u) as "user"
-		`);
+		this.updateOne({
+			id: info.id
+		}, {
+			content: info.content,
+			stage: info.stage,
+			is_star: info.is_star,
+			is_answer: info.is_answer,
+			updated_at: new Date().toISOString()
+		}, {
+			...this._queryOpt,
+			...opt
+		});
 		this.setRowReturn(1);
 		return this;
 	}
 
-	setDeleted(info, opt) {
+	setDeleted(info) {
 		return this.updateOne({
 			id: info.id
 		}, {

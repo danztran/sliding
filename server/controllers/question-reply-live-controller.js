@@ -35,7 +35,6 @@ module.exports = {
 				name: socket.$state.user.name
 			};
 			result.reply = reply;
-
 			socket.to(socket.$state.rooms.event).emit('new_added_question_reply', result.reply);
 		}
 		catch (e) {

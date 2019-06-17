@@ -1,4 +1,5 @@
 const Model = requireWrp('models/model');
+const qh = requireWrp('modules/query-helper');
 const crypto = requireWrp('modules/crypto-custom');
 
 class UserModel extends Model {
@@ -12,6 +13,20 @@ class UserModel extends Model {
 
 	findByUsername(username, opt) {
 		return this.findOne({ username }, opt);
+	}
+
+	findAsJsonById(id, { select = '*' } = {}) {
+		this.setQuery(`
+			SELECT ROW_TO_JSON(u)
+			FROM
+				(
+					SELECT ${select}
+					FROM ${this.getName()}
+				) as u
+			WHERE u.id=${id}
+			LIMIT 1
+		`);
+		return this;
 	}
 
 	create(user, opt) {

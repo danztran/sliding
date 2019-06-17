@@ -16,12 +16,15 @@ const queryHelper = {
 		return rdq + str + rdq;
 	},
 
-	toClause(object, symbol = ' ') {
+	toClause(object, {
+		symbol = ' ',
+		prefix = ''
+	} = {}) {
 		const states = [];
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
 				if (object[key] !== undefined) {
-					states.push(`"${key}"=${this.toDollarQuoted(object[key])}`);
+					states.push(`${prefix}"${key}"=${this.toDollarQuoted(object[key])}`);
 				}
 			}
 		}
@@ -32,18 +35,19 @@ const queryHelper = {
 	// @info: Object
 	// e.g.: {name: "Nguyên", username: "deeptry"}
 	// => WHERE "name"='Nguyên' AND "username"='deeptry'
-	toWhereClause(info) {
+	toWhereClause(info, { prefix = '' } = {}) {
 		if (!info) return '';
+		const opt = { symbol: ' AND ', prefix };
 		let clause = '';
 		if (Array.isArray(info)) {
 			const array = [];
 			for (const object of info) {
-				array.push(`(${this.toClause(object, ' AND ')})`);
+				array.push(`(${this.toClause(object, opt)})`);
 			}
 			clause = array.join(' OR ');
 		}
 		else {
-			clause = this.toClause(info, ' AND ');
+			clause = this.toClause(info, opt);
 		}
 		return clause ? `WHERE ${clause}` : '';
 	},
@@ -52,7 +56,7 @@ const queryHelper = {
 	// e.g.: {name: "Nguyên", username: "deeptry"}
 	// => SET "name"='Nguyên', "username"='deeptry'
 	toSetClause(info) {
-		return `SET ${this.toClause(info, ', ')}`;
+		return `SET ${this.toClause(info, { symbol: ', ' })}`;
 	},
 
 	// @order: String

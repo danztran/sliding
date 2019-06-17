@@ -26,74 +26,80 @@ class Model {
 		return this;
 	}
 
+	getRowReturn() {
+		return this._rowReturn;
+	}
+
 	// @info can be Object or Array of objects
 	find(info, {
+		mainq = 'mainq',
 		select = '*',
 		order,
 		limit,
 		offset
 	} = {}) {
-		this._query = `
+		this.setQuery(`
 			SELECT ${select}
-			FROM ${this._name}
-			${qh.toWhereClause(info)}
+			FROM ${this.getName()} AS ${mainq}
+			${qh.toWhereClause(info, { prefix: `${mainq}.` })}
 			${qh.toOrderClause(order)}
 			${qh.toLimitClause(limit)}
 			${qh.toOffsetClause(offset)}
-		`;
-		this._rowReturn = 0;
+		`);
+		this.setRowReturn(0);
 		return this;
 	}
 
 	findOne(object, { select } = {}) {
-		this._query = this.find(object, {
+		this.find(object, {
 			select,
 			limit: 1
-		}).getQuery();
-		this._rowReturn = 1;
+		});
+		this.setRowReturn(1);
 		return this;
 	}
 
 	findLastOf(column, { select } = {}) {
-		this._query = this.find(null, {
+		this.find(null, {
 			select,
 			order: `-${column}`,
 			limit: 1
-		}).getQuery();
-		this._rowReturn = 1;
+		});
+		this.setRowReturn(1);
 		return this;
 	}
 
 	createOne(object, { select = '*' } = {}) {
-		this._query = `
-			INSERT INTO ${this._name}
+		this.setQuery(`
+			INSERT INTO ${this.getName()}
 			${qh.toInsertClause(object)}
 			${qh.toReturningClause(select)}
-		`;
-		this._rowReturn = 1;
+		`);
+		this.setRowReturn(1);
 		return this;
 	}
 
-	updateOne(object, newInfo, { select } = {}) {
-		const column = Object.keys(object)[0];
-		this._query = `
-			UPDATE ${this._name}
+	updateOne(object, newInfo, {
+		select,
+		mainq = 'mainq',
+		subq = 'subq'
+	} = {}) {
+		this.setQuery(`
+			UPDATE ${this.getName()} AS ${mainq}
 			${qh.toSetClause(newInfo)}
-			WHERE ${column} in (
-					${this.findOne(object, { select: column }).getQuery()}
-				)
+			FROM ( ${this.findOne(object).getQuery()} FOR UPDATE ) AS ${subq}
 			${qh.toReturningClause(select)}
-		`;
+		`);
 		if (select) {
-			this._rowReturn = 1;
+			this.setRowReturn(1);
 		}
 		return this;
 	}
 
 	exec(rowReturn) {
 		return new Promise((resolve, reject) => {
-			this._rowReturn = rowReturn || this._rowReturn;
-			pool.query(this._query)
+			this.setRowReturn(rowReturn || this.getRowReturn());
+			pool.query(this.getQuery())
 				.then((result) => {
 					switch (this._rowReturn) {
 						case 1: return resolve(result.rows[0]);
