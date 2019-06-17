@@ -67,7 +67,7 @@
 			</v-list-tile>
 
 			<!-- LOGOUT -->
-			<v-list-tile @click="callLogout">
+			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
 					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
 				</v-list-tile-action>
@@ -134,9 +134,6 @@ export default {
 		});
 	},
 	methods: {
-		callLogout() {
-			this.$store.dispatch('auth/logout');
-		},
 		switchEvent() {
 			this.$router.push({ name: 'my-events' });
 		}

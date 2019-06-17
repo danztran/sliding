@@ -114,7 +114,7 @@
 
 					<v-divider></v-divider>
 					<!-- LOGOUT -->
-					<v-list-tile @click="callLogout">
+					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -144,9 +144,6 @@ export default {
 		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 	},
 	methods: {
-		callLogout() {
-			this.$store.dispatch('auth/logout');
-		},
 		editProfile() {},
 		toggleModalCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');

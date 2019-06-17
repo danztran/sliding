@@ -1,8 +1,6 @@
 import router from '@/router';
 import _cm from '@/modules/common-methods';
 import cookies from '@/modules/vue-cookies-custom';
-import api from '@/api';
-import axios from '@/modules/axios-custom';
 const { VUE_APP_CK_USER, VUE_APP_CK_FLASH_MESSAGE } = process.env;
 
 const setAuth = (context, userData) => {
@@ -19,17 +17,14 @@ const checkAuth = (context) => {
 	}
 };
 
-const logout = (context) => {
-	axios.get(api.auth.logout)
-		.then((res) => {
-			context.dispatch('resetAll', {}, { root: true });
-			cookies.remove(VUE_APP_CK_USER);
-			cookies.set(
-				VUE_APP_CK_FLASH_MESSAGE,
-				res.data.messages['auth.logout']
-			);
-			router.push({ name: 'login' });
-		});
+const logout = (context, data) => {
+	context.dispatch('resetAll', {}, { root: true });
+	cookies.remove(VUE_APP_CK_USER);
+	cookies.set(
+		VUE_APP_CK_FLASH_MESSAGE,
+		data.messages['auth.logout']
+	);
+	router.push({ name: 'login' });
 };
 
 const signup = (context, data) => {

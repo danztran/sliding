@@ -1,5 +1,5 @@
 const Model = requireWrp('models/model');
-const qh = requireWrp('modules/query-helper');
+// const qh = requireWrp('modules/query-helper');
 const crypto = requireWrp('modules/crypto-custom');
 
 class UserModel extends Model {
