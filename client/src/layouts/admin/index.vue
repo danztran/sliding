@@ -44,13 +44,18 @@ export default {
 	},
 	sockets: {
 		connect() {
-			console.warn('connected');
+			// console.warn('connected');
 		},
 		get_event(data) {
-			console.warn(data);
+			// console.warn(data);
 			this.$store.dispatch('admin/event/getCurrentEvent', data);
 			this.ready = true;
-		}
+		},
+		new_added_question_reply(result) {
+			console.warn(result);
+		},
+		new_edited_question_reply() {},
+		new_deleted_question_reply() {}
 	}
 };
 </script>

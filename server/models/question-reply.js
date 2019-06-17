@@ -63,7 +63,8 @@ class QuestionReplyModel extends Model {
 			is_deleted: true,
 			updated_at: new Date().toISOString()
 		}, {
-			select: '"id", "question_id"'
+			mainq: 'qrp',
+			select: 'qrp."id", qrp."question_id"'
 		});
 	}
 }

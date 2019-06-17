@@ -108,9 +108,19 @@ export default {
 			return this.$vuetify.breakpoint.sm;
 		}
 	},
+	sockets: {
+		delete_question_reply(result) {
+			console.warn(result);
+		}
+	},
 	methods: {
 		editReply() {},
-		deleteReply() {}
+		deleteReply() {
+			const infoReply = {
+				id: this.replyData.id
+			};
+			return this.$socket.emit('delete-question-reply', infoReply);
+		}
 	}
 };
 </script>

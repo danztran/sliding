@@ -51,7 +51,7 @@
 			<v-divider />
 
 			<!-- @desc: Replies message content -->
-			<div class="test">
+			<div class="max-height-sm-down">
 				<div class="wrapper-card">
 					<question-card :question="question"/>
 					<template v-for="reply in replies">
@@ -62,7 +62,7 @@
 				<!-- @desc: textarea for reply -->
 				<v-divider />
 				<v-card-actions>
-					<text-area :field="form.reply"/>
+					<text-area class="field-reply" :field="form.reply"/>
 					<v-btn
 						flat
 						icon
@@ -158,15 +158,15 @@ export default {
 			this.$store.dispatch('admin/questions/getQuestionReplies', data);
 		},
 		add_question_reply({ reply, errmsg }) {
+			const infoReply = {
+				question_id: this.question.id,
+				temp_id: this.tempReplyID
+			};
 			if (errmsg) {
 				this.form.reply.errmsg = errmsg;
-				const infoErrReply = {
-					question_id: this.question.id,
-					temp_id: this.tempReplyID
-				};
-				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', infoErrReply);
+				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', infoReply);
 			}
-			return this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', reply);
+			return this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', Object.assign(reply, { temp_id: infoReply.temp_id }));
 		}
 	},
 	methods: {
@@ -179,7 +179,7 @@ export default {
 				question_id: this.question.id,
 				data: {
 					id: replyId,
-					content: this.form.reply.value,
+					content: this.form.reply.value.trim(),
 					question_id: this.question.id,
 					user: {
 						id: user.id,
@@ -214,10 +214,18 @@ export default {
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
-	.test {
+	.max-height-sm-down {
 		height: calc(100vh - 52px);
 		display: flex;
 		flex-direction: column;
+	}
+}
+@media only screen and (min-width: 960px) {
+	.field-reply {
+		textarea {
+			max-height: 120px;
+			overflow-y: auto !important;
+		}
 	}
 }
 </style>

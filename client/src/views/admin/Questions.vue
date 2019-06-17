@@ -71,7 +71,7 @@ export default {
 	}),
 	sockets: {
 		get_questions(data) {
-			console.warn(data);
+			// console.warn(data);
 			this.$store.dispatch('admin/questions/getQuestions', data);
 		}
 	},

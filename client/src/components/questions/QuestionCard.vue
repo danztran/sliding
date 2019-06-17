@@ -141,8 +141,10 @@
 							small
 							@click="replyQuestion(question)">
 							<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
-							<span>
-								{{ question.replies ? question.replies.length : question.count_replies }}
+							<span class="caption">
+								{{ question.replies
+									? `${question.replies.length}&nbsp;`
+									: `${question.count_replies}&nbsp;` }}
 							</span>
 							<span
 								class="caption"
