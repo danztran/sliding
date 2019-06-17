@@ -91,9 +91,6 @@ export default {
 			this.form.password.value = this.fillInfo.password;
 		}
 	},
-	mounted() {
-		this.$root.$emit('hide-loading-overlay');
-	},
 	methods: {
 		handleLogin() {
 			this.loading = true;
