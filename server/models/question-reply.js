@@ -11,11 +11,12 @@ class QuestionReplyModel extends Model {
 
 	find(info, opt) {
 		super.find(info, {
-			mainq: 'qr',
+			alias: 'qr',
 			select: `
 				qr."id",
 				qr."question_id",
 				qr."content",
+				qr."created_at",
 				( ${User.findAsJsonById('qr."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user"
 			`,
 			...opt

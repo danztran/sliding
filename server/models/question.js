@@ -12,7 +12,7 @@ class QuestionModel extends Model {
 	constructor() {
 		super('_.question');
 		this._queryOpt = {
-			mainq: 'q',
+			alias: 'q',
 			select: `
 				q."id",
 				q."content",
@@ -54,7 +54,7 @@ class QuestionModel extends Model {
 			content: info.content,
 			stage: info.stage,
 			is_star: info.is_star,
-			is_answer: info.is_answer,
+			is_answered: info.is_answered,
 			updated_at: new Date().toISOString()
 		}, {
 			...this._queryOpt,

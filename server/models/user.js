@@ -16,14 +16,15 @@ class UserModel extends Model {
 	}
 
 	findAsJsonById(id, { select = '*' } = {}) {
+		const alias = 'userrrr';
 		this.setQuery(`
-			SELECT ROW_TO_JSON(u)
+			SELECT ROW_TO_JSON(${alias})
 			FROM
 				(
 					SELECT ${select}
 					FROM ${this.getName()}
-				) as u
-			WHERE u.id=${id}
+				) as ${alias}
+			WHERE ${alias}.id=${id}
 			LIMIT 1
 		`);
 		return this;
