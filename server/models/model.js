@@ -32,7 +32,7 @@ class Model {
 
 	// @info can be Object or Array of objects
 	find(info, {
-		mainq = 'mainq',
+		alias,
 		select = '*',
 		order,
 		limit,
@@ -40,8 +40,8 @@ class Model {
 	} = {}) {
 		this.setQuery(`
 			SELECT ${select}
-			FROM ${this.getName()} AS ${mainq}
-			${qh.toWhereClause(info, { prefix: `${mainq}.` })}
+			FROM ${this.getName()} ${qh.as(alias)}
+			${qh.toWhereClause(info, { alias })}
 			${qh.toOrderClause(order)}
 			${qh.toLimitClause(limit)}
 			${qh.toOffsetClause(offset)}
@@ -80,14 +80,15 @@ class Model {
 	}
 
 	updateOne(object, newInfo, {
-		select,
-		mainq = 'mainq',
-		subq = 'subq'
+		select
 	} = {}) {
+		const column = Object.keys(object)[0];
 		this.setQuery(`
-			UPDATE ${this.getName()} AS ${mainq}
+			UPDATE ${this._name}
 			${qh.toSetClause(newInfo)}
-			FROM ( ${this.findOne(object).getQuery()} FOR UPDATE ) AS ${subq}
+			WHERE ${column} in (
+					${this.findOne(object, { select: column }).getQuery()}
+				)
 			${qh.toReturningClause(select)}
 		`);
 		if (select) {

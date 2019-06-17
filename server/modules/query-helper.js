@@ -18,9 +18,10 @@ const queryHelper = {
 
 	toClause(object, {
 		symbol = ' ',
-		prefix = ''
+		alias
 	} = {}) {
 		const states = [];
+		const prefix = alias ? `${alias}.` : '';
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
 				if (object[key] !== undefined) {
@@ -35,9 +36,9 @@ const queryHelper = {
 	// @info: Object
 	// e.g.: {name: "Nguyên", username: "deeptry"}
 	// => WHERE "name"='Nguyên' AND "username"='deeptry'
-	toWhereClause(info, { prefix = '' } = {}) {
+	toWhereClause(info, { alias } = {}) {
 		if (!info) return '';
-		const opt = { symbol: ' AND ', prefix };
+		const opt = { symbol: ' AND ', alias };
 		let clause = '';
 		if (Array.isArray(info)) {
 			const array = [];
@@ -110,6 +111,10 @@ const queryHelper = {
 	// => OFFSET 4
 	toOffsetClause(offset) {
 		return offset ? `OFFSET ${this.toDollarQuoted(offset)}` : '';
+	},
+
+	as(alias) {
+		return alias ? `AS ${alias}` : '';
 	}
 };
 
