@@ -8,8 +8,9 @@
 		v-model="dialogReplyQuestion"
 		max-width="500px"
 		:transition="false"
-		:fullscreen="showSMnXS">
+		:fullscreen="isSMnXS">
 		<v-card>
+			<loading-linear :loading="loading"/>
 			<!--
 				@desc: header dialog
 				@contain: Title and btn Close
@@ -17,33 +18,33 @@
 			<v-card-title class="py-0">
 				<!-- @desc: show back button
 									hide title in small device -->
-				<template v-if="showSMnXS">
-					<v-btn v-if="showSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.small" v-html="'$vuetify.icons.arrow_left'"/>
+				<template v-if="isSMnXS">
+					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
+						<v-icon :size="icon.sm" v-html="'$vuetify.icons.arrow_left'"/>
 					</v-btn>
 				</template>
 				<template v-else>
-					<span v-if="!showSMnXS" v-t="'dialog-reply-question-title'"></span>
+					<span v-if="!isSMnXS" v-t="'dialog-reply-question-title'"></span>
 				</template>
 
 				<v-spacer></v-spacer>
 
 				<!-- @desc: show edit/delete/archive button
 									hide close button in small device -->
-				<template v-if="showSMnXS">
+				<template v-if="isSMnXS">
 					<v-btn icon @click="editQuestion">
-						<v-icon :size="icon.small" v-html="'$vuetify.icons.edit'"/>
+						<v-icon :size="icon.sm" v-html="'$vuetify.icons.edit'"/>
 					</v-btn>
 					<v-btn icon @click="deleteQuestion">
-						<v-icon :size="icon.small" v-html="'$vuetify.icons.delete'"/>
+						<v-icon :size="icon.sm" v-html="'$vuetify.icons.delete'"/>
 					</v-btn>
 					<v-btn icon @click="archiveQuestion">
-						<v-icon :size="icon.small" v-html="'$vuetify.icons.archive_all'"/>
+						<v-icon :size="icon.sm" v-html="'$vuetify.icons.archive_all'"/>
 					</v-btn>
 				</template>
 				<template v-else>
-					<v-btn v-if="!showSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.small" v-html="'$vuetify.icons.close'"/>
+					<v-btn v-if="!isSMnXS" icon @click="dialogReplyQuestion=false">
+						<v-icon :size="icon.sm" v-html="'$vuetify.icons.close'"/>
 					</v-btn>
 				</template>
 			</v-card-title>
@@ -53,7 +54,6 @@
 			<div class="test">
 				<div class="wrapper-card">
 					<question-card :question="question"/>
-
 					<template v-for="reply in replies">
 						<reply-card :key="reply.id" :replyData="reply"/>
 					</template>
@@ -104,7 +104,7 @@ export default {
 	data: () => ({
 		dialogReplyQuestion: false,
 		icon: {
-			small: 20
+			sm: 20
 		},
 		form: initForm(),
 		question: {
@@ -117,6 +117,8 @@ export default {
 				name: ''
 			}
 		},
+		loading: false,
+		tempReplyID: null,
 		replies: []
 	}),
 	computed: {
@@ -129,12 +131,18 @@ export default {
 			return !this._cm.notEmpty(reply.value)
 				|| reply.value.length > reply.counter;
 		},
-		showSMnXS() {
+		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		}
+	},
+	watch: {
+		replies(val) {
+			this.loading = val.length === 0;
 		}
 	},
 	mounted() {
 		this.$root.$on('dialog-reply-question', (question) => {
+			this.loading = this.replies.length <= 0;
 			this.question = question;
 			this.dialogReplyQuestion = true;
 		});
@@ -150,21 +158,25 @@ export default {
 			this.$store.dispatch('admin/questions/getQuestionReplies', data);
 		},
 		add_question_reply({ reply, errmsg }) {
-			if (!reply) {
+			if (errmsg) {
 				this.form.reply.errmsg = errmsg;
-				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', this.question.id);
+				const infoErrReply = {
+					question_id: this.question.id,
+					temp_id: this.tempReplyID
+				};
+				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', infoErrReply);
 			}
 			return this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', reply);
 		}
 	},
 	methods: {
 		sendReply() {
+			// @desc: generator temp id for new reply
+			this.tempReplyID = Math.random().toString(36).substring(7);
+			const replyId = this.tempReplyID;
 			const user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
-			const replyId = this.replies.length > 0
-				? parseInt(this.replies[this.replies.length - 1].id, 10) + 1
-				: 1;
 			const replyInfo = {
-				id: this.question.id,
+				question_id: this.question.id,
 				data: {
 					id: replyId,
 					content: this.form.reply.value,

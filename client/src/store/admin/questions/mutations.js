@@ -12,9 +12,8 @@ const GET_QUESTION_REPLIES = (state, dataReplies) => {
 };
 
 const SEND_QUESTION_REPLY = (state, reply) => {
-	const { id } = reply;
 	for (const question of state.questions) {
-		if (question.id === id) {
+		if (question.id === reply.question_id) {
 			question.replies.push(reply.data);
 			return;
 		}
@@ -27,13 +26,9 @@ const REPLACE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	Object.assign(reply, resReply);
 };
 
-const REMOVE_ERROR_QUESTION_REPLY = (state, questionId) => {
-	for (const question of state.questions) {
-		if (question.id === questionId) {
-			question.replies.pop();
-			return;
-		}
-	}
+const REMOVE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
+	const question = state.questions.find(q => q.id === infoErrReply.question_id);
+	question.replies.filter(r => r.id !== infoErrReply.temp_id);
 };
 
 const RESET = (state) => {

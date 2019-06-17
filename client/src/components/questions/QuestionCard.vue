@@ -1,7 +1,7 @@
 <!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
-		<v-card class="no-shadow card-question" slot-scope="{ hover }">
+		<v-card class="no-shadow" slot-scope="{ hover }">
 			<v-list subheader class="py-1">
 				<v-list-tile>
 					<!-- @desc: avatar -->
@@ -136,7 +136,6 @@
 						justify-end>
 						<v-btn
 							v-if="reply"
-							class="ma-0"
 							color="grey lighten-1"
 							flat
 							small
@@ -160,7 +159,7 @@
 									icon>
 									<v-icon
 										color="grey lighten-1"
-										:size="icon.sm"
+										:size="icon.xs"
 										v-html="'$vuetify.icons.options_dot'">
 									</v-icon>
 								</v-btn>

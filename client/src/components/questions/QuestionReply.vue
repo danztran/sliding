@@ -1,83 +1,79 @@
 <template>
-	<v-card class="ml-5 no-shadow card-question">
-		<v-list subheader class="py-1">
-			<v-list-tile>
-				<!-- @desc: avatar -->
-				<v-list-tile-avatar
-					class="pl-2"
-					:size="icon.lg"
-					color="grey lighten-2">
+	<v-card class="py-2 no-shadow card-reply">
+		<v-layout class="px-4" row wrap>
+			<v-flex
+				:class="{'pl-2': isSM}"
+				xs1>
+				<v-avatar :size="icon.lg" color="grey lighten-2">
 					<v-icon
 						:size="icon.sm"
 						color="white"
 						v-html="'$vuetify.icons.person'">
 					</v-icon>
-				</v-list-tile-avatar>
+				</v-avatar>
+			</v-flex>
+			<v-flex
+				:class="{'pl-2' : isXS}"
+				xs11>
+				<span class="body-2">
+					{{ replyData.user.name }}
+				</span>
+				<span class="body-1 mb-0">
+					{{ replyData.content }}
+					<br>
 
-				<v-list-tile-content>
-					<span class="body-2">
-						{{ replyData.user.name }}
-					</span>
-					<span class="body-1 grey--text font-weight-light">
-						• Date time
-					</span>
-				</v-list-tile-content>
-			</v-list-tile>
-		</v-list>
+					<v-card-actions class="pa-0">
+						<!-- datetime -->
+						<span class="grey--text caption">
+							Date time
+						</span>
+						<v-spacer></v-spacer>
 
-		<v-card-title class="py-0 px-4">
-			<p class="body-1 mb-0">
-				{{ replyData.content }}
-			</p>
-		</v-card-title>
+						<!-- *options: edit/delete -->
+						<v-menu
+							bottom
+							nudge-bottom
+							offset-y left>
+							<template v-slot:activator="{ on }">
+								<v-btn
+									class="mr-1"
+									v-on="on"
+									small
+									icon>
+									<v-icon
+										color="grey lighten-1"
+										:size="icon.xs"
+										v-html="'$vuetify.icons.options_dot'">
+									</v-icon>
+								</v-btn>
+							</template>
 
-		<v-card-actions class="py-0">
-			<v-list-tile class="grow">
-				<!-- *reply -->
-				<v-layout
-					align-center
-					justify-end>
+							<v-list class="py-0" dense>
+								<!-- *options: edit -->
+								<v-list-tile @click="editReply">
+									<v-list-tile-action>
+										<v-icon v-html="'$vuetify.icons.edit'" />
+									</v-list-tile-action>
+									<v-list-tile-content>
+										<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
+									</v-list-tile-content>
+								</v-list-tile>
 
-					<!-- *options button -->
-					<v-menu bottom nudge-bottom offset-y left>
-						<template v-slot:activator="{ on }">
-							<v-btn
-								v-on="on"
-								class="ma-0"
-								icon>
-								<v-icon
-									color="grey lighten-1"
-									:size="icon.sm"
-									v-html="'$vuetify.icons.options_dot'">
-								</v-icon>
-							</v-btn>
-						</template>
-
-						<v-list class="py-0" dense>
-							<!-- *options: edit -->
-							<v-list-tile @click="editReply">
-								<v-list-tile-action>
-									<v-icon v-html="'$vuetify.icons.edit'" />
-								</v-list-tile-action>
-								<v-list-tile-content>
-									<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
-								</v-list-tile-content>
-							</v-list-tile>
-
-							<!-- *options: delete -->
-							<v-list-tile @click="deleteReply">
-								<v-list-tile-action>
-									<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
-								</v-list-tile-action>
-								<v-list-tile-content>
-									<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
-								</v-list-tile-content>
-							</v-list-tile>
-						</v-list>
-					</v-menu>
-				</v-layout>
-			</v-list-tile>
-		</v-card-actions>
+								<!-- *options: delete -->
+								<v-list-tile @click="deleteReply">
+									<v-list-tile-action>
+										<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
+									</v-list-tile-action>
+									<v-list-tile-content>
+										<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
+									</v-list-tile-content>
+								</v-list-tile>
+							</v-list>
+						</v-menu>
+					</v-card-actions>
+				</span>
+			</v-flex>
+		</v-layout>
 	</v-card>
 </template>
 
@@ -104,9 +100,23 @@ export default {
 			lg: 25
 		}
 	}),
+	computed: {
+		isXS() {
+			return this.$vuetify.breakpoint.xs;
+		},
+		isSM() {
+			return this.$vuetify.breakpoint.sm;
+		}
+	},
 	methods: {
 		editReply() {},
 		deleteReply() {}
 	}
 };
 </script>
+
+<style lang="css" scoped>
+	.card-reply {
+		background-color: #f2f3f5;
+	}
+</style>
