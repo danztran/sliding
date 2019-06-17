@@ -10,6 +10,10 @@ const sendQuestionReply = (context, reply) => {
 	context.commit('SEND_QUESTION_REPLY', reply);
 };
 
+const replaceSuccessQuestionReply = (context, resReply) => {
+	context.commit('REPLACE_SUCCESS_QUESTION_REPLY', resReply);
+};
+
 const removeErrorQuestionReply = (context, questionId) => {
 	context.commit('REMOVE_ERROR_QUESTION_REPLY', questionId);
 };
@@ -18,5 +22,6 @@ export default {
 	getQuestions,
 	getQuestionReplies,
 	sendQuestionReply,
+	replaceSuccessQuestionReply,
 	removeErrorQuestionReply
 };

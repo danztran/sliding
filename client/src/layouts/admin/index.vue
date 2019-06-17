@@ -19,8 +19,8 @@
 <script>
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
-import EventDialog from '@/components/dials/EventDialog.vue';
-import ReplyQuestionDialog from '@/components/dials/ReplyQuestion.vue';
+import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
+import ReplyQuestionDialog from '@/components/questions/QuestionReplyDialog.vue';
 
 export default {
 	name: 'AdminLayout',
@@ -30,7 +30,7 @@ export default {
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
-		'event-dialog': EventDialog,
+		'event-dialog': DashboardEventDialog,
 		'reply-question-dialog': ReplyQuestionDialog
 	},
 	beforeCreate() {

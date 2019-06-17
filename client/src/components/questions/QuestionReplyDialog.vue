@@ -79,8 +79,8 @@
 </template>
 
 <script>
-import QuestionCard from '../questions/QuestionCard.vue';
-import QuestionReply from '../questions/QuestionReply.vue';
+import QuestionCard from './QuestionCard.vue';
+import QuestionReply from './QuestionReply.vue';
 
 const initForm = () => ({
 	reply: {
@@ -96,7 +96,7 @@ const initForm = () => ({
 });
 
 export default {
-	name: 'ReplyQuestionDialog',
+	name: 'QuestionReplyDialog',
 	components: {
 		'question-card': QuestionCard,
 		'reply-card': QuestionReply
@@ -149,13 +149,12 @@ export default {
 			};
 			this.$store.dispatch('admin/questions/getQuestionReplies', data);
 		},
-		add_question_reply({ bool, reply }) {
-			// bool: Boolean result, true if success
-			// reply: Object, new reply added.
-			if (!bool) {
-				this.form.reply.errmsg = this.$t('err-reply');
-				this.$store.dispatch('admin/questions/removeErrorQuestionReply', this.question.id);
+		add_question_reply({ reply, errmsg }) {
+			if (!reply) {
+				this.form.reply.errmsg = errmsg;
+				return this.$store.dispatch('admin/questions/removeErrorQuestionReply', this.question.id);
 			}
+			return this.$store.dispatch('admin/questions/replaceSuccessQuestionReply', reply);
 		}
 	},
 	methods: {

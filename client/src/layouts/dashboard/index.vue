@@ -18,13 +18,13 @@
 <script>
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
-import EventDialog from '@/components/dials/EventDialog.vue';
+import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
 
 export 	default {
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
-		'event-dialog': EventDialog
+		'event-dialog': DashboardEventDialog
 	}
 };
 </script>

@@ -53,8 +53,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import QuestionModeratorPanel from '@/components/panels/QuestionModerator.vue';
-import QuestionMainPanel from '@/components/panels/QuestionMain.vue';
+import QuestionModeratorPanel from '@/components/questions/QuestionModeratorPanel.vue';
+import QuestionMainPanel from '@/components/questions/QuestionMainPanel.vue';
 import QuestionCard from '@/components/questions/QuestionCard.vue';
 import QuestionModeratorCard from '@/components/questions/QuestionModeratorCard.vue';
 

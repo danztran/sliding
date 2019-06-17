@@ -233,7 +233,7 @@ const initForm = () => ({
 });
 
 export default {
-	name: 'EventDialog',
+	name: 'DashboardEventDialog',
 	data: () => ({
 		dialogCreate: false,
 		loading: false,

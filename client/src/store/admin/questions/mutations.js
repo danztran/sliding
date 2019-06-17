@@ -21,6 +21,12 @@ const SEND_QUESTION_REPLY = (state, reply) => {
 	}
 };
 
+const REPLACE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
+	const question = state.questions.find(q => q.id === resReply.question_id);
+	const reply = question.replies.find(rl => rl.id === resReply.id);
+	Object.assign(reply, resReply);
+};
+
 const REMOVE_ERROR_QUESTION_REPLY = (state, questionId) => {
 	for (const question of state.questions) {
 		if (question.id === questionId) {
@@ -38,6 +44,7 @@ export default {
 	GET_QUESTION,
 	GET_QUESTION_REPLIES,
 	SEND_QUESTION_REPLY,
+	REPLACE_SUCCESS_QUESTION_REPLY,
 	REMOVE_ERROR_QUESTION_REPLY,
 	RESET
 };
