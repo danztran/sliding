@@ -6,6 +6,6 @@ module.exports = session({
 	resave: true,
 	saveUninitialized: false,
 	cookie: {
-		maxAge: 864000
+		maxAge: 864000000
 	}
 });
