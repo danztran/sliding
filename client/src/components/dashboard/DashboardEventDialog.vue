@@ -17,7 +17,7 @@
 						<v-layout wrap>
 							<v-flex xs12>
 								<text-field :field="form.name" />
-								<text-area class="pt-2" :field="form.description" outline/>
+								<text-area class="pt-2" :field="form.description"/>
 							</v-flex>
 
 							<!-- DATE START PICKER -->
@@ -220,7 +220,9 @@ const initForm = () => ({
 		value: '',
 		label: 'event-description',
 		type: 'text',
-		errmsg: ''
+		errmsg: '',
+		outline: true,
+		rows: 3
 	},
 	start: {
 		defaultTime: null,

@@ -12,10 +12,10 @@
 						<div class="hidden-xs-only">
 							<div class="body-2">
 								<v-icon  size="20" v-html="'$vuetify.icons.user'" />
-								{{ user.email }}
+								{{ user ? user.email : '' }}
 							</div>
 							<div class="caption text-capitalize">
-								{{ user.name }}
+								{{ user ? user.name : '' }}
 							</div>
 						</div>
 						<div v-if="hiddenXS" class="text-xs-center">
@@ -103,7 +103,7 @@ export default {
 		}
 	},
 	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
+		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER) || {};
 		this.tabs.forEach((e) => {
 			e.name = this.$t(e.name);
 		});

@@ -5,6 +5,28 @@
 	}
 }
 
+.v-textarea-override {
+	&.no-shadow {
+		.v-input__slot {
+			box-shadow: none !important;
+		}
+	}
+	.v-textarea.v-text-field--solo {
+		.v-input__slot {
+			margin-bottom: 0;
+		}
+		textarea {
+			margin-top: 0 !important;
+			padding: 0 12px 0 0 !important;
+		}
+		.v-text-field__details {
+			margin-top: 5px;
+			margin-bottom: 0;
+		}
+	}
+
+}
+
 .v-toolbar--extended, .v-toolbar__extension {
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2);

@@ -8,13 +8,14 @@
 		:rules="[fieldRequired(field)]"
 		:error-messages="field.errmsg"
 		:label="$t(field.label)"
-		:rows="field.rows || 3"
-		:outline="outline"
+		:rows="field.rows"
+		:outline="field.outline"
 		:auto-grow="field.autogrow"
 		:counter="field.counter"
 		:clearable="field.clearable"
+		:solo="field.solo"
 		@input="onInput"
-		required>
+		:required="field.required">
 	</v-textarea>
 </template>
 
@@ -33,7 +34,7 @@ export default {
 					prepend: '',
 					outerIcon: '',
 					counter: '',
-					rows: null,
+					rows: 2,
 					autofocus: false,
 					required: false,
 					autogrow: false

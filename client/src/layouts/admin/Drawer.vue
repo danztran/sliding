@@ -11,10 +11,10 @@
 				<v-layout align-center justify-space-between row shrink>
 					<div class="d-inline-block w-100">
 						<div class="body-2">
-							{{ loading ? eventInfo.name : 'loading' }}
+							{{ eventInfo ? eventInfo.name : 'loading' }}
 						</div>
 						<div class="caption text-uppercase">
-							{{ loading ? `#${eventInfo.code}` : 'loading' }}
+							{{ eventInfo ? `#${eventInfo.code}` : 'loading' }}
 						</div>
 					</div>
 					<v-tooltip top>

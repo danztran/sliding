@@ -21,13 +21,10 @@
 					{{ replyData.user.name }}
 				</span>
 				<span class="body-1 mb-0">
-					<!-- *edit / content -->
-					<v-textarea
-						v-if="onEdit"
-						v-model="form.editReply.value"
-						:error-messages="form.editReply.errmsg"
-						:rows="form.editReply.rows"
-						autofocus/>
+					<span class="v-textarea-override no-shadow" v-if="onEdit">
+						<text-area :field="form.editReply"/>
+					</span>
+
 					<pre
 						v-else
 						class="d-inline word-break"
@@ -122,7 +119,11 @@ const initForm = () => ({
 		errmsg: '',
 		autofocus: true,
 		rows: 2,
-		maxLength: 1000
+		solo: true,
+		outline: true,
+		maxLength: 1000,
+		required: true,
+		autogrow: true
 	}
 });
 
@@ -185,7 +186,7 @@ export default {
 			this.onEdit = false;
 			const infoREdit = {
 				id: this.replyData.id,
-				content: this.replyData.content
+				content: this.form.editReply.value
 			};
 			const emiter = 'edit-question-reply';
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
