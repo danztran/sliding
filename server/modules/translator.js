@@ -7,9 +7,26 @@ const defLocale = process.env.DEFAULT_LOCALE;
 const defMessagePack = messagePacks[defLocale];
 const defDatePack = datePacks[defLocale];
 
-function Translator(locale) {
+function getLocale(param) {
+	if (!param) return defLocale;
+	let locale = null;
+	if (Array.isArray(param)) {
+		for (const key of param) {
+			if (messagePacks[key]) {
+				locale = key;
+				break;
+			}
+		}
+	}
+	else {
+		locale = messagePacks[param] ? param : defLocale;
+	}
+	return locale || defLocale;
+}
+
+function Translator(param) {
 	// set locale
-	this.locale = messagePacks[locale] ? locale : defLocale;
+	this.locale = getLocale(param);
 
 	// language pack
 	this.messagePack = messagePacks[this.locale] || defMessagePack;

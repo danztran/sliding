@@ -25,8 +25,7 @@ const _cm = {
 			@re: string as text replace end with
 		@return text: string
 	*/
-	replaceVars(str, args, opt = { s: '{', e: '}', rs: '', re: '' }) {
-		const { s, e, rs, re } = opt;
+	replaceVars(str, args, { s = '{', e = '}', rs = '', re = '' } = {}) {
 		let text = str;
 		for (const key of Object.keys(args)) {
 			text = text.replace(new RegExp(`${s + key + e}`, 'g'), `${rs + args[key].toString() + re}`);

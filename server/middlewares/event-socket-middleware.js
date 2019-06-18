@@ -3,8 +3,12 @@ const Translator = requireWrp('modules/translator');
 
 module.exports = (socket) => {
 	if (!socket) return;
-	const locale = socket.request.headers['accept-language'];
-	const translator = new Translator(locale);
+	const acceptlangs = socket.request.headers['accept-language'];
+	let locales = null;
+	if (acceptlangs) {
+		locales = acceptlangs.split(';')[0].split(',');
+	}
+	const translator = new Translator(locales);
 
 	// init state
 	socket.$state = socket.$state || {};
