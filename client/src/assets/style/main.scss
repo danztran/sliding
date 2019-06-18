@@ -18,6 +18,14 @@ html, body {
 	display: inline;
 }
 
+.word-break {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
+
 .w-100 {
 	width: 100%;
 }
