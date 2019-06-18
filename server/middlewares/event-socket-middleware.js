@@ -22,7 +22,7 @@ module.exports = (socket) => {
 		// check if error caused by system or user
 		let errmsg = socket.$fn.$t('somethingWrong');
 		if (error && error.expected) {
-			errmsg = errmsg.expected;
+			errmsg = error.expected;
 		}
 
 		// callback if have

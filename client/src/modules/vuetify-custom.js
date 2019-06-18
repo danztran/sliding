@@ -1,6 +1,7 @@
 import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
 import '@/assets/style/vuetify-override.scss';
+import { Scroll } from 'vuetify/lib/directives';
 
 import TextField from '@/components/pieces/TextField.vue';
 import TextArea from '@/components/pieces/TextArea.vue';
@@ -73,7 +74,10 @@ export default {
 			iconfont: 'md',
 			size: 20,
 			theme,
-			icons
+			icons,
+			directives: {
+				Scroll
+			}
 		});
 	}
 };

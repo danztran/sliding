@@ -51,7 +51,7 @@
 
 			<!-- @desc: Replies message content -->
 			<div class="max-height-sm-down">
-				<div class="wrapper-card">
+				<div id="qrd" ref="qrd" class="wrapper-card" v-scroll:#qrd="onScrollDialog">
 					<question-card--live :question="question"/>
 					<div class="wrapper-card--reply">
 						<template v-for="reply in replies">
@@ -126,7 +126,9 @@ export default {
 		},
 		loading: false,
 		tempReplyID: [],
-		replies: []
+		replies: [],
+		autoscroll: true,
+		qrd: null
 	}),
 	computed: {
 		...mapGetters({
@@ -146,6 +148,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.qrd = this.$refs.qrd;
 		this.$root.$on('dialog-reply-question', (question) => {
 			this.question = question;
 			this.dialogReplyQuestion = true;
@@ -162,6 +165,19 @@ export default {
 			this.updateReplies();
 		});
 	},
+	watch: {
+		replies() {
+			if (this.autoscroll) {
+				this.$nextTick(() => {
+					this.qrd.scrollBy({
+						top: this.qrd.scrollHeight - this.qrd.offsetHeight,
+						left: 0,
+						behavior: 'smooth'
+					});
+				});
+			}
+		}
+	},
 	methods: {
 		...mapActions({
 			deleteQReply: 'admin/questions/deleteQuestionReply',
@@ -170,6 +186,10 @@ export default {
 			mergeQReply: 'admin/questions/replaceSuccessQuestionReply',
 			sendQReply: 'admin/questions/sendQuestionReply'
 		}),
+		onScrollDialog(e) {
+			const { qrd } = this.$refs;
+			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
+		},
 		emitReplies() {
 			const emiter = 'get-question-replies';
 			this.$socket.emit(emiter, this.question.id, ({ errmsg, replies }) => {
@@ -222,8 +242,10 @@ export default {
 					question_id: this.question.id,
 					temp_id: this.tempReplyID.shift()
 				};
-				if (errmsg) {
-					this.form.reply.errmsg = errmsg;
+				if (!reply) {
+					if (errmsg) {
+						this.form.reply.errmsg = errmsg;
+					}
 					return this.removeErrorQReply(infoReply);
 				}
 				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
