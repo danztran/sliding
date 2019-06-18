@@ -125,7 +125,7 @@ export default {
 			}
 		},
 		loading: false,
-		tempReplyID: null,
+		tempReplyID: [],
 		replies: []
 	}),
 	computed: {
@@ -192,13 +192,15 @@ export default {
 		onReplyKeydown(event) {
 			if (event && !event.shiftKey) {
 				event.preventDefault();
+				if (this.form.reply.value === '') {
+					return;
+				}
 				this.sendReply();
-				this.form.reply.value = '';
 			}
 		},
 		sendReply() {
-			this.tempReplyID = Math.random().toString(36).substring(7);
-			const replyId = this.tempReplyID;
+			this.tempReplyID.push(Math.random().toString(36).substring(7));
+			const replyId = this.tempReplyID[this.tempReplyID.length - 1];
 			const user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 			const replyInfo = {
 				question_id: this.question.id,
@@ -213,11 +215,12 @@ export default {
 				}
 			};
 			this.sendQReply(replyInfo);
+			this.form.reply.value = '';
 			const emiter = 'add-question-reply';
 			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
 				const infoReply = {
 					question_id: this.question.id,
-					temp_id: this.tempReplyID
+					temp_id: this.tempReplyID.shift()
 				};
 				if (errmsg) {
 					this.form.reply.errmsg = errmsg;
