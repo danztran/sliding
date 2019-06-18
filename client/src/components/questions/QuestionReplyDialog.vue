@@ -239,10 +239,10 @@ export default {
 	position: relative !important;
 	flex: 1;
 	overflow-x: hidden;
+	height: 68vh;
 	.wrapper-card--reply {
 		overflow-y: auto;
 		position: relative !important;
-		max-height: 52vh;
 		min-height: 30vh;
 	}
 }
@@ -254,7 +254,7 @@ export default {
 
 @media only screen and (max-width: 960px) {
 	.wrapper-card {
-		max-height: 90vh;
+		height: 90vh;
 		.wrapper-card--reply {
 			max-height: unset;
 			min-height: 30vh;
