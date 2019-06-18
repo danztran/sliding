@@ -12,12 +12,10 @@ const GET_QUESTION_REPLIES = (state, dataReplies) => {
 };
 
 const SEND_QUESTION_REPLY = (state, reply) => {
-	for (const question of state.questions) {
-		if (question.id === reply.question_id) {
-			question.replies.push(reply.data);
-			return;
-		}
-	}
+	const question = state.questions.find(q => q.id === reply.question_id);
+	if (!question) return;
+	question.replies = question.replies || [];
+	question.replies.push(reply.data);
 };
 
 const REPLACE_SUCCESS_QUESTION_REPLY = (state, resReply) => {

@@ -239,7 +239,7 @@ export default {
 	position: relative !important;
 	flex: 1;
 	overflow-x: hidden;
-	height: 68vh;
+	max-height: 68vh;
 	.wrapper-card--reply {
 		overflow-y: auto;
 		position: relative !important;
@@ -257,7 +257,7 @@ export default {
 		height: 90vh;
 		.wrapper-card--reply {
 			max-height: unset;
-			min-height: 30vh;
+			min-height: 50vh;
 		}
 	}
 	.field-reply {

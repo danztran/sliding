@@ -25,7 +25,7 @@
 							{{ question.user.name }}
 						</span>
 						<span class="body-1 grey--text font-weight-light">
-							<span>{{ question.likes.length }} </span>
+							<span>{{ question.likes ? question.likes.length : 0 }} </span>
 							<v-icon :size="icon.xs" v-html="'$vuetify.icons.like'"/>
 							• Date time
 						</span>
