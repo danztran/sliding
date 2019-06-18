@@ -255,6 +255,7 @@ export default {
 @media only screen and (max-width: 960px) {
 	.wrapper-card {
 		height: 90vh;
+		max-height: 90vh;
 		.wrapper-card--reply {
 			max-height: unset;
 			min-height: 50vh;
