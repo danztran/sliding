@@ -7,45 +7,45 @@
 				@hidden panel in XS-SM
 			-->
 			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
-				<question-moderator-panel
+				<question-panel--review
 					:emptyQuestion=true
 					:onModerator="onModerator">
-					<question-card-for-moderator />
-				</question-moderator-panel>
+					<question-card--review />
+				</question-panel--review>
 			</v-flex>
 
 			<!--
-				@desc: tab question live/archive panel
+				@desc: tab question live/archived panel
 				@show tab moderator in XS-SM
 			-->
 			<v-flex
 				:class="{'pl-1': !showSMnXS}"
 				xs12
 				md6>
-				<question-main-panel
+				<question-panel--main
 					:onModerator="onModerator"
 					:emptyLive="Boolean(questions.length)"
 					:emptyArchive=true>
 					<template
 						v-if="showSMnXS"
 						slot="for-review-moderator-tab">
-						<!-- <question-card-for-moderator /> -->
+						<!-- <question-card--review /> -->
 					</template>
 
 					<template
 						slot="live-tab"
 						v-for="question in questions">
-						<question-card
+						<question-card--live
 							:key="question.id"
 							:question="question"
 							reply/>
 					</template>
 
 					<template
-						slot="archive-tab">
-						<!-- <question-card archive/> -->
+						slot="archived-tab">
+						<!-- <question-card archived/> -->
 					</template>
-				</question-main-panel>
+				</question-panel--main>
 			</v-flex>
 		</v-layout>
 	</div>
@@ -53,18 +53,18 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import QuestionModeratorPanel from '@/components/questions/QuestionModeratorPanel.vue';
+import QuestionReviewPanel from '@/components/questions/QuestionReviewPanel.vue';
 import QuestionMainPanel from '@/components/questions/QuestionMainPanel.vue';
-import QuestionCard from '@/components/questions/QuestionCard.vue';
-import QuestionModeratorCard from '@/components/questions/QuestionModeratorCard.vue';
+import LiveQuestionCard from '@/components/questions/LiveQuestionCard.vue';
+import ReviewQuestionCard from '@/components/questions/ReviewQuestionCard.vue';
 
 export default {
 	name: 'AdminQuestions',
 	components: {
-		'question-moderator-panel': QuestionModeratorPanel,
-		'question-main-panel': QuestionMainPanel,
-		'question-card': QuestionCard,
-		'question-card-for-moderator': QuestionModeratorCard
+		'question-panel--review': QuestionReviewPanel,
+		'question-panel--main': QuestionMainPanel,
+		'question-card--live': LiveQuestionCard,
+		'question-card--review': ReviewQuestionCard
 	},
 	data: () => ({
 		onModerator: false
@@ -75,7 +75,16 @@ export default {
 		},
 		...mapGetters({
 			questions: 'admin/questions/getQuestions'
-		})
+		}),
+		forReviewQuestions() {
+			return this.questions.filter(q => q.stage === 'private');
+		},
+		liveQuestions() {
+			return this.questions.filter(q => q.stage === 'public');
+		},
+		archivedQuestions() {
+			return this.questions.filter(q => q.stage === 'archived');
+		}
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {

@@ -102,7 +102,7 @@
 							<slot name="for-review-moderator-tab"></slot>
 						</v-flex>
 					</v-layout>
-					<empty-state-moderator
+					<empty-state-review
 						:emptyQuestion=true
 						:onModerator="onModerator"/>
 				</v-card>
@@ -130,7 +130,7 @@
 				:transition="false"
 				:reverse-transition="false">
 				<v-card class="card-parent list-scroll scrollbar-primary">
-					<empty-state-archive v-if="emptyArchive" />
+					<empty-state-archived v-if="emptyArchive" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>
 							<slot name="archive-tab"></slot>
@@ -144,16 +144,16 @@
 </template>
 
 <script>
-import EmptyModerator from '@/components/empty/ModeratorQuestion.vue';
-import EmptyLive from '@/components/empty/LiveQuestion.vue';
-import EmptyArchive from '@/components/empty/ArchiveQuestion.vue';
+import EmptyLive from './EmptyLiveQuestion.vue';
+import EmptyReview from './EmptyReviewQuestion.vue';
+import EmptyArchived from './EmptyArchivedQuestion.vue';
 
 export default {
 	name: 'QuestionMainPanel',
 	components: {
-		'empty-state-moderator': EmptyModerator,
+		'empty-state-review': EmptyReview,
 		'empty-state-live': EmptyLive,
-		'empty-state-archive': EmptyArchive
+		'empty-state-archived': EmptyArchived
 	},
 	props: {
 		emptyModerator: {

@@ -19,9 +19,7 @@
 					{{ replyData.user.name }}
 				</span>
 				<span class="body-1 mb-0">
-					{{ replyData.content }}
-					<br>
-
+					<pre class="d-inline" v-text="replyData.content" />
 					<v-card-actions class="pa-0">
 						<!-- datetime -->
 						<span class="grey--text caption">

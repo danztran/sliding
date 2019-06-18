@@ -52,7 +52,7 @@
 			<!-- @desc: Replies message content -->
 			<div class="max-height-sm-down">
 				<div class="wrapper-card">
-					<question-card :question="question"/>
+					<question-card--live :question="question"/>
 					<div class="wrapper-card--reply">
 						<template v-for="reply in replies">
 							<reply-card :key="reply.id" :replyData="reply"/>
@@ -64,7 +64,11 @@
 				<!-- @desc: textarea for reply -->
 				<v-divider />
 				<v-card-actions style="padding: 5px 24px;">
-					<text-area class="field-reply" :field="form.reply"/>
+					<!-- <div @keydown.enter.capture.prevent.stop> -->
+					<text-area class="field-reply"
+						:field="form.reply"
+						@keydown.native.enter.capture="onReplyKeydown"/>
+					<!-- </div> -->
 					<v-btn
 						flat
 						icon
@@ -82,8 +86,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import QuestionCard from './QuestionCard.vue';
-import QuestionReply from './QuestionReply.vue';
+import LiveQuestionCard from './LiveQuestionCard.vue';
+import QuestionReplyCard from './QuestionReplyCard.vue';
 
 const initForm = () => ({
 	reply: {
@@ -101,8 +105,8 @@ const initForm = () => ({
 export default {
 	name: 'QuestionReplyDialog',
 	components: {
-		'question-card': QuestionCard,
-		'reply-card': QuestionReply
+		'question-card--live': LiveQuestionCard,
+		'reply-card': QuestionReplyCard
 	},
 	data: () => ({
 		dialogReplyQuestion: false,
@@ -130,7 +134,7 @@ export default {
 		}),
 		checkReply() {
 			const { reply } = this.form;
-			if (reply.value.length > reply.counter) {
+			if (reply.value && reply.value.length > reply.counter) {
 				reply.errmsg = this.$t('err-limit');
 				return true;
 			}
@@ -185,8 +189,14 @@ export default {
 		updateReplies() {
 			this.replies = this.getReplies(this.question.id);
 		},
+		onReplyKeydown(event) {
+			if (event && !event.shiftKey) {
+				event.preventDefault();
+				this.sendReply();
+				this.form.reply.value = '';
+			}
+		},
 		sendReply() {
-			// @desc: generator temp id for new reply
 			this.tempReplyID = Math.random().toString(36).substring(7);
 			const replyId = this.tempReplyID;
 			const user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
@@ -216,7 +226,6 @@ export default {
 				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
 				return this.updateReplies();
 			});
-			this.form.reply.value = '';
 		},
 		editQuestion() {},
 		deleteQuestion() {},
@@ -228,23 +237,35 @@ export default {
 <style lang="scss">
 .wrapper-card {
 	position: relative !important;
-	max-height: 80vh;
 	flex: 1;
-	overflow-y: auto;
 	overflow-x: hidden;
 	.wrapper-card--reply {
+		overflow-y: auto;
 		position: relative !important;
+		max-height: 52vh;
 		min-height: 30vh;
 	}
 }
 .field-reply {
 	textarea {
-		max-height: 120px;
-		// min-height: 30px;
+		max-height: 10vh;
 	}
 }
 
 @media only screen and (max-width: 960px) {
+	.wrapper-card {
+		max-height: 90vh;
+		.wrapper-card--reply {
+			max-height: unset;
+			min-height: 30vh;
+		}
+	}
+	.field-reply {
+		textarea {
+			max-height: 10vh;
+		}
+	}
+
 	.max-height-sm-down {
 		height: calc(100vh - 52px);
 		display: flex;

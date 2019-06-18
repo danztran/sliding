@@ -12,6 +12,7 @@
 		:outline="outline"
 		:auto-grow="field.autogrow"
 		:counter="field.counter"
+		:clearable="field.clearable"
 		required>
 	</v-textarea>
 </template>

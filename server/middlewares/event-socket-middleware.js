@@ -21,15 +21,13 @@ module.exports = (socket) => {
 		console.error(error);
 		// check if error caused by system or user
 		let errmsg = socket.$fn.$t('somethingWrong');
-		if (error) {
-			if (error.expected) {
-				errmsg = errmsg.expected;
-			}
+		if (error && error.expected) {
+			errmsg = errmsg.expected;
 		}
 
 		// callback if have
 		if (callback) {
-			if (typeof callback !== 'function') {
+			if (typeof callback === 'function') {
 				return callback({ errmsg });
 			}
 			errmsg = 'Callback must be a function!';

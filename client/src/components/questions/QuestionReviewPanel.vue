@@ -77,7 +77,7 @@
 				</v-flex>
 			</v-layout>
 
-			<empty-question
+			<empty-review
 				:onModerator="onModerator"
 				:emptyQuestion="emptyQuestion"/>
 		</v-card>
@@ -85,12 +85,12 @@
 </template>
 
 <script>
-import EmptyModerator from '@/components/empty/ModeratorQuestion.vue';
+import EmptyReview from './EmptyReviewQuestion.vue';
 
 export default {
 	name: 'QuestionModeratorPanel',
 	components: {
-		'empty-question': EmptyModerator
+		'empty-review': EmptyReview
 	},
 	props: {
 		emptyQuestion: {
