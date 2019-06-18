@@ -3,12 +3,8 @@ const GET_QUESTION = (state, questions) => {
 };
 
 const GET_QUESTION_REPLIES = (state, dataReplies) => {
-	for (const question of state.questions) {
-		if (question.id === dataReplies.id) {
-			Object.assign(question, { replies: dataReplies.replies });
-			return;
-		}
-	}
+	const question = state.questions.find(q => q.id === dataReplies.id);
+	Object.assign(question, { replies: dataReplies.replies });
 };
 
 const SEND_QUESTION_REPLY = (state, reply) => {

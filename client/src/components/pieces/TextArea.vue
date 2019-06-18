@@ -13,6 +13,7 @@
 		:auto-grow="field.autogrow"
 		:counter="field.counter"
 		:clearable="field.clearable"
+		@input="onInput"
 		required>
 	</v-textarea>
 </template>
@@ -25,7 +26,7 @@ export default {
 			type: Object,
 			default() {
 				return {
-					label: 'label',
+					label: '',
 					type: 'text',
 					value: '',
 					errmsg: '',
@@ -47,6 +48,9 @@ export default {
 	methods: {
 		fieldRequired(field) {
 			return !!this.field.value || !this.field.required || this.$t('requireField');
+		},
+		onInput() {
+			this.field.errmsg = '';
 		}
 	}
 };

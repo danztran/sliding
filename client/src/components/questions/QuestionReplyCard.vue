@@ -21,16 +21,53 @@
 					{{ replyData.user.name }}
 				</span>
 				<span class="body-1 mb-0">
-					<pre class="d-inline word-break" v-text="replyData.content" />
+					<!-- *edit / content -->
+					<v-textarea
+						v-if="onEdit"
+						v-model="form.editReply.value"
+						:error-messages="form.editReply.errmsg"
+						:rows="form.editReply.rows"
+						autofocus/>
+					<pre
+						v-else
+						class="d-inline word-break"
+						v-text="replyData.content" />
 					<v-card-actions class="pa-0">
+						<!-- count reply character -->
+						<span
+							v-if="onEdit"
+							class="grey--text caption">
+							{{ form.editReply.value.length }}
+						</span>
 						<!-- datetime -->
-						<span class="grey--text caption">
+						<span
+							v-else
+							class="grey--text caption">
 							Date time
 						</span>
 						<v-spacer></v-spacer>
 
+						<template v-if="onEdit">
+							<v-btn
+								flat
+								small
+								:ripple=false
+								v-t="'btn-cancel'"
+								@click="cancelEdit">
+							</v-btn>
+							<v-btn
+								color="primary"
+								flat
+								small
+								:ripple=false
+								v-t="'btn-save'"
+								:disabled="checkValidEdit"
+								@click="saveEdit">
+							</v-btn>
+						</template>
 						<!-- *options: edit/delete -->
 						<v-menu
+							v-else
 							bottom
 							nudge-bottom
 							offset-y left>
@@ -78,6 +115,17 @@
 </template>
 
 <script>
+const initForm = () => ({
+	editReply: {
+		label: '',
+		value: '',
+		errmsg: '',
+		autofocus: true,
+		rows: 2,
+		maxLength: 1000
+	}
+});
+
 export default {
 	name: 'ReplyCard',
 	props: {
@@ -99,7 +147,9 @@ export default {
 			sm: 17,
 			lg: 25
 		},
-		deleting: false
+		form: initForm(),
+		deleting: false,
+		onEdit: false
 	}),
 	computed: {
 		isXS() {
@@ -107,16 +157,53 @@ export default {
 		},
 		isSM() {
 			return this.$vuetify.breakpoint.sm;
+		},
+		checkValidEdit() {
+			const { editReply } = this.form;
+			if (editReply.value && editReply.value.length > editReply.maxLength) {
+				editReply.errmsg = this.$t('err-reply-limit');
+				return true;
+			}
+			return !this._cm.notEmpty(editReply.value);
 		}
 	},
 	methods: {
-		editReply() {},
+		resetForm() {
+			const { editReply } = this.form;
+			editReply.value = '';
+			editReply.errmsg = '';
+		},
+		editReply() {
+			this.onEdit = true;
+			this.form.editReply.value = this.replyData.content;
+		},
+		cancelEdit() {
+			this.onEdit = false;
+			this.resetForm();
+		},
+		saveEdit() {
+			this.onEdit = false;
+			const infoREdit = {
+				id: this.replyData.id,
+				content: this.replyData.content
+			};
+			const emiter = 'edit-question-reply';
+			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
+				if (errmsg) {
+					// ...
+					return;
+				}
+				console.warn(reply);
+				// this.$root.$emit('edit-reply', reply);
+			});
+		},
 		deleteReply() {
 			this.deleting = true;
-			const infoReply = {
+			const infoRDelete = {
 				id: this.replyData.id
 			};
-			this.$socket.emit('delete-question-reply', infoReply, ({ reply, errmsg }) => {
+			const emiter = 'delete-question-reply';
+			this.$socket.emit(emiter, infoRDelete, ({ reply, errmsg }) => {
 				if (errmsg) {
 					this.deleting = false;
 					// show notify

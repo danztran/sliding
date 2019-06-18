@@ -73,7 +73,7 @@
 						flat
 						icon
 						color="primary"
-						:disabled="checkReply"
+						:disabled="checkValidReply"
 						@click="sendReply">
 						<v-icon v-html="'$vuetify.icons.send'"/>
 					</v-btn>
@@ -134,14 +134,13 @@ export default {
 		...mapGetters({
 			getReplies: 'admin/questions/getReplies'
 		}),
-		checkReply() {
+		checkValidReply() {
 			const { reply } = this.form;
 			if (reply.value && reply.value.length > reply.counter) {
-				reply.errmsg = this.$t('err-limit');
+				reply.errmsg = this.$t('err-reply-limit');
 				return true;
 			}
-			return !this._cm.notEmpty(reply.value)
-				|| reply.value.length > reply.counter;
+			return !this._cm.notEmpty(reply.value);
 		},
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -240,8 +239,9 @@ export default {
 			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
 				const infoReply = {
 					question_id: this.question.id,
-					temp_id: this.tempReplyID.shift()
+					temp_id: replyId
 				};
+				this.tempReplyID = this.tempReplyID.filter(id => id !== replyId);
 				if (!reply) {
 					if (errmsg) {
 						this.form.reply.errmsg = errmsg;

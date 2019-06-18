@@ -101,8 +101,11 @@
 				</v-list-tile>
 			</v-list>
 
-			<!-- @desc: message content -->
-			<v-card-title class="py-0 px-4">
+			<!-- @desc: on edit field / content -->
+			<v-card-title v-if="onEdit" class="py-0 px-4">
+				<text-area :field="form.editQuestion" />
+			</v-card-title>
+			<v-card-title v-else class="py-0 px-4">
 				<p class="body-1 mb-0">
 					{{ question.content }}
 				</p>
@@ -114,9 +117,16 @@
 					*options: mark start, edit/delete/archive question
 			-->
 			<v-card-actions class="py-0">
-				<!-- *options: mark star -->
 				<v-list-tile class="grow">
-					<v-tooltip bottom>
+					<!-- *edit: text length -->
+					<div
+						v-if="onEdit"
+						:class="{'red--text': checkValidEdit}"
+						class="body-1">
+						{{ form.editQuestion.value.length }}
+					</div>
+					<!-- *options: mark star -->
+					<v-tooltip v-else bottom>
 						<template v-slot:activator="{ on }">
 							<v-btn icon v-on="on">
 								<v-icon
@@ -134,72 +144,92 @@
 					<v-layout
 						align-center
 						justify-end>
-						<v-btn
-							v-if="reply"
-							color="grey lighten-1"
-							flat
-							small
-							@click="replyQuestion(question)">
-							<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
-							<span class="caption">
-								{{ question.replies
-									? `${question.replies.length}&nbsp;`
-									: `${question.count_replies}&nbsp;` }}
-								<!-- {{ `${question.replies.length}&nbsp;` }} -->
-							</span>
-							<span
-								class="caption"
-								v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'">
-							</span>
-						</v-btn>
+						<template v-if="onEdit">
+							<v-btn
+								flat
+								small
+								:ripple=false
+								v-t="'btn-cancel'"
+								@click="cancelEdit">
+							</v-btn>
+							<v-btn
+								color="primary"
+								flat
+								small
+								:ripple=false
+								v-t="'btn-save'"
+								:disabled="checkValidEdit"
+								@click="saveEdit">
+							</v-btn>
+						</template>
+						<div v-else>
+							<v-btn
+								v-if="reply"
+								color="grey lighten-1"
+								flat
+								small
+								@click="replyQuestion(question)">
+								<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
+								<span class="caption">
+									{{ question.replies
+										? `${question.replies.length}&nbsp;`
+										: `${question.count_replies}&nbsp;` }}
+									<!-- {{ `${question.replies.length}&nbsp;` }} -->
+								</span>
+								<span
+									class="caption"
+									v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'">
+								</span>
+							</v-btn>
 
-						<!-- *options button -->
-						<v-menu bottom nudge-bottom offset-y left>
-							<template v-slot:activator="{ on }">
-								<v-btn
-									v-on="on"
-									class="ma-0"
-									icon>
-									<v-icon
-										color="grey lighten-1"
-										:size="icon.xs"
-										v-html="'$vuetify.icons.options_dot'">
-									</v-icon>
-								</v-btn>
-							</template>
+							<!-- *options button -->
+							<v-menu bottom nudge-bottom offset-y left>
+								<template v-slot:activator="{ on }">
+									<v-btn
+										v-on="on"
+										class="ma-0"
+										icon>
+										<v-icon
+											color="grey lighten-1"
+											:size="icon.xs"
+											v-html="'$vuetify.icons.options_dot'">
+										</v-icon>
+									</v-btn>
+								</template>
 
-							<v-list class="py-0" dense>
-								<!-- *options: edit -->
-								<v-list-tile @click="editQuestion">
-									<v-list-tile-action>
-										<v-icon v-html="'$vuetify.icons.edit'" />
-									</v-list-tile-action>
-									<v-list-tile-content>
-										<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
-									</v-list-tile-content>
-								</v-list-tile>
+								<v-list class="py-0" dense>
+									<!-- *options: edit -->
+									<v-list-tile @click="editQuestion">
+										<v-list-tile-action>
+											<v-icon v-html="'$vuetify.icons.edit'" />
+										</v-list-tile-action>
+										<v-list-tile-content>
+											<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
+										</v-list-tile-content>
+									</v-list-tile>
 
-								<!-- *options: archive -->
-								<v-list-tile @click="archiveQuestion">
-									<v-list-tile-action>
-										<v-icon v-html="'$vuetify.icons.archive_all'" />
-									</v-list-tile-action>
-									<v-list-tile-content>
-										<v-list-tile-title v-t="'btn-archive'"></v-list-tile-title>
-									</v-list-tile-content>
-								</v-list-tile>
+									<!-- *options: archive -->
+									<v-list-tile @click="archiveQuestion">
+										<v-list-tile-action>
+											<v-icon v-html="'$vuetify.icons.archive_all'" />
+										</v-list-tile-action>
+										<v-list-tile-content>
+											<v-list-tile-title v-t="'btn-archive'"></v-list-tile-title>
+										</v-list-tile-content>
+									</v-list-tile>
 
-								<!-- *options: delete -->
-								<v-list-tile @click="deleteQuestion">
-									<v-list-tile-action>
-										<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
-									</v-list-tile-action>
-									<v-list-tile-content>
-										<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
-									</v-list-tile-content>
-								</v-list-tile>
-							</v-list>
-						</v-menu>
+									<!-- *options: delete -->
+									<v-list-tile @click="deleteQuestion">
+										<v-list-tile-action>
+											<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
+										</v-list-tile-action>
+										<v-list-tile-content>
+											<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
+										</v-list-tile-content>
+									</v-list-tile>
+								</v-list>
+							</v-menu>
+						</div>
 
 					</v-layout>
 				</v-list-tile>
@@ -209,6 +239,16 @@
 </template>
 
 <script>
+const initForm = () => ({
+	editQuestion: {
+		label: '',
+		value: '',
+		errmsg: '',
+		autofocus: true,
+		maxLength: 300
+	}
+});
+
 export default {
 	name: 'QuestionCard',
 	props: {
@@ -240,9 +280,26 @@ export default {
 			xs: 14,
 			sm: 17,
 			lg: 25
-		}
+		},
+		form: initForm(),
+		onEdit: false
 	}),
+	computed: {
+		checkValidEdit() {
+			const { editQuestion } = this.form;
+			if (editQuestion.value && editQuestion.value.length > editQuestion.maxLength) {
+				editQuestion.errmsg = this.$t('err-question-limit');
+				return true;
+			}
+			return !this._cm.notEmpty(editQuestion.value);
+		}
+	},
 	methods: {
+		resetForm() {
+			const { editQuestion } = this.form;
+			editQuestion.value = '';
+			editQuestion.errmsg = '';
+		},
 		replyQuestion(question) {
 			this.$root.$emit('dialog-reply-question', question);
 		},
@@ -250,7 +307,32 @@ export default {
 		highlightQuestion() {},
 		markQuestionAnswered() {},
 		markStarQuestion() {},
-		editQuestion() {},
+		editQuestion() {
+			this.onEdit = true;
+			this.form.editQuestion.value = this.question.content;
+		},
+		cancelEdit() {
+			this.onEdit = false;
+			this.resetForm();
+		},
+		saveEdit() {
+			this.onEdit = false;
+			const infoQEdit = {
+				id: this.question.id,
+				content: this.form.editQuestion.value.trim(),
+				stage: 'public',
+				is_star: false,
+				is_answered: false
+			};
+			const emiter = 'edit-question';
+			this.$socket.emit(emiter, infoQEdit, ({ errmsg, reply }) => {
+				if (errmsg) {
+					// do something
+					return;
+				}
+				console.warn(reply);
+			});
+		},
 		archiveQuestion() {},
 		deleteQuestion() {}
 	}
