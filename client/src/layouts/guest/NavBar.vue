@@ -1,12 +1,25 @@
 <template>
-	<div>
+	<div id="guest-navbar">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-toolbar dark color="primary" style="height: 58px">
-			<v-container fluid grid-list py-0>
-				<v-layout row justify-space-between>
+		<v-toolbar
+			dark
+			color="primary"
+			style="height: 58px">
+			<v-container
+				:class="{'pa-0': isSMnXS}"
+				fluid
+				grid-list
+				py-0>
+				<v-layout
+					align-center
+					justify-space-between
+					row
+					fill-height>
 					<v-flex sm4>
 						<v-toolbar-side-icon />
-						<div class="inline subheading font-weight-regular">Title</div>
+						<div class="d-inline subheading font-weight-medium">
+							event name
+						</div>
 					</v-flex>
 
 					<v-flex sm4 class="hidden-sm-and-down">
@@ -14,7 +27,7 @@
 							color="primary"
 							centered
 							dark
-							slider-color="error">
+							slider-color="white">
 							<v-tab
 								v-for="(tab, i) in tabs"
 								:key="i"
@@ -25,8 +38,10 @@
 					</v-flex>
 
 					<v-flex sm4 class="right">
-						<v-btn icon>
-							<v-icon v-html="'$vuetify.icons.anonymous'"/>
+						<v-btn
+							icon
+							@click="toggleDialogProfile">
+							<v-icon v-html="'$vuetify.icons.person'"/>
 						</v-btn>
 					</v-flex>
 
@@ -37,7 +52,7 @@
 			color="primary hidden-md-and-up"
 			centered
 			dark
-			slider-color="error">
+			slider-color="white">
 			<v-tab
 				v-for="(tab, i) in tabs"
 				:key="i"
@@ -53,19 +68,33 @@ export default {
 	name: 'NavBar',
 	data: () => ({
 		tabs: [
-			{ name: 'questions', url: '/anonymous/questions' },
-			{ name: 'ideas', url: '/anonymous/ideas' },
-			{ name: 'polls', url: '/anonymous/polls' }
+			{ name: 'questions', url: 'questions' },
+			{ name: 'ideas', url: 'polls' },
+			{ name: 'polls', url: 'ideas' }
 		]
-	})
+	}),
+	computed: {
+		isSMnXS() {
+			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		}
+	},
+	methods: {
+		toggleDialogProfile() {
+			this.$root.$emit('guest-profile-dialog');
+		}
+	}
 };
 </script>
 
-<style lang="css" scoped>
-.inline {
-	display: inline;
-}
-.right {
-	text-align: right;
+<style lang="scss">
+#guest-navbar {
+	.right {
+		text-align: right;
+	}
+	@media only screen and (max-width: 960px) {
+		.v-toolbar__content {
+			padding: 0;
+		}
+	}
 }
 </style>
