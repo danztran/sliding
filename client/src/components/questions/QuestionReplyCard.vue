@@ -1,5 +1,7 @@
 <template>
-	<v-card class="py-2 no-shadow card-reply">
+	<v-card
+		:class="{'delete': deleting}"
+		class="py-2 no-shadow card-reply">
 		<v-layout class="px-4" row wrap>
 			<v-flex
 				:class="{'pl-2': isSM}"
@@ -96,7 +98,8 @@ export default {
 			xs: 14,
 			sm: 17,
 			lg: 25
-		}
+		},
+		deleting: false
 	}),
 	computed: {
 		isXS() {
@@ -109,11 +112,13 @@ export default {
 	methods: {
 		editReply() {},
 		deleteReply() {
+			this.deleting = true;
 			const infoReply = {
 				id: this.replyData.id
 			};
 			this.$socket.emit('delete-question-reply', infoReply, ({ reply, errmsg }) => {
 				if (errmsg) {
+					this.deleting = false;
 					// show notify
 					return;
 				}
@@ -128,5 +133,9 @@ export default {
 <style lang="css" scoped>
 	.card-reply {
 		background-color: #f2f3f5;
+	}
+	.delete {
+		opacity: .4;
+		cursor: not-allowed;
 	}
 </style>

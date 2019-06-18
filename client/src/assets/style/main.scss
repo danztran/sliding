@@ -14,16 +14,13 @@ html, body {
 	box-shadow: none;
 }
 
-.d-inline {
-	display: inline;
-}
-
 .word-break {
 	white-space: pre-wrap;
 	white-space: -moz-pre-wrap;
 	white-space: -pre-wrap;
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
+	font-family: inherit;
 }
 
 .w-100 {
