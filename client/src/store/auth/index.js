@@ -1,6 +1,7 @@
 /* -----------------------*
 @desc: get info user
  * -----------------------*/
+import cookies from '@/modules/vue-cookies-custom';
 
 import actions from './actions';
 import getters from './getters';
@@ -14,6 +15,12 @@ const state = {
 		password: ''
 	}
 };
+
+const user = cookies.get(process.env.VUE_APP_CK_USER);
+if (user) {
+	state.loggedIn = true;
+	state.userData = user;
+}
 
 export default {
 	namespaced: true,

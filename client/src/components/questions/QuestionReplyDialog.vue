@@ -132,7 +132,8 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			getReplies: 'admin/questions/getReplies'
+			getReplies: 'admin/questions/getReplies',
+			user: 'auth/user'
 		}),
 		checkValidReply() {
 			const { reply } = this.form;
@@ -149,14 +150,14 @@ export default {
 	mounted() {
 		this.qrd = this.$refs.qrd;
 		this.$root.$on('dialog-reply-question', (question) => {
-			this.question = question;
 			this.dialogReplyQuestion = true;
+			if (this.question && this.question.id === question.id) return;
+			this.question = question;
+			this.autoscroll = true;
+			this.replies = this.question.replies || [];
 			if (this.question.replies === undefined && this.question.count_replies > 0) {
 				this.loading = true;
 				this.emitReplies();
-			}
-			else {
-				this.replies = this.question.replies;
 			}
 		});
 		this.$root.$on('delete-reply', (reply) => {
@@ -167,13 +168,7 @@ export default {
 	watch: {
 		replies() {
 			if (this.autoscroll) {
-				this.$nextTick(() => {
-					this.qrd.scrollBy({
-						top: this.qrd.scrollHeight - this.qrd.offsetHeight,
-						left: 0,
-						behavior: 'smooth'
-					});
-				});
+				this.$nextTick(this.toLatestReply);
 			}
 		}
 	},
@@ -185,6 +180,13 @@ export default {
 			mergeQReply: 'admin/questions/replaceSuccessQuestionReply',
 			sendQReply: 'admin/questions/sendQuestionReply'
 		}),
+		toLatestReply() {
+			this.qrd.scrollBy({
+				top: this.qrd.scrollHeight - this.qrd.offsetHeight,
+				left: 0,
+				behavior: 'smooth'
+			});
+		},
 		onScrollDialog(e) {
 			const { qrd } = this.$refs;
 			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
@@ -218,9 +220,12 @@ export default {
 			}
 		},
 		sendReply() {
-			this.tempReplyID.push(Math.random().toString(36).substring(7));
-			const replyId = this.tempReplyID[this.tempReplyID.length - 1];
-			const user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
+			let key = null;
+			do {
+				key = Math.random().toString(36).substring(7);
+			} while (this.tempReplyID.includes(key));
+			this.tempReplyID.push(key);
+			const replyId = key;
 			const replyInfo = {
 				question_id: this.question.id,
 				data: {
@@ -228,8 +233,8 @@ export default {
 					content: this.form.reply.value.trim(),
 					question_id: this.question.id,
 					user: {
-						id: user.id,
-						name: user.name
+						id: this.user.id,
+						name: this.user.name
 					}
 				}
 			};
