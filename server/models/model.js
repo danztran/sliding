@@ -80,11 +80,12 @@ class Model {
 	}
 
 	updateOne(object, newInfo, {
+		alias,
 		select
 	} = {}) {
 		const column = Object.keys(object)[0];
 		this.setQuery(`
-			UPDATE ${this._name}
+			UPDATE ${this._name} ${qh.as(alias)}
 			${qh.toSetClause(newInfo)}
 			WHERE ${column} in (
 					${this.findOne(object, { select: column }).getQuery()}
