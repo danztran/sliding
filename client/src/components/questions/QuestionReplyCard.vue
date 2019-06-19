@@ -59,6 +59,7 @@
 								:ripple=false
 								v-t="'btn-save'"
 								:disabled="checkValidEdit"
+								:loading="loadingSaveEdit"
 								@click="saveEdit">
 							</v-btn>
 						</template>
@@ -73,12 +74,24 @@
 									class="mr-1"
 									v-on="on"
 									small
-									icon>
-									<v-icon
-										color="grey lighten-1"
-										:size="icon.xs"
-										v-html="'$vuetify.icons.options_dot'">
-									</v-icon>
+									icon
+									:disabled="loadingSaveEdit || editSuccess"
+									:loading="loadingSaveEdit">
+									<template v-slot:loader>
+										<span class="custom-loader">
+											<v-icon light>cached</v-icon>
+										</span>
+									</template>
+									<template v-if="editSuccess">
+										<v-icon color="success">done</v-icon>
+									</template>
+									<template v-else>
+										<v-icon
+											color="grey lighten-1"
+											:size="icon.xs"
+											v-html="'$vuetify.icons.options_dot'">
+										</v-icon>
+									</template>
 								</v-btn>
 							</template>
 
@@ -149,8 +162,12 @@ export default {
 			lg: 25
 		},
 		form: initForm(),
+		cache: '',
 		deleting: false,
-		onEdit: false
+		onEdit: false,
+		loadingSaveEdit: false,
+		editSuccess: false,
+		timeout: 2000
 	}),
 	computed: {
 		isXS() {
@@ -173,9 +190,11 @@ export default {
 			const { editReply } = this.form;
 			editReply.value = '';
 			editReply.errmsg = '';
+			this.cache = '';
 		},
 		editReply() {
 			this.onEdit = true;
+			this.cache = this.replyData.content;
 			this.form.editReply.value = this.replyData.content;
 		},
 		cancelEdit() {
@@ -183,7 +202,9 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
+			this.loadingSaveEdit = true;
 			this.onEdit = false;
+			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
 				id: this.replyData.id,
 				content: this.form.editReply.value
@@ -191,11 +212,17 @@ export default {
 			const emiter = 'edit-question-reply';
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
 				if (errmsg) {
+					this.replyData.content = this.cache;
 					// ...
 					return;
 				}
-				console.warn(reply);
-				// this.$root.$emit('edit-reply', reply);
+				this.resetForm();
+				this.loadingSaveEdit = false;
+				this.editSuccess = true;
+				setTimeout(() => {
+					this.editSuccess = false;
+				}, this.timeout);
+				this.$root.$emit('edit-reply', reply);
 			});
 		},
 		deleteReply() {
@@ -225,5 +252,42 @@ export default {
 	.delete {
 		opacity: .4;
 		cursor: not-allowed;
+	}
+
+	.custom-loader {
+		animation: loader 1s infinite;
+		display: flex;
+	}
+	@-moz-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@-o-keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@keyframes loader {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>
