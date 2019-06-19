@@ -189,11 +189,8 @@
 										v-on="on"
 										class="ma-0"
 										icon
-										:disabled="mixEditLoading.loading || mixEditLoading.success"
-										:loading="mixEditLoading.loading">
-										<button-edit-loading
-											:success="mixEditLoading.success"
-											:fail="mixEditLoading.fail">
+										:disabled="loadingState !== ''">
+										<icon-loading-circle :state="loadingState">
 											<template slot="otp-icon">
 												<v-icon
 													color="grey lighten-1"
@@ -201,7 +198,7 @@
 													v-html="'$vuetify.icons.options_dot'">
 												</v-icon>
 											</template>
-										</button-edit-loading>
+										</icon-loading-circle>
 									</v-btn>
 								</template>
 
@@ -248,8 +245,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import ButtonEditLoading from '@/components/pieces/ButtonEditLoading.vue';
-import MixinButtonEditLoading from '@/mixins/buttonEditLoading';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 const initForm = () => ({
 	editQuestion: {
@@ -269,9 +265,8 @@ const initForm = () => ({
 export default {
 	name: 'QuestionCard',
 	components: {
-		'button-edit-loading': ButtonEditLoading
+		'icon-loading-circle': IconLoadingCircle
 	},
-	mixins: [MixinButtonEditLoading],
 	props: {
 		reply: {
 			type: Boolean,
@@ -304,7 +299,8 @@ export default {
 		},
 		form: initForm(),
 		onEdit: false,
-		cache: ''
+		cache: '',
+		loadingState: ''
 	}),
 	computed: {
 		checkValidEdit() {
@@ -342,7 +338,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.mixEditLoading.loading = true;
+			this.setStateIconLoading('loading');
 			this.onEdit = false;
 			this.question.content = this.form.editQuestion.value;
 			const infoQEdit = {
@@ -356,19 +352,25 @@ export default {
 			this.$socket.emit(emiter, infoQEdit, ({ errmsg, question }) => {
 				if (errmsg) {
 					this.question.content = this.cache;
-					this.mixEditLoading.loading = false;
-					this.buttonEditLoading('fail');
+					this.setStateIconLoading('fail');
 					// do something
 					return;
 				}
 				this.resetForm();
-				this.mixEditLoading.loading = false;
-				this.buttonEditLoading('success');
+				this.setStateIconLoading('success');
 				this.mergeQEdit(question);
 			});
 		},
 		archiveQuestion() {},
-		deleteQuestion() {}
+		deleteQuestion() {},
+		setStateIconLoading(state) {
+			if (state === 'success' || state === 'fail') {
+				setTimeout(() => {
+					this.loadingState = '';
+				}, 2000);
+			}
+			this.loadingState = '' || state;
+		}
 	}
 };
 </script>

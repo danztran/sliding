@@ -1,21 +1,22 @@
 <template>
 	<span>
-		<template slot="loader">
-			<span class="loading-circle">
-				<v-icon
-					v-html="'$vuetify.icons.loading_circle'">
-				</v-icon>
-			</span>
+		<template
+			v-if="state === 'loading'"
+			class="loading-circle"
+			slot="loader">
+			<v-icon
+				v-html="'$vuetify.icons.loading_circle'">
+			</v-icon>
 		</template>
 
-		<template v-if="success">
+		<template v-else-if="state === 'success'">
 			<v-icon
 				class="loading-success"
 				v-html="'$vuetify.icons.loading_success'">
 			</v-icon>
 		</template>
 
-		<template v-else-if="fail">
+		<template v-else-if="state === 'fail'">
 			<v-icon
 				class="loading-fail"
 				color="error"
@@ -31,19 +32,11 @@
 
 <script>
 export default {
-	name: 'ButtonEditLoading',
+	name: 'IconLoadingCircle',
 	props: {
-		success: {
-			type: Boolean,
-			default: false
-		},
-		fail: {
-			type: Boolean,
-			default: false
-		},
-		timeout: {
-			type: Number,
-			default: 2000
+		state: {
+			type: String,
+			default: ''
 		}
 	}
 };

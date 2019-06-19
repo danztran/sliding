@@ -59,7 +59,6 @@
 								:ripple=false
 								v-t="'btn-save'"
 								:disabled="checkValidEdit"
-								:loading="mixEditLoading.loading"
 								@click="saveEdit">
 							</v-btn>
 						</template>
@@ -75,11 +74,8 @@
 									v-on="on"
 									small
 									icon
-									:disabled="mixEditLoading.loading || mixEditLoading.success"
-									:loading="mixEditLoading.loading">
-									<button-edit-loading
-										:success="mixEditLoading.success"
-										:fail="mixEditLoading.fail">
+									:disabled="loadingState !== ''">
+									<icon-loading-circle :state="loadingState">
 										<template slot="otp-icon">
 											<v-icon
 												color="grey lighten-1"
@@ -87,7 +83,7 @@
 												v-html="'$vuetify.icons.options_dot'">
 											</v-icon>
 										</template>
-									</button-edit-loading>
+									</icon-loading-circle>
 								</v-btn>
 							</template>
 
@@ -121,8 +117,7 @@
 </template>
 
 <script>
-import ButtonEditLoading from '@/components/pieces/ButtonEditLoading.vue';
-import MixinButtonEditLoading from '@/mixins/buttonEditLoading';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 const initForm = () => ({
 	editReply: {
@@ -142,9 +137,8 @@ const initForm = () => ({
 export default {
 	name: 'ReplyCard',
 	components: {
-		'button-edit-loading': ButtonEditLoading
+		'icon-loading-circle': IconLoadingCircle
 	},
-	mixins: [MixinButtonEditLoading],
 	props: {
 		replyData: {
 			type: Object,
@@ -167,7 +161,8 @@ export default {
 		form: initForm(),
 		cache: '',
 		deleting: false,
-		onEdit: false
+		onEdit: false,
+		loadingState: ''
 	}),
 	computed: {
 		isXS() {
@@ -202,7 +197,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.mixEditLoading.loading = true;
+			this.setStateIconLoading('loading');
 			this.onEdit = false;
 			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
@@ -213,14 +208,12 @@ export default {
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
 				if (errmsg) {
 					this.replyData.content = this.cache;
-					this.mixEditLoading.loading = false;
-					this.buttonEditLoading('fail');
+					this.setStateIconLoading('fail');
 					// ...
 					return;
 				}
 				this.resetForm();
-				this.mixEditLoading.loading = false;
-				this.buttonEditLoading('success');
+				this.setStateIconLoading('success');
 				this.$root.$emit('edit-reply', reply);
 			});
 		},
@@ -238,6 +231,14 @@ export default {
 				}
 				this.$root.$emit('delete-reply', reply);
 			});
+		},
+		setStateIconLoading(state) {
+			if (state === 'success' || state === 'fail') {
+				setTimeout(() => {
+					this.loadingState = '';
+				}, 2000);
+			}
+			this.loadingState = '' || state;
 		}
 	}
 };
