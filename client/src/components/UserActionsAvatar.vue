@@ -7,6 +7,7 @@
 		offset-y
 		:nudge-width="250"
 		content-class="dropdown-menu">
+		<!-- @desc: avatar -->
 		<template v-slot:activator="{ on }">
 			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
 				<v-icon color="white" v-html="'$vuetify.icons.person'"/>
@@ -34,7 +35,10 @@
 
 						<v-list-tile-action>
 							<v-btn icon>
-								<span class="primary--text">EDIT</span>
+								<span
+									class="primary--text"
+									v-t="'btn-edit-profile'">
+								</span>
 							</v-btn>
 						</v-list-tile-action>
 					</v-list-tile>
@@ -42,7 +46,7 @@
 				<v-divider></v-divider>
 
 				<v-list class="pa-0">
-					<!-- HOMEPAGE -->
+					<!-- @desc: homepage -->
 					<v-list-tile to="/">
 						<v-list-tile-action>
 							<v-icon
@@ -56,7 +60,7 @@
 						<v-list-tile-title v-t="'home-page'"/>
 					</v-list-tile>
 
-					<!-- EVENTS -->
+					<!-- @desc: event -->
 					<v-list-tile to="/dashboard/my-events">
 						<v-list-tile-action>
 							<v-icon
@@ -70,8 +74,8 @@
 						<v-list-tile-title v-t="'my-events'"/>
 					</v-list-tile>
 
-					<!-- MODAL CREATE EVENT -->
-					<v-list-tile @click="toggleModalCreateEvent">
+					<!-- @desc: button for toggle diaog create event -->
+					<v-list-tile @click="toggleDialogCreateEvent">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -84,7 +88,7 @@
 						<v-list-tile-title v-t="'btn-create-event'"/>
 					</v-list-tile>
 
-					<!-- COOP EVENT -->
+					<!-- @desc: coop-event -->
 					<v-list-tile to="/dashboard/coop-events">
 						<v-list-tile-action>
 							<v-icon
@@ -98,7 +102,7 @@
 						<v-list-tile-title v-t="'coop-events'"/>
 					</v-list-tile>
 
-					<!-- ANALYTICS -->
+					<!-- @desc: analytic activities -->
 					<v-list-tile to="/dashboard/activity-logs">
 						<v-list-tile-action>
 							<v-icon
@@ -113,7 +117,7 @@
 					</v-list-tile>
 
 					<v-divider></v-divider>
-					<!-- LOGOUT -->
+					<!-- @desc: logout -->
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
@@ -132,20 +136,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'UserActionsAvatar',
-	data: () => ({
-		user: {
-			email: '',
-			name: ''
-		}
-	}),
-	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
+	data: () => ({}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		})
 	},
 	methods: {
 		editProfile() {},
-		toggleModalCreateEvent() {
+		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		}
 	}

@@ -1,7 +1,3 @@
-<!--
-	@desc: only fullcreen dialog in small device
-	@small device => XS - SM
- -->
 <template>
 	<v-dialog
 		id="reply-question-dialog"
@@ -10,10 +6,6 @@
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
-			<!--
-				@desc: header dialog
-				@contain: Title and btn Close
-			-->
 			<v-card-title class="py-0">
 				<!-- @desc: show back button
 									hide title in small device -->
@@ -22,6 +14,7 @@
 						<v-icon :size="icon.sm" v-html="'$vuetify.icons.arrow_left'"/>
 					</v-btn>
 				</template>
+				<!-- @desc: title -->
 				<template v-else>
 					<span v-if="!isSMnXS" v-t="'dialog-reply-question-title'"></span>
 				</template>
@@ -41,6 +34,7 @@
 						<v-icon :size="icon.sm" v-html="'$vuetify.icons.archive_all'"/>
 					</v-btn>
 				</template>
+				<!-- @desc: button close -->
 				<template v-else>
 					<v-btn v-if="!isSMnXS" icon @click="dialogReplyQuestion=false">
 						<v-icon :size="icon.sm" v-html="'$vuetify.icons.close'"/>

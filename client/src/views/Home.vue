@@ -340,15 +340,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
 export default {
 	name: 'Home',
 	data: () => ({
-		user: {
-			email: '',
-			name: ''
-		},
 		inputEventCode: '',
 		backgroundNav: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
 		cards: [
@@ -411,12 +408,12 @@ export default {
 		]
 	}),
 	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		}),
 		locale() {
 			return this.$i18n.locale;
 		}
-	},
-	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 	},
 	methods: {
 		changeLocale(locale) {

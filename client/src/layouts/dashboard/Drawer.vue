@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'Drawer',
 	data: () => ({
@@ -105,8 +107,12 @@ export default {
 			}
 		]
 	}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		})
+	},
 	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER);
 		this.links.forEach((e) => {
 			e.name = this.$t(e.name);
 		});

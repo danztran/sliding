@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import UserActionsAvatar from '@/components/UserActionsAvatar.vue';
 
 export default {
@@ -78,10 +79,6 @@ export default {
 	},
 	data() {
 		return {
-			user: {
-				email: '',
-				name: ''
-			},
 			tabs: [
 				{ id: 1, name: 'my-events', url: '/dashboard/my-events' },
 				{ id: 2, name: 'coop-events', url: '/dashboard/coop-events' },
@@ -98,12 +95,14 @@ export default {
 		};
 	},
 	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		}),
 		hiddenXS() {
 			return this.$vuetify.breakpoint.xs;
 		}
 	},
 	created() {
-		this.user = this.$cookies.get(this.$env.VUE_APP_CK_USER) || {};
 		this.tabs.forEach((e) => {
 			e.name = this.$t(e.name);
 		});
