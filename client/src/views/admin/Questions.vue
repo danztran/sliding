@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import QuestionReviewPanel from '@/components/questions/QuestionReviewPanel.vue';
 import QuestionMainPanel from '@/components/questions/QuestionMainPanel.vue';
 import LiveQuestionCard from '@/components/questions/LiveQuestionCard.vue';
@@ -92,13 +92,19 @@ export default {
 				// notify
 				return;
 			}
-			this.$store.dispatch('admin/questions/getQuestions', questions);
+			// this.$store.dispatch('admin/questions/getQuestions', questions);
+			this.getQuestions(questions);
 		});
 	},
 	mounted() {
 		this.$root.$on('toggle-mode-moderation', () => {
 			this.onModerator = !this.onModerator;
 		});
+	},
+	methods: {
+		...mapMutations({
+			getQuestions: 'admin/questions/GET_QUESTION'
+		})
 	}
 };
 </script>

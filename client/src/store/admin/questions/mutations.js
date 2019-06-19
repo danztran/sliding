@@ -14,10 +14,16 @@ const SEND_QUESTION_REPLY = (state, reply) => {
 	question.replies.push(reply.data);
 };
 
-const REPLACE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
+const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
 	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
 	delete resReply.temp_id;
+	Object.assign(reply, resReply);
+};
+
+const MERGE_EDIT_REPLY = (state, resReply) => {
+	const question = state.questions.find(q => q.id === resReply.question_id);
+	const reply = question.replies.find(rl => rl.id === resReply.id);
 	Object.assign(reply, resReply);
 };
 
@@ -39,8 +45,9 @@ export default {
 	GET_QUESTION,
 	GET_QUESTION_REPLIES,
 	SEND_QUESTION_REPLY,
-	REPLACE_SUCCESS_QUESTION_REPLY,
+	MERGE_SUCCESS_QUESTION_REPLY,
 	REMOVE_ERROR_QUESTION_REPLY,
 	DELETE_QUESTION_REPLY,
+	MERGE_EDIT_REPLY,
 	RESET
 };

@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import LiveQuestionCard from './LiveQuestionCard.vue';
 import QuestionReplyCard from './QuestionReplyCard.vue';
 
@@ -158,6 +158,10 @@ export default {
 			this.deleteQReply(reply);
 			this.updateReplies();
 		});
+		this.$root.$on('edit-reply', (reply) => {
+			// console.log('reply success', reply);
+			this.mergeEditReply(reply);
+		});
 	},
 	watch: {
 		replies() {
@@ -167,12 +171,14 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions({
-			deleteQReply: 'admin/questions/deleteQuestionReply',
-			setQReplies: 'admin/questions/getQuestionReplies',
-			removeErrorQReply: 'admin/questions/removeErrorQuestionReply',
-			mergeQReply: 'admin/questions/replaceSuccessQuestionReply',
-			sendQReply: 'admin/questions/sendQuestionReply'
+		...mapMutations({
+			mergeEditReply: 'admin/questions/MERGE_EDIT_REPLY',
+
+			deleteQReply: 'admin/questions/DELETE_QUESTION_REPLY',
+			setQReplies: 'admin/questions/GET_QUESTION_REPLIES',
+			mergeQReply: 'admin/questions/MERGE_SUCCESS_QUESTION_REPLY',
+			removeErrorQReply: 'admin/questions/REMOVE_ERROR_QUESTION_REPLY',
+			sendQReply: 'admin/questions/SEND_QUESTION_REPLY'
 		}),
 		toLatestReply() {
 			this.qrd.scrollBy({
