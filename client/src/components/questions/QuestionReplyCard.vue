@@ -59,7 +59,7 @@
 								:ripple=false
 								v-t="'btn-save'"
 								:disabled="checkValidEdit"
-								:loading="animation.loadingSaveEdit"
+								:loading="mixEditLoading.loading"
 								@click="saveEdit">
 							</v-btn>
 						</template>
@@ -75,35 +75,19 @@
 									v-on="on"
 									small
 									icon
-									:disabled="animation.loadingSaveEdit || animation.editSuccess"
-									:loading="animation.loadingSaveEdit">
-									<template v-slot:loader>
-										<span class="custom-loader">
+									:disabled="mixEditLoading.loading || mixEditLoading.success"
+									:loading="mixEditLoading.loading">
+									<button-edit-loading
+										:success="mixEditLoading.success"
+										:fail="mixEditLoading.fail">
+										<template slot="otp-icon">
 											<v-icon
-												v-html="'$vuetify.icons.loading_circle'">
+												color="grey lighten-1"
+												:size="icon.xs"
+												v-html="'$vuetify.icons.options_dot'">
 											</v-icon>
-										</span>
-									</template>
-									<template v-if="animation.editSuccess">
-										<v-icon
-											class="loading-success"
-											v-html="'$vuetify.icons.loading_success'">
-										</v-icon>
-									</template>
-									<template v-else-if="animation.editFail">
-										<v-icon
-											class="loading-fail"
-											color="error"
-											v-html="'$vuetify.icons.loading_fail'">
-										</v-icon>
-									</template>
-									<template v-else>
-										<v-icon
-											color="grey lighten-1"
-											:size="icon.xs"
-											v-html="'$vuetify.icons.options_dot'">
-										</v-icon>
-									</template>
+										</template>
+									</button-edit-loading>
 								</v-btn>
 							</template>
 
@@ -137,6 +121,9 @@
 </template>
 
 <script>
+import ButtonEditLoading from '@/components/pieces/ButtonEditLoading.vue';
+import MixinButtonEditLoading from '@/mixins/buttonEditLoading';
+
 const initForm = () => ({
 	editReply: {
 		label: '',
@@ -154,6 +141,10 @@ const initForm = () => ({
 
 export default {
 	name: 'ReplyCard',
+	components: {
+		'button-edit-loading': ButtonEditLoading
+	},
+	mixins: [MixinButtonEditLoading],
 	props: {
 		replyData: {
 			type: Object,
@@ -176,13 +167,7 @@ export default {
 		form: initForm(),
 		cache: '',
 		deleting: false,
-		onEdit: false,
-		animation: {
-			loadingSaveEdit: false,
-			editSuccess: false,
-			editFail: false,
-			timeout: 2000
-		}
+		onEdit: false
 	}),
 	computed: {
 		isXS() {
@@ -217,7 +202,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.animation.loadingSaveEdit = true;
+			this.mixEditLoading.loading = true;
 			this.onEdit = false;
 			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
@@ -228,14 +213,14 @@ export default {
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
 				if (errmsg) {
 					this.replyData.content = this.cache;
-					this.animation.loadingSaveEdit = false;
-					this.loadingAnimation('editFail');
+					this.mixEditLoading.loading = false;
+					this.buttonEditLoading('fail');
 					// ...
 					return;
 				}
 				this.resetForm();
-				this.animation.loadingSaveEdit = false;
-				this.loadingAnimation('editSuccess');
+				this.mixEditLoading.loading = false;
+				this.buttonEditLoading('success');
 				this.$root.$emit('edit-reply', reply);
 			});
 		},
@@ -253,12 +238,6 @@ export default {
 				}
 				this.$root.$emit('delete-reply', reply);
 			});
-		},
-		loadingAnimation(name) {
-			this.animation[`${name}`] = true;
-			setTimeout(() => {
-				this.animation[`${name}`] = false;
-			}, this.animation.timeout);
 		}
 	}
 };
@@ -271,42 +250,5 @@ export default {
 	.delete {
 		opacity: .4;
 		cursor: not-allowed;
-	}
-
-	.custom-loader {
-		animation: loader 1s infinite;
-		display: flex;
-	}
-	@-moz-keyframes loader {
-		from {
-			transform: rotate(0);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-	@-webkit-keyframes loader {
-		from {
-			transform: rotate(0);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-	@-o-keyframes loader {
-		from {
-			transform: rotate(0);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-	@keyframes loader {
-		from {
-			transform: rotate(0);
-		}
-		to {
-			transform: rotate(360deg);
-		}
 	}
 </style>

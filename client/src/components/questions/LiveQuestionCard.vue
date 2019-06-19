@@ -103,7 +103,9 @@
 
 			<!-- @desc: on edit field / content -->
 			<v-card-title v-if="onEdit" class="py-0 px-4">
-				<text-area :field="form.editQuestion" />
+				<span class="v-textarea-override no-shadow w-100">
+					<text-area :field="form.editQuestion" />
+				</span>
 			</v-card-title>
 			<v-card-title v-else class="py-0 px-4">
 				<p class="body-1 mb-0">
@@ -111,11 +113,9 @@
 				</p>
 			</v-card-title>
 
-			<!--
-				@desc:
+			<!--@desc:
 					*reply question by open dialog
-					*options: mark start, edit/delete/archive question
-			-->
+					*options: mark start, edit/delete/archive question -->
 			<v-card-actions class="py-0">
 				<v-list-tile class="grow">
 					<!-- *edit: text length -->
@@ -188,12 +188,20 @@
 									<v-btn
 										v-on="on"
 										class="ma-0"
-										icon>
-										<v-icon
-											color="grey lighten-1"
-											:size="icon.xs"
-											v-html="'$vuetify.icons.options_dot'">
-										</v-icon>
+										icon
+										:disabled="mixEditLoading.loading || mixEditLoading.success"
+										:loading="mixEditLoading.loading">
+										<button-edit-loading
+											:success="mixEditLoading.success"
+											:fail="mixEditLoading.fail">
+											<template slot="otp-icon">
+												<v-icon
+													color="grey lighten-1"
+													:size="icon.xs"
+													v-html="'$vuetify.icons.options_dot'">
+												</v-icon>
+											</template>
+										</button-edit-loading>
 									</v-btn>
 								</template>
 
@@ -239,18 +247,31 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import ButtonEditLoading from '@/components/pieces/ButtonEditLoading.vue';
+import MixinButtonEditLoading from '@/mixins/buttonEditLoading';
+
 const initForm = () => ({
 	editQuestion: {
 		label: '',
 		value: '',
 		errmsg: '',
 		autofocus: true,
-		maxLength: 300
+		rows: 2,
+		solo: true,
+		outline: true,
+		maxLength: 1000,
+		required: true,
+		autogrow: true
 	}
 });
 
 export default {
 	name: 'QuestionCard',
+	components: {
+		'button-edit-loading': ButtonEditLoading
+	},
+	mixins: [MixinButtonEditLoading],
 	props: {
 		reply: {
 			type: Boolean,
@@ -282,7 +303,8 @@ export default {
 			lg: 25
 		},
 		form: initForm(),
-		onEdit: false
+		onEdit: false,
+		cache: ''
 	}),
 	computed: {
 		checkValidEdit() {
@@ -295,6 +317,9 @@ export default {
 		}
 	},
 	methods: {
+		...mapMutations({
+			mergeQEdit: 'admin/questions/MERGE_EDIT_QUESTION'
+		}),
 		resetForm() {
 			const { editQuestion } = this.form;
 			editQuestion.value = '';
@@ -309,6 +334,7 @@ export default {
 		markStarQuestion() {},
 		editQuestion() {
 			this.onEdit = true;
+			this.cache = this.question.content;
 			this.form.editQuestion.value = this.question.content;
 		},
 		cancelEdit() {
@@ -316,7 +342,9 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
+			this.mixEditLoading.loading = true;
 			this.onEdit = false;
+			this.question.content = this.form.editQuestion.value;
 			const infoQEdit = {
 				id: this.question.id,
 				content: this.form.editQuestion.value.trim(),
@@ -325,12 +353,18 @@ export default {
 				is_answered: false
 			};
 			const emiter = 'edit-question';
-			this.$socket.emit(emiter, infoQEdit, ({ errmsg, reply }) => {
+			this.$socket.emit(emiter, infoQEdit, ({ errmsg, question }) => {
 				if (errmsg) {
+					this.question.content = this.cache;
+					this.mixEditLoading.loading = false;
+					this.buttonEditLoading('fail');
 					// do something
 					return;
 				}
-				console.warn(reply);
+				this.resetForm();
+				this.mixEditLoading.loading = false;
+				this.buttonEditLoading('success');
+				this.mergeQEdit(question);
 			});
 		},
 		archiveQuestion() {},

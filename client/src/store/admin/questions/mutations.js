@@ -2,6 +2,11 @@ const GET_QUESTION = (state, questions) => {
 	state.questions = questions;
 };
 
+const MERGE_EDIT_QUESTION = (state, resQ) => {
+	const question = state.questions.find(q => q.id === resQ.id);
+	Object.assign(question, resQ);
+};
+
 const GET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id === dataReplies.id);
 	Object.assign(question, { replies: dataReplies.replies });
@@ -43,6 +48,7 @@ const RESET = (state) => {
 
 export default {
 	GET_QUESTION,
+	MERGE_EDIT_QUESTION,
 	GET_QUESTION_REPLIES,
 	SEND_QUESTION_REPLY,
 	MERGE_SUCCESS_QUESTION_REPLY,

@@ -2,6 +2,7 @@
 	<div id="guest-navbar">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-toolbar
+			class="pa-0"
 			dark
 			color="primary"
 			style="height: 58px">
@@ -90,6 +91,9 @@ export default {
 #guest-navbar {
 	.right {
 		text-align: right;
+	}
+	.v-toolbar__content {
+		padding: 0;
 	}
 	@media only screen and (max-width: 960px) {
 		.v-toolbar__content {

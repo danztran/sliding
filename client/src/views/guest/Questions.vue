@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<span
-			class="subheading grey--text"
+			class="pl-2 body-1 grey--text"
 			v-t="'guest-ask-title'">
 		</span>
 		<!-- <v-icon>message</v-icon> -->
@@ -16,11 +16,11 @@
 			</v-textarea>
 
 			<div class="footer-ask">
-				<v-input v-model="form.name.value"/>
+				<v-divider />
+				<v-spacer />
 				<v-btn>send</v-btn>
 			</div>
 		</div>
-		<v-input v-model="form.name.value"/>
 	</div>
 </template>
 
@@ -48,15 +48,36 @@ export default {
 	display: block;
 	box-shadow: 0 1px 4px rgba(0,0,0,.2);
 
+	.footer-ask {
+		overflow: hidden;
+		max-height: 0;
+		transition: max-height .3s, overflow 0s, opacity .3s;
+		opacity: 0;
+		padding: 0 20px;
+		visibility: hidden;
+	}
+
+	&:focus-within, &:visited {
+		.footer-ask {
+			max-height: 65px;
+			transition: max-height .3s, overflow 0s .3s, opacity .3s;
+			overflow: visible;
+			opacity: 1;
+			visibility: visible;
+		}
+	};
+
 	.custom-textarea {
 		padding: 25px 30px 8px 25px;
+		height: 80px;
+		transition: height .5s;
 		.v-input__slot:after, .v-input__slot:before {
 			content: none !important;
 			display: none !important;
 		};
-		&:focus-within {
+		&:focus-within, &:hover {
 			padding-left: 30px !important;
-			height: 200px;
+			// height: 84px;
 
 			.v-input__prepend-outer {
 				display: none;
