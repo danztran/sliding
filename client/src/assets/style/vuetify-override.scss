@@ -1,3 +1,6 @@
+$primary-color: #3da4b5;
+$success-color: #4caf50;
+
 .theme--light.v-text-field--outline:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot {
 	border: 2px solid rgba(0, 0, 0, .2);
 	&:hover {
@@ -24,7 +27,10 @@
 			margin-bottom: 0;
 		}
 	}
+}
 
+i.v-icon.loading-success.material-icons.theme--light {
+    color: $success-color !important;
 }
 
 .v-toolbar--extended, .v-toolbar__extension {

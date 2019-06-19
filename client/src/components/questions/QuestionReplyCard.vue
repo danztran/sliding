@@ -59,7 +59,7 @@
 								:ripple=false
 								v-t="'btn-save'"
 								:disabled="checkValidEdit"
-								:loading="loadingSaveEdit"
+								:loading="animation.loadingSaveEdit"
 								@click="saveEdit">
 							</v-btn>
 						</template>
@@ -75,15 +75,27 @@
 									v-on="on"
 									small
 									icon
-									:disabled="loadingSaveEdit || editSuccess"
-									:loading="loadingSaveEdit">
+									:disabled="animation.loadingSaveEdit || animation.editSuccess"
+									:loading="animation.loadingSaveEdit">
 									<template v-slot:loader>
 										<span class="custom-loader">
-											<v-icon light>cached</v-icon>
+											<v-icon
+												v-html="'$vuetify.icons.loading_circle'">
+											</v-icon>
 										</span>
 									</template>
-									<template v-if="editSuccess">
-										<v-icon color="success">done</v-icon>
+									<template v-if="animation.editSuccess">
+										<v-icon
+											class="loading-success"
+											v-html="'$vuetify.icons.loading_success'">
+										</v-icon>
+									</template>
+									<template v-else-if="animation.editFail">
+										<v-icon
+											class="loading-fail"
+											color="error"
+											v-html="'$vuetify.icons.loading_fail'">
+										</v-icon>
 									</template>
 									<template v-else>
 										<v-icon
@@ -165,9 +177,12 @@ export default {
 		cache: '',
 		deleting: false,
 		onEdit: false,
-		loadingSaveEdit: false,
-		editSuccess: false,
-		timeout: 2000
+		animation: {
+			loadingSaveEdit: false,
+			editSuccess: false,
+			editFail: false,
+			timeout: 2000
+		}
 	}),
 	computed: {
 		isXS() {
@@ -202,7 +217,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.loadingSaveEdit = true;
+			this.animation.loadingSaveEdit = true;
 			this.onEdit = false;
 			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
@@ -213,15 +228,14 @@ export default {
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
 				if (errmsg) {
 					this.replyData.content = this.cache;
+					this.animation.loadingSaveEdit = false;
+					this.loadingAnimation('editFail');
 					// ...
 					return;
 				}
 				this.resetForm();
-				this.loadingSaveEdit = false;
-				this.editSuccess = true;
-				setTimeout(() => {
-					this.editSuccess = false;
-				}, this.timeout);
+				this.animation.loadingSaveEdit = false;
+				this.loadingAnimation('editSuccess');
 				this.$root.$emit('edit-reply', reply);
 			});
 		},
@@ -237,9 +251,14 @@ export default {
 					// show notify
 					return;
 				}
-				console.warn(reply);
 				this.$root.$emit('delete-reply', reply);
 			});
+		},
+		loadingAnimation(name) {
+			this.animation[`${name}`] = true;
+			setTimeout(() => {
+				this.animation[`${name}`] = false;
+			}, this.animation.timeout);
 		}
 	}
 };

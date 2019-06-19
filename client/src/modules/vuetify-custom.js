@@ -53,7 +53,10 @@ const icons = {
 	export: 'present_to_all',
 	delete: 'delete_outline',
 	edit: 'edit',
-	question_mark: 'help_outline'
+	question_mark: 'help_outline',
+	loading_circle: 'cached',
+	loading_success: 'done',
+	loading_fail: 'error_outline'
 };
 
 // custom components
