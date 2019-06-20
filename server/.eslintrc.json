@@ -31,7 +31,7 @@
 		"no-plusplus": "off",
 		"func-names": "off",
 		"no-console": ["error", { "allow": ["warn", "error"] }],
-		"no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["socket"] }]
+		"no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["socket", "io"] }]
 	},
 	"parser": "babel-eslint",
 	"globals": {

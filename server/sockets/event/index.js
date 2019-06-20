@@ -4,26 +4,20 @@ const QuestionLive = require('./question-live');
 const QuestionReplyLive = require('./question-reply-live');
 
 module.exports = (io) => {
+	EventSocketMdw.setIO(io);
+
 	io.on('connection', (socket) => {
-		EventSocketMdw(socket);
+		EventSocketMdw.setSocket({ io, socket });
 
 		// join event
 		socket.on('join-event', (code) => {
-			// join to room
-			const room = `event/${code}`;
-			socket.join(room);
-			socket.$state.rooms = {
-				event: room,
-				admin: `${room}/admin`,
-				guest: `${room}/guest`
-			};
-
-			// leave the room
-			socket.on('leave-event', () => {
-				socket.disconnect();
-			});
 			socket.on('disconnect', () => {
 				delete io.sockets[socket.id];
+				io.$fn.removeEventIfNoClient({ code });
+			});
+
+			socket.on('leave-event', () => {
+				socket.disconnect();
 			});
 
 			EventLive({ io, socket, code });

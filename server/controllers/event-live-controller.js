@@ -10,36 +10,44 @@ module.exports = {
 			const Event = new EventModel();
 			const EventRole = new EventRoleModel();
 			// find event
-			const event = await Event.findByCode(code).exec();
+			let ioEvent = io.$fn.getEvent(code);
+			let event = ioEvent;
 			if (!event) {
-				throw { expected: socket.$fn.$t('eventNotFound') };
+				event = await Event.findByCode(code).exec();
+				if (!event) {
+					throw { expected: socket.$fn.t('eventNotFound') };
+				}
+				else {
+					ioEvent = io.$fn.addEvent(event);
+				}
 			}
 			result.event = event;
 
 			// check user role
-			if (socket.$state.user) {
+			if (socket.$fn.isAuthenticated()) {
 				const eventRole = await EventRole.findRole({
-					event_id: event.id,
-					user_id: socket.$state.user.id
+					event_id: result.event.id,
+					user_id: socket.$fn.getUser().id
 				}).exec();
 				result.role = Roles[eventRole ? eventRole.role : 'guest'];
 			}
 			else {
 				result.role = Roles.guest;
 			}
-			socket.$state.role = result.role;
-			socket.$state.event = result.event;
+			socket.$fn.setRole(result.role);
+			socket.$fn.setEventCode(result.event.code);
 
 			// join role room
+			socket.join(ioEvent.rooms.main);
 			if (['host', 'moderator'].includes(result.role.name)) {
-				socket.join(socket.$state.rooms.admin);
+				socket.join(ioEvent.rooms.admin);
 			}
 			else {
-				socket.join(socket.$state.rooms.guest);
+				socket.join(ioEvent.rooms.guest);
 			}
 		}
 		catch (error) {
-			return socket.$fn.$err(error);
+			return socket.$fn.handleError(error);
 		}
 
 		return socket.emit('get_event', result);

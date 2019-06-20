@@ -1,13 +1,14 @@
 const QuestionModel = requireWrp('models/question');
 
 module.exports = {
-	async getQuestions({ socket }, callback) {
+	async getQuestions({ io, socket }, callback) {
+		const event = socket.$fn.getCurrentEvent();
 		const result = {};
 		const query = {
-			event_id: socket.$state.event.id,
+			event_id: event.id,
 			is_deleted: false
 		};
-		if (!socket.$state.role.permissions.seeAllQuestions) {
+		if (!socket.$fn.can('seeAllQuestions')) {
 			query.stage = 'public';
 		}
 		try {
@@ -17,45 +18,47 @@ module.exports = {
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async addQuestion({ socket }, info, callback) {
-		if (socket.$fn.$cannot('addQuestion', callback)) return;
+		if (socket.$fn.cannot('addQuestion', callback)) return;
 		// validate info here
 		// ...
+		const event = socket.$fn.getCurrentEvent();
+		const user = socket.$fn.getUser();
 		const result = {};
-
 		try {
 			const Question = new QuestionModel();
 
 			const question = await Question.create({
 				...info,
-				user_id: socket.$state.user.id,
-				stage: socket.$state.event.on_moderation ? 'private' : 'public'
+				user_id: user.id,
+				stage: event.on_moderation ? 'private' : 'public'
 			}).exec();
 			question.user = {
-				id: socket.$state.user.id,
-				name: socket.$state.user.name
+				id: user.id,
+				name: user.name
 			};
 			result.question = question;
 
-			socket.to(socket.$state.rooms.admin).emit('new_added_question', result.question);
+			socket.to(event.rooms.admin).emit('new_added_question', result.question);
 			if (question.stage === 'public') {
-				socket.to(socket.$state.rooms.guest).emit('new_added_question', result.question);
+				socket.to(event.rooms.guest).emit('new_added_question', result.question);
 			}
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async editQuestion({ socket }, info, callback) {
-		if (socket.$fn.$cannot('editQuestion', callback)) return;
+		if (socket.$fn.cannot('editQuestion', callback)) return;
 		// validate info here
 		// ...
+		const event = socket.$fn.getCurrentEvent();
 		const result = {};
 
 		try {
@@ -66,14 +69,14 @@ module.exports = {
 			}).exec();
 			if (!question) {
 				throw {
-					expected: socket.$fn.$t('questionNotFound')
+					expected: socket.$fn.t('questionNotFound')
 				};
 			}
 
 			const editedQuestion = await Question.update(info).exec();
 			result.question = editedQuestion;
 			// emit to admin room
-			socket.to(socket.$state.rooms.admin).emit('new_edited_question', result.question);
+			socket.to(event.rooms.admin).emit('new_edited_question', result.question);
 
 			// emit to guest room
 			const oldStage = question.stage;
@@ -89,20 +92,21 @@ module.exports = {
 				guestEvent = 'new_deleted_question';
 			}
 			if (guestEvent) {
-				socket.to(socket.$state.rooms.guest).emit(guestEvent, result.question);
+				socket.to(event.rooms.guest).emit(guestEvent, result.question);
 			}
 
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async deleteQuestion({ socket }, info, callback) {
-		if (socket.$fn.$cannot('deleteQuestion', callback)) return;
+		if (socket.$fn.cannot('deleteQuestion', callback)) return;
 		// VALIDATE INFO HERE
 		// ...
+		const event = socket.$fn.getCurrentEvent();
 		const result = {};
 		try {
 			const Question = new QuestionModel();
@@ -112,21 +116,23 @@ module.exports = {
 			}).exec();
 			if (!question) {
 				throw {
-					expected: socket.$fn.$t('questionNotFound')
+					expected: socket.$fn.t('questionNotFound')
 				};
 			}
 
 			const deletedQuestion = await Question.setDeleted(info).exec();
 			result.question = deletedQuestion;
-			socket.to(socket.$state.rooms.admin).emit('new_deleted_question', result.question);
+
+			// emiter
+			socket.to(event.rooms.admin).emit('new_deleted_question', result.question);
 			if (question.stage === 'public') {
-				socket.to(socket.$state.rooms.guest).emit('new_deleted_question', result.question);
+				socket.to(event.rooms.guest).emit('new_deleted_question', result.question);
 			}
 
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	}
 

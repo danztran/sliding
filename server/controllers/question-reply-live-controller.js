@@ -14,39 +14,42 @@ module.exports = {
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async addQuestionReply({ socket }, info, callback) {
-		if (socket.$fn.$cannot('addQuestionReply', callback)) return;
+		if (socket.$fn.cannot('addQuestionReply', callback)) return;
 		// VALIDATE INFO HERE
 		// ...
+		const event = socket.$fn.getCurrentEvent();
+		const user = socket.$fn.getUser();
 		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.create({
 				...info,
-				user_id: socket.$state.user.id
+				user_id: user.id
 			}).exec();
 			reply.user = {
-				id: socket.$state.user.id,
-				name: socket.$state.user.name
+				id: user.id,
+				name: user.name
 			};
 			result.reply = reply;
-			socket.to(socket.$state.rooms.event).emit('new_added_question_reply', result.reply);
+			socket.to(event.rooms.main).emit('new_added_question_reply', result.reply);
 
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async editQuestionReply({ socket }, info, callback) {
-		if (socket.$fn.$cannot('editQuestionReply', callback)) return;
+		if (socket.$fn.cannot('editQuestionReply', callback)) return;
 		// VALIDATE INFO HERE
 		// ...
+		const event = socket.$fn.getCurrentEvent();
 		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
@@ -56,25 +59,26 @@ module.exports = {
 			}).exec();
 			if (!reply) {
 				throw {
-					expected: socket.$fn.$t('replyNotFound')
+					expected: socket.$fn.t('replyNotFound')
 				};
 			}
 
 			const editedReply = await QuestionReply.update(info).exec();
 			result.reply = editedReply;
-			socket.to(socket.$state.rooms.event).emit('new_edited_question_reply', result.reply);
+			socket.to(event.rooms.main).emit('new_edited_question_reply', result.reply);
 
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	},
 
 	async deleteQuestionReply({ socket }, info, callback) {
-		if (socket.$fn.$cannot('deleteQuestionReply', callback)) return;
+		if (socket.$fn.cannot('deleteQuestionReply', callback)) return;
 		// VALIDATE INFO HERE
 		// ...
+		const event = socket.$fn.getCurrentEvent();
 		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
@@ -84,18 +88,18 @@ module.exports = {
 			}).exec();
 			if (!reply) {
 				throw {
-					expected: socket.$fn.$t('replyNotFound')
+					expected: socket.$fn.t('replyNotFound')
 				};
 			}
 
 			const deletedReply = await QuestionReply.setDeleted(info).exec();
 			result.reply = deletedReply;
-			socket.to(socket.$state.rooms.event).emit('new_deleted_question_reply', result.reply);
+			socket.to(event.rooms.main).emit('new_deleted_question_reply', result.reply);
 
 			return callback(result);
 		}
 		catch (e) {
-			return socket.$fn.$err(e, callback);
+			return socket.$fn.handleError(e, callback);
 		}
 	}
 };
