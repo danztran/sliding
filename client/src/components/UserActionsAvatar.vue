@@ -26,10 +26,10 @@
 
 						<v-list-tile-content>
 							<div class="body-1 text-capitalize">
-								{{ user.name }}
+								{{ user ? user.name : '' }}
 							</div>
 							<div class="caption grey--text">
-								{{ user.email }}
+								{{ user ? user.email : '' }}
 							</div>
 						</v-list-tile-content>
 
