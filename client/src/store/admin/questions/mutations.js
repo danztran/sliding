@@ -7,6 +7,16 @@ const MERGE_EDIT_QUESTION = (state, resQ) => {
 	Object.assign(question, resQ);
 };
 
+const ADD_QUESTION_REPLY = (state, reply) => {
+	const question = state.questions.find(q => q.id === reply.question_id);
+	if (question.replies) {
+		question.replies.push(reply);
+	}
+	else {
+		question.count_replies = Number(question.count_replies) + 1;
+	}
+};
+
 const GET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id === dataReplies.id);
 	Object.assign(question, { replies: dataReplies.replies });
@@ -28,6 +38,7 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 
 const MERGE_EDIT_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
+	if (!question.replies) return;
 	const reply = question.replies.find(rl => rl.id === resReply.id);
 	Object.assign(reply, resReply);
 };
@@ -39,7 +50,12 @@ const REMOVE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 
 const DELETE_QUESTION_REPLY = (state, res) => {
 	const question = state.questions.find(q => q.id === res.question_id);
-	question.replies = question.replies.filter(rl => rl.id !== res.id);
+	if (question.replies) {
+		question.replies = question.replies.filter(rl => rl.id !== res.id);
+	}
+	else {
+		question.count_replies = Number(question.count_replies) - 1;
+	}
 };
 
 const RESET = (state) => {
@@ -49,6 +65,7 @@ const RESET = (state) => {
 export default {
 	GET_QUESTION,
 	MERGE_EDIT_QUESTION,
+	ADD_QUESTION_REPLY,
 	GET_QUESTION_REPLIES,
 	SEND_QUESTION_REPLY,
 	MERGE_SUCCESS_QUESTION_REPLY,

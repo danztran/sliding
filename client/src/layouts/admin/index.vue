@@ -12,16 +12,15 @@
 			</v-content>
 			<event-dialog />
 			<event-setting-dialog />
-			<reply-question-dialog />
 		</v-app>
 	</div>
 </template>
 
 <script>
+import { mapMutations, mapActions } from 'vuex';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
-import ReplyQuestionDialog from '@/components/questions/QuestionReplyDialog.vue';
 import EventSettingDialog from '@/components/setting/event/EventSettingDialog.vue';
 
 export default {
@@ -30,8 +29,7 @@ export default {
 		navbar: NavBar,
 		drawer: Drawer,
 		'event-dialog': DashboardEventDialog,
-		'event-setting-dialog': EventSettingDialog,
-		'reply-question-dialog': ReplyQuestionDialog
+		'event-setting-dialog': EventSettingDialog
 	},
 	data: () => ({
 		ready: false
@@ -43,26 +41,27 @@ export default {
 	},
 	beforeRouteLeave(to, from, next) {
 		this.$socket.emit('leave-event');
-		this.$store.commit('admin/event/RESET');
-		this.$store.commit('admin/questions/RESET');
+		this.resetEvent();
+		this.resetQuestions();
 		next();
 	},
 	sockets: {
 		connect() {
-			// console.warn('connected');
+			// ..
 		},
 		get_event(data) {
-			// console.warn(data);
-			this.$store.dispatch('admin/event/getCurrentEvent', data);
+			this.setCurrentEvent(data);
 			this.ready = true;
-		},
-		new_added_question_reply(result) {
-			console.warn(result);
-		},
-		new_edited_question_reply() {},
-		new_deleted_question_reply(result) {
-			console.warn(result);
 		}
+	},
+	methods: {
+		...mapActions({
+			setCurrentEvent: 'admin/event/getCurrentEvent'
+		}),
+		...mapMutations({
+			resetEvent: 'admin/events/RESET',
+			resetQuestions: 'admin/questions/RESET'
+		})
 	}
 };
 </script>

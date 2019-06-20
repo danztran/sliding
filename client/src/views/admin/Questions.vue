@@ -1,6 +1,7 @@
 <template>
 	<div id="admin-question">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
+		<question-reply--dialog />
 		<v-layout row wrap>
 			<!--
 				@desc: check question Panel Moderator view
@@ -57,6 +58,7 @@ import QuestionReviewPanel from '@/components/questions/QuestionReviewPanel.vue'
 import QuestionMainPanel from '@/components/questions/QuestionMainPanel.vue';
 import LiveQuestionCard from '@/components/questions/LiveQuestionCard.vue';
 import ReviewQuestionCard from '@/components/questions/ReviewQuestionCard.vue';
+import QuestionReplyDialog from '@/components/questions/QuestionReplyDialog.vue';
 
 export default {
 	name: 'AdminQuestions',
@@ -64,18 +66,19 @@ export default {
 		'question-panel--review': QuestionReviewPanel,
 		'question-panel--main': QuestionMainPanel,
 		'question-card--live': LiveQuestionCard,
-		'question-card--review': ReviewQuestionCard
+		'question-card--review': ReviewQuestionCard,
+		'question-reply--dialog': QuestionReplyDialog
 	},
 	data: () => ({
 		onModerator: false
 	}),
 	computed: {
-		showSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		},
 		...mapGetters({
 			questions: 'admin/questions/getQuestions'
 		}),
+		showSMnXS() {
+			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		},
 		forReviewQuestions() {
 			return this.questions.filter(q => q.stage === 'private');
 		},
@@ -101,9 +104,24 @@ export default {
 			this.onModerator = !this.onModerator;
 		});
 	},
+	sockets: {
+		new_added_question_reply(reply) {
+			this.addQuestionReply(reply);
+		},
+		new_edited_question_reply(reply) {
+			this.mergeQuestionReply(reply);
+		},
+		new_deleted_question_reply(reply) {
+			this.deleteQuestionReply(reply);
+			this.$root.$emit('update-replies');
+		}
+	},
 	methods: {
 		...mapMutations({
-			getQuestions: 'admin/questions/GET_QUESTION'
+			getQuestions: 'admin/questions/GET_QUESTION',
+			addQuestionReply: 'admin/questions/ADD_QUESTION_REPLY',
+			mergeQuestionReply: 'admin/questions/MERGE_EDIT_REPLY',
+			deleteQuestionReply: 'admin/questions/DELETE_QUESTION_REPLY'
 		})
 	}
 };
