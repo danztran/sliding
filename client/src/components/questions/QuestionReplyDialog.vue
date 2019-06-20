@@ -213,6 +213,7 @@ export default {
 		},
 		updateReplies() {
 			this.replies = this.getReplies(this.question.id);
+			this._cm.customSort(this.replies, 'asc', 'created_at');
 		},
 		onReplyKeydown(event) {
 			if (event && !event.shiftKey) {
