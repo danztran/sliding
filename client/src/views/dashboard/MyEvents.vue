@@ -10,25 +10,59 @@
 				<!-- @desc: event being activated -->
 				<div v-t="'event-status'" />
 
-				<!-- @desc: button create event -->
-				<v-btn
-					class="px-3"
-					color="success lighten--2"
-					dark
-					round
-					small
-					@click.stop="createEvent">
-					{{ $t('btn-create-event') }}
-				</v-btn>
+				<div class="d-flex">
+					<!-- @desc: button create event -->
+					<v-btn
+						class="px-3"
+						color="success lighten--2"
+						dark
+						round
+						small
+						@click.stop="createEvent">
+						{{ $t('btn-create-event') }}
+					</v-btn>
+
+					<v-menu bottom nudge-bottom offset-y left>
+						<template v-slot:activator="{ on }">
+							<v-btn
+								class="ma-0"
+								icon
+								v-on="on">
+								<v-icon
+									size="17"
+									v-text="'$vuetify.icons.filter'" />
+							</v-btn>
+						</template>
+
+						<v-list class="py-0" dense subheader>
+							<v-subheader v-t="'opt-sort-by-title'" />
+							<v-list-tile>
+								<v-list-tile-action>
+									<v-icon />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title v-t="'btn-oldest'" />
+								</v-list-tile-content>
+							</v-list-tile>
+
+							<v-list-tile>
+								<v-list-tile-action>
+									<v-icon />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title v-t="'btn-recent'" />
+								</v-list-tile-content>
+							</v-list-tile>
+						</v-list>
+					</v-menu>
+				</div>
 			</template>
 		</v-layout>
 
 		<!-- @desc: list events -->
 		<v-card class="list-event scrollbar-primary">
 			<template v-for="event of events">
-				<div :key="event.code" @click="toEventLive(event.code)">
-					<event-card :field="event" />
-				</div>
+				<event-card :key="event.code" :info="event" />
 			</template>
 		</v-card>
 

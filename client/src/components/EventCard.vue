@@ -1,84 +1,87 @@
 <template>
-	<v-hover>
-		<v-card slot-scope="{ hover }" class="card-hover py-3 my-2">
-			<v-layout
-				class="mt-2"
-				row
-				wrap
-				align-center>
-				<!-- ICON -->
-				<v-flex xs2 sm1 class="text-xs-center">
-					<v-btn icon>
-						<v-icon
-							:size="iconSize"
-							color="primary"
-							v-text="'$vuetify.icons.event'" />
-					</v-btn>
-				</v-flex>
+	<v-card class="card-hover py-3 my-2">
+		<v-layout
+			class="mt-2"
+			row
+			wrap
+			align-center>
+			<!-- @desc: icon event -->
+			<v-flex xs2 sm1 class="text-xs-center" @click="toEventLive">
+				<v-btn icon>
+					<v-icon
+						:size="iconSize"
+						color="primary"
+						v-text="'$vuetify.icons.event'" />
+				</v-btn>
+			</v-flex>
 
-				<!-- CONTENT -->
-				<v-flex xs9 sm10>
-					<v-layout
-						row
-						justify-space-between
-						align-center>
-						<section>
-							<div>
-								<span class="body-2">{{ field.name }} </span>
-								<span class="grey--text text-uppercase"> #{{ field.code }}</span>
-							</div>
-							<span class="grey--text">
-								{{ calDateStart(field.start_at) }} - {{ calDateEnd(field.end_at) }}
+			<!-- @desc: event description -->
+			<v-flex xs8 sm9 @click="toEventLive">
+				<v-layout
+					row
+					justify-space-between
+					align-center>
+					<section>
+						<div>
+							<span class="body-2">
+								{{ info.name }}
 							</span>
-						</section>
-						<div v-if="hover" class="hidden-sm-and-down">
-							<v-icon
-								class="iconAction"
-								:size="iconSize"
-								v-text="'$vuetify.icons.web_slide_event'" />
-							<v-icon
-								class="iconAction"
-								:size="iconSize"
-								v-text="'$vuetify.icons.mobile_slide_event'" />
+							<span class="grey--text text-uppercase">
+								#{{ info.code }}
+							</span>
 						</div>
-					</v-layout>
-				</v-flex>
+						<span class="grey--text">
+							{{ calDateStart(info.start_at) }} - {{ calDateEnd(info.end_at) }}
+						</span>
+					</section>
+				</v-layout>
+			</v-flex>
 
-				<!-- ACTIONS -->
-				<v-flex xs1 sm1 class="text-xs-center">
-					<v-menu offset-y left>
-						<template #activator="{ on: menu }">
-							<v-tooltip top>
-								<template #activator="{ on: tooltip }">
-									<v-icon
-										class="iconAction"
-										:size="iconSize"
-										v-on="{ ...tooltip, ...menu }"
-										v-text="'$vuetify.icons.more_vert'" />
-								</template>
-								<span v-t="'action-tooltip'" />
-							</v-tooltip>
-						</template>
-						<v-list>
-							<v-list-tile
-								v-for="(item, index) in items"
-								:key="index"
-								class="iconAction">
-								<v-list-tile-title>{{ item.title }}</v-list-tile-title>
-							</v-list-tile>
-						</v-list>
-					</v-menu>
-				</v-flex>
-			</v-layout>
-		</v-card>
-	</v-hover>
+			<!-- @desc: actions -->
+			<v-flex xs2 sm2 class="text-xs-center">
+				<span class="otp hidden-sm-and-down pl-5">
+					<v-icon
+						class="iconAction"
+						:size="iconSize - 3"
+						v-text="'$vuetify.icons.web_slide_event'" />
+					<v-icon
+						class="iconAction"
+						:size="iconSize - 3"
+						v-text="'$vuetify.icons.mobile_slide_event'" />
+				</span>
+
+				<v-menu offset-y left>
+					<template #activator="{ on: menu }">
+						<v-tooltip top>
+							<template #activator="{ on: tooltip }">
+								<v-icon
+									class="iconAction right pr-2"
+									:size="iconSize"
+									v-on="{ ...tooltip, ...menu }"
+									v-text="'$vuetify.icons.more_vert'" />
+							</template>
+							<span v-t="'action-tooltip'" />
+						</v-tooltip>
+					</template>
+					<v-list dense>
+						<v-list-tile
+							v-for="(item, index) in items"
+							:key="index"
+							class="iconAction">
+							<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+						</v-list-tile>
+					</v-list>
+				</v-menu>
+			</v-flex>
+		</v-layout>
+	</v-card>
 </template>
 
 <script>
 export default {
 	name: 'EventCard',
 	props: {
-		field: {
+		info: {
 			type: Object,
 			default: () => ({
 				name: 'Name Event',
@@ -103,6 +106,10 @@ export default {
 		},
 		calDateEnd(date) {
 			return new Date(date).toGMTString().substr(0, 16);
+		},
+		toEventLive() {
+			const { code } = this.info;
+			this.$router.push({ name: 'admin-event', params: { code } });
 		}
 	}
 };
@@ -117,9 +124,17 @@ export default {
 		padding: 7px 0 12px 0 !important;
 	}
 }
+.otp {
+	opacity: 0;
+	visibility: hidden;
+}
 .card-hover:hover {
 	cursor: pointer;
 	background-color: #f5f5f5;
+	.otp {
+		opacity: 1;
+		visibility: visible;
+	}
 }
 .iconAction.material-icons.theme--light:hover {
 	color: #3595BE;

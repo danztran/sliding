@@ -4,12 +4,14 @@
 		:autofocus="field.autofocus"
 		:type="field.type"
 		:prepend-icon="field.prepend"
+		:append-icon="field.append"
 		:rules="[fieldRequired(field)]"
 		:label="$t(field.label)"
 		:readonly="field.readonly"
 		:validate-on-blur="true"
 		:error-messages="field.errmsg"
 		:disabled="disabled"
+		:prefix="field.prefix"
 		@input="onInput" />
 </template>
 <style scoped>
@@ -34,6 +36,8 @@ export default {
 					value: '',
 					errmsg: '',
 					prepend: '',
+					append: '',
+					prefix: '',
 					autofocus: false,
 					required: false
 				};

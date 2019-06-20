@@ -26,7 +26,7 @@
 						<span class="body-1 grey--text font-weight-light">
 							<span>{{ question.likes ? question.likes.length : 0 }} </span>
 							<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
-							• Date time
+							• {{ dateQCreated }}
 						</span>
 					</v-list-tile-content>
 
@@ -300,6 +300,9 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(editQuestion.value);
+		},
+		dateQCreated() {
+			return this._cm.dayCreate(this.question.created_at);
 		}
 	},
 	methods: {

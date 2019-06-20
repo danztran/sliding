@@ -56,7 +56,11 @@ const icons = {
 	question_mark: 'help_outline',
 	loading_circle: 'cached',
 	loading_success: 'done',
-	loading_fail: 'error_outline'
+	loading_fail: 'error_outline',
+	info: 'error_outline',
+	privacy: 'security',
+	multiple: 'add_to_photos',
+	copy: 'file_copy'
 };
 
 // custom components

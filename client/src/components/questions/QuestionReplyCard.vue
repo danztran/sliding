@@ -39,7 +39,7 @@
 						<span
 							v-else
 							class="grey--text caption">
-							Date time
+							{{ dateRCreated }}
 						</span>
 						<v-spacer />
 
@@ -174,6 +174,9 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(editReply.value);
+		},
+		dateRCreated() {
+			return this._cm.dayCreate(this.replyData.created_at);
 		}
 	},
 	methods: {

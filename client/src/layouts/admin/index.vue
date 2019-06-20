@@ -11,6 +11,7 @@
 				</v-slide-y-transition>
 			</v-content>
 			<event-dialog />
+			<event-setting-dialog />
 			<reply-question-dialog />
 		</v-app>
 	</div>
@@ -21,6 +22,7 @@ import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
 import ReplyQuestionDialog from '@/components/questions/QuestionReplyDialog.vue';
+import EventSettingDialog from '@/components/setting/event/EventSettingDialog.vue';
 
 export default {
 	name: 'AdminLayout',
@@ -28,6 +30,7 @@ export default {
 		navbar: NavBar,
 		drawer: Drawer,
 		'event-dialog': DashboardEventDialog,
+		'event-setting-dialog': EventSettingDialog,
 		'reply-question-dialog': ReplyQuestionDialog
 	},
 	data: () => ({

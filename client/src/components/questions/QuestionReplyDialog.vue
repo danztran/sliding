@@ -195,6 +195,13 @@ export default {
 			const { qrd } = this.$refs;
 			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
 		},
+		deleteReply(reply) {
+			this.deleteQReply(reply);
+			this.updateReplies();
+		},
+		editReply(reply) {
+			this.mergeEditReply(reply);
+		},
 		emitReplies() {
 			const emiter = 'get-question-replies';
 			this.$socket.emit(emiter, this.question.id, ({ errmsg, replies }) => {
@@ -263,14 +270,7 @@ export default {
 		},
 		editQuestion() {},
 		deleteQuestion() {},
-		archiveQuestion() {},
-		deleteReply(reply) {
-			this.deleteQReply(reply);
-			this.updateReplies();
-		},
-		editReply(reply) {
-			this.mergeEditReply(reply);
-		}
+		archiveQuestion() {}
 	}
 };
 </script>

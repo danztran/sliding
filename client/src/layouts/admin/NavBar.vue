@@ -66,6 +66,13 @@
 						{{ tab.name }}
 					</v-tab>
 				</v-tabs>
+
+				<v-btn icon @click="toggleEventSettingDialog">
+					<v-icon
+						size="17"
+						color="grey darken-1"
+						v-text="'$vuetify.icons.setting'" />
+				</v-btn>
 			</template>
 		</v-toolbar>
 	</div>
@@ -112,6 +119,9 @@ export default {
 	methods: {
 		toggleDrawer() {
 			this.$root.$emit('toggle-drawer');
+		},
+		toggleEventSettingDialog() {
+			this.$root.$emit('toggle-event-setting');
 		}
 	}
 };

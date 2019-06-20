@@ -12,7 +12,7 @@
 				row
 				align-center
 				justify-center>
-				<v-flex xs12 sm6 md5 lg4 xl3 class="pb-5">
+				<v-flex xs12 sm6 md5 lg3 xl3 class="pb-5">
 					<v-card class="elevation-20 pa-3">
 						<transition name="page" mode="out-in">
 							<router-view />
