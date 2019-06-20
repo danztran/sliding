@@ -33,14 +33,15 @@ export default {
 	props: {
 		state: {
 			type: String,
-			default: ''
+			default: '',
+			validator: val => ['loading', 'success', 'fail', 'default', ''].includes(val)
 		}
 	},
 	watch: {
 		state(val) {
 			if (val === 'success' || val === 'fail') {
 				setTimeout(() => {
-					this.$emit('update:state', '');
+					this.$emit('update:state', 'default');
 				}, 1000);
 			}
 		}
