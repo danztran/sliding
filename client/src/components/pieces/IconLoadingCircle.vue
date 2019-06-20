@@ -38,6 +38,15 @@ export default {
 			type: String,
 			default: ''
 		}
+	},
+	watch: {
+		state(val) {
+			if (val === 'success' || val === 'fail') {
+				setTimeout(() => {
+					this.$emit('update:state', '');
+				}, 1000);
+			}
+		}
 	}
 };
 </script>

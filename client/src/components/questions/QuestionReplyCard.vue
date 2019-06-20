@@ -75,7 +75,7 @@
 									small
 									icon
 									:disabled="loadingState !== ''">
-									<icon-loading-circle :state="loadingState">
+									<icon-loading-circle :state.sync="loadingState">
 										<template slot="otp-icon">
 											<v-icon
 												color="grey lighten-1"
@@ -197,7 +197,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.setStateIconLoading('loading');
+			this.loadingState = 'loading';
 			this.onEdit = false;
 			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
@@ -208,12 +208,12 @@ export default {
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
 				if (errmsg) {
 					this.replyData.content = this.cache;
-					this.setStateIconLoading('fail');
+					this.loadingState = 'fail';
 					// ...
 					return;
 				}
 				this.resetForm();
-				this.setStateIconLoading('success');
+				this.loadingState = 'success';
 				this.$root.$emit('edit-reply', reply);
 			});
 		},
@@ -231,14 +231,6 @@ export default {
 				}
 				this.$root.$emit('delete-reply', reply);
 			});
-		},
-		setStateIconLoading(state) {
-			if (state === 'success' || state === 'fail') {
-				setTimeout(() => {
-					this.loadingState = '';
-				}, 2000);
-			}
-			this.loadingState = '' || state;
 		}
 	}
 };

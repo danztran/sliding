@@ -190,7 +190,7 @@
 										class="ma-0"
 										icon
 										:disabled="loadingState !== ''">
-										<icon-loading-circle :state="loadingState">
+										<icon-loading-circle :state.sync="loadingState">
 											<template slot="otp-icon">
 												<v-icon
 													color="grey lighten-1"
@@ -338,7 +338,7 @@ export default {
 			this.resetForm();
 		},
 		saveEdit() {
-			this.setStateIconLoading('loading');
+			this.loadingState = 'loading';
 			this.onEdit = false;
 			this.question.content = this.form.editQuestion.value;
 			const infoQEdit = {
@@ -352,25 +352,17 @@ export default {
 			this.$socket.emit(emiter, infoQEdit, ({ errmsg, question }) => {
 				if (errmsg) {
 					this.question.content = this.cache;
-					this.setStateIconLoading('fail');
+					this.loadingState = 'fail';
 					// do something
 					return;
 				}
 				this.resetForm();
-				this.setStateIconLoading('success');
+				this.loadingState = 'success';
 				this.mergeQEdit(question);
 			});
 		},
 		archiveQuestion() {},
-		deleteQuestion() {},
-		setStateIconLoading(state) {
-			if (state === 'success' || state === 'fail') {
-				setTimeout(() => {
-					this.loadingState = '';
-				}, 2000);
-			}
-			this.loadingState = '' || state;
-		}
+		deleteQuestion() {}
 	}
 };
 </script>
