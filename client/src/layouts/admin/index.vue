@@ -59,7 +59,7 @@ export default {
 			setCurrentEvent: 'admin/event/getCurrentEvent'
 		}),
 		...mapMutations({
-			resetEvent: 'admin/events/RESET',
+			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET'
 		})
 	}

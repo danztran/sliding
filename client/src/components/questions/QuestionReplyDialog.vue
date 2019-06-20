@@ -181,10 +181,10 @@ export default {
 		...mapMutations({
 			mergeEditReply: 'admin/questions/MERGE_EDIT_REPLY',
 			deleteQReply: 'admin/questions/DELETE_QUESTION_REPLY',
-			setQReplies: 'admin/questions/GET_QUESTION_REPLIES',
+			setQReplies: 'admin/questions/SET_QUESTION_REPLIES',
 			mergeQReply: 'admin/questions/MERGE_SUCCESS_QUESTION_REPLY',
-			removeErrorQReply: 'admin/questions/REMOVE_ERROR_QUESTION_REPLY',
-			sendQReply: 'admin/questions/SEND_QUESTION_REPLY'
+			deleteErrorQReply: 'admin/questions/DELETE_ERROR_QUESTION_REPLY',
+			addTempReply: 'admin/questions/ADD_TEMP_QUESTION_REPLY'
 		}),
 		updateReplies() {
 			this.replies = this.getQuestionReplies(this.question.id);
@@ -252,7 +252,7 @@ export default {
 					}
 				}
 			};
-			this.sendQReply(replyInfo);
+			this.addTempReply(replyInfo);
 			this.form.reply.value = '';
 			const emiter = 'add-question-reply';
 			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
@@ -265,7 +265,7 @@ export default {
 					if (errmsg) {
 						this.form.reply.errmsg = errmsg;
 					}
-					return this.removeErrorQReply(infoReply);
+					return this.deleteErrorQReply(infoReply);
 				}
 				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
 				return this.updateReplies();

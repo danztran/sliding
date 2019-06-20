@@ -35,7 +35,7 @@
 							<v-flex xs12>
 								<text-field :field="form.name" />
 								<text-area class="pt-2" :field="form.description" />
-								<text-field :field="form.code" />
+								<text-field class="input-code" :field="form.code" />
 								<text-field :field="form.link" />
 							</v-flex>
 						</v-layout>
@@ -115,41 +115,6 @@
 				</v-card>
 			</v-expansion-panel-content>
 		</v-expansion-panel>
-
-		<!-- @desc: Multiple rooms -->
-		<v-expansion-panel expand>
-			<v-expansion-panel-content>
-				<template v-slot:header>
-					<v-list dense>
-						<v-list-tile class="grow">
-							<v-list-tile-avatar>
-								<v-icon
-									color="primary"
-									size="20"
-									v-text="'$vuetify.icons.multiple'" />
-							</v-list-tile-avatar>
-
-							<v-list-tile-content class="primary--text body-2  font-weight-medium">
-								<v-list-tile-title v-t="'event-setting-multi-room-title'" />
-								<v-list-tile-sub-title>
-									• Sigle room
-								</v-list-tile-sub-title>
-							</v-list-tile-content>
-						</v-list-tile>
-					</v-list>
-				</template>
-
-				<template v-slot:actions>
-					<v-icon color="primary" v-text="'keyboard_arrow_down'" />
-				</template>
-
-				<v-card flat>
-					<v-card-text flat class="grey lighten-3">
-						dlalef
-					</v-card-text>
-				</v-card>
-			</v-expansion-panel-content>
-		</v-expansion-panel>
 	</v-window-item>
 </template>
 
@@ -220,10 +185,11 @@ export default {
 		eventInfo(val) {
 			if (this._cm.notEmpty(val)) {
 				const { form, eventInfo } = this;
+				const baseUrl = process.env.VUE_APP_BASE_URL;
 				form.name.value = eventInfo.name;
 				form.description.value = eventInfo.description;
 				form.code.value = eventInfo.code;
-				form.link.value = `https://sliding.com/guest/event/${eventInfo.code}`;
+				form.link.value = `${baseUrl}/guest/event/${eventInfo.code}`;
 			}
 		}
 	}
@@ -231,4 +197,7 @@ export default {
 </script>
 
 <style lang="scss">
+.input-code input[type="text"] {
+	text-transform: uppercase;
+}
 </style>

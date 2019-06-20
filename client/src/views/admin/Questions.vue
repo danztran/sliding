@@ -96,7 +96,7 @@ export default {
 				return;
 			}
 			// this.$store.dispatch('admin/questions/getQuestions', questions);
-			this.getQuestions(questions);
+			this.setQuestions(questions);
 		});
 	},
 	mounted() {
@@ -118,7 +118,7 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			getQuestions: 'admin/questions/GET_QUESTION',
+			setQuestions: 'admin/questions/SET_QUESTIONS',
 			addQuestionReply: 'admin/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'admin/questions/MERGE_EDIT_REPLY',
 			deleteQuestionReply: 'admin/questions/DELETE_QUESTION_REPLY'
