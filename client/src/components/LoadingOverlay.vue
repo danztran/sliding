@@ -1,6 +1,6 @@
 <template>
 	<transition name="fade">
-		<div id="loading-overlay" v-show="loading">
+		<div v-show="loading" id="loading-overlay">
 			<bouncy-loader />
 		</div>
 	</transition>

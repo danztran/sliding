@@ -49,11 +49,10 @@
 							<v-icon
 								color="grey darken-1"
 								:size="icon.small"
-								v-html="'$vuetify.icons.search'">
-							</v-icon>
+								v-text="'$vuetify.icons.search'" />
 						</v-btn>
 					</template>
-					<span v-t="'search'"></span>
+					<span v-t="'search'" />
 				</v-tooltip>
 
 				<v-tooltip bottom>
@@ -66,11 +65,10 @@
 							<v-icon
 								color="grey darken-1"
 								:size="icon.small"
-								v-html="'$vuetify.icons.archive_all'">
-							</v-icon>
+								v-text="'$vuetify.icons.archive_all'" />
 						</v-btn>
 					</template>
-					<span v-t="'btn-archive-all'"></span>
+					<span v-t="'btn-archive-all'" />
 				</v-tooltip>
 
 				<v-tooltip bottom>
@@ -79,11 +77,10 @@
 							<v-icon
 								color="grey darken-1"
 								:size="icon.small"
-								v-html="'$vuetify.icons.filter'">
-							</v-icon>
+								v-text="'$vuetify.icons.filter'" />
 						</v-btn>
 					</template>
-					<span v-t="'btn-filter'"></span>
+					<span v-t="'btn-filter'" />
 				</v-tooltip>
 			</div>
 		</v-layout>
@@ -99,12 +96,12 @@
 				<v-card class="card-parent list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
-							<slot name="for-review-moderator-tab"></slot>
+							<slot name="for-review-moderator-tab" />
 						</v-flex>
 					</v-layout>
 					<empty-state-review
-						:emptyQuestion=true
-						:onModerator="onModerator"/>
+						:empty-question="true"
+						:on-moderator="onModerator" />
 				</v-card>
 			</v-tab-item>
 
@@ -117,7 +114,7 @@
 					class="card-parent list-scroll scrollbar-primary">
 					<v-layout v-if="emptyLive" row wrap>
 						<v-flex xs12>
-							<slot name="live-tab"></slot>
+							<slot name="live-tab" />
 						</v-flex>
 					</v-layout>
 					<empty-state-live v-else />
@@ -133,13 +130,12 @@
 					<empty-state-archived v-if="emptyArchive" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>
-							<slot name="archive-tab"></slot>
+							<slot name="archive-tab" />
 						</v-flex>
 					</v-layout>
 				</v-card>
 			</v-tab-item>
 		</v-tabs-items>
-
 	</v-layout>
 </template>
 

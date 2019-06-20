@@ -3,7 +3,7 @@
 		<v-app>
 			<navbar />
 			<drawer />
-			<v-content class="my-3" v-if="ready">
+			<v-content v-if="ready" class="my-3">
 				<v-slide-y-transition mode="out-in">
 					<keep-alive>
 						<router-view />
@@ -24,15 +24,15 @@ import ReplyQuestionDialog from '@/components/questions/QuestionReplyDialog.vue'
 
 export default {
 	name: 'AdminLayout',
-	data: () => ({
-		ready: false
-	}),
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
 		'event-dialog': DashboardEventDialog,
 		'reply-question-dialog': ReplyQuestionDialog
 	},
+	data: () => ({
+		ready: false
+	}),
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');
 		this.$socket.connect();

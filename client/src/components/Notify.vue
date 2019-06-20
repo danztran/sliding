@@ -1,17 +1,19 @@
 <template>
 	<v-card>
 		<v-snackbar
+			v-model="show"
 			:top="true"
 			:right="true"
 			:multi-line="true"
 			:vertical="true"
-			:timeout=6000
-			v-model="show">
+			:timeout="6000">
 			{{ message }}
 			<v-btn
 				color="pink"
 				flat
-				@click="show = false">Close</v-btn>
+				@click="show = false">
+				Close
+			</v-btn>
 		</v-snackbar>
 	</v-card>
 </template>

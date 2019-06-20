@@ -1,5 +1,5 @@
 <template>
-	<v-progress-linear :height="4" :indeterminate="loading" v-show="loading"/>
+	<v-progress-linear v-show="loading" :height="4" :indeterminate="loading" />
 </template>
 <style scoped>
 .v-progress-linear {

@@ -7,12 +7,11 @@
 		<v-icon
 			size="35"
 			color="grey lighten-1"
-			v-html="'$vuetify.icons.archive_all'"/>
+			v-text="'$vuetify.icons.archive_all'" />
 		<div class="subheading text-xs-center mt-2">
 			<span
-				class="grey--text text--darken-2"
-				v-t="'empty-archive'">
-			</span>
+				v-t="'empty-archive'"
+				class="grey--text text--darken-2" />
 		</div>
 	</v-layout>
 </template>

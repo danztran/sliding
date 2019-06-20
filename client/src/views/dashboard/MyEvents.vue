@@ -1,17 +1,22 @@
 <template>
 	<div id="my-events-page">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-layout class="ml-3 mb-1" row justify-space-between align-center>
+		<v-layout
+			class="ml-3 mb-1"
+			row
+			justify-space-between
+			align-center>
 			<template v-if="!loading && !isEmpty">
 				<!-- @desc: event being activated -->
-				<div v-t="'event-status'"></div>
+				<div v-t="'event-status'" />
 
 				<!-- @desc: button create event -->
 				<v-btn
 					class="px-3"
 					color="success lighten--2"
+					dark
 					round
-					dark small
+					small
 					@click.stop="createEvent">
 					{{ $t('btn-create-event') }}
 				</v-btn>
@@ -21,8 +26,8 @@
 		<!-- @desc: list events -->
 		<v-card class="list-event scrollbar-primary">
 			<template v-for="event of events">
-				<div @click="toEventLive(event.code)" :key="event.code">
-					<event-card :field="event"/>
+				<div :key="event.code" @click="toEventLive(event.code)">
+					<event-card :field="event" />
 				</div>
 			</template>
 		</v-card>
@@ -30,7 +35,7 @@
 		<!-- @desc: message empty event -->
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
-			<div class="empty-state mt-3" v-show="isEmpty">
+			<div v-show="isEmpty" class="empty-state mt-3">
 				<empty-event />
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 <!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
-		<v-card class="no-shadow" slot-scope="{ hover }">
+		<v-card slot-scope="{ hover }" class="no-shadow">
 			<v-list subheader class="py-1">
 				<v-list-tile>
 					<!-- @desc: avatar -->
@@ -12,8 +12,7 @@
 						<v-icon
 							:size="icon.sm"
 							color="white"
-							v-html="'$vuetify.icons.person'">
-						</v-icon>
+							v-text="'$vuetify.icons.person'" />
 					</v-list-tile-avatar>
 
 					<!--
@@ -26,7 +25,7 @@
 						</span>
 						<span class="body-1 grey--text font-weight-light">
 							<span>{{ question.likes ? question.likes.length : 0 }} </span>
-							<v-icon :size="icon.xs" v-html="'$vuetify.icons.like'"/>
+							<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
 							• Date time
 						</span>
 					</v-list-tile-content>
@@ -44,18 +43,17 @@
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
 										<v-btn
-											@click="restoreQuestion"
 											class="mx-1"
 											flat
-											icon v-on="on">
+											icon
+											@click="restoreQuestion" v-on="on">
 											<v-icon
 												color="grey lighten-1"
 												:size="icon.lg"
-												v-html="'$vuetify.icons.restore'">
-											</v-icon>
+												v-text="'$vuetify.icons.restore'" />
 										</v-btn>
 									</template>
-									<span v-t="'btn-restore-question'"></span>
+									<span v-t="'btn-restore-question'" />
 								</v-tooltip>
 							</template>
 
@@ -64,36 +62,34 @@
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
 										<v-btn
-											@click="highlightQuestion"
 											class="mx-1"
 											flat
-											icon v-on="on"
-											color="primary lighten-1">
+											icon
+											color="primary lighten-1" @click="highlightQuestion"
+											v-on="on">
 											<v-icon
 												color="primary lighten-1"
 												:size="icon.lg"
-												v-html="'$vuetify.icons.highlight_question'">
-											</v-icon>
+												v-text="'$vuetify.icons.highlight_question'" />
 										</v-btn>
 									</template>
-									<span v-t="'btn-mark-highlight'"></span>
+									<span v-t="'btn-mark-highlight'" />
 								</v-tooltip>
 
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
 										<v-btn
 											flat
-											icon v-on="on"
-											color="success">
+											icon color="success"
+											v-on="on">
 											<v-icon
-												@click="markQuestionAnswered"
 												color="success"
 												:size="icon.lg"
-												v-html="'$vuetify.icons.approve'">
-											</v-icon>
+												@click="markQuestionAnswered"
+												v-text="'$vuetify.icons.approve'" />
 										</v-btn>
 									</template>
-									<span v-t="'btn-mark-answer'"></span>
+									<span v-t="'btn-mark-answer'" />
 								</v-tooltip>
 							</template>
 						</v-list-tile>
@@ -130,14 +126,13 @@
 						<template v-slot:activator="{ on }">
 							<v-btn icon v-on="on">
 								<v-icon
-									@click="markStarQuestion"
 									color="grey lighten-1"
 									size="17"
-									v-html="'$vuetify.icons.star_border'">
-								</v-icon>
+									@click="markStarQuestion"
+									v-text="'$vuetify.icons.star_border'" />
 							</v-btn>
 						</template>
-						<span v-t="'btn-star-question'"></span>
+						<span v-t="'btn-star-question'" />
 					</v-tooltip>
 
 					<!-- *reply -->
@@ -146,21 +141,19 @@
 						justify-end>
 						<template v-if="onEdit">
 							<v-btn
+								v-t="'btn-cancel'"
 								flat
 								small
-								:ripple=false
-								v-t="'btn-cancel'"
-								@click="cancelEdit">
-							</v-btn>
+								:ripple="false"
+								@click="cancelEdit" />
 							<v-btn
+								v-t="'btn-save'"
 								color="primary"
 								flat
 								small
-								:ripple=false
-								v-t="'btn-save'"
+								:ripple="false"
 								:disabled="checkValidEdit"
-								@click="saveEdit">
-							</v-btn>
+								@click="saveEdit" />
 						</template>
 						<div v-else>
 							<v-btn
@@ -169,7 +162,7 @@
 								flat
 								small
 								@click="replyQuestion(question)">
-								<v-icon size="17" v-html="'$vuetify.icons.reply'"/>
+								<v-icon size="17" v-text="'$vuetify.icons.reply'" />
 								<span class="caption">
 									{{ question.replies
 										? `${question.replies.length}&nbsp;`
@@ -177,26 +170,24 @@
 									<!-- {{ `${question.replies.length}&nbsp;` }} -->
 								</span>
 								<span
-									class="caption"
-									v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'">
-								</span>
+									v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'"
+									class="caption" />
 							</v-btn>
 
 							<!-- *options button -->
 							<v-menu bottom nudge-bottom offset-y left>
 								<template v-slot:activator="{ on }">
 									<v-btn
-										v-on="on"
 										class="ma-0"
 										icon
-										:disabled="loadingState !== ''">
+										:disabled="loadingState !== ''"
+										v-on="on">
 										<icon-loading-circle :state.sync="loadingState">
 											<template slot="otp-icon">
 												<v-icon
 													color="grey lighten-1"
 													:size="icon.xs"
-													v-html="'$vuetify.icons.options_dot'">
-												</v-icon>
+													v-text="'$vuetify.icons.options_dot'" />
 											</template>
 										</icon-loading-circle>
 									</v-btn>
@@ -206,36 +197,35 @@
 									<!-- *options: edit -->
 									<v-list-tile @click="editQuestion">
 										<v-list-tile-action>
-											<v-icon v-html="'$vuetify.icons.edit'" />
+											<v-icon v-text="'$vuetify.icons.edit'" />
 										</v-list-tile-action>
 										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
+											<v-list-tile-title v-t="'btn-edit'" />
 										</v-list-tile-content>
 									</v-list-tile>
 
 									<!-- *options: archive -->
 									<v-list-tile @click="archiveQuestion">
 										<v-list-tile-action>
-											<v-icon v-html="'$vuetify.icons.archive_all'" />
+											<v-icon v-text="'$vuetify.icons.archive_all'" />
 										</v-list-tile-action>
 										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-archive'"></v-list-tile-title>
+											<v-list-tile-title v-t="'btn-archive'" />
 										</v-list-tile-content>
 									</v-list-tile>
 
 									<!-- *options: delete -->
 									<v-list-tile @click="deleteQuestion">
 										<v-list-tile-action>
-											<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
+											<v-icon v-text="'$vuetify.icons.delete'" />
 										</v-list-tile-action>
 										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
+											<v-list-tile-title v-t="'btn-delete'" />
 										</v-list-tile-content>
 									</v-list-tile>
 								</v-list>
 							</v-menu>
 						</div>
-
 					</v-layout>
 				</v-list-tile>
 			</v-card-actions>

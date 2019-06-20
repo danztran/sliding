@@ -1,16 +1,32 @@
 <template>
 	<div>
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-toolbar color="primary" dark tabs>
-			<v-layout align-center justify-space-between row fill-height>
+		<v-toolbar
+			dark
+			color="primary"
+			tabs>
+			<v-layout
+				row
+				align-center
+				justify-space-between
+				fill-height>
 				<v-toolbar-side-icon
 					v-if="hiddenXS"
 					@click="toggleDrawer" />
 
 				<v-list-tile>
-					<v-list-tile-avatar v-if="!hiddenXS" size="35" color="white">
-						<router-link to="/dashboard/my-events" class="no-underline pt-1" id="btn-back">
-							<v-icon size="25" color="primary" v-html="'$vuetify.icons.arrow_left'"></v-icon>
+					<v-list-tile-avatar
+						v-if="!hiddenXS"
+						size="35"
+						color="white">
+						<router-link
+							id="btn-back"
+							to="/dashboard/my-events"
+							class="no-underline pt-1">
+							<v-icon
+								size="25"
+								color="primary"
+								v-text="'$vuetify.icons.arrow_left'" />
 						</router-link>
 					</v-list-tile-avatar>
 
@@ -27,7 +43,7 @@
 
 				<v-spacer class="hidden-xs-only" />
 				<v-list-tile>
-					<div></div>
+					<div />
 				</v-list-tile>
 
 				<!-- USER DROPDOWN ACTIONS -->

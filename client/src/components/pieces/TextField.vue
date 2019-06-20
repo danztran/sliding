@@ -1,17 +1,16 @@
 <template>
 	<v-text-field
+		v-model="field.value"
 		:autofocus="field.autofocus"
 		:type="field.type"
 		:prepend-icon="field.prepend"
-		v-model="field.value"
 		:rules="[fieldRequired(field)]"
 		:label="$t(field.label)"
 		:readonly="field.readonly"
 		:validate-on-blur="true"
 		:error-messages="field.errmsg"
-		@input="onInput"
-		:disabled="disabled">
-	</v-text-field>
+		:disabled="disabled"
+		@input="onInput" />
 </template>
 <style scoped>
 .v-text-field {

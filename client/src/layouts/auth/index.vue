@@ -3,15 +3,22 @@
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
-		<v-container fluid fill-height pt-0 pb-5>
-			<v-layout align-center justify-center row>
-				<v-flex xs12 sm6 md5 lg3 xl3 class="pb-5">
+		<v-container
+			fluid
+			fill-height
+			pt-0
+			pb-5>
+			<v-layout
+				row
+				align-center
+				justify-center>
+				<v-flex xs12 sm6 md5 lg4 xl3 class="pb-5">
 					<v-card class="elevation-20 pa-3">
 						<transition name="page" mode="out-in">
 							<router-view />
 						</transition>
 						<div class="my-2 text-xs-center">
-							<span></span>
+							<span />
 							<router-link class="body-1 font-weight-medium no-underline" to="/">
 								<span>&#60; </span>
 								<span>{{ $t('btn-back-home') }}</span>

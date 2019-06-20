@@ -8,9 +8,9 @@
 			@contains: username, change language, login, logout, signup
 		-->
 		<v-toolbar id="my-navbar" fixed class="nav-transparent">
-			<v-layout align-center row>
-				<v-toolbar-title class="mx-0" v-t="'app-name'"></v-toolbar-title>
-				<v-spacer></v-spacer>
+			<v-layout row align-center>
+				<v-toolbar-title v-t="'app-name'" class="mx-0" />
+				<v-spacer />
 				<section class="nav-btn body-2">
 					<template v-if="!user">
 						<span
@@ -28,16 +28,16 @@
 						<v-btn
 							to="/login"
 							flat medium>
-							<router-link class="no-underline" to='/login' v-t="'loginFormTitle'" />
+							<router-link v-t="'loginFormTitle'" class="no-underline" to="/login" />
 						</v-btn>
 						<v-btn
+							v-t="'btn-signup'"
 							to="/signup"
 							flat
 							medium
 							class="primary no-underline"
-							color="white"
-							v-t="'btn-signup'">
-							<router-link to='/signup' v-t="'signUp'" />
+							color="white">
+							<router-link v-t="'signUp'" to="/signup" />
 						</v-btn>
 					</template>
 					<template v-else>
@@ -47,12 +47,11 @@
 							</router-link>
 						</v-btn>
 						<v-btn
-							@click="callLogout"
+							v-t="'logout'"
 							flat
 							medium
 							class="no-underline"
-							v-t="'logout'">
-						</v-btn>
+							@click="callLogout" />
 					</template>
 				</section>
 			</v-layout>
@@ -64,10 +63,13 @@
 			-->
 			<v-parallax
 				class="pa-0"
-				dark
 				height="500"
+				dark
 				:src="backgroundNav">
-				<v-layout align-center justify-center row>
+				<v-layout
+					row
+					align-center
+					justify-center>
 					<v-container grid-list-xs>
 						<!--
 							@desc: sologan
@@ -77,37 +79,35 @@
 							text-xs-center
 							class="mb-5"
 							style="text-shadow: 0.2em 0.4em 9em #000000de">
-							<h1 class="display-3 font-weight-regular text-capitalize mb-3" v-t="'sologan'"></h1>
-							<span class="font-weight-light headline" v-t="'sub-sologan'"></span>
+							<h1 v-t="'sologan'" class="display-3 font-weight-regular text-capitalize mb-3" />
+							<span v-t="'sub-sologan'" class="font-weight-light headline" />
 						</v-flex>
 
 						<!--
 							@desc: Input code
 						-->
-						<v-layout justify-center row>
+						<v-layout row justify-center>
 							<div class="my-input-code w-3">
 								<v-text-field
+									v-model="inputEventCode"
 									height="60"
 									solo
 									:label="$t('plhEnterCode')"
-									v-model="inputEventCode"
-									prefix="#">
-								</v-text-field>
+									prefix="#" />
 								<v-btn color="primary" :to="inputEventCode">
-									<span v-t="'btn-join'"></span>
+									<span v-t="'btn-join'" />
 								</v-btn>
 							</div>
 							<div class="mx-4 pt-3 hidden-sm-and-down">
-								<span class="headline" v-t="'or'"></span>
+								<span v-t="'or'" class="headline" />
 							</div>
 							<div class="hidden-sm-and-down">
 								<v-btn
+									v-t="'btn-intro-sigup'"
 									outline
 									dark
 									class="w-3 h-6 ma-0"
-									v-t="'btn-intro-sigup'"
-									to="/signup">
-								</v-btn>
+									to="/signup" />
 							</div>
 						</v-layout>
 					</v-container>
@@ -127,13 +127,11 @@
 					<v-flex xs12 sm6 class="my-3">
 						<div class="text-xs-center">
 							<h2
-								class="headline text-uppercase"
-								v-t="'card-header-title'">
-							</h2>
+								v-t="'card-header-title'"
+								class="headline text-uppercase" />
 							<span
-								class="subheading"
-								v-t="'card-subheader-title'">
-							</span>
+								v-t="'card-subheader-title'"
+								class="subheading" />
 						</div>
 					</v-flex>
 
@@ -141,20 +139,19 @@
 						<v-container grid-list-xl>
 							<v-layout row wrap>
 								<template v-for="card in cards">
-									<v-flex xs12 md4 :key="card.id">
+									<v-flex :key="card.id" xs12 md4>
 										<v-card>
-											<v-img :src="card.urlImg" height="200px"></v-img>
+											<v-img :src="card.urlImg" height="200px" />
 											<v-card-text class="text-xs-center">
-												<div class="headline" v-t="card.title"></div>
+												<div v-t="card.title" class="headline" />
 											</v-card-text>
-											<v-card-text class="pt-1" v-t="card.description"></v-card-text>
+											<v-card-text v-t="card.description" class="pt-1" />
 										</v-card>
 									</v-flex>
 								</template>
 							</v-layout>
 						</v-container>
 					</v-flex>
-
 				</v-layout>
 			</section>
 
@@ -168,31 +165,37 @@
 					class="py-4"
 					align-center>
 					<v-flex xs12>
-
 						<v-container grid-list-xl>
 							<v-layout row wrap>
 								<v-flex xs12 sm6>
-									<v-img :src="phone.urlImg" aspect-ratio="1.2" contain></v-img>
+									<v-img :src="phone.urlImg" aspect-ratio="1.2" contain />
 								</v-flex>
 								<v-flex xs12 sm6>
-									<h1 class="headline font-weight-regular mb-3" v-t="phone.title"></h1>
-									<p class="font-weight-light subheading" v-t="phone.description"></p>
+									<h1 v-t="phone.title" class="headline font-weight-regular mb-3" />
+									<p v-t="phone.description" class="font-weight-light subheading" />
 									<v-layout row wrap>
 										<v-flex xs6>
-											<v-btn depressed large color="primary" class="mx-0">
-												<span v-t="'phone-intro-start-btn'"></span>
+											<v-btn
+												depressed
+												large
+												color="primary"
+												class="mx-0">
+												<span v-t="'phone-intro-start-btn'" />
 											</v-btn>
 										</v-flex>
 										<v-flex xs6>
-											<v-btn depressed large color="primary" flat>
-												<span class="underline" v-t="'phone-intro-findout-btn'"></span>
+											<v-btn
+												depressed
+												large
+												flat
+												color="primary">
+												<span v-t="'phone-intro-findout-btn'" class="underline" />
 											</v-btn>
 										</v-flex>
 									</v-layout>
 								</v-flex>
 							</v-layout>
 						</v-container>
-
 					</v-flex>
 				</v-layout>
 			</section>
@@ -209,21 +212,24 @@
 					align-center>
 					<v-flex xs12 class="my-4">
 						<div class="text-xs-center">
-							<h2 class="headline font-weight-regular text-uppercase" v-t="'partner-title'"></h2>
+							<h2 v-t="'partner-title'" class="headline font-weight-regular text-uppercase" />
 						</div>
 					</v-flex>
 
 					<v-flex xs12>
 						<v-container grid-list-xl>
-							<v-layout row wrap align-center justify-center>
+							<v-layout
+								row
+								wrap
+								align-center
+								justify-center>
 								<template v-for="partner in partners">
 									<v-flex :key="partner.id" xs6 sm3>
 										<v-img
 											:src="partner.urlImg"
 											:lazy-src="partner.urlImg"
 											aspect-ratio="5"
-											contain>
-										</v-img>
+											contain />
 									</v-flex>
 								</template>
 							</v-layout>
@@ -245,12 +251,15 @@
 					<v-flex xs12 sm6 class="my-4">
 						<div class="text-xs-center">
 							<h2
-								class="headline font-weight-regular text-uppercase white--text"
-								v-t="'experience-title'">
-							</h2>
+								v-t="'experience-title'"
+								class="headline font-weight-regular text-uppercase white--text" />
 							<div>
-								<v-btn depressed large color="white" class="my-3">
-									<span v-t="'phone-intro-start-btn'"></span>
+								<v-btn
+									depressed
+									large
+									color="white"
+									class="my-3">
+									<span v-t="'phone-intro-start-btn'" />
 								</v-btn>
 							</div>
 						</div>
@@ -276,12 +285,10 @@
 								-->
 								<v-flex xs6 sm3>
 									<ul>
-										<span class="subheading pb-2 font-weight-medium" v-t="'footer-product'">
-										</span>
+										<span v-t="'footer-product'" class="subheading pb-2 font-weight-medium" />
 										<template v-for="item in footerProducts">
 											<li :key="item.title">
-												<router-link :to="item.url" v-t="item.title">
-												</router-link>
+												<router-link v-t="item.title" :to="item.url" />
 											</li>
 										</template>
 									</ul>
@@ -291,12 +298,10 @@
 								-->
 								<v-flex xs6 sm3>
 									<ul>
-										<span class="subheading pb-2 font-weight-medium" v-t="'footer-customer'">
-										</span>
+										<span v-t="'footer-customer'" class="subheading pb-2 font-weight-medium" />
 										<template v-for="item in footerCustomer">
 											<li :key="item.title">
-												<router-link :to="item.url" v-t="item.title">
-												</router-link>
+												<router-link v-t="item.title" :to="item.url" />
 											</li>
 										</template>
 									</ul>
@@ -306,12 +311,10 @@
 								-->
 								<v-flex xs6 sm3>
 									<ul>
-										<span class="subheading pb-2 font-weight-medium" v-t="'footer-about'">
-										</span>
+										<span v-t="'footer-about'" class="subheading pb-2 font-weight-medium" />
 										<template v-for="item in footerAbout">
 											<li :key="item.title">
-												<router-link :to="item.url" v-t="item.title">
-												</router-link>
+												<router-link v-t="item.title" :to="item.url" />
 											</li>
 										</template>
 									</ul>
@@ -322,10 +325,9 @@
 								<v-flex xs6 sm3>
 									<ul>
 										<span
-											class="display-1 pb-2 font-weight-medium"
-											v-t="'app-name'">
-										</span>
-										<li class="subheading font-weight-medium" v-t="'footer-contact'"></li>
+											v-t="'app-name'"
+											class="display-1 pb-2 font-weight-medium" />
+										<li v-t="'footer-contact'" class="subheading font-weight-medium" />
 										<li>(+84) 123 456 789</li>
 										<li>sliding@sli.com</li>
 									</ul>

@@ -1,19 +1,25 @@
 <template>
 	<div id="login-page">
-		<loading-linear :loading="loading"/>
+		<loading-linear :loading="loading" />
 
 		<v-form @submit.prevent="handleLogin">
 			<!--
 				@desc: form title, and link to signup
 			-->
-			<v-layout align-center justify-center row fill-height>
+			<v-layout
+				row
+				align-center
+				justify-center
+				fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
-						<div class="headline font-weight-regular">{{ $t('loginFormTitle') }}</div>
-						<span class="grey--text" v-t="'or'">
+						<div class="headline font-weight-regular">
+							{{ $t('loginFormTitle') }}
+						</div>
+						<span v-t="'or'" class="grey--text">
 							&nbsp;
 						</span>
-						<router-link tag='a' class="primary--text body-2 no-underline" to="/signup">
+						<router-link tag="a" class="primary--text body-2 no-underline" to="/signup">
 							{{ $t('signUp') }}
 						</router-link>
 					</div>
@@ -43,11 +49,17 @@
 				@desc: button submit
 			-->
 			<v-card-actions class="px-3 py-2">
-				<v-layout align-center justify-center column fill-height>
-					<v-btn color="primary" type="submit">{{ $t('loginFormTitle') }}</v-btn>
+				<v-layout
+					column
+					align-center
+					justify-center
+					fill-height>
+					<v-btn color="primary" type="submit">
+						{{ $t('loginFormTitle') }}
+					</v-btn>
 				</v-layout>
 			</v-card-actions>
-			<slot></slot>
+			<slot />
 		</v-form>
 	</div>
 </template>

@@ -1,19 +1,17 @@
 <template>
 	<div>
 		<span
-			class="pl-2 body-1 grey--text"
-			v-t="'guest-ask-title'">
-		</span>
+			v-t="'guest-ask-title'"
+			class="pl-2 body-1 grey--text" />
 		<!-- <v-icon>message</v-icon> -->
 		<div id="wrapper-ask" class="elevation-2">
 			<v-textarea
-				class="custom-textarea"
 				v-model="form.ask.value"
+				class="custom-textarea"
 				:placeholder="$t('lb-question')"
 				rows="1"
 				prepend-icon="message"
-				auto-grow>
-			</v-textarea>
+				auto-grow />
 
 			<div class="footer-ask">
 				<v-divider />

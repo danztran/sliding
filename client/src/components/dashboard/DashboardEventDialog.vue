@@ -1,11 +1,17 @@
 <template>
-	<v-layout row justify-center fill-height>
+	<v-layout
+		row
+		justify-center
+		fill-height>
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
-		<v-dialog v-model="dialogCreate" max-width="400px" no-click-animation>
+		<v-dialog
+			v-model="dialogCreate"
+			max-width="400px"
+			no-click-animation>
 			<v-card>
-				<loading-linear :loading="loading"/>
+				<loading-linear :loading="loading" />
 				<v-card-title class="pb-0 ml-3" primary-title>
 					<div class="headline">
 						{{ $t('btn-create-event') }}
@@ -17,7 +23,7 @@
 						<v-layout wrap>
 							<v-flex xs12>
 								<text-field :field="form.name" />
-								<text-area class="pt-2" :field="form.description"/>
+								<text-area class="pt-2" :field="form.description" />
 							</v-flex>
 
 							<!-- DATE START PICKER -->
@@ -35,17 +41,16 @@
 											v-model="form.start.defaultDate"
 											:label="$t('event-start-date')"
 											readonly
-											v-on="on">
-										</v-text-field>
+											v-on="on" />
 									</template>
 									<v-date-picker
+										v-model="form.start.defaultDate"
 										:min="currentDate"
 										:max="form.end.defaultDate"
-										v-model="form.start.defaultDate"
 										:locale="this.$i18n.locale"
 										no-title
 										scrollable>
-										<v-spacer></v-spacer>
+										<v-spacer />
 										<v-btn
 											flat
 											color="primary"
@@ -77,16 +82,15 @@
 											v-model="form.end.defaultDate"
 											:label="$t('event-end-date')"
 											readonly
-											v-on="on">
-										</v-text-field>
+											v-on="on" />
 									</template>
 									<v-date-picker
-										:min="form.start.defaultDate"
 										v-model="form.end.defaultDate"
+										:min="form.start.defaultDate"
 										:locale="this.$i18n.locale"
 										no-title
 										scrollable>
-										<v-spacer></v-spacer>
+										<v-spacer />
 										<v-btn
 											flat
 											color="primary"
@@ -118,13 +122,12 @@
 											v-model="form.start.defaultTime"
 											:label="$t('event-start-time')"
 											readonly
-											v-on="on">
-										</v-text-field>
+											v-on="on" />
 									</template>
 									<v-time-picker
 										v-model="form.start.defaultTime"
 										full-width>
-										<v-spacer></v-spacer>
+										<v-spacer />
 										<v-btn flat color="primary" @click="dialogTimeStart = false">
 											{{ $t('btn-cancel') }}
 										</v-btn>
@@ -153,13 +156,12 @@
 											v-model="form.end.defaultTime"
 											:label="$t('event-end-time')"
 											readonly
-											v-on="on">
-										</v-text-field>
+											v-on="on" />
 									</template>
 									<v-time-picker
 										v-model="form.end.defaultTime"
 										full-width>
-										<v-spacer></v-spacer>
+										<v-spacer />
 										<v-btn
 											flat
 											color="primary"
@@ -182,7 +184,6 @@
 									{{ $t('event-attendees-info') }}
 								</div>
 							</v-flex>
-
 						</v-layout>
 					</v-container>
 				</v-card-actions>
@@ -193,11 +194,17 @@
 
 				<!-- ACTION BTN -->
 				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn color="primary" flat @click="dialogCreate = false" >
+					<v-spacer />
+					<v-btn
+						color="primary"
+						flat
+						@click="dialogCreate = false">
 						{{ $t('btn-cancel') }}
 					</v-btn>
-					<v-btn color="primary" :disabled="loading" @click="createEvent">
+					<v-btn
+						color="primary"
+						:disabled="loading"
+						@click="createEvent">
 						{{ $t('btn-create') }}
 					</v-btn>
 				</v-card-actions>

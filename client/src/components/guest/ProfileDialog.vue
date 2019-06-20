@@ -8,9 +8,9 @@
 		<v-card>
 			<v-card-title>
 				<span
-					class="pl-3 grey--text text--darken-1"
-					v-t="'guest-profile-title-dialog'" />
-				<v-spacer></v-spacer>
+					v-t="'guest-profile-title-dialog'"
+					class="pl-3 grey--text text--darken-1" />
+				<v-spacer />
 				<v-menu
 					bottom
 					left>
@@ -23,19 +23,21 @@
 							<v-icon
 								color="grey lighten--2"
 								size="20"
-								v-html="'$vuetify.icons.close'">
-							</v-icon>
+								v-text="'$vuetify.icons.close'" />
 						</v-btn>
 					</template>
 				</v-menu>
 			</v-card-title>
 
 			<v-container grid-list-xs class="pt-0">
-				<v-layout wrap justify-center align-center>
+				<v-layout
+					wrap
+					justify-center
+					align-center>
 					<v-flex id="dialog-avatar" xs12 sm8>
 						<v-card-title>
 							<v-avatar size="70" color="grey lighten-4">
-								<v-icon size="30" v-html="'$vuetify.icons.person'"></v-icon>
+								<v-icon size="30" v-text="'$vuetify.icons.person'" />
 							</v-avatar>
 						</v-card-title>
 					</v-flex>
@@ -45,15 +47,14 @@
 						<text-field :field="form.email" />
 						<div class="layout wrap justify-center align-center">
 							<v-btn
+								v-t="'btn-save'"
 								round
 								medium
-								color="success"
-								v-t="'btn-save'"/>
+								color="success" />
 						</div>
 					</v-flex>
 				</v-layout>
 			</v-container>
-
 		</v-card>
 	</v-dialog>
 </template>

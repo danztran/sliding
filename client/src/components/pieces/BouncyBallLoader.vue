@@ -1,8 +1,8 @@
 <template>
 	<div class="bouncy-ball-loader">
 		<div class="wrapper">
-			<div class="ring"></div>
-			<div class="ball"></div>
+			<div class="ring" />
+			<div class="ball" />
 		</div>
 	</div>
 </template>

@@ -2,7 +2,7 @@
 	<div>
 		<h1>#sliding</h1>
 		<p class="zoom-area">
-			<b class="text-uppercase" v-t="'page-not-found'" />
+			<b v-t="'page-not-found'" class="text-uppercase" />
 		</p>
 		<section class="error-container">
 			<span class="four"><span class="screen-reader-text">4</span></span>

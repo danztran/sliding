@@ -12,9 +12,9 @@
 				grid-list
 				py-0>
 				<v-layout
+					row
 					align-center
 					justify-space-between
-					row
 					fill-height>
 					<v-flex sm4>
 						<v-toolbar-side-icon />
@@ -26,8 +26,8 @@
 					<v-flex sm4 class="hidden-sm-and-down">
 						<v-tabs
 							color="primary"
-							centered
 							dark
+							centered
 							slider-color="white">
 							<v-tab
 								v-for="(tab, i) in tabs"
@@ -42,10 +42,9 @@
 						<v-btn
 							icon
 							@click="toggleDialogProfile">
-							<v-icon v-html="'$vuetify.icons.person'"/>
+							<v-icon v-text="'$vuetify.icons.person'" />
 						</v-btn>
 					</v-flex>
-
 				</v-layout>
 			</v-container>
 		</v-toolbar>

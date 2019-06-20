@@ -1,14 +1,24 @@
 <template>
 	<v-navigation-drawer
+		id="dashboard-navbar"
 		v-model="drawer"
 		absolute
 		temporary
-		app
-		id="dashboard-navbar">
-		<v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
-			<v-layout pa-2 column fill-height class="lightbox white--text">
-				<v-spacer></v-spacer>
-				<v-layout align-center justify-space-between row shrink>
+		app>
+		<v-img
+			:aspect-ratio="16/9"
+			src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+			<v-layout
+				column
+				pa-2
+				fill-height
+				class="lightbox white--text">
+				<v-spacer />
+				<v-layout
+					row
+					align-center
+					justify-space-between
+					shrink>
 					<div class="d-inline-block w-100">
 						<div class="body-2">
 							{{ user.email }}
@@ -20,7 +30,7 @@
 					<v-tooltip top>
 						<template v-slot:activator="{ on }">
 							<v-btn icon v-on="on">
-								<v-icon color="white" v-html="'$vuetify.icons.setting'"/>
+								<v-icon color="white" v-text="'$vuetify.icons.setting'" />
 							</v-btn>
 						</template>
 						<span v-t="'accountSetting'" />
@@ -30,8 +40,8 @@
 		</v-img>
 
 		<v-layout
-			class="fill-height"
-			column>
+			column
+			class="fill-height">
 			<v-list-tile
 				v-for="(link, i) in links"
 				:key="i"
@@ -40,41 +50,39 @@
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
-					<v-icon :color="link.color" v-html="`$vuetify.icons.${link.icon}`"></v-icon>
+					<v-icon :color="link.color" v-text="`$vuetify.icons.${link.icon}`" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-text="link.name"/>
+				<v-list-tile-title v-text="link.name" />
 			</v-list-tile>
-			<v-divider/>
+			<v-divider />
 
 			<!-- HOMEPAGE -->
 			<v-list-tile to="/">
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.home'">
-					</v-icon>
+					<v-icon v-text="'$vuetify.icons.home'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'home-page'"/>
+				<v-list-tile-title v-t="'home-page'" />
 			</v-list-tile>
 
 			<!-- PROFILE -->
 			<v-list-tile>
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.user'"></v-icon>
+					<v-icon v-text="'$vuetify.icons.user'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'btn-your-profile'"/>
+				<v-list-tile-title v-t="'btn-your-profile'" />
 			</v-list-tile>
 
 			<!-- LOGOUT -->
 			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
+					<v-icon v-text="'$vuetify.icons.signout'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'logout'"/>
+				<v-list-tile-title v-t="'logout'" />
 			</v-list-tile>
-
 		</v-layout>
 	</v-navigation-drawer>
 </template>

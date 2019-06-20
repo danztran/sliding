@@ -4,19 +4,17 @@
 		justify-center
 		column
 		fill-height>
-		<v-icon size="35" color="success" v-html="'$vuetify.icons.question_mark'"/>
+		<v-icon size="35" color="success" v-text="'$vuetify.icons.question_mark'" />
 		<div class="subheading text-xs-center">
 			<span
-				class="grey--text text--darken-2"
-				v-t="'live-view-empty-title-join'">
-			</span>
+				v-t="'live-view-empty-title-join'"
+				class="grey--text text--darken-2" />
 			<span class="font-weight-bold"> www.sliding.com</span>
 		</div>
 		<div class="subheading">
 			<span
-				class="grey--text text--darken-2"
-				v-t="'live-view-empty-title-joincode'">
-			</span>
+				v-t="'live-view-empty-title-joincode'"
+				class="grey--text text--darken-2" />
 			<span class="font-weight-bold text-uppercase">
 				{{ eventInfo ? `#${eventInfo.code}` : '#...' }}
 			</span>

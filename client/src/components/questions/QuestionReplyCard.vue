@@ -10,8 +10,7 @@
 					<v-icon
 						:size="icon.sm"
 						color="white"
-						v-html="'$vuetify.icons.person'">
-					</v-icon>
+						v-text="'$vuetify.icons.person'" />
 				</v-avatar>
 			</v-flex>
 			<v-flex
@@ -21,8 +20,8 @@
 					{{ replyData.user.name }}
 				</span>
 				<span class="body-1 mb-0">
-					<span class="v-textarea-override no-shadow" v-if="onEdit">
-						<text-area :field="form.editReply"/>
+					<span v-if="onEdit" class="v-textarea-override no-shadow">
+						<text-area :field="form.editReply" />
 					</span>
 
 					<pre
@@ -42,25 +41,23 @@
 							class="grey--text caption">
 							Date time
 						</span>
-						<v-spacer></v-spacer>
+						<v-spacer />
 
 						<template v-if="onEdit">
 							<v-btn
+								v-t="'btn-cancel'"
 								flat
 								small
-								:ripple=false
-								v-t="'btn-cancel'"
-								@click="cancelEdit">
-							</v-btn>
+								:ripple="false"
+								@click="cancelEdit" />
 							<v-btn
+								v-t="'btn-save'"
 								color="primary"
 								flat
 								small
-								:ripple=false
-								v-t="'btn-save'"
+								:ripple="false"
 								:disabled="checkValidEdit"
-								@click="saveEdit">
-							</v-btn>
+								@click="saveEdit" />
 						</template>
 						<!-- *options: edit/delete -->
 						<v-menu
@@ -71,17 +68,16 @@
 							<template v-slot:activator="{ on }">
 								<v-btn
 									class="mr-1"
-									v-on="on"
 									small
 									icon
-									:disabled="loadingState !== ''">
+									:disabled="loadingState !== ''"
+									v-on="on">
 									<icon-loading-circle :state.sync="loadingState">
 										<template slot="otp-icon">
 											<v-icon
 												color="grey lighten-1"
 												:size="icon.xs"
-												v-html="'$vuetify.icons.options_dot'">
-											</v-icon>
+												v-text="'$vuetify.icons.options_dot'" />
 										</template>
 									</icon-loading-circle>
 								</v-btn>
@@ -91,20 +87,20 @@
 								<!-- *options: edit -->
 								<v-list-tile @click="editReply">
 									<v-list-tile-action>
-										<v-icon v-html="'$vuetify.icons.edit'" />
+										<v-icon v-text="'$vuetify.icons.edit'" />
 									</v-list-tile-action>
 									<v-list-tile-content>
-										<v-list-tile-title v-t="'btn-edit'"></v-list-tile-title>
+										<v-list-tile-title v-t="'btn-edit'" />
 									</v-list-tile-content>
 								</v-list-tile>
 
 								<!-- *options: delete -->
 								<v-list-tile @click="deleteReply">
 									<v-list-tile-action>
-										<v-icon v-html="'$vuetify.icons.delete'"></v-icon>
+										<v-icon v-text="'$vuetify.icons.delete'" />
 									</v-list-tile-action>
 									<v-list-tile-content>
-										<v-list-tile-title v-t="'btn-delete'"></v-list-tile-title>
+										<v-list-tile-title v-t="'btn-delete'" />
 									</v-list-tile-content>
 								</v-list-tile>
 							</v-list>
@@ -214,7 +210,7 @@ export default {
 				}
 				this.resetForm();
 				this.loadingState = 'success';
-				this.$root.$emit('edit-reply', reply);
+				this.$emit('edit-reply', reply);
 			});
 		},
 		deleteReply() {
@@ -229,7 +225,7 @@ export default {
 					// show notify
 					return;
 				}
-				this.$root.$emit('delete-reply', reply);
+				this.$emit('delete-reply', reply);
 			});
 		}
 	}

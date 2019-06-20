@@ -1,20 +1,24 @@
 <template>
 	<div id="signup-page">
-		<loading-linear :loading="loading"/>
+		<loading-linear :loading="loading" />
 		<!--
 			@desc: form title
 		-->
 		<v-form @submit.prevent="handleSignup">
-			<v-layout align-center justify-center row fill-height>
+			<v-layout
+				row
+				align-center
+				justify-center
+				fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
 						<div class="headline font-weight-regular">
 							{{ $t('signUp') }}
 						</div>
-						<span class="grey--text" v-t="'or'">
+						<span v-t="'or'" class="grey--text">
 							&nbsp;
 						</span>
-						<router-link tag='a' class="primary--text body-2 no-underline" to="/login">
+						<router-link tag="a" class="primary--text body-2 no-underline" to="/login">
 							{{ $t('loginFormTitle') }}
 						</router-link>
 					</div>
@@ -45,14 +49,16 @@
 			-->
 			<v-card-actions class="px-3 py-2">
 				<v-layout
+					column
 					align-center
 					justify-center
-					column
 					fill-height>
-					<v-btn color="primary" type="submit">{{ $t('signUp') }}</v-btn>
+					<v-btn color="primary" type="submit">
+						{{ $t('signUp') }}
+					</v-btn>
 				</v-layout>
 			</v-card-actions>
-			<slot></slot>
+			<slot />
 		</v-form>
 	</div>
 </template>

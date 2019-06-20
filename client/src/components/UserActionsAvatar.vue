@@ -10,7 +10,7 @@
 		<!-- @desc: avatar -->
 		<template v-slot:activator="{ on }">
 			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
-				<v-icon color="white" v-html="'$vuetify.icons.person'"/>
+				<v-icon color="white" v-text="'$vuetify.icons.person'" />
 			</v-avatar>
 		</template>
 
@@ -21,7 +21,7 @@
 				<v-list>
 					<v-list-tile>
 						<v-list-tile-avatar size="30">
-							<v-icon size="20" v-html="'$vuetify.icons.person'" />
+							<v-icon size="20" v-text="'$vuetify.icons.person'" />
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
@@ -36,14 +36,13 @@
 						<v-list-tile-action>
 							<v-btn icon>
 								<span
-									class="primary--text"
-									v-t="'btn-edit-profile'">
-								</span>
+									v-t="'btn-edit-profile'"
+									class="primary--text" />
 							</v-btn>
 						</v-list-tile-action>
 					</v-list-tile>
 				</v-list>
-				<v-divider></v-divider>
+				<v-divider />
 
 				<v-list class="pa-0">
 					<!-- @desc: homepage -->
@@ -53,11 +52,10 @@
 								class="pl-1"
 								color="secondary"
 								size="20"
-								v-html="'$vuetify.icons.home'">
-							</v-icon>
+								v-text="'$vuetify.icons.home'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'home-page'"/>
+						<v-list-tile-title v-t="'home-page'" />
 					</v-list-tile>
 
 					<!-- @desc: event -->
@@ -67,11 +65,10 @@
 								class="pl-1"
 								color="primary"
 								size="20"
-								v-html="'$vuetify.icons.event'">
-							</v-icon>
+								v-text="'$vuetify.icons.event'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'my-events'"/>
+						<v-list-tile-title v-t="'my-events'" />
 					</v-list-tile>
 
 					<!-- @desc: button for toggle diaog create event -->
@@ -81,11 +78,10 @@
 								class="pl-1"
 								color="yellow"
 								size="20"
-								v-html="'$vuetify.icons.add'">
-							</v-icon>
+								v-text="'$vuetify.icons.add'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'btn-create-event'"/>
+						<v-list-tile-title v-t="'btn-create-event'" />
 					</v-list-tile>
 
 					<!-- @desc: coop-event -->
@@ -95,11 +91,10 @@
 								class="pl-1"
 								color="success"
 								size="20"
-								v-html="'$vuetify.icons.person'">
-							</v-icon>
+								v-text="'$vuetify.icons.person'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'coop-events'"/>
+						<v-list-tile-title v-t="'coop-events'" />
 					</v-list-tile>
 
 					<!-- @desc: analytic activities -->
@@ -109,25 +104,23 @@
 								class="pl-1"
 								color="red"
 								size="20"
-								v-html="'$vuetify.icons.analytics'">
-							</v-icon>
+								v-text="'$vuetify.icons.analytics'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'activity-logs'"/>
+						<v-list-tile-title v-t="'activity-logs'" />
 					</v-list-tile>
 
-					<v-divider></v-divider>
+					<v-divider />
 					<!-- @desc: logout -->
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
 								size="20"
-								v-html="'$vuetify.icons.signout'">
-							</v-icon>
+								v-text="'$vuetify.icons.signout'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'logout'"/>
+						<v-list-tile-title v-t="'logout'" />
 					</v-list-tile>
 				</v-list>
 			</v-card>

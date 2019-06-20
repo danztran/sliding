@@ -16,7 +16,7 @@
 			row
 			fill-height>
 			<!-- @desc: title -->
-			<div class="pt-1 body-1 grey--text"  v-t="'moderator-view-title'"></div>
+			<div v-t="'moderator-view-title'" class="pt-1 body-1 grey--text" />
 			<!-- @desc: actions active moderator mode/sorting -->
 			<div class="d-flex">
 				<v-switch
@@ -25,39 +25,37 @@
 					:label="$t('moderator-view-stt')"
 					hide-details
 					:input-value="onModerator"
-					v-on:change="toggleModeModeration">
-				</v-switch>
+					@change="toggleModeModeration" />
 
 				<v-menu bottom nudge-bottom offset-y left>
 					<template v-slot:activator="{ on }">
 						<v-btn
-							v-on="on"
 							class="ma-0"
-							icon>
+							icon
+							v-on="on">
 							<v-icon
 								:size="icon.xs"
-								v-html="'$vuetify.icons.options_dot'">
-							</v-icon>
+								v-text="'$vuetify.icons.options_dot'" />
 						</v-btn>
 					</template>
 
 					<v-list class="py-0" dense subheader>
-						<v-subheader v-t="'opt-sort-by-title'"></v-subheader>
+						<v-subheader v-t="'opt-sort-by-title'" />
 						<v-list-tile>
 							<v-list-tile-action>
-								<v-icon/>
+								<v-icon />
 							</v-list-tile-action>
 							<v-list-tile-content>
-								<v-list-tile-title v-t="'btn-oldest'"></v-list-tile-title>
+								<v-list-tile-title v-t="'btn-oldest'" />
 							</v-list-tile-content>
 						</v-list-tile>
 
 						<v-list-tile>
 							<v-list-tile-action>
-								<v-icon/>
+								<v-icon />
 							</v-list-tile-action>
 							<v-list-tile-content>
-								<v-list-tile-title v-t="'btn-recent'"></v-list-tile-title>
+								<v-list-tile-title v-t="'btn-recent'" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -73,13 +71,13 @@
 				row
 				wrap>
 				<v-flex xs12>
-					<slot></slot>
+					<slot />
 				</v-flex>
 			</v-layout>
 
 			<empty-review
-				:onModerator="onModerator"
-				:emptyQuestion="emptyQuestion"/>
+				:on-moderator="onModerator"
+				:empty-question="emptyQuestion" />
 		</v-card>
 	</v-layout>
 </template>

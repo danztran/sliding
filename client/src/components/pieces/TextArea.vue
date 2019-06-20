@@ -1,10 +1,10 @@
 <template>
 	<v-textarea
+		v-model="field.value"
 		:autofocus="field.autofocus"
 		:type="field.type"
 		:prepend-icon="field.prepend"
 		:append-outer-icon="field.outerIcon"
-		v-model="field.value"
 		:rules="[fieldRequired(field)]"
 		:error-messages="field.errmsg"
 		:label="$t(field.label)"
@@ -14,9 +14,8 @@
 		:counter="field.counter"
 		:clearable="field.clearable"
 		:solo="field.solo"
-		@input="onInput"
-		:required="field.required">
-	</v-textarea>
+		:required="field.required"
+		@input="onInput" />
 </template>
 
 <script>

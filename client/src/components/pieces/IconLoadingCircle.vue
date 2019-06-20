@@ -2,30 +2,27 @@
 	<span>
 		<template
 			v-if="state === 'loading'"
-			class="loading-circle"
-			slot="loader">
+			slot="loader"
+			class="loading-circle">
 			<v-icon
-				v-html="'$vuetify.icons.loading_circle'">
-			</v-icon>
+				v-text="'$vuetify.icons.loading_circle'" />
 		</template>
 
 		<template v-else-if="state === 'success'">
 			<v-icon
 				class="loading-success"
-				v-html="'$vuetify.icons.loading_success'">
-			</v-icon>
+				v-text="'$vuetify.icons.loading_success'" />
 		</template>
 
 		<template v-else-if="state === 'fail'">
 			<v-icon
 				class="loading-fail"
 				color="error"
-				v-html="'$vuetify.icons.loading_fail'">
-			</v-icon>
+				v-text="'$vuetify.icons.loading_fail'" />
 		</template>
 
 		<template v-else>
-			<slot name="otp-icon"></slot>
+			<slot name="otp-icon" />
 		</template>
 	</span>
 </template>

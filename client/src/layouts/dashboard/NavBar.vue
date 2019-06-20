@@ -1,8 +1,15 @@
 <template>
 	<div>
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<v-toolbar color="primary" dark tabs>
-			<v-layout align-center justify-space-between row fill-height>
+		<v-toolbar
+			dark
+			color="primary"
+			tabs>
+			<v-layout
+				row
+				align-center
+				justify-space-between
+				fill-height>
 				<v-toolbar-side-icon
 					v-if="hiddenXS"
 					@click="toggleDrawer" />
@@ -11,7 +18,7 @@
 					<v-list-tile-content>
 						<div class="hidden-xs-only">
 							<div class="body-2">
-								<v-icon  size="20" v-html="'$vuetify.icons.user'" />
+								<v-icon size="20" v-text="'$vuetify.icons.user'" />
 								{{ user ? user.email : '' }}
 							</div>
 							<div class="caption text-capitalize">
@@ -24,7 +31,7 @@
 					</v-list-tile-content>
 				</v-toolbar-title>
 
-				<v-spacer class="hidden-xs-only"/>
+				<v-spacer class="hidden-xs-only" />
 
 				<v-text-field
 					v-if="!hiddenXS"
@@ -32,15 +39,13 @@
 					flat
 					solo-inverted
 					:prepend-inner-icon="'$vuetify.icons.search'"
-					:label="$t('search')">
-				</v-text-field>
+					:label="$t('search')" />
 
 				<v-list-tile class="hidden-sm-and-up">
 					<v-icon
 						color="whilte"
-						size="20">
-						search
-					</v-icon>
+						size="20"
+						v-text="'$vuetify.icons.search'" />
 				</v-list-tile>
 
 				<user-actions-avatar />

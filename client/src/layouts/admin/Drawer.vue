@@ -1,14 +1,24 @@
 <template>
 	<v-navigation-drawer
+		id="admin-navbar"
 		v-model="drawer"
 		absolute
 		temporary
-		app
-		id="admin-navbar">
-		<v-img :aspect-ratio="16/9" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
-			<v-layout pa-2 column fill-height class="lightbox white--text">
-				<v-spacer></v-spacer>
-				<v-layout align-center justify-space-between row shrink>
+		app>
+		<v-img
+			:aspect-ratio="16/9"
+			src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+			<v-layout
+				column
+				pa-2
+				fill-height
+				class="lightbox white--text">
+				<v-spacer />
+				<v-layout
+					row
+					align-center
+					justify-space-between
+					shrink>
 					<div class="d-inline-block w-100">
 						<div class="body-2">
 							{{ eventInfo ? eventInfo.name : 'loading' }}
@@ -20,7 +30,7 @@
 					<v-tooltip top>
 						<template v-slot:activator="{ on }">
 							<v-btn icon v-on="on">
-								<v-icon color="white" v-html="'$vuetify.icons.setting'"/>
+								<v-icon color="white" v-text="'$vuetify.icons.setting'" />
 							</v-btn>
 						</template>
 						<span v-t="'accountSetting'" />
@@ -40,41 +50,41 @@
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
-					<v-icon :color="link.color">{{ link.icon }}</v-icon>
-				</v-list-tile-action>
-
-				<v-list-tile-title v-text="link.name"/>
-			</v-list-tile>
-
-			<!-- HOMEPAGE -->
-			<v-divider/>
-			<v-list-tile to="/">
-				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.home'">
+					<v-icon :color="link.color">
+						{{ link.icon }}
 					</v-icon>
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'home-page'"/>
+				<v-list-tile-title v-text="link.name" />
+			</v-list-tile>
+
+			<!-- HOMEPAGE -->
+			<v-divider />
+			<v-list-tile to="/">
+				<v-list-tile-action>
+					<v-icon v-text="'$vuetify.icons.home'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'home-page'" />
 			</v-list-tile>
 
 			<!-- SWITCH EVENT -->
 			<v-list-tile @click="switchEvent">
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.switch_event'"></v-icon>
+					<v-icon v-text="'$vuetify.icons.switch_event'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'btn-switch-event'"/>
+				<v-list-tile-title v-t="'btn-switch-event'" />
 			</v-list-tile>
 
 			<!-- LOGOUT -->
 			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
-					<v-icon v-html="'$vuetify.icons.signout'"></v-icon>
+					<v-icon v-text="'$vuetify.icons.signout'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'logout'"/>
+				<v-list-tile-title v-t="'logout'" />
 			</v-list-tile>
-
 		</v-layout>
 	</v-navigation-drawer>
 </template>
@@ -118,15 +128,15 @@ export default {
 			eventInfo: 'admin/event/infoCurrentEvent'
 		})
 	},
-	created() {
-		this.links.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
-	},
 	watch: {
 		eventInfo(val) {
 			this.loading = true;
 		}
+	},
+	created() {
+		this.links.forEach((e) => {
+			e.name = this.$t(e.name);
+		});
 	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {

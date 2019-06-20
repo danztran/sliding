@@ -11,33 +11,38 @@
 									hide title in small device -->
 				<template v-if="isSMnXS">
 					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.sm" v-html="'$vuetify.icons.arrow_left'"/>
+						<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
 					</v-btn>
 				</template>
 				<!-- @desc: title -->
 				<template v-else>
-					<span v-if="!isSMnXS" v-t="'dialog-reply-question-title'"></span>
+					<span v-if="!isSMnXS" v-t="'dialog-reply-question-title'" />
 				</template>
 
-				<v-spacer></v-spacer>
+				<v-spacer />
 
 				<!-- @desc: show edit/delete/archive button
 									hide close button in small device -->
 				<template v-if="isSMnXS">
 					<v-btn icon @click="editQuestion">
-						<v-icon :size="icon.sm" v-html="'$vuetify.icons.edit'"/>
+						<v-icon :size="icon.sm" v-text="'$vuetify.icons.edit'" />
 					</v-btn>
 					<v-btn icon @click="deleteQuestion">
-						<v-icon :size="icon.sm" v-html="'$vuetify.icons.delete'"/>
+						<v-icon :size="icon.sm" v-text="'$vuetify.icons.delete'" />
 					</v-btn>
 					<v-btn icon @click="archiveQuestion">
-						<v-icon :size="icon.sm" v-html="'$vuetify.icons.archive_all'"/>
+						<v-icon :size="icon.sm" v-text="'$vuetify.icons.archive_all'" />
 					</v-btn>
 				</template>
 				<!-- @desc: button close -->
 				<template v-else>
-					<v-btn v-if="!isSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.sm" v-html="'$vuetify.icons.close'"/>
+					<v-btn
+						v-if="!isSMnXS"
+						icon
+						@click="dialogReplyQuestion=false">
+						<v-icon
+							:size="icon.sm"
+							v-text="'$vuetify.icons.close'" />
 					</v-btn>
 				</template>
 			</v-card-title>
@@ -45,13 +50,21 @@
 
 			<!-- @desc: Replies message content -->
 			<div class="max-height-sm-down">
-				<div id="qrd" ref="qrd" class="wrapper-card" v-scroll:#qrd="onScrollDialog">
-					<question-card--live :question="question"/>
+				<div
+					id="qrd"
+					ref="qrd"
+					v-scroll:#qrd="onScrollDialog"
+					class="wrapper-card">
+					<question-card--live :question="question" />
 					<div class="wrapper-card--reply">
 						<template v-for="reply in replies">
-							<reply-card :key="reply.id" :replyData="reply"/>
+							<reply-card
+								:key="reply.id"
+								:reply-data="reply"
+								@delete-reply="deleteReply(reply)"
+								@edit-reply="editReply(reply)" />
 						</template>
-						<bouncy-loader v-if="loading"/>
+						<bouncy-loader v-if="loading" />
 					</div>
 				</div>
 
@@ -61,7 +74,7 @@
 					<!-- <div @keydown.enter.capture.prevent.stop> -->
 					<text-area class="field-reply"
 						:field="form.reply"
-						@keydown.native.enter.capture="onReplyKeydown"/>
+						@keydown.native.enter.capture="onReplyKeydown" />
 					<!-- </div> -->
 					<v-btn
 						flat
@@ -69,11 +82,10 @@
 						color="primary"
 						:disabled="checkValidReply"
 						@click="sendReply">
-						<v-icon v-html="'$vuetify.icons.send'"/>
+						<v-icon v-text="'$vuetify.icons.send'" />
 					</v-btn>
 				</v-card-actions>
 			</div>
-
 		</v-card>
 	</v-dialog>
 </template>
@@ -141,6 +153,13 @@ export default {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
 		}
 	},
+	watch: {
+		replies() {
+			if (this.autoscroll) {
+				this.$nextTick(this.toLatestReply);
+			}
+		}
+	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
 		this.$root.$on('dialog-reply-question', (question) => {
@@ -154,21 +173,6 @@ export default {
 				this.emitReplies();
 			}
 		});
-		this.$root.$on('delete-reply', (reply) => {
-			this.deleteQReply(reply);
-			this.updateReplies();
-		});
-		this.$root.$on('edit-reply', (reply) => {
-			// console.log('reply success', reply);
-			this.mergeEditReply(reply);
-		});
-	},
-	watch: {
-		replies() {
-			if (this.autoscroll) {
-				this.$nextTick(this.toLatestReply);
-			}
-		}
 	},
 	methods: {
 		...mapMutations({
@@ -259,7 +263,14 @@ export default {
 		},
 		editQuestion() {},
 		deleteQuestion() {},
-		archiveQuestion() {}
+		archiveQuestion() {},
+		deleteReply(reply) {
+			this.deleteQReply(reply);
+			this.updateReplies();
+		},
+		editReply(reply) {
+			this.mergeEditReply(reply);
+		}
 	}
 };
 </script>

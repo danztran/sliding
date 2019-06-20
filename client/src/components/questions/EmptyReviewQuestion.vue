@@ -10,28 +10,27 @@
 				v-if="onModerator"
 				size="35"
 				color="success"
-				v-html="'$vuetify.icons.approve'"/>
+				v-text="'$vuetify.icons.approve'" />
 			<img
 				v-else
 				class="emptyQuestion"
-				:src="require('@/assets/moderationOff.svg')"/>
+				:src="require('@/assets/moderationOff.svg')">
 		</template>
 
 		<div
-			class="title font-weight-regular mt-2"
-			v-t="onModerator ? 'moderator-view-on' : 'moderator-view-off'">
-		</div>
+			v-t="onModerator ? 'moderator-view-on' : 'moderator-view-off'"
+			class="title font-weight-regular mt-2" />
 
-		<div class="subheading grey--text text--darken-1" v-t="'moderator-view-des'"></div>
+		<div v-t="'moderator-view-des'" class="subheading grey--text text--darken-1" />
 
 		<v-btn
+			v-t="onModerator ? 'btn-disable-moderator' : 'btn-enable-moderator'"
 			class="mt-3"
 			color="primary"
 			outline
 			small
-			v-t="onModerator ? 'btn-disable-moderator' : 'btn-enable-moderator'"
-			:ripple=false
-			@click="toggleModeratorMode"></v-btn>
+			:ripple="false"
+			@click="toggleModeratorMode" />
 	</v-layout>
 </template>
 

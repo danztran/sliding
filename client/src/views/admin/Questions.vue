@@ -8,8 +8,8 @@
 			-->
 			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
 				<question-panel--review
-					:emptyQuestion=true
-					:onModerator="onModerator">
+					:empty-question="true"
+					:on-moderator="onModerator">
 					<question-card--review />
 				</question-panel--review>
 			</v-flex>
@@ -23,9 +23,9 @@
 				xs12
 				md6>
 				<question-panel--main
-					:onModerator="onModerator"
-					:emptyLive="Boolean(questions.length)"
-					:emptyArchive=true>
+					:on-moderator="onModerator"
+					:empty-live="Boolean(questions.length)"
+					:empty-archive="true">
 					<template
 						v-if="showSMnXS"
 						slot="for-review-moderator-tab">
@@ -33,12 +33,12 @@
 					</template>
 
 					<template
-						slot="live-tab"
-						v-for="question in questions">
+						v-for="question in questions"
+						slot="live-tab">
 						<question-card--live
 							:key="question.id"
 							:question="question"
-							reply/>
+							reply />
 					</template>
 
 					<template

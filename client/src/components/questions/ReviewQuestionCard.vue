@@ -3,14 +3,20 @@
 -->
 <template>
 	<v-hover>
-		<v-card class="no-shadow" slot-scope="{ hover }">
+		<v-card slot-scope="{ hover }" class="no-shadow">
 			<v-list subheader class="py-1">
 				<v-list-tile>
 					<!--
 						@desc: avatar
 					-->
-					<v-list-tile-avatar class="pl-2" :size="icon.lg" color="grey lighten-2">
-						<v-icon :size="icon.sm" color="white" v-html="'$vuetify.icons.person'"></v-icon>
+					<v-list-tile-avatar
+						class="pl-2"
+						:size="icon.lg"
+						color="grey lighten-2">
+						<v-icon
+							:size="icon.sm"
+							color="white"
+							v-text="'$vuetify.icons.person'" />
 					</v-list-tile-avatar>
 
 					<!--
@@ -22,7 +28,7 @@
 							{{ question.user.name }}
 						</span>
 						<span class="body-1 grey--text font-weight-light">
-							<v-icon :size="icon.xs" v-html="'$vuetify.icons.like'"/>
+							<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
 							• Date time
 						</span>
 					</v-list-tile-content>
@@ -41,11 +47,10 @@
 										<v-icon
 											color="grey lighten-1"
 											:size="icon.sm"
-											v-html="'$vuetify.icons.star_border'">
-										</v-icon>
+											v-text="'$vuetify.icons.star_border'" />
 									</v-btn>
 								</template>
-								<span v-t="'btn-not-star-question'"></span>
+								<span v-t="'btn-not-star-question'" />
 							</v-tooltip>
 
 							<v-tooltip bottom>
@@ -53,36 +58,33 @@
 									<v-btn
 										class="mx-1"
 										flat
-										icon v-on="on"
-										color="success"
+										icon color="success"
+										v-on="on"
 										@click="approve">
 										<v-icon
 											color="success"
 											:size="icon.lg"
-											v-html="'$vuetify.icons.approve'">
-										</v-icon>
+											v-text="'$vuetify.icons.approve'" />
 									</v-btn>
 								</template>
-								<span v-t="'btn-approve-question'"></span>
+								<span v-t="'btn-approve-question'" />
 							</v-tooltip>
 
 							<v-tooltip bottom>
 								<template v-slot:activator="{ on }">
 									<v-btn
 										flat
-										icon v-on="on"
-										color="red"
+										icon color="red"
+										v-on="on"
 										@click="dismiss">
 										<v-icon
 											color="red"
 											:size="icon.lg"
-											v-html="'$vuetify.icons.dismiss'">
-										</v-icon>
+											v-text="'$vuetify.icons.dismiss'" />
 									</v-btn>
 								</template>
-								<span v-t="'btn-dismiss-question'"></span>
+								<span v-t="'btn-dismiss-question'" />
 							</v-tooltip>
-
 						</v-list-tile>
 					</v-list-tile-action>
 				</v-list-tile>

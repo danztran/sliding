@@ -1,20 +1,27 @@
 <template>
 	<v-hover>
-		<v-card class="card-hover py-3 my-2" slot-scope="{ hover }">
-			<v-layout class="mt-2" row wrap align-center>
+		<v-card slot-scope="{ hover }" class="card-hover py-3 my-2">
+			<v-layout
+				class="mt-2"
+				row
+				wrap
+				align-center>
 				<!-- ICON -->
 				<v-flex xs2 sm1 class="text-xs-center">
 					<v-btn icon>
 						<v-icon
 							:size="iconSize"
 							color="primary"
-							v-html="'$vuetify.icons.event'"/>
+							v-text="'$vuetify.icons.event'" />
 					</v-btn>
 				</v-flex>
 
 				<!-- CONTENT -->
 				<v-flex xs9 sm10>
-					<v-layout row justify-space-between align-center>
+					<v-layout
+						row
+						justify-space-between
+						align-center>
 						<section>
 							<div>
 								<span class="body-2">{{ field.name }} </span>
@@ -28,11 +35,11 @@
 							<v-icon
 								class="iconAction"
 								:size="iconSize"
-								v-html="'$vuetify.icons.web_slide_event'"/>
+								v-text="'$vuetify.icons.web_slide_event'" />
 							<v-icon
 								class="iconAction"
 								:size="iconSize"
-								v-html="'$vuetify.icons.mobile_slide_event'"/>
+								v-text="'$vuetify.icons.mobile_slide_event'" />
 						</div>
 					</v-layout>
 				</v-flex>
@@ -47,16 +54,16 @@
 										class="iconAction"
 										:size="iconSize"
 										v-on="{ ...tooltip, ...menu }"
-										v-html="'$vuetify.icons.more_vert'" />
+										v-text="'$vuetify.icons.more_vert'" />
 								</template>
-								<span v-t="'action-tooltip'"></span>
+								<span v-t="'action-tooltip'" />
 							</v-tooltip>
 						</template>
 						<v-list>
 							<v-list-tile
-								class="iconAction"
 								v-for="(item, index) in items"
-								:key="index">
+								:key="index"
+								class="iconAction">
 								<v-list-tile-title>{{ item.title }}</v-list-tile-title>
 							</v-list-tile>
 						</v-list>
