@@ -74,7 +74,7 @@
 					<!-- <div @keydown.enter.capture.prevent.stop> -->
 					<text-area class="field-reply"
 						:field="form.reply"
-						@keydown.native.enter.capture="onReplyKeydown" />
+						@keydown.native.enter.capture="onReplyEnter" />
 					<!-- </div> -->
 					<v-btn
 						flat
@@ -207,6 +207,15 @@ export default {
 		onScrollDialog(e) {
 			const { qrd } = this.$refs;
 			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
+		},
+		onReplyEnter(e) {
+			if (e && !e.shiftKey) {
+				e.preventDefault();
+				if (this.form.reply.value.trim() === '') {
+					return;
+				}
+				this.sendReply();
+			}
 		},
 		emitReplies() {
 			const emiter = 'get-question-replies';
