@@ -120,6 +120,8 @@ export default {
 			sm: 20
 		},
 		form: initForm(),
+		loading: false,
+		tempReplyID: [],
 		question: {
 			content: '',
 			count_replies: null,
@@ -130,15 +132,13 @@ export default {
 				name: ''
 			}
 		},
-		loading: false,
-		tempReplyID: [],
 		replies: [],
 		autoscroll: true,
 		qrd: null
 	}),
 	computed: {
 		...mapGetters({
-			getReplies: 'admin/questions/getReplies',
+			getQuestionReplies: 'admin/questions/getQuestionReplies',
 			user: 'auth/user'
 		}),
 		checkValidReply() {
@@ -162,6 +162,9 @@ export default {
 	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
+		this.$root.$on('update-replies', () => {
+			this.updateReplies();
+		});
 		this.$root.$on('dialog-reply-question', (question) => {
 			this.dialogReplyQuestion = true;
 			if (this.question && this.question.id === question.id) return;
@@ -177,13 +180,23 @@ export default {
 	methods: {
 		...mapMutations({
 			mergeEditReply: 'admin/questions/MERGE_EDIT_REPLY',
-
 			deleteQReply: 'admin/questions/DELETE_QUESTION_REPLY',
 			setQReplies: 'admin/questions/GET_QUESTION_REPLIES',
 			mergeQReply: 'admin/questions/MERGE_SUCCESS_QUESTION_REPLY',
 			removeErrorQReply: 'admin/questions/REMOVE_ERROR_QUESTION_REPLY',
 			sendQReply: 'admin/questions/SEND_QUESTION_REPLY'
 		}),
+		updateReplies() {
+			this.replies = this.getQuestionReplies(this.question.id);
+			this._cm.customSort(this.replies, 'asc', 'created_at');
+		},
+		deleteReply(reply) {
+			this.deleteQReply(reply);
+			this.updateReplies();
+		},
+		editReply(reply) {
+			this.mergeEditReply(reply);
+		},
 		toLatestReply() {
 			this.qrd.scrollBy({
 				top: this.qrd.scrollHeight - this.qrd.offsetHeight,
@@ -194,6 +207,15 @@ export default {
 		onScrollDialog(e) {
 			const { qrd } = this.$refs;
 			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
+		},
+		onReplyKeydown(event) {
+			if (event && !event.shiftKey) {
+				event.preventDefault();
+				if (this.form.reply.value === '') {
+					return;
+				}
+				this.sendReply();
+			}
 		},
 		emitReplies() {
 			const emiter = 'get-question-replies';
@@ -210,19 +232,6 @@ export default {
 				this.setQReplies(data);
 				this.updateReplies();
 			});
-		},
-		updateReplies() {
-			this.replies = this.getReplies(this.question.id);
-			this._cm.customSort(this.replies, 'asc', 'created_at');
-		},
-		onReplyKeydown(event) {
-			if (event && !event.shiftKey) {
-				event.preventDefault();
-				if (this.form.reply.value === '') {
-					return;
-				}
-				this.sendReply();
-			}
 		},
 		sendReply() {
 			let key = null;
@@ -264,14 +273,7 @@ export default {
 		},
 		editQuestion() {},
 		deleteQuestion() {},
-		archiveQuestion() {},
-		deleteReply(reply) {
-			this.deleteQReply(reply);
-			this.updateReplies();
-		},
-		editReply(reply) {
-			this.mergeEditReply(reply);
-		}
+		archiveQuestion() {}
 	}
 };
 </script>
