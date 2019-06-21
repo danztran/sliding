@@ -1,14 +1,17 @@
-const dollarQuotedLength = 10;
+const {
+	pgRandomDollarQuotedLength: rdqLength,
+	pgRandomDollarQuotedCharacters: rdqCharacters,
+	pgDollarQuotedPrefix: rdqPrefix
+} = requireWrp('config');
+const rdqCharactersLength = rdqCharacters.length;
 
 const queryHelper = {
 	randomString(len) {
-		const p = '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		const plen = p.length;
-		return [...Array(len)].reduce(a => a + p[Math.floor((Math.random() * plen))], '');
+		return [...Array(len)].reduce(a => a + rdqCharacters[Math.floor((Math.random() * rdqCharactersLength))], '');
 	},
 
 	randomDollarQuoted() {
-		return `$q${this.randomString(dollarQuotedLength)}$`;
+		return `$${rdqPrefix + this.randomString(rdqLength)}$`;
 	},
 
 	toDollarQuoted(str) {

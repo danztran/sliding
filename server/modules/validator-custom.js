@@ -1,8 +1,7 @@
 const Validatorjs = require('validatorjs');
+const { defaultLocale: defLocale } = requireWrp('config');
 const fieldPacks = requireDir('resources/languages/fields/');
 const validatePacks = requireDir('resources/languages/validates/');
-
-const defLocale = process.env.DEFAULT_LOCALE;
 
 for (const locale of Object.keys(validatePacks)) {
 	let messages = Validatorjs.getMessages(locale);

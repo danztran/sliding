@@ -1,6 +1,7 @@
 const EventModel = requireWrp('models/event');
 const EventRoleModel = requireWrp('models/event-role');
 const { nextStringOf } = requireWrp('modules/common');
+const { eventCodeBone, eventCodeStart } = requireWrp('config');
 
 // generate new event code
 let getEventCode;
@@ -9,14 +10,13 @@ new EventModel().findLastOf('id', { select: 'code' })
 	.then((lastEvent) => {
 		console.warn(`Last event code: ${lastEvent.code}`);
 		getEventCode = (function* () {
-			const codeBone = 'abcdefghijklmnopqrstuvwxyz0123456789';
-			let code = 'aaa';
+			let code = eventCodeStart;
 			if (lastEvent) {
-				code = nextStringOf(lastEvent.code, codeBone);
+				code = nextStringOf(lastEvent.code, eventCodeBone);
 			}
 			while (true) {
 				yield code;
-				code = nextStringOf(code, codeBone);
+				code = nextStringOf(code, eventCodeBone);
 			}
 		}());
 	})

@@ -11,17 +11,18 @@ global.requireWrp = p => require(path.resolve(__dirname, p));
 global.requireDir = p => requireDirectory(path.resolve(__dirname, p));
 
 global.$io = requireWrp('sockets');
+const { nodeEnv, clientHost } = requireWrp('config');
 const session = requireWrp('modules/session-custom');
 const router = requireWrp('router');
 
-const production = process.env.NODE_ENV === 'production';
+const production = nodeEnv === 'production';
 const development = !production;
 
 const app = express();
 
 if (development) {
 	app.use(logger('dev'));
-	app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
+	app.use(cors({ credentials: true, origin: clientHost }));
 }
 
 app.use(express.json());

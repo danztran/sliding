@@ -2,8 +2,8 @@ const moment = require('moment');
 const messagePacks = requireDir('resources/languages/messages/');
 const datePacks = requireDir('resources/languages/dates/');
 const { varToText, replaceVars } = requireWrp('modules/common');
+const { defaultLocale: defLocale } = requireWrp('config');
 
-const defLocale = process.env.DEFAULT_LOCALE;
 const defMessagePack = messagePacks[defLocale];
 const defDatePack = datePacks[defLocale];
 

@@ -1,6 +1,21 @@
 const { Pool } = require('pg');
+const {
+	pgHost,
+	pgPort,
+	pgDatabase,
+	pgUser,
+	pgPassword,
+	pgMaxPool
+} = requireWrp('config');
+
 const pool = new Pool({
-	ssl: true
+	ssl: true,
+	user: pgUser,
+	host: pgHost,
+	database: pgDatabase,
+	password: pgPassword,
+	port: pgPort,
+	max: pgMaxPool
 });
 
 pool.query('SELECT NOW()', (err, res) => {

@@ -1,5 +1,5 @@
 const CryptoJS = require('crypto-js');
-const secretKey = process.env.AES_KEY;
+const { aesKey: secretKey } = requireWrp('config');
 
 const crypto = {
 	enc(str) {

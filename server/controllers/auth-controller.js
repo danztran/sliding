@@ -1,6 +1,6 @@
 const passport = requireWrp('modules/passport-custom');
 const UserModel = requireWrp('models/user');
-const nameRegExp = 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g';
+const { signUpRules, logInRules } = requireWrp('config');
 
 const Ctlr = {
 	getSafeInfo(user) {
@@ -19,14 +19,7 @@ const Ctlr = {
 	},
 
 	async signup(req, res, next) {
-		const rules = {
-			name: ['required', 'min:3', 'max:100', nameRegExp],
-			email: 'email|required|max:320',
-			username: 'alpha_num|required|min:6|max:50|regex:/^[a-z][a-z0-9]*$/g',
-			password: 'string|required|min:6|max:50',
-			rePassword: 'string|required|min:6|max:50|same:password'
-		};
-		if (!res.$v.rif(rules)) return;
+		if (!res.$v.rif(signUpRules)) return;
 		const { username, email } = req.body;
 		const result = {};
 		try {
@@ -60,11 +53,7 @@ const Ctlr = {
 			res.messages['auth.login'] = res.$t('alreadyLoggedIn');
 			return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
 		}
-		const rules = {
-			username: 'string|required',
-			password: 'string|required'
-		};
-		if (!res.$v.rif(rules)) return;
+		if (!res.$v.rif(logInRules)) return;
 		passport.authenticate('local', (err, user, field, info) => {
 			const result = {};
 			if (err) return next(err);
