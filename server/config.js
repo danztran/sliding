@@ -43,12 +43,12 @@ module.exports = {
 
 	// ========= PM2
 	pm2MainScript: './bin/www',
-	pm2Instances: 1,
+	pm2Instances: 4,
 	pm2MMR: '1G',
 	pm2ErrorLogDir: './temp/logs/error.log',
 	pm2OutLogDir: './temp/logs/out.log',
 	pm2MergeLog: true,
-	pm2ExecMod: 'cluster',
+	pm2ExecMode: 'cluster',
 	pm2IgnoreWatch: ['public', '.git', 'temp', './vue-dist'],
 	pm2AutoRestart: true,
 	pm2Watch: true,
