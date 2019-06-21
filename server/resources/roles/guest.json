@@ -1,6 +1,7 @@
 {
 	"name": "guest",
 	"permissions": {
+		"editEvent": false,
 		"seeAllQuestions": false,
 		"addQuestionReply": false,
 		"editQuestionReply": false,

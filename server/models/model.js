@@ -50,8 +50,9 @@ class Model {
 		return this;
 	}
 
-	findOne(object, { select } = {}) {
+	findOne(object, { select, alias } = {}) {
 		this.find(object, {
+			alias,
 			select,
 			limit: 1
 		});

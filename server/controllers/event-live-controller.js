@@ -22,6 +22,7 @@ module.exports = {
 				}
 			}
 			result.event = event;
+			delete result.event.password;
 
 			// check user role
 			if (socket.$fn.isAuthenticated()) {
@@ -51,5 +52,29 @@ module.exports = {
 		}
 
 		return socket.emit('get_event', result);
+	},
+
+	async editEvent({ io, socket }, info, callback) {
+		if (socket.$fn.cannot('editEvent', callback)) return;
+		// VALIDATE INFO HERE
+		// ..
+		const event = socket.$fn.getCurrentEvent();
+		const result = {};
+		try {
+			const Event = new EventModel();
+			const newInfo = {
+				...info,
+				id: event.id,
+				code: event.code
+			};
+			const editedEvent = await Event.update(newInfo).exec();
+			result.event = editedEvent;
+			delete result.event.password;
+			socket.to(event.rooms.main).emit('new_edited_event', newInfo);
+			return callback(result);
+		}
+		catch (e) {
+			socket.$fn.handleError(e, callback);
+		}
 	}
 };

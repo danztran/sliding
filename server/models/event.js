@@ -24,6 +24,17 @@ class EventModel extends Model {
 			updated_at: new Date().toISOString()
 		}, opt);
 	}
+
+	update(info, opt) {
+		return this.updateOne({
+			id: info.id
+		}, {
+			...info,
+			updated_at: new Date().toISOString()
+		}, {
+			select: '*'
+		});
+	}
 }
 
 module.exports = EventModel;
