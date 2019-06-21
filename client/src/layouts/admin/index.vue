@@ -21,7 +21,7 @@ import { mapMutations, mapActions } from 'vuex';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
-import EventSettingDialog from '@/components/setting/event/EventSettingDialog.vue';
+import EventSettingDialog from '@/components/setting/EventSettingDialog.vue';
 
 export default {
 	name: 'AdminLayout',
