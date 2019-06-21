@@ -23,6 +23,7 @@ const theme = {
 const icons = {
 	user: 'how_to_reg',
 	person: 'person',
+	group_people: 'group',
 	setting: 'settings',
 	search: 'search',
 	event: 'event_available',
