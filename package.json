@@ -20,10 +20,13 @@
 		"lint": "concurrently 'npm:lint:*'",
 		"lint:server": "cd server && npm run lint",
 		"lint:client": "cd client && npm run lint",
+		"test": "concurrently 'npm:test:*'",
+		"test:server": "cd server && npm run test",
 		"git:add": "git add ."
 	},
 	"pre-commit": [
 		"lint",
+		"test",
 		"git:add"
 	],
 	"dependencies": {

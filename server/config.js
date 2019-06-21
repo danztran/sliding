@@ -17,7 +17,7 @@ module.exports = {
 	pgPassword: process.env.PGPASSWORD,
 	pgMaxPool: process.env.PGMAXPOOL || 2,
 	// Query Config
-	// warning: this only accept underscore, alphabet and numeric
+	// warning: this only accept underscore, alphabet and numeric with a prefix is a letter
 	pgRandomDollarQuotedCharacters: '_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
 	pgRandomDollarQuotedLength: 10,
 	pgDollarQuotedPrefix: 'q',
@@ -61,6 +61,7 @@ module.exports = {
 
 	// ========== USER MODEL
 	// This settings will combined with package validatorjs for validation
+	// checke at modules/validator-custom.js
 	signUpRules: {
 		name: ['required', 'min:3', 'max:100', 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g'],
 		email: 'email|required|max:320',

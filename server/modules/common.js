@@ -7,10 +7,11 @@ const _cm = {
 	varToText(str) {
 		return str
 			.replace(/[_.]+/gi, ' ')
-			.replace(/\W+/g, '')
+			.replace(/\W+/g, ' ')
 			.replace(/([a-z])([A-Z])/g, '$1 $2')
 			.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
-			.replace(/\w{1}/, x => x.toUpperCase());
+			.replace(/\w{1}/, x => x.toUpperCase())
+			.trim();
 	},
 	/*
 		@function replace Variable Name with Variable Value

@@ -11,7 +11,7 @@ global.requireWrp = p => require(path.resolve(__dirname, p));
 global.requireDir = p => requireDirectory(path.resolve(__dirname, p));
 
 global.$io = requireWrp('sockets');
-const { nodeEnv, clientHost } = requireWrp('config');
+const { nodeEnv, clientHost, vueDist } = requireWrp('config');
 const session = requireWrp('modules/session-custom');
 const router = requireWrp('router');
 
@@ -39,7 +39,7 @@ app.use(passport.session()); // persistent login sessions
 
 // router
 app.use(compression());
-app.use(express.static(path.join(__dirname, process.env.VUE_DIST)));
+app.use(express.static(path.join(__dirname, vueDist)));
 app.use(router);
 
 module.exports = app;

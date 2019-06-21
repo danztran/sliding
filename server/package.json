@@ -5,6 +5,7 @@
     "start": "npm run server && npm run logs",
     "server": "pm2-runtime start ecosystem.config.js",
     "logs": "pm2 logs all",
+    "test": "node tests",
     "lint": "eslint . --fix",
     "lint:debug": "eslint . --debug"
   },
