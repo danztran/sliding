@@ -246,6 +246,7 @@ export default {
 					id: replyId,
 					content: this.form.reply.value.trim(),
 					question_id: this.question.id,
+					created_at: new Date().toISOString(),
 					user: {
 						id: this.user.id,
 						name: this.user.name

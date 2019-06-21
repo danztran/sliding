@@ -1,78 +1,119 @@
 <template>
-	<v-card class="card-hover py-3 my-2">
+	<v-card class="card-hover py-3 my-3">
 		<v-layout
 			class="mt-2"
 			row
 			wrap
 			align-center>
-			<!-- @desc: icon event -->
-			<v-flex xs2 sm1 class="text-xs-center" @click="toEventLive">
-				<v-btn icon>
-					<v-icon
-						:size="iconSize"
-						color="primary"
-						v-text="'$vuetify.icons.event'" />
-				</v-btn>
+			<!-- icon event -->
+			<v-flex
+				xs10
+				sm4
+				class="text-xs-center"
+				@click="toEventLive">
+				<v-list-tile class="grow">
+					<v-list-tile-avatar>
+						<v-btn icon>
+							<v-icon
+								size="35"
+								color="primary"
+								v-text="'$vuetify.icons.event'" />
+						</v-btn>
+					</v-list-tile-avatar>
+
+					<v-list-tile-content>
+						<v-list-tile-title class="body-2 text-capitalize">
+							{{ info.name }}
+						</v-list-tile-title>
+						<v-list-tile-sub-title class="grey--text text-uppercase">
+							#{{ info.code }}
+						</v-list-tile-sub-title>
+					</v-list-tile-content>
+				</v-list-tile>
 			</v-flex>
 
-			<!-- @desc: event description -->
-			<v-flex xs8 sm9 @click="toEventLive">
+			<!-- date/time (SM and up)-->
+			<template v-if="!isXS">
+				<!-- @desc: time begin/end -->
+				<v-flex
+					sm1
+					class="text-xs-center"
+					@click="toEventLive">
+					<div class="grey--text text--darken-1">
+						{{ formatTime(info.start_at) }}
+					</div>
+					<div class="red--text text--darken-3">
+						{{ formatTime(info.end_at) }}
+					</div>
+				</v-flex>
+
+				<!-- @desc: date begin/end -->
+				<v-flex
+					sm4
+					class="text-xs-center"
+					@click="toEventLive">
+					<div class="grey--text text--darken-1">
+						{{ formatDate(info.start_at) }}
+					</div>
+					<div class="red--text text--darken-3">
+						{{ formatDate(info.end_at) }}
+					</div>
+				</v-flex>
+			</template>
+
+			<!-- actions -->
+			<v-flex
+				xs2
+				sm3
+				class="text-xs-center">
 				<v-layout
-					row
-					justify-space-between
-					align-center>
-					<section>
-						<div>
-							<span class="body-2">
-								{{ info.name }}
-							</span>
-							<span class="grey--text text-uppercase">
-								#{{ info.code }}
-							</span>
-						</div>
-						<span class="grey--text">
-							{{ calDateStart(info.start_at) }} - {{ calDateEnd(info.end_at) }}
-						</span>
-					</section>
+					justify-end>
+					<span class="otp hidden-sm-and-down pl-5">
+						<v-icon
+							class="iconAction"
+							:size="iconSize - 3"
+							v-text="'$vuetify.icons.web_slide_event'" />
+						<v-icon
+							class="iconAction"
+							:size="iconSize - 3"
+							v-text="'$vuetify.icons.mobile_slide_event'" />
+					</span>
+
+					<v-menu offset-y left>
+						<template #activator="{ on: menu }">
+							<v-tooltip top>
+								<template #activator="{ on: tooltip }">
+									<v-icon
+										class="iconAction right px-2"
+										:size="iconSize"
+										v-on="{ ...tooltip, ...menu }"
+										v-text="'$vuetify.icons.more_vert'" />
+								</template>
+								<span v-t="'action-tooltip'" />
+							</v-tooltip>
+						</template>
+						<v-list dense>
+							<v-list-tile class="iconAction">
+								<v-list-tile-title v-t="'btn-delete'" />
+							</v-list-tile>
+						</v-list>
+					</v-menu>
 				</v-layout>
 			</v-flex>
 
-			<!-- @desc: actions -->
-			<v-flex xs2 sm2 class="text-xs-center">
-				<span class="otp hidden-sm-and-down pl-5">
-					<v-icon
-						class="iconAction"
-						:size="iconSize - 3"
-						v-text="'$vuetify.icons.web_slide_event'" />
-					<v-icon
-						class="iconAction"
-						:size="iconSize - 3"
-						v-text="'$vuetify.icons.mobile_slide_event'" />
-				</span>
-
-				<v-menu offset-y left>
-					<template #activator="{ on: menu }">
-						<v-tooltip top>
-							<template #activator="{ on: tooltip }">
-								<v-icon
-									class="iconAction right pr-2"
-									:size="iconSize"
-									v-on="{ ...tooltip, ...menu }"
-									v-text="'$vuetify.icons.more_vert'" />
-							</template>
-							<span v-t="'action-tooltip'" />
-						</v-tooltip>
-					</template>
-					<v-list dense>
-						<v-list-tile
-							v-for="(item, index) in items"
-							:key="index"
-							class="iconAction">
-							<v-list-tile-title>{{ item.title }}</v-list-tile-title>
-						</v-list-tile>
-					</v-list>
-				</v-menu>
-			</v-flex>
+			<!-- date/time (XS) -->
+			<template v-if="isXS">
+				<v-flex xs2 />
+				<!-- @desc: time begin/end -->
+				<v-flex xs10 class="pl-3">
+					<div class="grey--text text--darken-1">
+						{{ formatTime(info.start_at) }} - {{ formatDate(info.start_at) }}
+					</div>
+					<div class="red--text text--darken-3">
+						{{ formatTime(info.end_at) }} - {{ formatDate(info.end_at) }}
+					</div>
+				</v-flex>
+			</template>
 		</v-layout>
 	</v-card>
 </template>
@@ -100,12 +141,17 @@ export default {
 			{ title: 'Click Me4' }
 		]
 	}),
+	computed: {
+		isXS() {
+			return this.$vuetify.breakpoint.xs;
+		}
+	},
 	methods: {
-		calDateStart(date) {
-			return new Date(date).toGMTString().substr(0, 7).replace(',', '');
-		},
-		calDateEnd(date) {
+		formatDate(date) {
 			return new Date(date).toGMTString().substr(0, 16);
+		},
+		formatTime(date) {
+			return new Date(date).toLocaleString([], { hour: '2-digit', minute: '2-digit' });
 		},
 		toEventLive() {
 			const { code } = this.info;

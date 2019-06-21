@@ -265,11 +265,12 @@ export default {
 		const dayTime = 1000 * 3600 * 24;
 		this.currentDate = date.toISOString().substr(0, 10);
 		this.form.start.defaultDate = date.toISOString().substr(0, 10);
-		this.form.start.defaultTime = date.toLocaleTimeString().substr(0, 4);
+		this.form.start.defaultTime = date.toTimeString().substr(0, 5);
 		// 3 days next
 		this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
 			.toISOString().substr(0, 10);
-		this.form.end.defaultTime = date.toLocaleTimeString().substr(0, 4);
+		this.form.end.defaultTime = date.toTimeString().substr(0, 5);
+		// new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' })
 	},
 	mounted() {
 		this.$root.$on('dialog-create-new-event', () => {
