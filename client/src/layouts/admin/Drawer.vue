@@ -125,7 +125,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getInfoEvent'
+			eventInfo: 'admin/event/infoEvent'
 		})
 	},
 	watch: {
