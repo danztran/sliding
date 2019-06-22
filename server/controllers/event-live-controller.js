@@ -1,5 +1,6 @@
 const EventModel = requireWrp('models/event');
 const EventRoleModel = requireWrp('models/event-role');
+const UserModel = requireWrp('models/user');
 const Roles = requireDir('resources/roles/');
 
 module.exports = {
@@ -35,7 +36,7 @@ module.exports = {
 			else {
 				result.role = Roles.guest;
 			}
-			socket.$fn.setRole(result.role);
+			socket.$fn.setRole(result.role.name);
 			socket.$fn.setEventCode(result.event.code);
 
 			// join role room
@@ -46,12 +47,12 @@ module.exports = {
 			else {
 				socket.join(ioEvent.rooms.guest);
 			}
+
+			return socket.emit('get_event', result);
 		}
 		catch (error) {
 			return socket.$fn.handleError(error);
 		}
-
-		return socket.emit('get_event', result);
 	},
 
 	async editEvent({ io, socket }, info, callback) {
@@ -77,6 +78,47 @@ module.exports = {
 		}
 		catch (e) {
 			socket.$fn.handleError(e, callback);
+		}
+	},
+
+	async addModerator({ io, socket }, info, callback) {
+		if (socket.$fn.cannot('addModerator', callback)) return;
+		// VALIDATE INFO HERE
+		// ...
+		const event = socket.$fn.getCurrentEvent();
+		const result = {};
+		try {
+			const User = new UserModel();
+			const EventRole = new EventRoleModel();
+
+			if (socket.$fn.getUser().email === info.email) {
+				throw socket.$fn.t('userHostAlready');
+			}
+
+			// find user
+			const query = [{ email: info.email }, { select: '"id", "name"' }];
+			const user = await User.findOne(...query).exec();
+			if (!user) throw socket.$fn.t('userNotFoundByEmail');
+
+			result.user = { ...user, email: info.email };
+
+			// check role exists
+			const role = await EventRole.findOne({
+				event_id: event.id,
+				user_id: result.user.id
+			}).exec();
+			if (role) throw socket.$fn.t('userModeratorAlready');
+
+			await EventRole.create({
+				user_id: result.user.id,
+				event_id: event.id,
+				role: 'moderator'
+			}).exec();
+
+			return callback(result);
+		}
+		catch (e) {
+			return socket.$fn.handleError(e, callback);
 		}
 	}
 };

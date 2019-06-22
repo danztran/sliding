@@ -2,6 +2,7 @@
 	"name": "host",
 	"permissions": {
 		"editEvent": true,
+		"addModerator": true,
 		"seeAllQuestions": true,
 		"addQuestionReply": true,
 		"editQuestionReply": true,

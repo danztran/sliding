@@ -7,6 +7,17 @@ const { defaultLocale: defLocale } = requireWrp('config');
 const defMessagePack = messagePacks[defLocale];
 const defDatePack = datePacks[defLocale];
 
+function Translator(param) {
+	// set locale
+	this.locale = getLocale(param);
+
+	// translate
+	this.$t = (key, args) => translate(key, args, this.locale);
+
+	// formatting
+	this.$d = (date, option) => toLocaleDate(date, option, this.locale);
+}
+
 function getLocale(param) {
 	if (!param) return defLocale;
 	let locale = null;
@@ -24,26 +35,18 @@ function getLocale(param) {
 	return locale || defLocale;
 }
 
-function Translator(param) {
-	// set locale
-	this.locale = getLocale(param);
+function translate(key, args, locale = defLocale) {
+	const messagePack = messagePacks[locale] || defMessagePack;
+	let text = messagePack[key] || defMessagePack[key] || varToText(key);
+	if (args) {
+		text = replaceVars(text, args, { s: '{', e: '}' });
+	}
+	return text;
+}
 
-	// language pack
-	this.messagePack = messagePacks[this.locale] || defMessagePack;
-
-	// translate
-	this.$t = (key, args) => {
-		let text = this.messagePack[key] || defMessagePack[key] || varToText(key);
-		if (args) {
-			text = replaceVars(text, args, { s: '{', e: '}' });
-		}
-		return text;
-	};
-
-	this.datePack = datePacks[this.locale] || defDatePack;
-
-	// formatting
-	this.$d = (date = new Date(), option = 'short') => moment(date).format(this.datePack.date[option]);
+function toLocaleDate(date = new Date(), option = 'short', locale = defLocale) {
+	const datePack = datePacks[locale] || defDatePack;
+	return moment(date).format(datePack.date[option]);
 }
 
 module.exports = Translator;

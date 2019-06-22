@@ -40,6 +40,7 @@ module.exports = {
 	vueDist: 'vue-dist',
 	vueMain: 'index.html',
 	clientHost: 'http://localhost:8080',
+	defaultLocale: 'en',
 
 	// ========= PM2
 	pm2MainScript: './bin/www',

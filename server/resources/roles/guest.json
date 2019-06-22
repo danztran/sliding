@@ -2,6 +2,7 @@
 	"name": "guest",
 	"permissions": {
 		"editEvent": false,
+		"addModerator": false,
 		"seeAllQuestions": false,
 		"addQuestionReply": false,
 		"editQuestionReply": false,

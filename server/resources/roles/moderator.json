@@ -2,6 +2,7 @@
 	"name": "moderator",
 	"permissions": {
 		"editEvent": false,
+		"addModerator": false,
 		"seeAllQuestions": true,
 		"addQuestionReply": true,
 		"editQuestionReply": true,

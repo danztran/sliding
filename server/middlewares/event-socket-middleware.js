@@ -1,4 +1,5 @@
 const Translator = requireWrp('modules/translator');
+const Roles = requireDir('resources/roles/');
 // const Validator = requireWrp('modules/validator-custom');
 module.exports = {
 	setIO(io) {
@@ -78,15 +79,15 @@ module.exports = {
 				return !!socket.$state.user;
 			},
 			setRole(role) {
-				socket.$state.role = { ...role };
+				socket.$state.role = role;
 			},
 			getRole() {
-				const { role } = socket.$state;
-				return role ? { ...role } : null;
+				return socket.$state.role;
 			},
 			can(permission) {
 				const { role } = socket.$state;
-				return role && role.permissions[permission];
+				const { permissions } = Roles[role];
+				return permissions[permission];
 			},
 			cannot(permission, callback) {
 				if (this.can(permission)) return false;
@@ -100,7 +101,10 @@ module.exports = {
 				console.error(error);
 				// check if error caused by system or user
 				let errmsg = this.t('somethingWrong');
-				if (error && error.expected) {
+				if (typeof error === 'string') {
+					errmsg = error;
+				}
+				else if (error && error.expected) {
 					errmsg = error.expected;
 				}
 
