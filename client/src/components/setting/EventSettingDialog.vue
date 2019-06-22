@@ -581,7 +581,7 @@ const initForm = () => ({
 		label: 'lb-event-code',
 		type: 'text',
 		prefix: '#',
-		required: true,
+		readonly: true,
 		errmsg: ''
 	},
 	link: {
@@ -647,7 +647,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/infoCurrentEvent'
+			eventInfo: 'admin/event/getInfoEvent'
 		}),
 		allowSearch() {
 			return this.eventInfo ? this.eventInfo.allow_search : false;

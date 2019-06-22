@@ -31,7 +31,7 @@
 					</v-list-tile-avatar>
 
 					<v-list-tile-content>
-						<div class="body-2">
+						<div class="subheading text-capitalize font-weight-medium">
 							{{ eventInfo ? eventInfo.name : '' }}
 						</div>
 						<div
@@ -102,7 +102,7 @@ export default {
 			return this.$vuetify.breakpoint.xs;
 		},
 		...mapGetters({
-			eventInfo: 'admin/event/infoCurrentEvent'
+			eventInfo: 'admin/event/getInfoEvent'
 		})
 	},
 	watch: {

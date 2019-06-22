@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
@@ -55,10 +55,8 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions({
-			setCurrentEvent: 'admin/event/getCurrentEvent'
-		}),
 		...mapMutations({
+			setCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET'
 		})

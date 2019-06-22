@@ -5,7 +5,7 @@ import authModule from './auth';
 import dashboardModule from './dashboard';
 
 // Admin manage current event
-import eventModule from './admin/events';
+import eventModule from './admin/event';
 import questionModule from './admin/questions';
 
 Vue.use(Vuex);
