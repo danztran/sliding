@@ -18,6 +18,7 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import handleSockets from '@/mixins/handleSockets';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
@@ -31,13 +32,16 @@ export default {
 		'event-dialog': DashboardEventDialog,
 		'event-setting-dialog': EventSettingDialog
 	},
+	mixins: [handleSockets],
 	data: () => ({
 		ready: false
 	}),
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');
+	},
+	created() {
+		this.$socket_updateHeaders();
 		this.$socket.connect();
-		this.$socket.emit('join-event', this.$route.params.code);
 	},
 	beforeRouteLeave(to, from, next) {
 		this.$socket.emit('leave-event');
@@ -47,6 +51,7 @@ export default {
 	},
 	sockets: {
 		connect() {
+			this.$socket.emit('join-event', this.$route.params.code);
 			// ..
 		},
 		get_event(data) {
