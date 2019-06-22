@@ -29,8 +29,9 @@ module.exports = {
 			removeEvent(code) {
 				delete io.$state.events[code];
 			},
-			removeEventIfNoClient({ code, room }) {
-				if (!io.adapter.rooms[room]) {
+			removeEventIfNoClient({ code }) {
+				const event = io.$state.events[code];
+				if (!io.adapter.rooms[event.rooms.main]) {
 					delete io.$state.events[code];
 				}
 			}
