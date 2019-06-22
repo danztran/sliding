@@ -57,11 +57,7 @@ module.exports = {
 				id: info.id,
 				is_deleted: false
 			}).exec();
-			if (!reply) {
-				throw {
-					expected: socket.$fn.t('replyNotFound')
-				};
-			}
+			if (!reply) throw socket.$fn.t('replyNotFound');
 
 			const editedReply = await QuestionReply.update(info).exec();
 			result.reply = editedReply;
@@ -86,11 +82,7 @@ module.exports = {
 				id: info.id,
 				is_deleted: false
 			}).exec();
-			if (!reply) {
-				throw {
-					expected: socket.$fn.t('replyNotFound')
-				};
-			}
+			if (!reply) throw socket.$fn.t('replyNotFound');
 
 			const deletedReply = await QuestionReply.setDeleted(info).exec();
 			result.reply = deletedReply;

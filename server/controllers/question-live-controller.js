@@ -67,11 +67,7 @@ module.exports = {
 				id: info.id,
 				is_deleted: false
 			}).exec();
-			if (!question) {
-				throw {
-					expected: socket.$fn.t('questionNotFound')
-				};
-			}
+			if (!question) throw socket.$fn.t('questionNotFound');
 
 			const editedQuestion = await Question.update(info).exec();
 			result.question = editedQuestion;
@@ -114,11 +110,7 @@ module.exports = {
 				id: info.id,
 				is_deleted: false
 			}).exec();
-			if (!question) {
-				throw {
-					expected: socket.$fn.t('questionNotFound')
-				};
-			}
+			if (!question) throw socket.$fn.t('questionNotFound');
 
 			const deletedQuestion = await Question.setDeleted(info).exec();
 			result.question = deletedQuestion;

@@ -15,12 +15,9 @@ module.exports = {
 			let event = ioEvent;
 			if (!event) {
 				event = await Event.findByCode(code).exec();
-				if (!event) {
-					throw { expected: socket.$fn.t('eventNotFound') };
-				}
-				else {
-					ioEvent = io.$fn.saveEvent(event);
-				}
+				if (!event) throw socket.$fn.t('eventNotFound');
+
+				ioEvent = io.$fn.saveEvent(event);
 			}
 			result.event = event;
 			delete result.event.password;

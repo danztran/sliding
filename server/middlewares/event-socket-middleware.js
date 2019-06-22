@@ -94,7 +94,7 @@ module.exports = {
 				const message = this.t('noPermissionTo', {
 					permission: this.t(permission)
 				});
-				this.handleError({ expected: message }, callback);
+				this.handleError(message, callback);
 				return true;
 			},
 			handleError(error, callback) {
