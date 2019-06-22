@@ -1,10 +1,10 @@
 <!--
 	@desc:
 		*including questions posted from the audience
-		*if (moderator) on: questions approved by Moderator
+		*if (moderation) on: questions approved by Moderation
 	@contains:
 		*live/archive tabs in Medium(MD) and up devices
-		*for-review(moderator)/live/archive tabs in XS-SM devices
+		*for-review(moderation)/live/archive tabs in XS-SM devices
 -->
 <template>
 	<v-layout row wrap>
@@ -23,7 +23,7 @@
 				<v-tab
 					v-if="showSMnXS"
 					active-class="primary--text font-weight-medium">
-					{{ $t('moderator-view-title') }}
+					{{ $t('moderation-view-title') }}
 				</v-tab>
 
 				<v-tab
@@ -87,7 +87,7 @@
 
 		<!-- @desc: tab name -->
 		<v-tabs-items v-model="currentTab" class="w-100">
-			<!-- @tab: moderator tab in XS-SM -->
+			<!-- @tab: moderation tab in XS-SM -->
 			<v-tab-item
 				v-if="showSMnXS"
 				class="list-scroll"
@@ -96,12 +96,12 @@
 				<v-card class="card-parent list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
-							<slot name="for-review-moderator-tab" />
+							<slot name="for-review-moderation-tab" />
 						</v-flex>
 					</v-layout>
 					<empty-state-review
-						:empty-question="true"
-						:on-moderator="onModerator" />
+						:on-moderation="onModeration"
+						:empty-question="true" />
 				</v-card>
 			</v-tab-item>
 
@@ -152,10 +152,6 @@ export default {
 		'empty-state-archived': EmptyArchived
 	},
 	props: {
-		emptyModerator: {
-			type: Boolean,
-			default: false
-		},
 		emptyLive: {
 			type: Boolean,
 			default: false
@@ -164,7 +160,7 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		onModerator: {
+		onModeration: {
 			type: Boolean,
 			default: false
 		}

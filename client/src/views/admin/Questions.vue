@@ -4,32 +4,32 @@
 		<question-reply--dialog />
 		<v-layout row wrap>
 			<!--
-				@desc: check question Panel Moderator view
+				@desc: check question Panel Moderation view
 				@hidden panel in XS-SM
 			-->
 			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
 				<question-panel--review
 					:empty-question="true"
-					:on-moderator="onModerator">
+					:on-moderation="onModeration">
 					<question-card--review />
 				</question-panel--review>
 			</v-flex>
 
 			<!--
 				@desc: tab question live/archived panel
-				@show tab moderator in XS-SM
+				@show tab moderation in XS-SM
 			-->
 			<v-flex
 				:class="{'pl-1': !showSMnXS}"
 				xs12
 				md6>
 				<question-panel--main
-					:on-moderator="onModerator"
+					:on-moderation="onModeration"
 					:empty-live="Boolean(questions.length)"
 					:empty-archive="true">
 					<template
 						v-if="showSMnXS"
-						slot="for-review-moderator-tab">
+						slot="for-review-moderation-tab">
 						<!-- <question-card--review /> -->
 					</template>
 
@@ -70,7 +70,7 @@ export default {
 		'question-reply--dialog': QuestionReplyDialog
 	},
 	data: () => ({
-		onModerator: false
+		onModeration: false
 	}),
 	computed: {
 		...mapGetters({
@@ -101,7 +101,7 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('toggle-mode-moderation', () => {
-			this.onModerator = !this.onModerator;
+			this.onModeration = !this.onModeration;
 		});
 	},
 	sockets: {

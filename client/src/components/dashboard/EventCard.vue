@@ -36,27 +36,13 @@
 			<template v-if="!isXS">
 				<!-- @desc: time begin/end -->
 				<v-flex
-					sm1
-					class="text-xs-center"
+					sm5
 					@click="toEventLive">
 					<div class="grey--text text--darken-1">
-						{{ formatTime(info.start_at) }}
+						{{ formatTime(info.start_at) }} - {{ formatDate(info.start_at) }}
 					</div>
-					<div class="red--text text--darken-3">
-						{{ formatTime(info.end_at) }}
-					</div>
-				</v-flex>
-
-				<!-- @desc: date begin/end -->
-				<v-flex
-					sm4
-					class="text-xs-center"
-					@click="toEventLive">
-					<div class="grey--text text--darken-1">
-						{{ formatDate(info.start_at) }}
-					</div>
-					<div class="red--text text--darken-3">
-						{{ formatDate(info.end_at) }}
+					<div>
+						{{ formatTime(info.end_at) }} - {{ formatDate(info.end_at) }}
 					</div>
 				</v-flex>
 			</template>
@@ -101,7 +87,7 @@
 				</v-layout>
 			</v-flex>
 
-			<!-- date/time (XS) -->
+			<!-- date/time (only XS) -->
 			<template v-if="isXS">
 				<v-flex xs2 />
 				<!-- @desc: time begin/end -->
@@ -133,13 +119,7 @@ export default {
 		}
 	},
 	data: () => ({
-		iconSize: 25,
-		items: [
-			{ title: 'Click Me1' },
-			{ title: 'Click Me2' },
-			{ title: 'Click Me3' },
-			{ title: 'Click Me4' }
-		]
+		iconSize: 25
 	}),
 	computed: {
 		isXS() {
@@ -148,7 +128,7 @@ export default {
 	},
 	methods: {
 		formatDate(date) {
-			return new Date(date).toGMTString().substr(0, 16);
+			return new Date(date).toLocaleDateString();
 		},
 		formatTime(date) {
 			return new Date(date).toLocaleString([], { hour: '2-digit', minute: '2-digit' });

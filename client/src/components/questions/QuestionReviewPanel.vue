@@ -16,17 +16,19 @@
 			row
 			fill-height>
 			<!-- @desc: title -->
-			<div v-t="'moderator-view-title'" class="pt-1 body-1 grey--text" />
-			<!-- @desc: actions active moderator mode/sorting -->
+			<div v-t="'moderation-view-title'" class="pt-1 body-1 grey--text" />
+			<!-- @desc: moderation mode/sorting -->
 			<div class="d-flex">
+				<!-- moderation mode -->
 				<v-switch
 					class="ma-0 pt-2"
 					color="primary"
-					:label="$t('moderator-view-stt')"
+					:label="$t('moderation-view-stt')"
 					hide-details
-					:input-value="onModerator"
+					:input-value="onModeration"
 					@change="toggleModeModeration" />
 
+				<!-- sorting -->
 				<v-menu bottom nudge-bottom offset-y left>
 					<template v-slot:activator="{ on }">
 						<v-btn
@@ -64,19 +66,20 @@
 		</v-layout>
 
 		<v-card
-			:class="{'bg-grey': !onModerator}"
+			:class="{'bg-grey': !onModeration}"
 			class="w-100 card-parent list-scroll scrollbar-primary list-scroll">
 			<v-layout
-				v-if="onModerator && !emptyQuestion"
+				v-if="onModeration && !emptyQuestion"
 				row
 				wrap>
 				<v-flex xs12>
+					<!-- @desc: question review -->
 					<slot />
 				</v-flex>
 			</v-layout>
 
 			<empty-review
-				:on-moderator="onModerator"
+				:on-moderation="onModeration"
 				:empty-question="emptyQuestion" />
 		</v-card>
 	</v-layout>
@@ -86,7 +89,7 @@
 import EmptyReview from './EmptyReviewQuestion.vue';
 
 export default {
-	name: 'QuestionModeratorPanel',
+	name: 'QuestionModerationPanel',
 	components: {
 		'empty-review': EmptyReview
 	},
@@ -95,7 +98,7 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		onModerator: {
+		onModeration: {
 			type: Boolean,
 			default: false
 		}

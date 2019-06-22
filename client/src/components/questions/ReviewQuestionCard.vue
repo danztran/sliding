@@ -1,5 +1,5 @@
 <!--
-	@desc: question review card for Moderator mode
+	@desc: question review card for Moderation mode
 -->
 <template>
 	<v-hover>

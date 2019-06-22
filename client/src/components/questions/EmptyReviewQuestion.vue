@@ -7,7 +7,7 @@
 		fill-height>
 		<template>
 			<v-icon
-				v-if="onModerator"
+				v-if="onModeration"
 				size="35"
 				color="success"
 				v-text="'$vuetify.icons.approve'" />
@@ -18,27 +18,27 @@
 		</template>
 
 		<div
-			v-t="onModerator ? 'moderator-view-on' : 'moderator-view-off'"
+			v-t="onModeration ? 'moderation-view-on' : 'moderation-view-off'"
 			class="title font-weight-regular mt-2" />
 
-		<div v-t="'moderator-view-des'" class="subheading grey--text text--darken-1" />
+		<div v-t="'moderation-view-des'" class="subheading grey--text text--darken-1 px-2" />
 
 		<v-btn
-			v-t="onModerator ? 'btn-disable-moderator' : 'btn-enable-moderator'"
+			v-t="onModeration ? 'btn-disable-moderation' : 'btn-enable-moderation'"
 			class="mt-3"
 			color="primary"
 			outline
 			small
 			:ripple="false"
-			@click="toggleModeratorMode" />
+			@click="toggleModerationMode" />
 	</v-layout>
 </template>
 
 <script>
 export default {
-	name: 'EmptyModeratorQuestion',
+	name: 'EmptyModerationQuestion',
 	props: {
-		onModerator: {
+		onModeration: {
 			type: Boolean,
 			default: false
 		},
@@ -48,7 +48,7 @@ export default {
 		}
 	},
 	methods: {
-		toggleModeratorMode() {
+		toggleModerationMode() {
 			this.$root.$emit('toggle-mode-moderation');
 		}
 	}

@@ -11,7 +11,7 @@
 				class="grey--text text--darken-2" />
 			<span class="font-weight-bold"> www.sliding.com</span>
 		</div>
-		<div class="subheading">
+		<div class="subheading px-2">
 			<span
 				v-t="'live-view-empty-title-joincode'"
 				class="grey--text text--darken-2" />

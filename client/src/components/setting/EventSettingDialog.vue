@@ -191,15 +191,40 @@
 												<div class="d-flex w-100 mt-3">
 													<v-flex xs8>
 														<div
-															v-t="'event-setting-require-auth'"
+															v-t="'event-setting-require-passcode'"
 															class="body-1" />
 														<div
-															v-t="'event-setting-auth-des'"
+															v-t="'event-setting-passcode-des'"
 															class="body-1 grey--text" />
 													</v-flex>
 													<v-flex xs4>
 														<v-switch
-															v-model="requireAuth"
+															:input-value="requireAuth"
+															class="right"
+															color="primary"
+															@change="toggleEnblePasscode" />
+													</v-flex>
+												</div>
+
+												<div class="d-flex w-100 mr-5">
+													<text-field
+														v-show="requireAuth"
+														:field="form.passcode" />
+												</div>
+
+												<!-- guest(anonymous) Q -->
+												<div class="d-flex w-100 mt-3">
+													<v-flex xs8>
+														<div
+															v-t="'event-setting-require-login'"
+															class="body-1" />
+														<div
+															v-t="'event-setting-require-login-des'"
+															class="body-1 grey--text" />
+													</v-flex>
+													<v-flex xs4>
+														<v-switch
+															v-model="requireLogin"
 															class="right"
 															color="primary" />
 													</v-flex>
@@ -240,7 +265,7 @@
 										<v-icon color="primary" v-text="'keyboard_arrow_down'" />
 									</template>
 
-									<!-- *option: questions, moderator review, dislike, replies,
+									<!-- *option: questions, moderation review, dislike, replies,
 															guest question, close questions -->
 									<v-card flat>
 										<v-card-text flat>
@@ -249,7 +274,7 @@
 												<div class="d-flex w-100">
 													<v-flex xs8>
 														<div
-															v-t="'moderator-view-stt'"
+															v-t="'moderation-view-stt'"
 															class="body-1" />
 														<div
 															v-t="'event-moderation-des'"
@@ -257,7 +282,7 @@
 													</v-flex>
 													<v-flex xs4>
 														<v-switch
-															v-model="questionExpand.moderator"
+															v-model="questionExpand.moderation"
 															class="right"
 															color="primary" />
 													</v-flex>
@@ -298,42 +323,6 @@
 															color="primary" />
 													</v-flex>
 												</div>
-
-												<!-- uest Q -->
-												<div class="d-flex w-100 mt-3">
-													<v-flex xs8>
-														<div
-															v-t="'event-setting-guest'"
-															class="body-1" />
-														<div
-															v-t="'event-guest-des'"
-															class="body-1 grey--text" />
-													</v-flex>
-													<v-flex xs4>
-														<v-switch
-															v-model="questionExpand.anonymousQ"
-															class="right"
-															color="primary" />
-													</v-flex>
-												</div>
-
-												<!-- close Q -->
-												<div class="d-flex w-100 mt-3">
-													<v-flex xs8>
-														<div
-															v-t="'event-setting-closeQ'"
-															class="body-1" />
-														<div
-															v-t="'event-closeQ-des'"
-															class="body-1 grey--text" />
-													</v-flex>
-													<v-flex xs4>
-														<v-switch
-															v-model="questionExpand.closeQ"
-															class="right"
-															color="primary" />
-													</v-flex>
-												</div>
 											</v-layout>
 										</v-card-text>
 									</v-card>
@@ -354,14 +343,10 @@
 														v-text="'$vuetify.icons.polls'" />
 												</v-list-tile-avatar>
 
-												<v-list-tile-content class="primary--text body-2  font-weight-medium w-100">
+												<v-list-tile-content class="primary--text body-2  font-weight-medium">
 													<v-list-tile-title v-t="'polls'" />
 													<v-list-tile-sub-title v-t="'event-setting-polls-des'" />
 												</v-list-tile-content>
-												<v-switch
-													v-model="pollExpand.polls"
-													class="right"
-													color="primary" />
 											</v-list-tile>
 										</v-list>
 									</template>
@@ -429,14 +414,10 @@
 														v-text="'$vuetify.icons.ideas'" />
 												</v-list-tile-avatar>
 
-												<v-list-tile-content class="primary--text body-2  font-weight-medium w-100">
+												<v-list-tile-content class="primary--text body-2  font-weight-medium">
 													<v-list-tile-title v-t="'ideas'" />
 													<v-list-tile-sub-title v-t="'event-setting-ideas-des'" />
 												</v-list-tile-content>
-												<v-switch
-													v-model="ideaExpand.ideas"
-													class="right"
-													color="primary" />
 											</v-list-tile>
 										</v-list>
 									</template>
@@ -448,38 +429,59 @@
 									<!-- *option: ideas, dislike, replies, access guess ideas -->
 									<v-card flat>
 										<v-card-text flat>
-											<v-layout wrap justify-center align-center>
-												<!-- moderation review Q-->
+											<v-layout
+												wrap
+												justify-center
+												align-center>
+												<!-- ideas dislike-->
 												<div class="d-flex w-100">
 													<v-flex xs8>
 														<div
-															v-t="'event-setting-poll-counter'"
+															v-t="'event-setting-dislikes'"
 															class="body-1" />
 														<div
-															v-t="'event-setting-poll-counter-des'"
+															v-t="'event-setting-idea-dislike-des'"
 															class="body-1 grey--text" />
 													</v-flex>
 													<v-flex xs4>
 														<v-switch
-															v-model="pollExpand.pollCounter"
+															v-model="ideaExpand.dislikes"
 															class="right"
 															color="primary" />
 													</v-flex>
 												</div>
 
-												<!-- dislikes Q -->
+												<!-- replies -->
 												<div class="d-flex w-100 mt-3">
 													<v-flex xs8>
 														<div
-															v-t="'event-setting-poll-result'"
+															v-t="'event-setting-replies'"
 															class="body-1" />
 														<div
-															v-t="'event-setting-poll-result-des'"
+															v-t="'event-setting-idea-replies-des'"
 															class="body-1 grey--text" />
 													</v-flex>
 													<v-flex xs4>
 														<v-switch
-															v-model="pollExpand.pollResult"
+															v-model="ideaExpand.replies"
+															class="right"
+															color="primary" />
+													</v-flex>
+												</div>
+
+												<!-- anonymous ideas -->
+												<div class="d-flex w-100 mt-3">
+													<v-flex xs8>
+														<div
+															v-t="'event-setting-idea-guest'"
+															class="body-1" />
+														<div
+															v-t="'event-setting-idea-guest-des'"
+															class="body-1 grey--text" />
+													</v-flex>
+													<v-flex xs4>
+														<v-switch
+															v-model="ideaExpand.anonymousIdea"
 															class="right"
 															color="primary" />
 													</v-flex>
@@ -599,6 +601,14 @@ const initForm = () => ({
 		defaultTime: null,
 		defaultDate: null
 	},
+	passcode: {
+		value: '',
+		label: 'lb-event-passcode',
+		type: 'text',
+		prepend: 'lock',
+		required: true,
+		errmsg: ''
+	},
 	adminAccess: {
 		value: '',
 		type: 'text',
@@ -617,21 +627,19 @@ export default {
 			sm: 20
 		},
 		form: initForm(),
+		requireLogin: false,
+		requireAuth: false,
 		questionExpand: {
 			questions: true,
-			moderator: false,
+			moderation: false,
 			dislikes: false,
-			replies: true,
-			anonymousQ: true,
-			closeQ: false
+			replies: true
 		},
 		pollExpand: {
-			polls: true,
 			pollCounter: true,
 			pollResult: false
 		},
 		ideaExpand: {
-			ideas: false,
 			dislikes: false,
 			replies: false,
 			anonymousIdea: true
@@ -643,9 +651,6 @@ export default {
 		}),
 		allowSearch() {
 			return this.eventInfo ? this.eventInfo.allow_search : false;
-		},
-		requireAuth() {
-			return this.eventInfo ? this.eventInfo.require_auth : false;
 		},
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -660,6 +665,7 @@ export default {
 				form.description.value = eventInfo.description;
 				form.code.value = eventInfo.code;
 				form.link.value = `${baseUrl}/guest/event/${eventInfo.code}`;
+				this.requireAuth = eventInfo.require_auth;
 			}
 		}
 	},
@@ -669,6 +675,9 @@ export default {
 		});
 	},
 	methods: {
+		toggleEnblePasscode() {
+			this.requireAuth = !this.requireAuth;
+		},
 		submitInvite() {},
 		saveSetting() {}
 	}
@@ -705,7 +714,7 @@ $grey: #f3f3f3;
 
 		.v-card__text {
 			padding-top: 0;
-			padding-left: 18%;
+			padding-left: 15%;
 		}
 
 		.input-code input[type="text"] {
@@ -736,6 +745,10 @@ $grey: #f3f3f3;
 		.v-expansion-panel {
 			.v-list--dense .v-list__tile {
 				height: 10vh;
+			}
+
+			.v-card__text {
+				padding-left: 20%;
 			}
 		}
 
