@@ -74,7 +74,8 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			questions: 'admin/questions/getQuestions'
+			questions: 'admin/questions/getQuestions',
+			event: 'admin/event/getInfoEvent'
 		}),
 		showSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -90,6 +91,7 @@ export default {
 		}
 	},
 	created() {
+		this.onModeration = this.event.on_moderation;
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
 			if (errmsg) {
 				// notify

@@ -3,6 +3,10 @@ const SET_CURRENT_EVENT = (state, resData) => {
 	state.role = resData.role;
 };
 
+const MERGE_CURRENT_EVENT = (state, newInfo) => {
+	state.infoEvent = { ...state.infoEvent, ...newInfo };
+};
+
 const RESET = (state) => {
 	state.infoEvent = {};
 	state.role = {};
@@ -10,5 +14,6 @@ const RESET = (state) => {
 
 export default {
 	SET_CURRENT_EVENT,
+	MERGE_CURRENT_EVENT,
 	RESET
 };

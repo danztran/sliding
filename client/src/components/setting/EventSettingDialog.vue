@@ -76,7 +76,7 @@
 							v-t="'btn-save'"
 							color="primary"
 							round
-							@click="saveSetting" />
+							@click="saveSettings" />
 						<v-btn
 							v-else
 							icon
@@ -548,7 +548,7 @@
 							v-t="'btn-save'"
 							color="success"
 							flat
-							@click="saveSetting" />
+							@click="saveSettings" />
 					</v-card-actions>
 				</v-flex>
 			</v-layout>
@@ -557,7 +557,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 const initForm = () => ({
 	name: {
@@ -643,7 +643,8 @@ export default {
 			dislikes: false,
 			replies: false,
 			anonymousIdea: true
-		}
+		},
+		tempSettings: {}
 	}),
 	computed: {
 		...mapGetters({
@@ -673,13 +674,36 @@ export default {
 		this.$root.$on('toggle-event-setting', () => {
 			this.settingDialog = true;
 		});
+		this.$root.$on('toggle-mode-moderation', () => {
+			this.tempSettings.on_moderation = !this.eventInfo.on_moderation;
+			this.saveSettings();
+		});
 	},
 	methods: {
+		...mapMutations({
+			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT'
+		}),
 		toggleEnblePasscode() {
 			this.requireAuth = !this.requireAuth;
 		},
 		submitInvite() {},
-		saveSetting() {}
+		saveSettings() {
+			// check temp settings
+			for (const setting in this.tempSettings) {
+				if (this.eventInfo[setting] === this.tempSettings[setting]) {
+					delete this.tempSettings[setting];
+				}
+			}
+			// emit edit event to server
+			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
+				if (errmsg) {
+					// handle error
+					return;
+				}
+				this.mergeEventInfo(event);
+				this.tempSettings = {};
+			});
+		}
 	}
 };
 </script>
