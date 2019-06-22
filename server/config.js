@@ -43,7 +43,7 @@ module.exports = {
 
 	// ========= PM2
 	pm2MainScript: './bin/www',
-	pm2Instances: 4,
+	pm2Instances: 1,
 	pm2MMR: '1G',
 	pm2ErrorLogDir: './temp/logs/error.log',
 	pm2OutLogDir: './temp/logs/out.log',
