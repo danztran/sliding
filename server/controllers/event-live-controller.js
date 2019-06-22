@@ -18,7 +18,7 @@ module.exports = {
 					throw { expected: socket.$fn.t('eventNotFound') };
 				}
 				else {
-					ioEvent = io.$fn.addEvent(event);
+					ioEvent = io.$fn.saveEvent(event);
 				}
 			}
 			result.event = event;
@@ -68,8 +68,10 @@ module.exports = {
 				code: event.code
 			};
 			const editedEvent = await Event.update(newInfo).exec();
-			result.event = editedEvent;
+			io.$fn.saveEvent(editedEvent);
+			result.event = { ...editedEvent };
 			delete result.event.password;
+
 			socket.to(event.rooms.main).emit('new_edited_event', newInfo);
 			return callback(result);
 		}

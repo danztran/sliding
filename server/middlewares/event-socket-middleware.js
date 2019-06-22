@@ -9,7 +9,7 @@ module.exports = {
 
 		// init func
 		io.$fn = {
-			addEvent(event) {
+			saveEvent(event) {
 				const { code } = event;
 				const _event = {
 					...event,
