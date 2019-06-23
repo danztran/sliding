@@ -1,7 +1,7 @@
 <template>
 	<!-- @desc: Polls -->
 	<event-setting--expand :info="pollExpand">
-		<template slot="switch-on-title">
+		<template #switch-on-title>
 			<!-- *enable poll features -->
 			<v-switch
 				v-model="pollData.allow_poll"
@@ -9,7 +9,7 @@
 				color="primary" />
 		</template>
 
-		<template slot="content">
+		<template #content>
 			<!-- *poll counter-->
 			<div class="d-flex w-100">
 				<v-flex xs8>

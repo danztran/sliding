@@ -1,14 +1,14 @@
 <template>
 	<!-- @desc: Questions -->
 	<event-setting--expand :info="questionExpand">
-		<template slot="switch-on-title">
+		<template #switch-on-title>
 			<v-switch
 				v-model="questionSettings.on_question"
 				class="right"
 				color="primary" />
 		</template>
 
-		<template slot="content">
+		<template #content>
 			<div class="d-flex w-100">
 				<v-flex xs8>
 					<div

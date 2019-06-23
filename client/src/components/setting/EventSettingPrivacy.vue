@@ -1,7 +1,7 @@
 <template>
 	<!-- @desc: Privacy -->
 	<event-setting--expand :info="privacyExpand">
-		<template slot="content">
+		<template #content>
 			<!-- *allow search -->
 			<div class="d-flex w-100">
 				<v-flex xs8>

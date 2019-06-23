@@ -1,7 +1,7 @@
 <template>
 	<!-- @desc: Basic infomation -->
 	<event-setting--expand :info="basicExpand">
-		<template slot="subtitle-text">
+		<template #subtitle-text>
 			<!-- *event code -->
 			<v-list-tile-sub-title class="text-uppercase">
 				• #{{ eventInfo ? basicData.code : '...' }}
@@ -9,7 +9,7 @@
 		</template>
 
 		<!-- *field: eventname, description, date begin/end, code, link -->
-		<template slot="content">
+		<template #content>
 			<v-flex xs12>
 				<text-field
 					:field="basicData.form.name" />
