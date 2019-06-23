@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 
 export default {
@@ -75,13 +76,18 @@ export default {
 			allow_poll_result: false
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
-			// const { pollData, data } = this;
+		eventInfo(val) {
+			// const { pollData } = this;
 			// *poll map with default settings
-			// pollData.allow_poll = data.allow_poll;
-			// pollData.allow_poll_counter = data.allow_poll_counter;
-			// pollData.allow_poll_result = data.allow_poll_result;
+			// pollData.allow_poll = val.allow_poll;
+			// pollData.allow_poll_counter = val.allow_poll_counter;
+			// pollData.allow_poll_result = val.allow_poll_result;
 		}
 	}
 };

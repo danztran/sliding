@@ -96,12 +96,12 @@
 						<v-window-item
 							:reverse-transition="false"
 							:transition="false">
-							<event-setting-info--expand :data="eventInfo" />
-							<event-setting-privacy--expand :data="eventInfo" />
-							<event-setting-question--expand :data="eventInfo" />
-							<event-setting-poll--expand :data="eventInfo" />
-							<event-setting-idea--expand :data="eventInfo" />
-							<event-setting-admin--expand :data="eventInfo" />
+							<event-setting-expand--info />
+							<event-setting-expand--privacy />
+							<event-setting-expand--question />
+							<event-setting-expand--poll />
+							<event-setting-expand--idea />
+							<event-setting-expand--invite />
 						</v-window-item>
 					</v-window>
 
@@ -132,12 +132,12 @@ import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
 export default {
 	name: 'EventSettingDialog',
 	components: {
-		'event-setting-info--expand': EventSettingInfo,
-		'event-setting-privacy--expand': EventSettingPrivacy,
-		'event-setting-question--expand': EventSettingQuestion,
-		'event-setting-poll--expand': EventSettingPoll,
-		'event-setting-idea--expand': EventSettingIdea,
-		'event-setting-admin--expand': EventSettingInviteAdmin
+		'event-setting-expand--info': EventSettingInfo,
+		'event-setting-expand--privacy': EventSettingPrivacy,
+		'event-setting-expand--question': EventSettingQuestion,
+		'event-setting-expand--poll': EventSettingPoll,
+		'event-setting-expand--idea': EventSettingIdea,
+		'event-setting-expand--invite': EventSettingInviteAdmin
 	},
 	data: () => ({
 		icon: {

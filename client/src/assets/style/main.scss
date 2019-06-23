@@ -3,6 +3,8 @@ $black-color: #000000de;
 
 html, body {
 	overflow-y: auto;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
 }
 
 .no-underline, .no-undeline a {
@@ -28,6 +30,7 @@ html, body {
 }
 
 .scrollbar-primary {
+	-webkit-overflow-scrolling: touch;
 	&::-webkit-scrollbar {
 		width: 7px;
 	}

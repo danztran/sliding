@@ -4,7 +4,7 @@
 		<template slot="subtitle-text">
 			<!-- *event code -->
 			<v-list-tile-sub-title class="text-uppercase">
-				• #{{ data ? data.code : '...' }}
+				• #{{ eventInfo ? basicData.code : '...' }}
 			</v-list-tile-sub-title>
 		</template>
 
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 
 const initForm = () => ({
@@ -70,12 +71,6 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand
 	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
-	},
 	data: () => ({
 		basicExpand: {
 			icon: 'info',
@@ -83,20 +78,27 @@ export default {
 		},
 		basicData: {
 			form: initForm(),
+			code: '',
 			start_at: null,
 			end_at: null
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
-			const { basicData, data } = this;
+		eventInfo(val) {
+			const { basicData } = this;
 			const baseUrl = process.env.VUE_APP_BASE_URL;
 
 			// *basic info map with default settings
-			basicData.form.name.value = data.name;
-			basicData.form.description.value = data.description;
-			basicData.form.code.value = data.code;
-			basicData.form.link.value = `${baseUrl}/guest/event/${data.code}`;
+			basicData.code = val.code;
+			basicData.form.name.value = val.name;
+			basicData.form.description.value = val.description;
+			basicData.form.code.value = val.code;
+			basicData.form.link.value = `${baseUrl}/guest/event/${val.code}`;
 		}
 	}
 };

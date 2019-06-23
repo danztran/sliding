@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 const initForm = () => ({
 	passcode: {
@@ -85,12 +86,6 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand
 	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
-	},
 	data: () => ({
 		prrivacyExpand: {
 			icon: 'privacy',
@@ -105,14 +100,19 @@ export default {
 			require_login: false
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
-			const { privacyData, data } = this;
+		eventInfo(val) {
+			const { privacyData } = this;
 
 			// *privacy map with default settings
-			privacyData.allow_search = data.allow_search;
-			privacyData.require_passcode = data.require_passcode;
-			privacyData.passcode = data.passcode;
+			privacyData.allow_search = val.allow_search;
+			privacyData.require_passcode = val.require_passcode;
+			privacyData.passcode = val.passcode;
 		}
 	},
 	methods: {

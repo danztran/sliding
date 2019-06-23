@@ -3,7 +3,7 @@
 	<event-setting--expand :info="adminExpand">
 		<template slot="content">
 			<div class="d-flex w-100">
-				<text-field :field="inviteAdmin.form.adminInvite" />
+				<text-field :field="inviteAdmin.form.invite" />
 				<v-btn
 					v-t="'btn-invite'"
 					color="primary"
@@ -17,9 +17,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 const initForm = () => ({
-	adminInvite: {
+	invite: {
 		value: '',
 		type: 'text',
 		label: 'lb-admin-access-mail',
@@ -33,12 +34,6 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand
 	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
-	},
 	data: () => ({
 		adminExpand: {
 			icon: 'group_people',
@@ -49,8 +44,13 @@ export default {
 			form: initForm()
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
+		eventInfo(val) {
 			// ...
 		}
 	},

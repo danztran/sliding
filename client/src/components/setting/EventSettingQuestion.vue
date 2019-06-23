@@ -67,18 +67,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 
 export default {
 	name: 'EventSettingQuestion',
 	components: {
 		'event-setting--expand': EventSettingExpand
-	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
 	},
 	data: () => ({
 		questionExpand: {
@@ -93,15 +88,20 @@ export default {
 			allow_question_dislike: false
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
-			const { questionData, data } = this;
+		eventInfo(val) {
+			const { questionData } = this;
 
 			// *privacy settings
-			questionData.allow_question = data.allow_question;
-			questionData.on_moderation = data.on_moderation;
-			questionData.allow_question_reply = data.allow_question_reply;
-			questionData.allow_question_dislike = data.allow_question_dislike;
+			questionData.allow_question = val.allow_question;
+			questionData.on_moderation = val.on_moderation;
+			questionData.allow_question_reply = val.allow_question_reply;
+			questionData.allow_question_dislike = val.allow_question_dislike;
 		}
 	}
 };
