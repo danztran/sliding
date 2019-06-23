@@ -30,17 +30,15 @@
 						<!-- <question-card--review /> -->
 					</template>
 
-					<template
-						v-for="question in questions"
-						#live-tab>
+					<template #live-tab>
 						<question-card--live
+							v-for="question in questions"
 							:key="question.id"
 							:question="question"
 							reply />
 					</template>
 
-					<template
-						#archived-tab>
+					<template #archived-tab>
 						<!-- <question-card archived/> -->
 					</template>
 				</question-panel--main>
