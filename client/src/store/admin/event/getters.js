@@ -1,9 +1,11 @@
 const getEventInfo = state => state.eventInfo;
 const getRole = state => state.role;
-const getTempSetting = state => state.tempSetting;
+const getTempSettings = state => state.tempSettings;
+const onModeration = state => state.tempSettings.on_moderation;
 
 export default {
 	getEventInfo,
 	getRole,
-	getTempSetting
+	getTempSettings,
+	onModeration
 };

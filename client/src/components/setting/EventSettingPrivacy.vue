@@ -1,6 +1,6 @@
 <template>
 	<!-- @desc: Privacy -->
-	<event-setting--expand :info="prrivacyExpand">
+	<event-setting--expand :info="privacyExpand">
 		<template slot="content">
 			<!-- *allow search -->
 			<div class="d-flex w-100">
@@ -14,7 +14,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="privacyData.allow_search"
+						v-model="privacySettings.search_hidden"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -32,7 +32,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						:input-value="privacyData.require_passcode"
+						:input-value="privacySettings.require_passcode"
 						class="right"
 						color="primary"
 						@change="toggleEnblePasscode" />
@@ -42,33 +42,15 @@
 			<!-- *field input passcode -->
 			<div class="d-flex w-100 mr-5">
 				<text-field
-					v-show="privacyData.require_passcode"
-					:field="privacyData.form.passcode" />
-			</div>
-
-			<!-- *login required -->
-			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
-					<div
-						v-t="'event-setting-require-login'"
-						class="body-1" />
-					<div
-						v-t="'event-setting-require-login-des'"
-						class="body-1 grey--text" />
-				</v-flex>
-				<v-flex xs4>
-					<v-switch
-						v-model="privacyData.requireLogin"
-						class="right"
-						color="primary" />
-				</v-flex>
+					v-show="privacySettings.require_passcode"
+					:field="form.passcode" />
 			</div>
 		</template>
 	</event-setting--expand>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 const initForm = () => ({
 	passcode: {
@@ -87,37 +69,50 @@ export default {
 		'event-setting--expand': EventSettingExpand
 	},
 	data: () => ({
-		prrivacyExpand: {
+		privacyExpand: {
 			icon: 'privacy',
 			title: 'event-setting-privacy-title',
 			subtitle: 'event-setting-privacy-subtitle'
 		},
-		privacyData: {
-			form: initForm(),
-			allow_search: false,
+		form: initForm(),
+		privacySettings: {
+			search_hidden: false,
 			require_passcode: false,
-			passcode: null,
 			require_login: false
 		}
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
+			tempSettings: 'admin/event/getTempSettings'
 		})
 	},
 	watch: {
-		eventInfo(val) {
-			const { privacyData } = this;
-
-			// *privacy map with default settings
-			privacyData.allow_search = val.allow_search;
-			privacyData.require_passcode = val.require_passcode;
-			privacyData.passcode = val.passcode;
+		tempSettings(val) {
+			const { privacySettings, tempSettings } = this;
+			for (const s of Object.keys(privacySettings)) {
+				if (tempSettings[s] !== undefined) {
+					privacySettings[s] = tempSettings[s];
+				}
+			}
+			this.form.passcode.value = privacySettings.require_passcode
+				? tempSettings.passcode
+				: '';
+		},
+		privacySettings: {
+			deep: true,
+			handler(val) {
+				if (!val.require_passcode) {
+					this.mergeTempSettings(val);
+				}
+			}
 		}
 	},
 	methods: {
+		...mapMutations({
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+		}),
 		toggleEnblePasscode() {
-			this.privacy.require_passcode = !this.privacy.require_passcode;
+			this.privacySettings.require_passcode = !this.privacySettings.require_passcode;
 		}
 	}
 };

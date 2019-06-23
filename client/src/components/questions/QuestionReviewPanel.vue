@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 import EmptyReview from './EmptyReviewQuestion.vue';
 
 export default {
@@ -97,10 +98,6 @@ export default {
 		emptyQuestion: {
 			type: Boolean,
 			default: false
-		},
-		onModeration: {
-			type: Boolean,
-			default: false
 		}
 	},
 	data: () => ({
@@ -110,9 +107,18 @@ export default {
 			lg: 35
 		}
 	}),
+	computed: {
+		...mapGetters({
+			onModeration: 'admin/event/onModeration'
+		})
+	},
 	methods: {
+		...mapMutations({
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+		}),
 		toggleModeModeration() {
-			this.$root.$emit('toggle-mode-moderation');
+			this.mergeTempSettings({ on_moderation: !this.onModeration });
+			this.$root.$emit('save-settings');
 		}
 	}
 };

@@ -147,7 +147,8 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
+			eventInfo: 'admin/event/getEventInfo',
+			tempSettings: 'admin/event/getTempSettings'
 		}),
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
@@ -157,14 +158,14 @@ export default {
 		this.$root.$on('toggle-event-setting', () => {
 			this.settingDialog = true;
 		});
-		this.$root.$on('toggle-mode-moderation', () => {
-			this.tempSettings.on_moderation = !this.eventInfo.on_moderation;
+		this.$root.$on('save-settings', () => {
 			this.saveSettings();
 		});
 	},
 	methods: {
 		...mapMutations({
-			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT'
+			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT',
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
 		}),
 		saveSettings() {
 			// check temp settings
@@ -176,11 +177,13 @@ export default {
 			// emit edit event to server
 			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
 				if (errmsg) {
-					// handle error
+					// notify
+					// ...
+					// turn back to origin settings
+					this.mergeTempSettings(this.eventInfo);
 					return;
 				}
 				this.mergeEventInfo(event);
-				this.tempSettings = {};
 			});
 		}
 	}

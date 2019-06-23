@@ -4,7 +4,7 @@
 		<template slot="subtitle-text">
 			<!-- *event code -->
 			<v-list-tile-sub-title class="text-uppercase">
-				• #{{ eventInfo ? basicData.code : '...' }}
+				• #{{ basicSettings.code }}
 			</v-list-tile-sub-title>
 		</template>
 
@@ -12,15 +12,22 @@
 		<template slot="content">
 			<v-flex xs12>
 				<text-field
-					:field="basicData.form.name" />
+					:field="basicSettings.form.name" />
 				<text-area
 					class="pt-2"
-					:field="basicData.form.description" />
+					:field="basicSettings.form.description" />
 				<text-field
 					class="input-code"
-					:field="basicData.form.code" />
+					:field="basicSettings.form.code" />
 				<text-field
-					:field="basicData.form.link" />
+					:field="basicSettings.form.link" />
+			</v-flex>
+			<v-flex xs12 sm6 class="pr-1">
+				<date-picker--dialog :date-info="basicSettings.form.start_at" />
+			</v-flex>
+			<v-spacer />
+			<v-flex xs12 sm6>
+				<date-picker--dialog :date-info="basicSettings.form.end_at" />
 			</v-flex>
 		</template>
 	</event-setting--expand>
@@ -29,6 +36,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
+import DatePickerDialog from '../pieces/DatePickerDialog.vue';
 
 const initForm = () => ({
 	name: {
@@ -63,42 +71,57 @@ const initForm = () => ({
 		readonly: true,
 		required: true,
 		errmsg: ''
+	},
+	start_at: {
+		label: 'event-start-date',
+		date: null
+	},
+	end_at: {
+		label: 'event-end-date',
+		date: null
 	}
 });
 
 export default {
 	name: 'EventSettingInfo',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
+		'date-picker--dialog': DatePickerDialog
 	},
 	data: () => ({
 		basicExpand: {
 			icon: 'info',
 			title: 'event-setting-basic-title'
 		},
-		basicData: {
+		basicSettings: {
 			form: initForm(),
-			code: '',
-			start_at: null,
-			end_at: null
+			code: ''
 		}
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
+			tempSettings: 'admin/event/getTempSettings'
 		})
 	},
 	watch: {
-		eventInfo(val) {
-			const { basicData } = this;
+		tempSettings(val) {
+			const { basicSettings, tempSettings } = this;
 			const baseUrl = process.env.VUE_APP_BASE_URL;
 
 			// *basic info map with default settings
-			basicData.code = val.code;
-			basicData.form.name.value = val.name;
-			basicData.form.description.value = val.description;
-			basicData.form.code.value = val.code;
-			basicData.form.link.value = `${baseUrl}/guest/event/${val.code}`;
+			basicSettings.code = tempSettings.code;
+			basicSettings.form.name.value = tempSettings.name;
+			basicSettings.form.description.value = tempSettings.description;
+			basicSettings.form.code.value = tempSettings.code;
+			basicSettings.form.link.value = `${baseUrl}/guest/event/${tempSettings.code}`;
+
+			basicSettings.form.start_at.date = this.formatDate(tempSettings.start_at);
+			basicSettings.form.end_at.date = this.formatDate(tempSettings.end_at);
+		}
+	},
+	methods: {
+		formatDate(date) {
+			return new Date(date).toISOString().substr(0, 10);
 		}
 	}
 };
