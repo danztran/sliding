@@ -38,7 +38,7 @@ module.exports = {
 
 			// join role room
 			socket.join(ioEvent.rooms.main);
-			if (['host', 'moderator'].includes(result.role.name)) {
+			if (socket.$fn.isAdmin()) {
 				socket.join(ioEvent.rooms.admin);
 			}
 			else {

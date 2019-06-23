@@ -24,6 +24,7 @@ module.exports = {
 
 	async addQuestion({ socket }, info, callback) {
 		if (socket.$fn.cannot('addQuestion', callback)) return;
+		if (socket.$fn.forbid('allow_question', callback)) return;
 		// validate info here
 		// ...
 		const event = socket.$fn.getCurrentEvent();
