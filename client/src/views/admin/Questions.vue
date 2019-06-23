@@ -8,9 +8,7 @@
 				@hidden panel in XS-SM
 			-->
 			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
-				<question-panel--review
-					:empty-question="true"
-					:on-moderation="onModeration">
+				<question-panel--review :empty-question="true">
 					<question-card--review />
 				</question-panel--review>
 			</v-flex>
@@ -24,7 +22,6 @@
 				xs12
 				md6>
 				<question-panel--main
-					:on-moderation="onModeration"
 					:empty-live="Boolean(questions.length)"
 					:empty-archive="true">
 					<template
@@ -69,9 +66,6 @@ export default {
 		'question-card--review': ReviewQuestionCard,
 		'question-reply--dialog': QuestionReplyDialog
 	},
-	data: () => ({
-		onModeration: false
-	}),
 	computed: {
 		...mapGetters({
 			questions: 'admin/questions/getQuestions',
@@ -91,7 +85,6 @@ export default {
 		}
 	},
 	created() {
-		this.onModeration = this.event.on_moderation;
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
 			if (errmsg) {
 				// notify

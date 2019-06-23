@@ -1,6 +1,6 @@
 <template>
 	<!-- @desc: Privacy -->
-	<event-setting--expand :info="prrivacyExpand">
+	<event-setting--expand :info="privacyExpand">
 		<template slot="content">
 			<!-- *allow search -->
 			<div class="d-flex w-100">
@@ -14,7 +14,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="privacyData.allow_search"
+						v-model="privacyData.search_hidden"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -45,24 +45,6 @@
 					v-show="privacyData.require_passcode"
 					:field="privacyData.form.passcode" />
 			</div>
-
-			<!-- *login required -->
-			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
-					<div
-						v-t="'event-setting-require-login'"
-						class="body-1" />
-					<div
-						v-t="'event-setting-require-login-des'"
-						class="body-1 grey--text" />
-				</v-flex>
-				<v-flex xs4>
-					<v-switch
-						v-model="privacyData.requireLogin"
-						class="right"
-						color="primary" />
-				</v-flex>
-			</div>
 		</template>
 	</event-setting--expand>
 </template>
@@ -87,7 +69,7 @@ export default {
 		'event-setting--expand': EventSettingExpand
 	},
 	data: () => ({
-		prrivacyExpand: {
+		privacyExpand: {
 			icon: 'privacy',
 			title: 'event-setting-privacy-title',
 			subtitle: 'event-setting-privacy-subtitle'
@@ -117,7 +99,7 @@ export default {
 	},
 	methods: {
 		toggleEnblePasscode() {
-			this.privacy.require_passcode = !this.privacy.require_passcode;
+			this.privacyData.require_passcode = !this.privacyData.require_passcode;
 		}
 	}
 };
