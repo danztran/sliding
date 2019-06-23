@@ -39,8 +39,9 @@ module.exports = {
 	// Must change from client/vue.config.js too
 	vueDist: 'vue-dist',
 	vueMain: 'index.html',
-	clientHost: 'http://localhost:8080',
 	defaultLocale: 'en',
+	// cors only works in development env
+	corsOptions: { credentials: true, origin: true },
 
 	// ========= PM2
 	pm2MainScript: './bin/www',

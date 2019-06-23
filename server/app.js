@@ -11,7 +11,7 @@ global.requireWrp = p => require(path.resolve(__dirname, p));
 global.requireDir = p => requireDirectory(path.resolve(__dirname, p));
 
 global.$io = requireWrp('sockets');
-const { nodeEnv, clientHost, vueDist } = requireWrp('config');
+const { nodeEnv, vueDist, corsOptions } = requireWrp('config');
 const session = requireWrp('modules/session-custom');
 const router = requireWrp('router');
 
@@ -22,7 +22,7 @@ const app = express();
 
 if (development) {
 	app.use(logger('dev'));
-	app.use(cors({ credentials: true, origin: clientHost }));
+	app.use(cors(corsOptions));
 }
 
 app.use(express.json());
