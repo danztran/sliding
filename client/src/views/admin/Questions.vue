@@ -26,21 +26,19 @@
 					:empty-archive="true">
 					<template
 						v-if="showSMnXS"
-						slot="for-review-moderation-tab">
+						#for-review-moderation-tab>
 						<!-- <question-card--review /> -->
 					</template>
 
-					<template
-						v-for="question in questions"
-						slot="live-tab">
+					<template #live-tab>
 						<question-card--live
+							v-for="question in questions"
 							:key="question.id"
 							:question="question"
 							reply />
 					</template>
 
-					<template
-						slot="archived-tab">
+					<template #archived-tab>
 						<!-- <question-card archived/> -->
 					</template>
 				</question-panel--main>

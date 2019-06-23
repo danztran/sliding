@@ -84,8 +84,15 @@ module.exports = {
 			getRole() {
 				return socket.$state.role;
 			},
+			isAdmin() {
+				return ['host', 'moderator'].includes(this.getRole());
+			},
+			isGuest() {
+				return !this.isAdmin();
+			},
+			// check role permissions
 			can(permission) {
-				const { role } = socket.$state;
+				const role = this.getRole();
 				const { permissions } = Roles[role];
 				return permissions[permission];
 			},
@@ -93,6 +100,20 @@ module.exports = {
 				if (this.can(permission)) return false;
 				const message = this.t('noPermissionTo', {
 					permission: this.t(permission)
+				});
+				this.handleError(message, callback);
+				return true;
+			},
+			// check event rule
+			allow(action) {
+				if (this.isAdmin()) return true;
+				const event = io.$fn.getEvent(this.getEventCode());
+				return event && event[action];
+			},
+			forbid(action, callback) {
+				if (this.allow(action)) return false;
+				const message = this.t('forbidTo', {
+					action: this.t(action)
 				});
 				this.handleError(message, callback);
 				return true;

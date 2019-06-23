@@ -1,7 +1,7 @@
 <template>
 	<!-- @desc: Ideas -->
 	<event-setting--expand :info="ideaExpand">
-		<template slot="switch-on-title">
+		<template #switch-on-title>
 			<!-- *enable ideas surveys -->
 			<v-switch
 				v-model="ideaData.allow_idea"
@@ -9,7 +9,7 @@
 				color="primary" />
 		</template>
 
-		<template slot="content">
+		<template #content>
 			<!-- *dislike idea-->
 			<div class="d-flex w-100">
 				<v-flex xs8>
