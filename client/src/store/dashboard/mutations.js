@@ -1,8 +1,9 @@
-const QUERY_EVENT = (state, result) => {
+// @desc: set list events after query
+const SET_EVENTS = (state, result) => {
 	state.events = result;
 };
 
-const CREATE_EVENT = (state, newEvent) => {
+const ADD_NEW_EVENT = (state, newEvent) => {
 	state.events.unshift(newEvent);
 };
 
@@ -11,7 +12,7 @@ const RESET = (state) => {
 };
 
 export default {
-	QUERY_EVENT,
+	SET_EVENTS,
 	RESET,
-	CREATE_EVENT
+	ADD_NEW_EVENT
 };

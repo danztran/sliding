@@ -51,24 +51,137 @@
 					</v-item-group>
 				</v-flex>
 
-				<!-- *main content -->
-				<event-setting--content />
+				<!-- *main content right panel-->
+				<v-flex
+					:md9="!isSMnXS"
+					column>
+					<!-- @desc: header - close, save-->
+					<v-card-title class="pa-2">
+						<!-- small divice: close btn, title -->
+						<template v-if="isSMnXS">
+							<v-btn
+								icon
+								@click="settingDialog=false">
+								<v-icon
+									:size="icon.sm"
+									v-text="'$vuetify.icons.arrow_left'" />
+							</v-btn>
+							<span
+								v-t="'event-setting-title'"
+								class="subheading font-weight-medium" />
+						</template>
+						<v-spacer />
+
+						<!-- small divice: save setting - hide: close btn -->
+						<v-btn
+							v-if="isSMnXS"
+							v-t="'btn-save'"
+							color="primary"
+							round
+							@click="saveSettings" />
+						<v-btn
+							v-else
+							icon
+							@click="settingDialog=false">
+							<v-icon
+								color="grey lighten-1"
+								:size="icon.sm"
+								v-text="'$vuetify.icons.close'" />
+						</v-btn>
+					</v-card-title>
+
+					<v-window
+						class="content-setting scrollbar-primary"
+						vertical>
+						<v-window-item
+							:reverse-transition="false"
+							:transition="false">
+							<event-setting-info--expand :data="eventInfo" />
+							<event-setting-privacy--expand :data="eventInfo" />
+							<event-setting-question--expand :data="eventInfo" />
+							<event-setting-poll--expand :data="eventInfo" />
+							<event-setting-idea--expand :data="eventInfo" />
+							<event-setting-admin--expand :data="eventInfo" />
+						</v-window-item>
+					</v-window>
+
+					<!-- @desc: save setting btn -->
+					<v-card-actions v-if="!isSMnXS">
+						<v-spacer />
+						<v-btn
+							v-t="'btn-save'"
+							color="success"
+							round
+							@click="saveSettings" />
+					</v-card-actions>
+				</v-flex>
 			</v-layout>
 		</v-card>
 	</v-dialog>
 </template>
 
 <script>
-import EventSettingContent from './EventSettingContent.vue';
+import { mapGetters, mapMutations } from 'vuex';
+import EventSettingInfo from './EventSettingInfo.vue';
+import EventSettingPrivacy from './EventSettingPrivacy.vue';
+import EventSettingQuestion from './EventSettingQuestion.vue';
+import EventSettingPoll from './EventSettingPoll.vue';
+import EventSettingIdea from './EventSettingIdea.vue';
+import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
 
 export default {
 	name: 'EventSettingDialog',
 	components: {
-		'event-setting--content': EventSettingContent
+		'event-setting-info--expand': EventSettingInfo,
+		'event-setting-privacy--expand': EventSettingPrivacy,
+		'event-setting-question--expand': EventSettingQuestion,
+		'event-setting-poll--expand': EventSettingPoll,
+		'event-setting-idea--expand': EventSettingIdea,
+		'event-setting-admin--expand': EventSettingInviteAdmin
 	},
+	data: () => ({
+		icon: {
+			sm: 20
+		},
+		settingDialog: false
+	}),
 	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		}),
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		}
+	},
+	mounted() {
+		this.$root.$on('toggle-event-setting', () => {
+			this.settingDialog = true;
+		});
+		this.$root.$on('toggle-mode-moderation', () => {
+			this.tempSettings.on_moderation = !this.eventInfo.on_moderation;
+			this.saveSettings();
+		});
+	},
+	methods: {
+		...mapMutations({
+			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT'
+		}),
+		saveSettings() {
+			// check temp settings
+			for (const setting in this.tempSettings) {
+				if (this.eventInfo[setting] === this.tempSettings[setting]) {
+					delete this.tempSettings[setting];
+				}
+			}
+			// emit edit event to server
+			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
+				if (errmsg) {
+					// handle error
+					return;
+				}
+				this.mergeEventInfo(event);
+				this.tempSettings = {};
+			});
 		}
 	}
 };

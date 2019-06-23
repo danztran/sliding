@@ -75,7 +75,7 @@ export default {
 	computed: {
 		...mapGetters({
 			questions: 'admin/questions/getQuestions',
-			event: 'admin/event/infoEvent'
+			event: 'admin/event/getEventInfo'
 		}),
 		showSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;

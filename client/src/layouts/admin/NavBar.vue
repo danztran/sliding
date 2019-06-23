@@ -102,7 +102,7 @@ export default {
 			return this.$vuetify.breakpoint.xs;
 		},
 		...mapGetters({
-			eventInfo: 'admin/event/infoEvent'
+			eventInfo: 'admin/event/getEventInfo'
 		})
 	},
 	watch: {

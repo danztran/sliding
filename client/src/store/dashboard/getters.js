@@ -1,5 +1,5 @@
-const events = state => state.events;
+const getEvents = state => state.events;
 
 export default {
-	events
+	getEvents
 };

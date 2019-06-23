@@ -28,7 +28,7 @@ const logout = (context, data) => {
 };
 
 const signup = (context, data) => {
-	context.commit('FILL_LOGIN_AFTER_SIGNUP', data);
+	context.commit('SET_INFO_AFTER_SIGNUP', data);
 	cookies.set(
 		VUE_APP_CK_FLASH_MESSAGE,
 		data.messages['auth.signup']

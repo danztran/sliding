@@ -99,7 +99,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			events: 'dashboard/events'
+			events: 'dashboard/getEvents'
 		})
 	},
 	watch: {

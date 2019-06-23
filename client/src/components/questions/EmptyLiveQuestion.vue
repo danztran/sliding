@@ -28,7 +28,7 @@ export default {
 	name: 'EmptyLiveQuestion',
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/infoEvent'
+			eventInfo: 'admin/event/getEventInfo'
 		})
 	}
 };

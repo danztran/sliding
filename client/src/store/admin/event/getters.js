@@ -1,7 +1,9 @@
-const infoEvent = state => state.infoEvent;
-const role = state => state.role;
+const getEventInfo = state => state.eventInfo;
+const getRole = state => state.role;
+const getTempSetting = state => state.tempSetting;
 
 export default {
-	infoEvent,
-	role
+	getEventInfo,
+	getRole,
+	getTempSetting
 };
