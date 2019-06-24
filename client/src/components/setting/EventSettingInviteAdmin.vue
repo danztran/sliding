@@ -1,9 +1,9 @@
 <template>
 	<!-- @desc: Admin invite moderator -->
 	<event-setting--expand :info="adminExpand">
-		<template slot="content">
+		<template #content>
 			<div class="d-flex w-100">
-				<text-field :field="inviteAdmin.form.adminInvite" />
+				<text-field :field="form.email" />
 				<v-btn
 					v-t="'btn-invite'"
 					color="primary"
@@ -17,12 +17,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 const initForm = () => ({
-	adminInvite: {
+	email: {
 		value: '',
 		type: 'text',
 		label: 'lb-admin-access-mail',
+		placeholderz: 'email@example.com',
 		prepend: 'person',
 		errmsg: ''
 	}
@@ -33,29 +35,28 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand
 	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
-	},
 	data: () => ({
 		adminExpand: {
 			icon: 'group_people',
 			title: 'event-setting-share-access',
 			subtitle: 'event-setting-share-access-des'
 		},
-		inviteAdmin: {
-			form: initForm()
-		}
+		form: initForm()
 	}),
+	computed: {
+		...mapGetters({
+			tempSettings: 'admin/event/getTempSettings'
+		})
+	},
 	watch: {
-		data(val) {
+		tempSettings(val) {
 			// ...
 		}
 	},
 	methods: {
-		submitInvite() {}
+		submitInvite() {
+			// ...
+		}
 	}
 };
 </script>

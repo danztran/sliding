@@ -1,10 +1,11 @@
 const SET_CURRENT_EVENT = (state, resData) => {
 	state.eventInfo = resData.event;
 	state.role = resData.role;
+	state.tempSettings = resData.event;
 };
 
-const SET_TEMP_SETTING = (state, temp) => {
-	state.tempSetting = { ...state.tempSetting, ...temp };
+const MERGE_TEMP_SETTINGS = (state, temp) => {
+	state.tempSettings = { ...state.tempSettings, ...temp };
 };
 
 const MERGE_CURRENT_EVENT = (state, newInfo) => {
@@ -14,12 +15,12 @@ const MERGE_CURRENT_EVENT = (state, newInfo) => {
 const RESET = (state) => {
 	state.eventInfo = {};
 	state.role = {};
-	state.tempSetting = {};
+	state.tempSettings = {};
 };
 
 export default {
 	SET_CURRENT_EVENT,
-	SET_TEMP_SETTING,
+	MERGE_TEMP_SETTINGS,
 	MERGE_CURRENT_EVENT,
 	RESET
 };

@@ -1,16 +1,33 @@
 <template>
 	<!-- @desc: Questions -->
 	<event-setting--expand :info="questionExpand">
-		<template slot="switch-on-title">
+		<template #switch-on-title>
 			<v-switch
-				v-model="questionData.allow_question"
+				v-model="questionSettings.on_question"
 				class="right"
 				color="primary" />
 		</template>
 
-		<template slot="content">
-			<!-- *moderation review quesiton-->
+		<template #content>
 			<div class="d-flex w-100">
+				<v-flex xs8>
+					<div
+						v-t="'event-setting-ask-question'"
+						class="body-1" />
+					<div
+						v-t="'event-setting-questions-des'"
+						class="body-1 grey--text" />
+				</v-flex>
+				<v-flex xs4>
+					<v-switch
+						v-model="questionSettings.allow_question"
+						class="right"
+						color="primary" />
+				</v-flex>
+			</div>
+
+			<!-- *moderation review quesiton-->
+			<div class="d-flex w-100 mt-3">
 				<v-flex xs8>
 					<div
 						v-t="'moderation-view-stt'"
@@ -21,7 +38,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="questionData.on_moderation"
+						v-model="questionSettings.on_moderation"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -39,7 +56,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="questionData.dislikes"
+						v-model="questionSettings.allow_question_dislike"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -57,7 +74,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="questionData.allow_question_reply"
+						v-model="questionSettings.allow_question_reply"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -67,6 +84,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 
 export default {
@@ -74,35 +92,43 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand
 	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
-	},
 	data: () => ({
 		questionExpand: {
 			icon: 'questions',
 			title: 'questions',
 			subtitle: 'event-setting-questions-des'
 		},
-		questionData: {
-			allow_question: false,
+		questionSettings: {
+			on_question: false,
 			on_moderation: false,
+			allow_question: false,
 			allow_question_reply: true,
 			allow_question_dislike: false
 		}
 	}),
+	computed: {
+		...mapGetters({
+			tempSettings: 'admin/event/getTempSettings'
+		})
+	},
 	watch: {
-		data(val) {
-			const { questionData, data } = this;
-
-			// *privacy settings
-			questionData.allow_question = data.allow_question;
-			questionData.on_moderation = data.on_moderation;
-			questionData.allow_question_reply = data.allow_question_reply;
-			questionData.allow_question_dislike = data.allow_question_dislike;
+		tempSettings(val) {
+			const { questionSettings, tempSettings } = this;
+			for (const s of Object.keys(questionSettings)) {
+				questionSettings[s] = tempSettings[s];
+			}
+		},
+		questionSettings: {
+			deep: true,
+			handler(val) {
+				this.mergeTempSettings(val);
+			}
 		}
+	},
+	methods: {
+		...mapMutations({
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+		})
 	}
 };
 </script>

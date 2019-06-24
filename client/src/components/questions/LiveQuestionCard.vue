@@ -36,7 +36,9 @@
 							*archive: restore question
 							*live: mark star, mark answered
 					-->
-					<v-list-tile-action v-if="hover">
+					<v-list-tile-action
+						v-if="hover"
+						class="hidden-sm-and-down">
 						<v-list-tile>
 							<!-- * archive: restore -->
 							<template v-if="archive">
@@ -183,7 +185,7 @@
 										:disabled="loadingState !== ''"
 										v-on="on">
 										<icon-loading-circle :state.sync="loadingState">
-											<template slot="otp-icon">
+											<template #otp-icon>
 												<v-icon
 													color="grey lighten-1"
 													:size="icon.xs"

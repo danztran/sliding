@@ -4,7 +4,7 @@
 		"editEvent": false,
 		"addModerator": false,
 		"seeAllQuestions": false,
-		"addQuestionReply": false,
+		"addQuestionReply": true,
 		"editQuestionReply": false,
 		"deleteQuestionReply": false,
 		"addQuestion": true,

@@ -7,6 +7,7 @@
 		:append-icon="field.append"
 		:rules="[fieldRequired(field)]"
 		:label="$t(field.label)"
+		:placeholder="field.placeholderz || $t(field.placeholder)"
 		:readonly="field.readonly"
 		:validate-on-blur="true"
 		:error-messages="field.errmsg"

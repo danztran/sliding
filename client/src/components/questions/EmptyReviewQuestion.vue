@@ -35,21 +35,31 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
 	name: 'EmptyModerationQuestion',
 	props: {
-		onModeration: {
-			type: Boolean,
-			default: false
-		},
+		// onModeration: {
+		// 	type: Boolean,
+		// 	default: false
+		// },
 		emptyQuestion: {
 			type: Boolean,
 			default: false
 		}
 	},
+	computed: {
+		...mapGetters({
+			onModeration: 'admin/event/onModeration'
+		})
+	},
 	methods: {
+		...mapMutations({
+			mergeTemptSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+		}),
 		toggleModerationMode() {
-			this.$root.$emit('toggle-mode-moderation');
+			this.mergeTemptSettings({ on_moderation: !this.onModeration });
+			this.$root.$emit('save-settings');
 		}
 	}
 };

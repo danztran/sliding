@@ -73,7 +73,7 @@
 									:disabled="loadingState !== ''"
 									v-on="on">
 									<icon-loading-circle :state.sync="loadingState">
-										<template slot="otp-icon">
+										<template #otp-icon>
 											<v-icon
 												color="grey lighten-1"
 												:size="icon.xs"

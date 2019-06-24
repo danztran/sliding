@@ -1,7 +1,7 @@
 <template>
 	<!-- @desc: Ideas -->
 	<event-setting--expand :info="ideaExpand">
-		<template slot="switch-on-title">
+		<template #switch-on-title>
 			<!-- *enable ideas surveys -->
 			<v-switch
 				v-model="ideaData.allow_idea"
@@ -9,7 +9,7 @@
 				color="primary" />
 		</template>
 
-		<template slot="content">
+		<template #content>
 			<!-- *dislike idea-->
 			<div class="d-flex w-100">
 				<v-flex xs8>
@@ -68,18 +68,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 
 export default {
 	name: 'EventSettingIdea',
 	components: {
 		'event-setting--expand': EventSettingExpand
-	},
-	props: {
-		data: {
-			type: Object,
-			default() {}
-		}
 	},
 	data: () => ({
 		ideaExpand: {
@@ -94,14 +89,19 @@ export default {
 			allow_anonymous_idea: true
 		}
 	}),
+	computed: {
+		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo'
+		})
+	},
 	watch: {
-		data(val) {
-			// const { ideaData, data } = this;
+		eventInfo(val) {
+			// const { ideaData } = this;
 			// *idea map with default settings
-			// ideaData.allow_idea = data.allow_idea;
-			// ideaData.allow_idea_dislikes = data.allow_idea_dislikes;
-			// ideaData.allow_idea_reply = data.allow_idea_reply;
-			// ideaData.allow_anonymous_idea = data.allow_anonymous_idea;
+			// ideaData.allow_idea = val.allow_idea;
+			// ideaData.allow_idea_dislikes = val.allow_idea_dislikes;
+			// ideaData.allow_idea_reply = val.allow_idea_reply;
+			// ideaData.allow_anonymous_idea = val.allow_anonymous_idea;
 		}
 	}
 };
