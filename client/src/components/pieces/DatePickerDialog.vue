@@ -5,19 +5,19 @@
 		:return-value.sync="dateInfo.date"
 		width="290px"
 		lazy
-		full-width
-		no-click-animation>
+		no-click-animation
+		:transition="false">
 		<template v-slot:activator="{ on }">
 			<v-text-field
-				v-model="dateInfo.date"
+				v-model="formattedDate"
 				:label="$t(dateInfo.label)"
 				readonly
 				v-on="on" />
 		</template>
 		<v-date-picker
 			v-model="dateInfo.date"
-			:min="dateInfo.min"
 			:max="dateInfo.max"
+			:min="dateInfo.min"
 			:locale="this.$i18n.locale"
 			no-title
 			scrollable>
@@ -46,14 +46,30 @@ export default {
 			type: Object,
 			default: () => ({
 				label: '',
-				date: new Date().toISOString().substr(0, 10),
+				date: null,
 				max: null,
-				min: new Date().toISOString().substr(0, 10)
+				min: null
 			})
 		}
 	},
 	data: () => ({
 		dialogDate: false
-	})
+	}),
+	computed: {
+		formattedDate() {
+			if (this.dateInfo.date) {
+				return this.formatToDash(new Date(this.dateInfo.date).toISOString().substr(0, 10));
+			}
+			return new Date();
+		}
+	},
+	methods: {
+		formatToDash(date) {
+			if (!date) return null;
+
+			const [year, month, day] = date.split('-');
+			return `${month}/${day}/${year}`;
+		}
+	}
 };
 </script>

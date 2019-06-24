@@ -115,8 +115,8 @@ export default {
 			basicSettings.form.code.value = tempSettings.code;
 			basicSettings.form.link.value = `${baseUrl}/guest/event/${tempSettings.code}`;
 
-			basicSettings.form.start_at.date = this.formatDate(tempSettings.start_at);
-			basicSettings.form.end_at.date = this.formatDate(tempSettings.end_at);
+			basicSettings.form.start_at.date = tempSettings.start_at;
+			basicSettings.form.end_at.date = tempSettings.end_at;
 		}
 	},
 	methods: {

@@ -6,7 +6,8 @@
 		lazy
 		full-width
 		width="290px"
-		no-click-animation>
+		no-click-animation
+		:transition="false">
 		<template v-slot:activator="{ on }">
 			<v-text-field
 				v-model="timeInfo.time"
@@ -48,6 +49,11 @@ export default {
 	},
 	data: () => ({
 		dialogTime: false
-	})
+	}),
+	watch: {
+		'timeInfo.time': function(val) {
+			this.$emit('update:timeInfo.time', new Date(val).toTimeString.substr(0, 5));
+		}
+	}
 };
 </script>
