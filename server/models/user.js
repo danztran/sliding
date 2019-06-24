@@ -41,16 +41,8 @@ class UserModel extends Model {
 		}, opt);
 	}
 
-	update(user, opt) {
-		return this.updateOne({
-			id: user.id,
-			name: user.name,
-			email: user.email,
-			username: user.username,
-			password: crypto.enc(user.password),
-			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
-		}, opt);
+	update(user) {
+		// ...
 	}
 
 	setLastAccessed(user) {
