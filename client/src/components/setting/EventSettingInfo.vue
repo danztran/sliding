@@ -4,7 +4,7 @@
 		<template #subtitle-text>
 			<!-- *event code -->
 			<v-list-tile-sub-title class="text-uppercase">
-				• #{{ basicSettings.code }}
+				• #{{ basicSettings.form.code.value }}
 			</v-list-tile-sub-title>
 		</template>
 
@@ -105,8 +105,7 @@ export default {
 			title: 'event-setting-basic-title'
 		},
 		basicSettings: {
-			form: initForm(),
-			code: ''
+			form: initForm()
 		}
 	}),
 	computed: {
@@ -116,12 +115,11 @@ export default {
 	},
 	watch: {
 		tempSettings(val) {
-			const { basicSettings, tempSettings } = this;
+			const { tempSettings } = this;
 			const { form } = this.basicSettings;
 			const baseUrl = process.env.VUE_APP_BASE_URL;
 
 			// *basic info map with default settings
-			basicSettings.code = tempSettings.code;
 			form.name.value = tempSettings.name;
 			form.description.value = tempSettings.description;
 			form.code.value = tempSettings.code;

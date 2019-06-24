@@ -51,7 +51,6 @@
 					</v-item-group>
 				</v-flex>
 
-				<!-- *main content right panel-->
 				<v-flex
 					:md9="!isSMnXS"
 					column>
@@ -75,10 +74,16 @@
 						<!-- small divice: save setting - hide: close btn -->
 						<v-btn
 							v-if="isSMnXS"
-							v-t="'btn-save'"
 							color="primary"
 							round
-							@click="saveSettings" />
+							:disabled="loadingState !== ''"
+							:loading="loadingState !== ''"
+							@click="saveSettings">
+							<span v-t="'btn-save'" />
+							<template v-slot:loader>
+								<icon-loading-circle :state.sync="loadingState" />
+							</template>
+						</v-btn>
 						<v-btn
 							v-else
 							icon
@@ -90,29 +95,23 @@
 						</v-btn>
 					</v-card-title>
 
-					<v-window
-						class="content-setting scrollbar-primary"
-						vertical>
-						<v-window-item
-							:reverse-transition="false"
-							:transition="false">
-							<event-setting-expand--info />
-							<event-setting-expand--privacy />
-							<event-setting-expand--question />
-							<event-setting-expand--poll />
-							<event-setting-expand--idea />
-							<event-setting-expand--invite />
-						</v-window-item>
-					</v-window>
+					<!-- @desc: body main content -->
+					<event-settings-content />
 
-					<!-- @desc: save setting btn -->
-					<v-card-actions v-if="!isSMnXS">
+					<!-- @desc: footer save setting btn -->
+					<v-card-actions v-if="!isSMnXS" class="pr-3">
 						<v-spacer />
 						<v-btn
-							v-t="'btn-save'"
 							color="success"
 							round
-							@click="saveSettings" />
+							:disabled="loadingState !== ''"
+							:loading="loadingState !== ''"
+							@click="saveSettings">
+							<span v-t="'btn-save'" />
+							<template v-slot:loader>
+								<icon-loading-circle :state.sync="loadingState" />
+							</template>
+						</v-btn>
 					</v-card-actions>
 				</v-flex>
 			</v-layout>
@@ -120,30 +119,24 @@
 	</v-dialog>
 </template>
 
+
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import EventSettingInfo from './EventSettingInfo.vue';
-import EventSettingPrivacy from './EventSettingPrivacy.vue';
-import EventSettingQuestion from './EventSettingQuestion.vue';
-import EventSettingPoll from './EventSettingPoll.vue';
-import EventSettingIdea from './EventSettingIdea.vue';
-import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
+import EventSettingsContent from './EventSettingsContent.vue';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 export default {
 	name: 'EventSettingDialog',
 	components: {
-		'event-setting-expand--info': EventSettingInfo,
-		'event-setting-expand--privacy': EventSettingPrivacy,
-		'event-setting-expand--question': EventSettingQuestion,
-		'event-setting-expand--poll': EventSettingPoll,
-		'event-setting-expand--idea': EventSettingIdea,
-		'event-setting-expand--invite': EventSettingInviteAdmin
+		'icon-loading-circle': IconLoadingCircle,
+		'event-settings-content': EventSettingsContent
 	},
 	data: () => ({
 		icon: {
 			sm: 20
 		},
-		settingDialog: false
+		settingDialog: false,
+		loadingState: ''
 	}),
 	computed: {
 		...mapGetters({
@@ -155,11 +148,11 @@ export default {
 		}
 	},
 	mounted() {
-		this.$root.$on('toggle-event-setting', () => {
-			this.settingDialog = true;
-		});
 		this.$root.$on('save-settings', () => {
 			this.saveSettings();
+		});
+		this.$root.$on('toggle-event-setting', () => {
+			this.settingDialog = true;
 		});
 	},
 	methods: {
@@ -168,6 +161,7 @@ export default {
 			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
 		}),
 		saveSettings() {
+			this.loadingState = 'loading';
 			// check temp settings
 			for (const setting in this.tempSettings) {
 				if (this.eventInfo[setting] === this.tempSettings[setting]) {
@@ -177,12 +171,14 @@ export default {
 			// emit edit event to server
 			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
 				if (errmsg) {
+					this.loadingState = 'fail';
 					// notify
 					// ...
 					// turn back to origin settings
 					this.mergeTempSettings(this.eventInfo);
 					return;
 				}
+				this.loadingState = 'success';
 				this.mergeEventInfo(event);
 			});
 		}

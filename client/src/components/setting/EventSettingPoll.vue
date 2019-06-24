@@ -4,7 +4,7 @@
 		<template #switch-on-title>
 			<!-- *enable poll features -->
 			<v-switch
-				v-model="pollData.allow_poll"
+				v-model="pollSettings.allow_poll"
 				class="right"
 				color="primary" />
 		</template>
@@ -22,7 +22,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="pollData.allow_poll_counter"
+						v-model="pollSettings.allow_poll_counter"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -40,7 +40,7 @@
 				</v-flex>
 				<v-flex xs4>
 					<v-switch
-						v-model="pollData.allow_poll_result"
+						v-model="pollSettings.allow_poll_result"
 						class="right"
 						color="primary" />
 				</v-flex>
@@ -70,7 +70,7 @@ export default {
 			title: 'polls',
 			subtitle: 'event-setting-polls-des'
 		},
-		pollData: {
+		pollSettings: {
 			allow_poll: false,
 			allow_poll_counter: false,
 			allow_poll_result: false
@@ -78,17 +78,29 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
+			tempSettings: 'admin/event/getTempSettings'
 		})
 	},
 	watch: {
-		eventInfo(val) {
-			// const { pollData } = this;
-			// *poll map with default settings
-			// pollData.allow_poll = val.allow_poll;
-			// pollData.allow_poll_counter = val.allow_poll_counter;
-			// pollData.allow_poll_result = val.allow_poll_result;
-		}
+		// tempSettings(val) {
+		// 	const { pollSettings, tempSettings } = this;
+		// 	for (const s of Object.keys(pollSettings)) {
+		// 		if (tempSettings[s] !== undefined) {
+		// 			pollSettings[s] = tempSettings[s];
+		// 		}
+		// 	}
+		// },
+		// pollSettings: {
+		// 	deep: true,
+		// 	handler(val) {
+		// 		this.mergeTempSettings(val);
+		// 	}
+		// }
+	},
+	methods: {
+		// ...mapMutations({
+		// 	mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+		// })
 	}
 };
 </script>

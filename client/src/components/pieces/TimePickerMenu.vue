@@ -22,7 +22,6 @@
 				v-on="on" />
 		</template>
 		<v-time-picker
-			v-if="menuPickTime"
 			v-model="time"
 			:min="timeInfo.min"
 			:max="timeInfo.max"

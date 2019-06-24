@@ -77,8 +77,8 @@ export default {
 		form: initForm(),
 		privacySettings: {
 			search_hidden: false,
-			require_passcode: false,
-			require_login: false
+			require_passcode: false
+			// require_login: false
 		}
 	}),
 	computed: {
