@@ -47,6 +47,35 @@ const Ctlr = {
 		}
 	},
 
+	async profile(req, res, next) {
+		if (!res.$v.rif(signUpRules)) return;
+		const { username, email } = req.body;
+		const result = {};
+		try {
+			const User = new UserModel();
+			const checkExistUsername = await User.findOne({ username }).exec();
+			if (checkExistUsername) {
+				res.status(409);
+				throw { username: res.$t('usernameTaken') };
+			}
+
+			const checkExistEmail = await User.findOne({ email }).exec();
+			if (checkExistEmail) {
+				res.status(409);
+				throw { email: res.$t('emailTaken') };
+			}
+
+			await User.update(req.body).exec();
+			res.messages['auth.signup'] = res.$t('successSignUp');
+
+			return res.sendwm(result);
+		}
+		catch (error) {
+			res.messages = { ...res.messages, ...error };
+			return next(error);
+		}
+	},
+
 	login(req, res, next) {
 		const User = new UserModel();
 		if (req.user) {
