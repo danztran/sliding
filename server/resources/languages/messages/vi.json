@@ -17,6 +17,7 @@
 	"forbidTo": "Sự kiện này hiện không cho phép {action}",
 	"allow_question": "Đặt câu hỏi",
 	"allow_question_reply": "Trả lời câu hỏi",
+	"allow_question_dislike": "Dislike câu hỏi",
 	"editEvent": "Chỉnh sửa cài đặt cho sự kiện này",
 	"addModerator": "Thêm Moderator cho sự kiện này",
 	"userNotFoundByEmail": "Không tìm thấy người dùng nào với email này",

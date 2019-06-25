@@ -99,6 +99,22 @@ class Model {
 		return this;
 	}
 
+	createOrUpdate(uniqueInfo, otherInfo, {
+		select
+	} = {}) {
+		this.setQuery(`
+		   ${this.createOne({ ...uniqueInfo, ...otherInfo }).getQuery()}
+			${qh.toConflictClause(uniqueInfo)}
+			DO
+			${this.updateOne(...arguments).getQuery()}
+			${qh.toReturningClause(select)}
+		`);
+		if (select) {
+			this.setRowReturn(1);
+		}
+		return this;
+	}
+
 	exec(rowReturn) {
 		return new Promise((resolve, reject) => {
 			this.setRowReturn(rowReturn || this.getRowReturn());

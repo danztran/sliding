@@ -118,6 +118,10 @@ const queryHelper = {
 
 	as(alias) {
 		return alias ? `AS ${alias}` : '';
+	},
+
+	toConflictClause(info) {
+		return `ON CONFLICT (${Object.keys(info).map( e => `"${e}"`).join(', ')})`;
 	}
 };
 

@@ -2,6 +2,7 @@ const EventSocketMdw = requireWrp('middlewares/event-socket-middleware');
 const EventLive = require('./event-live');
 const QuestionLive = require('./question-live');
 const QuestionReplyLive = require('./question-reply-live');
+const QuestionReactionLive = require('./question-reaction-live');
 
 module.exports = (io) => {
 	EventSocketMdw.setIO(io);
@@ -23,6 +24,7 @@ module.exports = (io) => {
 			EventLive({ io, socket, code });
 			QuestionLive({ io, socket });
 			QuestionReplyLive({ io, socket });
+			QuestionReactionLive({ io, socket });
 		});
 	});
 };

@@ -1,12 +1,12 @@
 const Model = requireWrp('models/model');
 const UserModel = requireWrp('models/user');
 const QuestionReplyModel = requireWrp('models/question-reply');
-const QuestionLikeModel = requireWrp('models/question-like');
+const QuestionReactionModel = requireWrp('models/question-reaction');
 // const qh = requireWrp('modules/query-helper');
 
 const User = new UserModel();
 const QuestionReply = new QuestionReplyModel();
-const QuestionLike = new QuestionLikeModel();
+const QuestionReaction = new QuestionReactionModel();
 
 class QuestionModel extends Model {
 	constructor() {
@@ -22,7 +22,7 @@ class QuestionModel extends Model {
 				q."is_answered",
 				( ${User.findAsJsonById('q."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user",
 				( ${QuestionReply.getCountByQid('q."id"').getQuery()} ) AS "count_replies",
-				( ${QuestionLike.findAsJsonByQid('q."id"').getQuery()} ) AS "likes"
+				( ${QuestionReaction.findAsJsonByQid('q."id"').getQuery()} ) AS "reactions"
 			`
 		};
 	}

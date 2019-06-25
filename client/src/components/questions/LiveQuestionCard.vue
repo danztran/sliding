@@ -24,7 +24,7 @@
 							{{ question.user.name }}
 						</span>
 						<span class="body-1 grey--text font-weight-light">
-							<span>{{ question.likes ? question.likes.length : 0 }} </span>
+							<span>{{ likes.length }} </span>
 							<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
 							• {{ dateQCreated }}
 						</span>
@@ -274,7 +274,7 @@ export default {
 				content: '',
 				count_replies: null,
 				id: null,
-				likes: [],
+				reactions: [],
 				is_star: false,
 				is_answered: false,
 				user: {
@@ -309,6 +309,10 @@ export default {
 		},
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);
+		},
+		likes() {
+			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
+			return [];
 		}
 	},
 	methods: {
