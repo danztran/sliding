@@ -10,9 +10,13 @@ const SET_QUESTION_REPLIES = (state, dataReplies) => {
 };
 
 // @desc: socket return data question had editted, then merge
-const MERGE_EDIT_QUESTION = (state, resQ) => {
+const MERGE_QUESTION = (state, resQ) => {
 	const question = state.questions.find(q => q.id === resQ.id);
 	Object.assign(question, resQ);
+};
+
+const DELETE_QUESTION = (state, delQuestion) => {
+	state.questions = state.questions.filter(q => q.id !== delQuestion.id);
 };
 
 // @desc: socket listen orther user add new question reply
@@ -77,7 +81,8 @@ export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
 	ADD_QUESTION_REPLY,
-	MERGE_EDIT_QUESTION,
+	MERGE_QUESTION,
+	DELETE_QUESTION,
 	ADD_TEMP_QUESTION_REPLY,
 	MERGE_SUCCESS_QUESTION_REPLY,
 	DELETE_ERROR_QUESTION_REPLY,

@@ -17,6 +17,9 @@ class QuestionModel extends Model {
 				q."id",
 				q."content",
 				q."created_at",
+				q."stage",
+				q."is_star",
+				q."is_answered",
 				( ${User.findAsJsonById('q."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user",
 				( ${QuestionReply.getCountByQid('q."id"').getQuery()} ) AS "count_replies",
 				( ${QuestionLike.findAsJsonByQid('q."id"').getQuery()} ) AS "likes"

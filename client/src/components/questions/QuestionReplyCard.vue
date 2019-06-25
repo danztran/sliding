@@ -1,6 +1,6 @@
 <template>
 	<v-card
-		:class="{'delete': deleting}"
+		:class="{ deleting }"
 		class="py-2 no-shadow card-reply">
 		<v-layout class="px-4" row wrap>
 			<v-flex
@@ -236,11 +236,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-	.card-reply {
-		background-color: #f2f3f5;
-	}
-	.delete {
-		opacity: .4;
-		cursor: not-allowed;
-	}
+.card-reply {
+	background-color: #f2f3f5;
+}
+.deleting {
+	opacity: .4;
+	cursor: not-allowed;
+}
 </style>

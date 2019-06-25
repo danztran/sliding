@@ -1,7 +1,7 @@
 <!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
-		<v-card slot-scope="{ hover }" class="no-shadow">
+		<v-card slot-scope="{ hover }" :class="{ deleting }" class="no-shadow">
 			<v-list subheader class="py-1">
 				<v-list-tile>
 					<!-- @desc: avatar -->
@@ -87,7 +87,7 @@
 											<v-icon
 												color="success"
 												:size="icon.lg"
-												@click="markQuestionAnswered"
+												@click="toggleAnswered"
 												v-text="'$vuetify.icons.approve'" />
 										</v-btn>
 									</template>
@@ -130,7 +130,7 @@
 								<v-icon
 									color="grey lighten-1"
 									size="17"
-									@click="markStarQuestion"
+									@click="toggleStar"
 									v-text="'$vuetify.icons.star_border'" />
 							</v-btn>
 						</template>
@@ -275,6 +275,8 @@ export default {
 				count_replies: null,
 				id: null,
 				likes: [],
+				is_star: false,
+				is_answered: false,
 				user: {
 					id: null,
 					name: ''
@@ -292,7 +294,9 @@ export default {
 		form: initForm(),
 		onEdit: false,
 		cache: '',
-		loadingState: ''
+		loadingState: '',
+		tempQuestion: null,
+		deleting: false
 	}),
 	computed: {
 		checkValidEdit() {
@@ -309,9 +313,12 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			mergeQEdit: 'admin/questions/MERGE_EDIT_QUESTION'
+			mergeQuestion: 'admin/questions/MERGE_QUESTION',
+			deleteQuestion: 'admin/questions/DELETE_QUESTION'
 		}),
 		resetForm() {
+			this.cache = '';
+			this.tempQuestion = null;
 			const { editQuestion } = this.form;
 			editQuestion.value = '';
 			editQuestion.errmsg = '';
@@ -320,9 +327,24 @@ export default {
 			this.$root.$emit('dialog-reply-question', question);
 		},
 		restoreQuestion() {},
-		highlightQuestion() {},
-		markQuestionAnswered() {},
-		markStarQuestion() {},
+		highlightQuestion() {
+			// ...this should emit to change pinned_question_id event setting
+		},
+		toggleAnswered() {
+			this.tempQuestion = { ...this.question };
+			this.question.is_answered = !this.question.is_answered;
+			this.emitEdit({ is_answered: this.question.is_answered });
+		},
+		toggleStar() {
+			this.tempQuestion = { ...this.question };
+			this.question.is_star = !this.question.is_star;
+			this.emitEdit({ is_star: this.question.is_star });
+		},
+		archiveQuestion() {
+			this.tempQuestion = { ...this.question };
+			this.question.stage = 'archived';
+			this.emitEdit({ stage: 'archived' });
+		},
 		editQuestion() {
 			this.onEdit = true;
 			this.cache = this.question.content;
@@ -337,30 +359,55 @@ export default {
 			this.onEdit = false;
 			this.question.content = this.form.editQuestion.value;
 			const infoQEdit = {
-				id: this.question.id,
-				content: this.form.editQuestion.value.trim(),
-				stage: 'public',
-				is_star: false,
-				is_answered: false
+				content: this.form.editQuestion.value.trim()
 			};
+			this.emitEdit(infoQEdit);
+		},
+		emitEdit(info) {
 			const emiter = 'edit-question';
-			this.$socket.emit(emiter, infoQEdit, ({ errmsg, question }) => {
+			this.$socket.emit(emiter, {
+				id: this.question.id,
+				...info
+			}, ({ errmsg, question }) => {
 				if (errmsg) {
-					this.question.content = this.cache;
-					this.loadingState = 'fail';
+					if (this.cache) {
+						this.question.content = this.cache;
+					}
+					if (this.tempQuestion) {
+						this.question = { ...this.question, ...this.tempQuestion };
+					}
+					this.changeLoadingState('fail');
 					// do something
 					return;
 				}
+				this.changeLoadingState('success');
 				this.resetForm();
-				this.loadingState = 'success';
-				this.mergeQEdit(question);
+				this.mergeQuestion(question);
 			});
 		},
-		archiveQuestion() {},
-		deleteQuestion() {}
+		deleteQuestion() {
+			const emiter = 'delete-question';
+			this.$socket.emit(emiter, { id: this.question.id }, ({ errmsg, question }) => {
+				if (errmsg) {
+					this.deleting = false;
+					// show notify
+					return;
+				}
+				this.deleteQuestion(question);
+			});
+		},
+		changeLoadingState(state) {
+			if (this.loadingState === 'loading') {
+				this.loadingState = state;
+			}
+		}
 	}
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.deleting {
+	opacity: .4;
+	cursor: not-allowed;
+}
 </style>
