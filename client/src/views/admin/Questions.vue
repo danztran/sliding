@@ -49,11 +49,11 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex';
-import QuestionReviewPanel from '@/components/questions/QuestionReviewPanel.vue';
-import QuestionMainPanel from '@/components/questions/QuestionMainPanel.vue';
-import LiveQuestionCard from '@/components/questions/LiveQuestionCard.vue';
-import ReviewQuestionCard from '@/components/questions/ReviewQuestionCard.vue';
-import QuestionReplyDialog from '@/components/questions/QuestionReplyDialog.vue';
+import QuestionReviewPanel from '@/components/questions/admin/QuestionReviewPanel.vue';
+import QuestionMainPanel from '@/components/questions/admin/QuestionMainPanel.vue';
+import LiveQuestionCard from '@/components/questions/admin/LiveQuestionCard.vue';
+import ReviewQuestionCard from '@/components/questions/admin/ReviewQuestionCard.vue';
+import QuestionReplyDialog from '@/components/questions/admin/QuestionReplyDialog.vue';
 
 export default {
 	name: 'AdminQuestions',

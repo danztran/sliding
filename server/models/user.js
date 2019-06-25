@@ -41,9 +41,9 @@ class UserModel extends Model {
 		}, opt);
 	}
 
-	update(user) {
-		// ...
-	}
+	// update(user) {
+	//  ...
+	// }
 
 	setLastAccessed(user) {
 		const { id } = user;

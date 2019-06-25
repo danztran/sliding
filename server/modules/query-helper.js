@@ -121,7 +121,7 @@ const queryHelper = {
 	},
 
 	toConflictClause(info) {
-		return `ON CONFLICT (${Object.keys(info).map( e => `"${e}"`).join(', ')})`;
+		return `ON CONFLICT (${Object.keys(info).map(e => `"${e}"`).join(', ')})`;
 	}
 };
 

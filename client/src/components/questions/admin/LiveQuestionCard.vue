@@ -121,7 +121,7 @@
 						v-if="onEdit"
 						:class="{'red--text': checkValidEdit}"
 						class="body-1">
-						{{ form.editQuestion.value.length }}
+						{{ countCharacterEdit }}
 					</div>
 					<!-- *options: mark star -->
 					<v-tooltip v-else bottom>
@@ -306,6 +306,10 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(editQuestion.value);
+		},
+		countCharacterEdit() {
+			const { editQuestion } = this.form;
+			return editQuestion.maxLength - editQuestion.value.length;
 		},
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);

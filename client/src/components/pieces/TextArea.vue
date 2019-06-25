@@ -8,6 +8,7 @@
 		:rules="[fieldRequired(field)]"
 		:error-messages="field.errmsg"
 		:label="$t(field.label)"
+		:placeholder="$t(field.placeholder)"
 		:rows="field.rows"
 		:outline="field.outline"
 		:auto-grow="field.autogrow"

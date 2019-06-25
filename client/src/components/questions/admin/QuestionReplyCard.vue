@@ -33,7 +33,7 @@
 						<span
 							v-if="onEdit"
 							class="grey--text caption">
-							{{ form.editReply.value.length }}
+							{{ countCharacterEdit }}
 						</span>
 						<!-- datetime -->
 						<span
@@ -174,6 +174,10 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(editReply.value);
+		},
+		countCharacterEdit() {
+			const { editReply } = this.form;
+			return editReply.maxLength - editReply.value.length;
 		},
 		dateRCreated() {
 			return this._cm.dayCreate(this.replyData.created_at);
