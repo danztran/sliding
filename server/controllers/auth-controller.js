@@ -87,6 +87,7 @@ const Ctlr = {
 	},
 
 	logout(req, res) {
+		delete req.session.user;
 		req.logout();
 		res.messages['auth.logout'] = res.$t('successLoggedOut');
 		return res.sendwm();
