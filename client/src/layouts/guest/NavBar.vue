@@ -4,8 +4,7 @@
 		<v-toolbar
 			class="pa-0"
 			dark
-			color="primary"
-			style="height: 58px">
+			color="primary">
 			<v-container
 				:class="{'pa-0': isSMnXS}"
 				fluid
@@ -95,12 +94,22 @@ export default {
 	.right {
 		text-align: right;
 	}
+	.v-toolbar {
+		height: 58px;
+	}
 	.v-toolbar__content {
 		padding: 0;
 	}
 	@media only screen and (max-width: 960px) {
-		.v-toolbar__content {
-			padding: 0;
+		.v-toolbar {
+			height: 40px;
+			.v-toolbar__content {
+				padding: 0;
+				height: 40px;
+			}
+		}
+		.v-tabs__container {
+			height: 35px;
 		}
 	}
 }

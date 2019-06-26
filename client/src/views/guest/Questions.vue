@@ -44,7 +44,6 @@ export default {
 				return;
 			}
 			this.setQuestions(questions);
-			console.warn(questions);
 		});
 	},
 	methods: {

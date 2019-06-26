@@ -29,7 +29,7 @@
 			<div v-if="!allowQuestion" class="question-not-allow">
 				<div
 					v-t="'guest-ask-disable'"
-					class="text--center red--text text--darken-1 subheading" />
+					class="text--center primary--text text--darken-1 subheading" />
 			</div>
 		</div>
 	</div>
@@ -57,11 +57,9 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'guest/event/getEventInfo'
+			eventInfo: 'guest/event/getEventInfo',
+			allowQuestion: 'guest/event/allowQuestion'
 		}),
-		allowQuestion() {
-			return this.eventInfo.allow_question;
-		},
 		checkValidLength() {
 			const { ask } = this.form;
 			if (ask.value && ask.value.length > ask.maxLength) {

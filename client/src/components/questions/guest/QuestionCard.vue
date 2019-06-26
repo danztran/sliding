@@ -41,6 +41,7 @@
 
 						<!-- *dislike -->
 						<v-btn
+							v-if="allowQDislike"
 							flat
 							icon
 							small
@@ -76,11 +77,12 @@
 					class="grey--text caption text-lowercase" />
 
 				<v-btn
+					v-if="!reply"
 					color="grey lighten-1"
 					class="text-lowercase"
 					flat
 					small
-					@click="showDialogReplies">
+					@click="showDialogReplies(question)">
 					<v-icon size="13" v-text="'$vuetify.icons.guest_reply'" />
 					<span class="caption text-lowercase">
 						&nbsp;{{ question.count_replies }}&nbsp;
@@ -97,9 +99,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'QuestionCard',
 	props: {
+		reply: {
+			type: Boolean,
+			default: false
+		},
 		question: {
 			type: Object,
 			default: () => ({
@@ -126,6 +134,9 @@ export default {
 		}
 	}),
 	computed: {
+		...mapGetters({
+			allowQDislike: 'guest/event/allowQDislike'
+		}),
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);
 		},
@@ -135,8 +146,8 @@ export default {
 		}
 	},
 	methods: {
-		showDialogReplies() {
-			// toggle dialog reply
+		showDialogReplies(question) {
+			this.$root.$emit('dialog-reply-question', question);
 		},
 		dislikeQuestion() {
 			// ...

@@ -6,7 +6,10 @@
 			<v-flex
 				:class="{'pl-2': isSM}"
 				xs1>
-				<v-avatar :size="icon.lg" color="grey lighten-2">
+				<v-avatar
+					:size="icon.lg"
+					class="mt-1"
+					color="grey lighten-2">
 					<v-icon
 						:size="icon.sm"
 						color="white"

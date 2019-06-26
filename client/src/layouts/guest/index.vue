@@ -3,6 +3,7 @@
 		<!-- <v-navigation-drawer app hide-overlay ></v-navigation-drawer> -->
 		<nav-bar />
 		<profile-dialog />
+		<reply-question-dialog />
 		<v-content v-if="ready" id="my-guest-content" class="mt-2">
 			<v-slide-y-transition mode="out-in">
 				<keep-alive>
@@ -18,11 +19,13 @@ import { mapMutations } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
 import ProfileDialog from '@/components/guest/ProfileDialog.vue';
+import QuestionReplyDialog from '@/components/questions/guest/QuestionReplyDialog.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'profile-dialog': ProfileDialog
+		'profile-dialog': ProfileDialog,
+		'reply-question-dialog': QuestionReplyDialog
 	},
 	mixins: [handleSockets],
 	data: () => ({
@@ -52,6 +55,7 @@ export default {
 			this.$socket.emit('leave-event');
 		}
 		this.resetEvent();
+		this.resetQuestions();
 		next();
 	},
 	sockets: {
@@ -68,20 +72,32 @@ export default {
 				this.setGuestCurrentEvent(data);
 				this.ready = true;
 			}
+		},
+		new_edited_event(newSettings) {
+			this.mergeGuestEventInfo(newSettings);
 		}
 	},
 	methods: {
 		...mapMutations({
 			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
-			resetEvent: 'guest/event/RESET'
+			mergeGuestEventInfo: 'guest/event/MERGE_CURRENT_EVENT',
+			resetEvent: 'guest/event/RESET',
+			resetQuestions: 'guest/questions/RESET'
 		})
 	}
 };
 </script>
 
-<style lang="css">
+<style lang="scss">
 #my-guest-content {
-	padding: 0 25% !important;
+	.v-content__wrap {
+		padding: 0 25% !important;
+	}
+	@media only screen and (max-width: 960px) {
+		.v-content__wrap {
+			padding: 0 !important;
+		}
+	}
 }
 </style>
