@@ -161,6 +161,7 @@ const router = new Router({
 				},
 				{
 					path: 'guest/event/:code',
+					name: 'guest-event',
 					component: GuestLayout,
 					redirect: { name: 'guest-questions' },
 					children: [

@@ -89,7 +89,6 @@ export default {
 	},
 	data: () => ({
 		date: '',
-		loading: false,
 		tabs: [
 			{ name: 'questions', url: 'questions' },
 			{ name: 'polls', url: 'polls' },
@@ -104,12 +103,6 @@ export default {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo'
 		})
-	},
-	watch: {
-		eventInfo(val) {
-			this.loading = true;
-			this.$root.$emit('hide-loading-overlay');
-		}
 	},
 	created() {
 		this.tabs.forEach((e) => {

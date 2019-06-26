@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
 	name: 'NavBar',
 	data: () => ({
@@ -74,6 +75,9 @@ export default {
 		]
 	}),
 	computed: {
+		...mapGetters({
+			eventInfo: 'guest/event/getEventInfo'
+		}),
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
 		}

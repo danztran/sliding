@@ -5,8 +5,11 @@ import authModule from './auth';
 import dashboardModule from './dashboard';
 
 // Admin manage current event
-import eventModule from './admin/event';
-import questionModule from './admin/questions';
+import adminEvent from './admin/event';
+import adminQuestions from './admin/questions';
+
+// Guest manage current event
+import guestEvent from './guest/event';
 
 Vue.use(Vuex);
 
@@ -17,8 +20,14 @@ export default new Vuex.Store({
 		admin: {
 			namespaced: true,
 			modules: {
-				event: eventModule,
-				questions: questionModule
+				event: adminEvent,
+				questions: adminQuestions
+			}
+		},
+		guest: {
+			namespaced: true,
+			modules: {
+				event: guestEvent
 			}
 		}
 	},

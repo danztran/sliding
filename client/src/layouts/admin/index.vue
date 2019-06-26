@@ -36,15 +36,29 @@ export default {
 	data: () => ({
 		ready: false
 	}),
+	watch: {
+		ready(val) {
+			if (val) {
+				this.$root.$emit('hide-loading-overlay');
+			}
+		}
+	},
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');
 	},
 	created() {
 		this.$socket_updateHeaders();
-		this.$socket.connect();
+		if (this.$socket.disconnected) {
+			this.$socket.connect();
+		}
+		else {
+			this.ready = true;
+		}
 	},
 	beforeRouteLeave(to, from, next) {
-		this.$socket.emit('leave-event');
+		if (to.name !== 'guest-event') {
+			this.$socket.emit('leave-event');
+		}
 		this.resetEvent();
 		this.resetQuestions();
 		next();
@@ -55,13 +69,20 @@ export default {
 			// ..
 		},
 		get_event(data) {
-			this.setCurrentEvent(data);
-			this.ready = true;
+			if (data.role.name === 'guest') {
+				this.setGuestCurrentEvent(data);
+				this.$router.push({ name: 'guest-event', params: this.$route.params });
+			}
+			else {
+				this.setAdminCurrentEvent(data);
+				this.ready = true;
+			}
 		}
 	},
 	methods: {
 		...mapMutations({
-			setCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
+			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
+			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET'
 		})
