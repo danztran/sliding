@@ -44,6 +44,7 @@ const icons = {
 	approve: 'check_circle_outline',
 	dismiss: 'highlight_off',
 	star_border: 'star_border',
+	star: 'star',
 	highlight_question: 'adjust',
 	filter: 'filter_list',
 	like: 'thumb_up_alt',
@@ -63,7 +64,8 @@ const icons = {
 	info: 'error_outline',
 	privacy: 'security',
 	multiple: 'add_to_photos',
-	copy: 'file_copy'
+	copy: 'file_copy',
+	lock: 'lock'
 };
 
 // custom components

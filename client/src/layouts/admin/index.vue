@@ -77,12 +77,16 @@ export default {
 				this.setAdminCurrentEvent(data);
 				this.ready = true;
 			}
+		},
+		new_edited_event(newSettings) {
+			this.mergeAdminCurrentEvent(newSettings);
 		}
 	},
 	methods: {
 		...mapMutations({
 			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
+			mergeAdminCurrentEvent: 'admin/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET'
 		})

@@ -74,14 +74,14 @@ export default {
 			}
 		},
 		new_edited_event(newSettings) {
-			this.mergeGuestEventInfo(newSettings);
+			this.mergeGuestCurrentEvent(newSettings);
 		}
 	},
 	methods: {
 		...mapMutations({
 			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
-			mergeGuestEventInfo: 'guest/event/MERGE_CURRENT_EVENT',
+			mergeGuestCurrentEvent: 'guest/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'guest/event/RESET',
 			resetQuestions: 'guest/questions/RESET'
 		})

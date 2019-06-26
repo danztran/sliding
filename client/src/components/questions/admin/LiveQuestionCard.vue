@@ -75,7 +75,7 @@
 												v-text="'$vuetify.icons.highlight_question'" />
 										</v-btn>
 									</template>
-									<span v-t="'btn-mark-highlight'" />
+									<span v-t="'btn-pin-question'" />
 								</v-tooltip>
 
 								<v-tooltip bottom>
@@ -128,10 +128,12 @@
 						<template v-slot:activator="{ on }">
 							<v-btn icon v-on="on">
 								<v-icon
-									color="grey lighten-1"
+									:color="isStar ? 'yellow' : 'grey lighten-1'"
 									size="17"
 									@click="toggleStar"
-									v-text="'$vuetify.icons.star_border'" />
+									v-text="isStar
+										? '$vuetify.icons.star'
+										: '$vuetify.icons.star_border'" />
 							</v-btn>
 						</template>
 						<span v-t="'btn-star-question'" />
@@ -314,6 +316,9 @@ export default {
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);
 		},
+		isStar() {
+			return this.question.is_star;
+		},
 		likes() {
 			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
 			return [];
@@ -417,5 +422,8 @@ export default {
 .deleting {
 	opacity: .4;
 	cursor: not-allowed;
+}
+.v-list__tile__action {
+	min-width: 40px !important;
 }
 </style>

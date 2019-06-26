@@ -27,9 +27,10 @@
 					@click="sendQuestion" />
 			</v-layout>
 			<div v-if="!allowQuestion" class="question-not-allow">
-				<div
-					v-t="'guest-ask-disable'"
-					class="text--center primary--text text--darken-1 subheading" />
+				<div class="centered">
+					<v-icon size="50" v-text="'$vuetify.icons.lock'" />
+					<div v-t="'guest-ask-disable'" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -99,11 +100,12 @@ export default {
 		background-color: rgba(224, 224, 224, 0.14);
 		z-index: 2;
 
-		.text--center {
-			transform: translateY(-50%);
-			position: relative;
-			top: 50%;
-			z-index: 3;
+		.centered {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			top: 11%;
+			z-index: 4;
 		}
 	}
 
