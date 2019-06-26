@@ -16,6 +16,7 @@
 		:clearable="field.clearable"
 		:solo="field.solo"
 		:required="field.required"
+		:disabled="disabled"
 		@input="onInput" />
 </template>
 
@@ -23,6 +24,10 @@
 export default {
 	name: 'TextArea',
 	props: {
+		disabled: {
+			type: Boolean,
+			default: false
+		},
 		field: {
 			type: Object,
 			default() {

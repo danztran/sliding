@@ -56,12 +56,14 @@
 			</v-list-tile>
 		</v-list>
 
+		<!-- @desc: content -->
 		<v-card-title class="py-0 px-4">
 			<p class="body-1 mb-0">
 				{{ question.content }}
 			</p>
 		</v-card-title>
 
+		<!-- @desc: footer count reply, btn dialog reply -->
 		<v-card-actions class="py-0">
 			<v-list-tile class="grow">
 				<span class="grey--text caption">

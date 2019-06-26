@@ -3,7 +3,7 @@
 		id="guest-tabs"
 		row
 		wrap>
-		<!-- @desc: header: tab title - count question -->
+		<!-- @desc: header: tab title - count questions -->
 		<v-layout
 			class="px-3 pt-1"
 			align-center
@@ -28,7 +28,7 @@
 				</v-tab>
 			</v-tabs>
 
-			<!-- @desc: count question -->
+			<!-- @desc: count questions alive -->
 			<div>
 				<span class="grey--text body-1">
 					<span>
@@ -40,7 +40,7 @@
 		</v-layout>
 
 		<v-tabs-items v-model="currentTab" class="w-100">
-			<!-- @tab:  live tab-->
+			<!-- @tab:  popular -->
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
@@ -86,11 +86,11 @@ export default {
 </script>
 
 <style lang="scss">
-#guest-tabs {
-	.guest-list-scroll {
-		height: 65vh;
-		overflow-y: scroll;
-		scroll-behavior: smooth;
+	#guest-tabs {
+		.guest-list-scroll {
+			height: 65vh;
+			overflow-y: scroll;
+			scroll-behavior: smooth;
+		}
 	}
-}
 </style>
