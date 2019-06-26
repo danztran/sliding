@@ -31,7 +31,9 @@
 			<!-- @desc: count question -->
 			<div>
 				<span class="grey--text body-1">
-					<span>X&nbsp;</span>
+					<span>
+						{{ questions.length }}
+					</span>
 					<span v-t="'recent-count-question-title'" class="text-lowercase" />
 				</span>
 			</div>
@@ -69,11 +71,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
 	name: 'QuestionTabs',
 	data: () => ({
 		currentTab: null
-	})
+	}),
+	computed: {
+		...mapGetters({
+			questions: 'guest/questions/getQuestions'
+		})
+	}
 };
 </script>
 

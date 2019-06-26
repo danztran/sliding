@@ -16,11 +16,10 @@
 				<!-- @desc: user info -->
 				<v-list-tile-content>
 					<span class="body-2">
-						Username
+						{{ question.user.name }}
 					</span>
 					<span class="body-1 grey--text font-weight-light">
-						<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
-						Date Created
+						{{ dateQCreated }}
 					</span>
 				</v-list-tile-content>
 
@@ -59,27 +58,36 @@
 
 		<v-card-title class="py-0 px-4">
 			<p class="body-1 mb-0">
-				Question content
+				{{ question.content }}
 			</p>
 		</v-card-title>
 
 		<v-card-actions class="py-0">
 			<v-list-tile class="grow">
 				<span class="grey--text caption">
-					Count likes
+					{{ likes.length }}&nbsp;
 				</span>
+				<span
+					v-t="likes.length > 2
+						? 'guest-question-count-likes'
+						: 'guest-question-count-like'"
+					class="grey--text caption text-lowercase" />
+
 				<v-btn
 					color="grey lighten-1"
+					class="text-lowercase"
 					flat
 					small
 					@click="showDialogReplies">
 					<v-icon size="13" v-text="'$vuetify.icons.guest_reply'" />
 					<span class="caption text-lowercase">
-						&nbsp;1 reply
+						&nbsp;{{ question.count_replies }}&nbsp;
 					</span>
-					<!-- <span
-						v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'"
-						class="caption" /> -->
+					<span
+						v-t="question.count_replies > 2
+							? 'btn-reply'
+							: 'btn-replies'"
+						class="caption" />
 				</v-btn>
 			</v-list-tile>
 		</v-card-actions>
@@ -89,6 +97,25 @@
 <script>
 export default {
 	name: 'QuestionCard',
+	props: {
+		question: {
+			type: Object,
+			default: () => ({
+				content: '',
+				count_replies: null,
+				created_at: null,
+				id: null,
+				is_answered: false,
+				is_star: false,
+				reactions: [],
+				// stage: "public"
+				user: {
+					id: null,
+					name: ''
+				}
+			})
+		}
+	},
 	data: () => ({
 		icon: {
 			xs: 14,
@@ -96,6 +123,15 @@ export default {
 			lg: 25
 		}
 	}),
+	computed: {
+		dateQCreated() {
+			return this._cm.dayCreate(this.question.created_at);
+		},
+		likes() {
+			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
+			return [];
+		}
+	},
 	methods: {
 		showDialogReplies() {
 			// toggle dialog reply
@@ -104,7 +140,16 @@ export default {
 			// ...
 		},
 		likeQuestion() {
-			// ...
+			// ..
+		},
+		reactionQuestion(info) {
+			const emiter = 'add-question-reaction';
+			this.$socket.emit(emiter, {
+				id: this.question.id,
+				...info
+			}, (data) => {
+				console.warn(data);
+			});
 		}
 	}
 };

@@ -10,6 +10,7 @@ import adminQuestions from './admin/questions';
 
 // Guest manage current event
 import guestEvent from './guest/event';
+import guestQuestions from './guest/questions';
 
 Vue.use(Vuex);
 
@@ -27,7 +28,8 @@ export default new Vuex.Store({
 		guest: {
 			namespaced: true,
 			modules: {
-				event: guestEvent
+				event: guestEvent,
+				questions: guestQuestions
 			}
 		}
 	},

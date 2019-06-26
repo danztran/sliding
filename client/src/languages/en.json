@@ -142,6 +142,8 @@
 		"err-reply": "Could not send message. Sorry, try again!",
 		"guest-profile-title-dialog": "My profile",
 		"guest-ask-title": "Ask speaker",
+		"guest-question-count-like": "like",
+		"guest-question-count-likes": "likes",
 		"card-header-title": "The best way to make your speech perfect",
 		"card-subheader-title": "No more restrictions, no more limits",
 		"card-intro-title1": "Group meetings",
