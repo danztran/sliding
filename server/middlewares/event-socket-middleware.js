@@ -32,7 +32,7 @@ module.exports = {
 			},
 			removeEventIfNoClient({ code }) {
 				const event = io.$state.events[code];
-				if (!io.adapter.rooms[event.rooms.main]) {
+				if (event && !io.adapter.rooms[event.rooms.main]) {
 					delete io.$state.events[code];
 				}
 			}
@@ -57,6 +57,14 @@ module.exports = {
 		socket.$fn = {
 			t: translator.$t,
 			d: translator.$d,
+			setSession(key, value) {
+				socket.request.session[key] = value;
+				socket.request.session.save();
+				return true;
+			},
+			getSession(key) {
+				return key ? socket.request.session[key] : socket.request.session;
+			},
 			setLocale(locale) {
 				socket.$state.locale = locale;
 			},
