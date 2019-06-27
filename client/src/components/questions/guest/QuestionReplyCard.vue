@@ -20,7 +20,7 @@
 			<v-flex
 				:class="{'pl-2' : isXS}"
 				xs11>
-				<span class="body-2">
+				<span class="body-2 text-capitalize">
 					{{ replyData.user.name }}
 				</span>
 				<span class="mb-0 right">

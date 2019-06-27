@@ -34,7 +34,33 @@ const ADD_QUESTION_REPLY = (state, reply) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: receice reply editted, then merge to replies
+	@desc: add temp reply for showing in UI
+	@socket: before emiter 'add-question-reply'
+------------------------------------------------------------------------*/
+const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
+	const question = state.questions.find(q => q.id === tempReply.question_id);
+	if (!question) return;
+	question.replies = question.replies || [];
+	question.replies.push(tempReply.data);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: receive success reply data,
+				merge(override) to temp reply
+	@socket: after emiter 'add-question-reply'
+------------------------------------------------------------------------*/
+const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
+	const question = state.questions.find(q => q.id === resReply.question_id);
+	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
+	delete resReply.temp_id;
+	Object.assign(reply, resReply);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: receice reply editted from admin
+				then merge to replies
 	@socket: after emiter 'edit-question-reply'
 ------------------------------------------------------------------------*/
 const MERGE_EDIT_REPLY = (state, resReply) => {
@@ -42,6 +68,16 @@ const MERGE_EDIT_REPLY = (state, resReply) => {
 	if (!question.replies) return;
 	const reply = question.replies.find(rl => rl.id === resReply.id);
 	Object.assign(reply, resReply);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: if receive error, remove temp reply
+	@socket: after emiter 'add-question-reply'
+------------------------------------------------------------------------*/
+const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
+	const question = state.questions.find(q => q.id === infoErrReply.question_id);
+	question.replies = question.replies.filter(r => r.id !== infoErrReply.temp_id);
 };
 
 
@@ -72,6 +108,9 @@ export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
 	ADD_QUESTION_REPLY,
+	ADD_TEMP_QUESTION_REPLY,
+	MERGE_SUCCESS_QUESTION_REPLY,
+	DELETE_ERROR_QUESTION_REPLY,
 	MERGE_EDIT_REPLY,
 	DELETE_QUESTION_REPLY,
 	RESET

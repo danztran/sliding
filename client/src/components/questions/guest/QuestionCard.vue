@@ -34,7 +34,7 @@
 							color="primary lighten-1"
 							@click="likeQuestion">
 							<v-icon
-								color="grey lighten-2"
+								:color="isLike ? 'primary' : 'grey lighten-2'"
 								:size="icon.sm"
 								v-text="'$vuetify.icons.like'" />
 						</v-btn>
@@ -47,7 +47,7 @@
 							small
 							color="red lighten-1">
 							<v-icon
-								color="grey lighten-2"
+								:color="!!isLike ? 'primary' : 'grey lighten-2'"
 								:size="icon.sm"
 								@click="dislikeQuestion"
 								v-text="'$vuetify.icons.dislike'" />
@@ -68,10 +68,10 @@
 		<v-card-actions class="py-0">
 			<v-list-tile class="grow">
 				<span class="grey--text caption">
-					{{ likes.length }}&nbsp;
+					{{ count_likes.length }}&nbsp;
 				</span>
 				<span
-					v-t="likes.length > 2
+					v-t="count_likes.length > 2
 						? 'guest-question-count-likes'
 						: 'guest-question-count-like'"
 					class="grey--text caption text-lowercase" />
@@ -135,14 +135,23 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			allowQDislike: 'guest/event/allowQDislike'
+			allowQDislike: 'guest/event/allowQDislike',
+			user: 'auth/user'
 		}),
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);
 		},
-		likes() {
+		count_likes() {
 			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
 			return [];
+		},
+		isLike() {
+			const { reactions } = this.question;
+			if (this._cm.notEmpty(reactions)) {
+				const isLike = reactions.some(el => el.like && el.user_id === this.user.id);
+				return isLike;
+			}
+			return false;
 		}
 	},
 	methods: {

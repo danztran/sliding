@@ -98,6 +98,7 @@ export default {
 		},
 		form: initForm(),
 		loading: false,
+		tempReplyID: [],
 		question: {
 			content: '',
 			count_replies: null,
@@ -115,7 +116,8 @@ export default {
 	computed: {
 		...mapGetters({
 			getQuestionReplies: 'guest/questions/getQuestionReplies',
-			allowQReply: 'guest/event/allowQReply'
+			allowQReply: 'guest/event/allowQReply',
+			user: 'auth/user'
 		}),
 		checkValidReply() {
 			const { reply } = this.form;
@@ -152,7 +154,10 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			setQReplies: 'guest/questions/SET_QUESTION_REPLIES'
+			setQReplies: 'guest/questions/SET_QUESTION_REPLIES',
+			addTempReply: 'guest/questions/ADD_TEMP_QUESTION_REPLY',
+			mergeQReply: 'guest/questions/MERGE_SUCCESS_QUESTION_REPLY',
+			deleteErrorQReply: 'guest/questions/DELETE_ERROR_QUESTION_REPLY'
 		}),
 		toLatestReply() {
 			this.qrd.scrollBy({
@@ -166,13 +171,13 @@ export default {
 			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
 		},
 		onReplyEnter(e) {
-			// if (e && !e.shiftKey) {
-			// 	e.preventDefault();
-			// 	if (this.form.reply.value.trim() === '') {
-			// 		return;
-			// 	}
-			// 	this.sendReply();
-			// }
+			if (e && !e.shiftKey) {
+				e.preventDefault();
+				if (this.form.reply.value.trim() === '') {
+					return;
+				}
+				this.sendReply();
+			}
 		},
 		updateReplies() {
 			this.replies = this.getQuestionReplies(this.question.id);

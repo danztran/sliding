@@ -51,7 +51,8 @@
 			</v-expand-transition>
 			<div v-if="!allowQuestion" class="question-not-allow">
 				<div class="centered">
-					<v-icon size="50" v-text="'$vuetify.icons.lock'" />
+					<v-icon size="30" v-text="'$vuetify.icons.lock'" />
+					<div v-t="'guest-question-disable'" />
 				</div>
 			</div>
 		</div>
