@@ -47,6 +47,28 @@ const Ctlr = {
 		}
 	},
 
+	async quickSignup(req, res, next) {
+		const result = {};
+		try {
+			const User = new UserModel();
+			const name = `${res.$t('anonymousUser')} ${Math.floor(Math.random() * 10000)}`;
+			const user = await User.quickCreate({ name }).exec();
+			result.user = user;
+
+			req.logIn(user, (error) => {
+				if (error) return next(error);
+				req.session.user = req.user;
+				result.user = Ctlr.getSafeInfo(user);
+				User.setLastAccessed(user).exec();
+				return res.sendwm(result);
+			});
+		}
+		catch (error) {
+			res.messages = { ...res.messages, ...error };
+			return next(error);
+		}
+	},
+
 	async update(req, res, next) {
 		// ...
 	},

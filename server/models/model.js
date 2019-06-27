@@ -1,4 +1,3 @@
-/* eslint-disable */
 const pool = requireWrp('modules/postgresql');
 const qh = requireWrp('modules/query-helper');
 

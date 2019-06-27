@@ -4,6 +4,7 @@ const AuthMdw = requireWrp('middlewares/auth-middleware');
 
 router.get('/info', AuthCtlr.info);
 router.post('/signup', AuthCtlr.signup);
+router.post('/quick-signup', AuthCtlr.quickSignup);
 router.post('/login', AuthCtlr.login);
 router.get('/logout', AuthCtlr.logout);
 

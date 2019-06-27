@@ -41,6 +41,14 @@ class UserModel extends Model {
 		}, opt);
 	}
 
+	quickCreate(user, opt) {
+		return this.createOne({
+			name: user.name,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString()
+		}, opt);
+	}
+
 	// update(user) {
 	//  ...
 	// }

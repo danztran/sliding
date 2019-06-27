@@ -1,5 +1,6 @@
 {
 	"hello": "Hello friend !",
+	"anonymousUser": "Stranger",
 	"usernameNotFound": "Username is not found",
 	"passwordIncorrect": "Password is incorrect",
 	"sessionExpired": "Your session has expired. Please log in again.",

@@ -32,7 +32,8 @@
 		"func-names": "off",
 		"no-console": ["error", { "allow": ["warn", "error"] }],
 		"no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["socket", "io"] }],
-		"no-use-before-define": ["error", { "functions": false }]
+		"no-use-before-define": ["error", { "functions": false }],
+		"prefer-rest-params": "off"
 	},
 	"parser": "babel-eslint",
 	"globals": {

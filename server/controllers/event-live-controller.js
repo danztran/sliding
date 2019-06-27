@@ -24,14 +24,27 @@ module.exports = {
 
 			// check user role
 			if (socket.$fn.isAuthenticated()) {
+				const user = socket.$fn.getUser();
 				const eventRole = await EventRole.findRole({
 					event_id: result.event.id,
-					user_id: socket.$fn.getUser().id
+					user_id: user.id
 				}).exec();
-				result.role = Roles[eventRole ? eventRole.role : 'guest'];
+				if (eventRole) {
+					result.role = Roles[eventRole.role];
+				}
+				else {
+					EventRole.create({
+						user_id: user.id,
+						event_id: event.id,
+						role: 'guest'
+					}).exec();
+					result.role = Roles.guest;
+				}
 			}
 			else {
-				result.role = Roles.guest;
+				throw {
+					expected: 'Unauthenticated'
+				};
 			}
 			socket.$fn.setRole(result.role.name);
 			socket.$fn.setEventCode(result.event.code);
