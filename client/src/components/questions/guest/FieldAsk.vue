@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 const askForm = () => ({
 	ask: {
 		value: '',
@@ -74,13 +74,15 @@ const askForm = () => ({
 export default {
 	name: 'FieldAsk',
 	data: () => ({
+		expand: false,
 		form: askForm(),
-		expand: false
+		tempQuestionID: []
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'guest/event/getEventInfo',
-			allowQuestion: 'guest/event/allowQuestion'
+			allowQuestion: 'guest/event/allowQuestion',
+			user: 'auth/user'
 		}),
 		checkValidLength() {
 			const { ask } = this.form;
@@ -96,8 +98,46 @@ export default {
 		}
 	},
 	methods: {
+		...mapMutations({
+			addTempQuestion: 'guest/questions/ADD_TEMP_QUESTION',
+			mergeQuestion: 'guest/questions/MERGE_SUCCESS_QUESTION',
+			deleteErrQuestion: 'guest/questions/DELETE_ERROR_QUESTION'
+		}),
 		sendQuestion() {
-			// ...
+			let key = null;
+			do {
+				key = Math.random().toString(36).substring(7);
+			} while (this.tempQuestionID.includes(key));
+			const questionID = key;
+			const tempQuestionInfo = {
+				content: this.form.ask.value.trim(),
+				count_replies: 0,
+				created_at: new Date().toISOString(),
+				id: questionID,
+				reactions: null,
+				stage: 'public',
+				user: {
+					id: this.user.id,
+					name: this.user.name
+				}
+			};
+			this.form.ask.value = '';
+			this.addTempQuestion(tempQuestionInfo);
+			const emiter = 'add-question';
+			this.$socket.emit(emiter, {
+				event_id: this.eventInfo.id,
+				user_id: this.user.id,
+				content: tempQuestionInfo.content,
+				stage: 'public'
+			}, ({ errmsg, question }) => {
+				if (!question) {
+					if (errmsg) {
+						this.form.ask.errmsg = errmsg;
+					}
+					return this.deleteErrQuestion(questionID);
+				}
+				return this.mergeQuestion(Object.assign(question, { temp_id: questionID }));
+			});
 		}
 	}
 };

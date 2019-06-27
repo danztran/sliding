@@ -1,8 +1,14 @@
 <!-- @desc: question card in live/archive tabs -->
 <template>
 	<v-hover>
-		<v-card slot-scope="{ hover }" :class="{ deleting }" class="no-shadow">
-			<v-list subheader class="py-1">
+		<v-card
+			slot-scope="{ hover }"
+			:class="{ deleting }"
+			class="no-shadow">
+			<v-list
+				subheader
+				class="py-1"
+				:class="{ 'is-star': isStar }">
 				<v-list-tile>
 					<!-- @desc: avatar -->
 					<v-list-tile-avatar
@@ -20,13 +26,21 @@
 						@contains: username, question likes, time post
 					-->
 					<v-list-tile-content>
-						<span class="body-2">
+						<span class="body-2 text-capitalize">
 							{{ question.user.name }}
 						</span>
-						<span class="body-1 grey--text font-weight-light">
-							<span>{{ likes.length }} </span>
-							<v-icon :size="icon.xs" v-text="'$vuetify.icons.like'" />
-							• {{ dateQCreated }}
+						<span class="body-1 grey--text font-weight-light d-flex">
+							<span>{{ likes.length }}&nbsp;</span>
+							<v-icon
+								:size="icon.xs"
+								v-text="'$vuetify.icons.like'" />
+							&nbsp;• {{ dateQCreated }}
+							<v-chip
+								v-if="isAnswered"
+								class="my-0"
+								small
+								outline
+								color="success">Answered</v-chip>
 						</span>
 					</v-list-tile-content>
 
@@ -91,7 +105,10 @@
 												v-text="'$vuetify.icons.approve'" />
 										</v-btn>
 									</template>
-									<span v-t="'btn-mark-answer'" />
+									<span
+										v-t="isAnswered
+											? 'btn-unmark-answer'
+											: 'btn-mark-answer'" />
 								</v-tooltip>
 							</template>
 						</v-list-tile>
@@ -100,139 +117,142 @@
 			</v-list>
 
 			<!-- @desc: on edit field / content -->
-			<v-card-title v-if="onEdit" class="py-0 px-4">
-				<span class="v-textarea-override no-shadow w-100">
-					<text-area :field="form.editQuestion" />
-				</span>
-			</v-card-title>
-			<v-card-title v-else class="py-0 px-4">
-				<p class="body-1 mb-0">
-					{{ question.content }}
-				</p>
-			</v-card-title>
+			<div :class="{ 'is-star': isStar }">
+				<v-card-title v-if="onEdit" class="py-0 px-4">
+					<span class="v-textarea-override no-shadow w-100">
+						<text-area :field="form.editQuestion" />
+					</span>
+				</v-card-title>
+				<v-card-title v-else class="py-0 px-4">
+					<p class="body-1 mb-0">
+						{{ question.content }}
+					</p>
+				</v-card-title>
 
-			<!--@desc:
-					*reply question by open dialog
-					*options: mark start, edit/delete/archive question -->
-			<v-card-actions class="py-0">
-				<v-list-tile class="grow">
-					<!-- *edit: text length -->
-					<div
-						v-if="onEdit"
-						:class="{'red--text': checkValidEdit}"
-						class="body-1">
-						{{ countCharacterEdit }}
-					</div>
-					<!-- *options: mark star -->
-					<v-tooltip v-else bottom>
-						<template v-slot:activator="{ on }">
-							<v-btn icon v-on="on">
-								<v-icon
-									:color="isStar ? 'yellow' : 'grey lighten-1'"
-									size="17"
-									@click="toggleStar"
-									v-text="isStar
-										? '$vuetify.icons.star'
-										: '$vuetify.icons.star_border'" />
-							</v-btn>
-						</template>
-						<span v-t="'btn-star-question'" />
-					</v-tooltip>
-
-					<!-- *reply -->
-					<v-layout
-						align-center
-						justify-end>
-						<template v-if="onEdit">
-							<v-btn
-								v-t="'btn-cancel'"
-								flat
-								small
-								:ripple="false"
-								@click="cancelEdit" />
-							<v-btn
-								v-t="'btn-save'"
-								color="primary"
-								flat
-								small
-								:ripple="false"
-								:disabled="checkValidEdit"
-								@click="saveEdit" />
-						</template>
-						<div v-else>
-							<v-btn
-								v-if="reply"
-								color="grey lighten-1"
-								flat
-								small
-								@click="replyQuestion(question)">
-								<v-icon size="17" v-text="'$vuetify.icons.reply'" />
-								<span class="caption">
-									{{ question.replies
-										? `${question.replies.length}&nbsp;`
-										: `${question.count_replies}&nbsp;` }}
-									<!-- {{ `${question.replies.length}&nbsp;` }} -->
-								</span>
-								<span
-									v-t="question.count_replies > 2 ? 'btn-reply' : 'btn-replies'"
-									class="caption" />
-							</v-btn>
-
-							<!-- *options button -->
-							<v-menu bottom nudge-bottom offset-y left>
-								<template v-slot:activator="{ on }">
-									<v-btn
-										class="ma-0"
-										icon
-										:disabled="loadingState !== ''"
-										v-on="on">
-										<icon-loading-circle :state.sync="loadingState">
-											<template #otp-icon>
-												<v-icon
-													color="grey lighten-1"
-													:size="icon.xs"
-													v-text="'$vuetify.icons.options_dot'" />
-											</template>
-										</icon-loading-circle>
-									</v-btn>
-								</template>
-
-								<v-list class="py-0" dense>
-									<!-- *options: edit -->
-									<v-list-tile @click="editQuestion">
-										<v-list-tile-action>
-											<v-icon v-text="'$vuetify.icons.edit'" />
-										</v-list-tile-action>
-										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-edit'" />
-										</v-list-tile-content>
-									</v-list-tile>
-
-									<!-- *options: archive -->
-									<v-list-tile @click="archiveQuestion">
-										<v-list-tile-action>
-											<v-icon v-text="'$vuetify.icons.archive_all'" />
-										</v-list-tile-action>
-										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-archive'" />
-										</v-list-tile-content>
-									</v-list-tile>
-
-									<!-- *options: delete -->
-									<v-list-tile @click="deleteQuestion">
-										<v-list-tile-action>
-											<v-icon v-text="'$vuetify.icons.delete'" />
-										</v-list-tile-action>
-										<v-list-tile-content>
-											<v-list-tile-title v-t="'btn-delete'" />
-										</v-list-tile-content>
-									</v-list-tile>
-								</v-list>
-							</v-menu>
+				<!--@desc:
+						*reply question by open dialog
+						*options: mark start, edit/delete/archive question -->
+				<v-card-actions class="py-0">
+					<v-list-tile class="grow">
+						<!-- *edit: text length -->
+						<div
+							v-if="onEdit"
+							:class="{'red--text': checkValidEdit}"
+							class="body-1">
+							{{ countCharacterEdit }}
 						</div>
-					</v-layout>
-				</v-list-tile>
-			</v-card-actions>
+						<!-- *options: mark star -->
+						<v-tooltip v-else bottom>
+							<template v-slot:activator="{ on }">
+								<v-btn icon v-on="on">
+									<v-icon
+										:color="isStar ? 'yellow' : 'grey lighten-1'"
+										size="17"
+										@click="toggleStar"
+										v-text="isStar
+											? '$vuetify.icons.star'
+											: '$vuetify.icons.star_border'" />
+								</v-btn>
+							</template>
+							<span v-t="'btn-star-question'" />
+						</v-tooltip>
+
+						<!-- *reply -->
+						<v-layout
+							align-center
+							justify-end>
+							<template v-if="onEdit">
+								<v-btn
+									v-t="'btn-cancel'"
+									flat
+									small
+									:ripple="false"
+									@click="cancelEdit" />
+								<v-btn
+									v-t="'btn-save'"
+									color="primary"
+									flat
+									small
+									:ripple="false"
+									:disabled="checkValidEdit"
+									@click="saveEdit" />
+							</template>
+							<div v-else>
+								<v-btn
+									v-if="reply"
+									color="grey lighten-1"
+									flat
+									small
+									@click="replyQuestion(question)">
+									<v-icon size="17" v-text="'$vuetify.icons.reply'" />
+									<span class="caption">
+										{{ question.replies
+											? `${question.replies.length}&nbsp;`
+											: `${question.count_replies}&nbsp;` }}
+									</span>
+									<span
+										v-t="question.count_replies > 2
+											? 'btn-reply'
+											: 'btn-replies'"
+										class="caption" />
+								</v-btn>
+
+								<!-- *options button -->
+								<v-menu bottom nudge-bottom offset-y left>
+									<template v-slot:activator="{ on }">
+										<v-btn
+											class="ma-0"
+											icon
+											:disabled="loadingState !== ''"
+											v-on="on">
+											<icon-loading-circle :state.sync="loadingState">
+												<template #otp-icon>
+													<v-icon
+														color="grey lighten-1"
+														:size="icon.xs"
+														v-text="'$vuetify.icons.options_dot'" />
+												</template>
+											</icon-loading-circle>
+										</v-btn>
+									</template>
+
+									<v-list class="py-0" dense>
+										<!-- *options: edit -->
+										<v-list-tile @click="editQuestion">
+											<v-list-tile-action>
+												<v-icon v-text="'$vuetify.icons.edit'" />
+											</v-list-tile-action>
+											<v-list-tile-content>
+												<v-list-tile-title v-t="'btn-edit'" />
+											</v-list-tile-content>
+										</v-list-tile>
+
+										<!-- *options: archive -->
+										<v-list-tile @click="archiveQuestion">
+											<v-list-tile-action>
+												<v-icon v-text="'$vuetify.icons.archive_all'" />
+											</v-list-tile-action>
+											<v-list-tile-content>
+												<v-list-tile-title v-t="'btn-archive'" />
+											</v-list-tile-content>
+										</v-list-tile>
+
+										<!-- *options: delete -->
+										<v-list-tile @click="deleteQuestion">
+											<v-list-tile-action>
+												<v-icon v-text="'$vuetify.icons.delete'" />
+											</v-list-tile-action>
+											<v-list-tile-content>
+												<v-list-tile-title v-t="'btn-delete'" />
+											</v-list-tile-content>
+										</v-list-tile>
+									</v-list>
+								</v-menu>
+							</div>
+						</v-layout>
+					</v-list-tile>
+				</v-card-actions>
+			</div>
 		</v-card>
 	</v-hover>
 </template>
@@ -318,6 +338,9 @@ export default {
 		},
 		isStar() {
 			return this.question.is_star;
+		},
+		isAnswered() {
+			return this.question.is_answered;
 		},
 		likes() {
 			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
@@ -423,7 +446,13 @@ export default {
 	opacity: .4;
 	cursor: not-allowed;
 }
+.is-star {
+	background: rgba(162, 209, 218, 0.231372549) !important;
+}
 .v-list__tile__action {
 	min-width: 40px !important;
+}
+.v-chip--small {
+	height: 21px !important;
 }
 </style>

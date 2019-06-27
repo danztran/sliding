@@ -11,14 +11,17 @@ const _cm = {
 	},
 	dayCreate(createdAt) {
 		const toMs = new Date().getTime() - Date.parse(createdAt);
+		const toTimeString = new Date(createdAt).toTimeString().substr(0, 5);
 		const calMs = toMs / 86000000; // milisecond per day;
 		if (calMs <= 1) {
-			return `Today, ${new Date(createdAt).toTimeString().substr(0, 5)}`;
+			return `Today, ${toTimeString}`;
 		}
 		if (calMs <= 2 && calMs > 1) {
-			return `Yesterday, ${new Date(createdAt).toTimeString().substr(0, 5)}`;
+			return `Yesterday, ${toTimeString}`;
 		}
-		return (new Date(createdAt).toUTCString().substr(0, 22));
+		const date = new Date(createdAt).toGMTString().split(' ');
+		const result = `${date[1]} ${date[2]}, ${toTimeString}`;
+		return result;
 	},
 	customSort(array = [], order = 'asc', field) {
 		if (Array.isArray(array) && array.length > 0) {

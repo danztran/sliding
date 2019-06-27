@@ -18,6 +18,36 @@ const SET_QUESTION_REPLIES = (state, dataReplies) => {
 
 
 /* ------------------------------------------------------------------------
+	@desc: receive new question, add to state
+	@socket: listen 'new_added_question'
+------------------------------------------------------------------------*/
+const ADD_QUESTION = (state, question) => {
+	state.questions.push(Object.assign(question, { count_replies: 0 }));
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: add temp question for showing in UI
+	@socket: before emiter 'add-question'
+------------------------------------------------------------------------*/
+const ADD_TEMP_QUESTION = (state, tempQuestion) => {
+	state.questions.push(tempQuestion);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: receive success question data,
+				merge to temp question above.
+	@socket: after emiter 'add-question'
+------------------------------------------------------------------------*/
+const MERGE_SUCCESS_QUESTION = (state, resQuestion) => {
+	const question = state.questions.find(q => q.id === resQuestion.temp_id);
+	delete resQuestion.temp_id;
+	Object.assign(question, resQuestion);
+};
+
+
+/* ------------------------------------------------------------------------
 	@desc: listen other user add new reply,
 				then find question by 'id' and add
 	@socket: listen 'new_added_question_reply'
@@ -55,6 +85,15 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
 	delete resReply.temp_id;
 	Object.assign(reply, resReply);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: if receive error, remove temp question added before
+	@socket: after emiter 'add-question-reply'
+------------------------------------------------------------------------*/
+const DELETE_ERROR_QUESTION = (state, tempID) => {
+	state.questions = state.questions.filter(q => q.id !== tempID);
 };
 
 
@@ -107,6 +146,10 @@ const RESET = (state) => {
 export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
+	ADD_QUESTION,
+	ADD_TEMP_QUESTION,
+	MERGE_SUCCESS_QUESTION,
+	DELETE_ERROR_QUESTION,
 	ADD_QUESTION_REPLY,
 	ADD_TEMP_QUESTION_REPLY,
 	MERGE_SUCCESS_QUESTION_REPLY,

@@ -47,6 +47,9 @@ export default {
 		});
 	},
 	sockets: {
+		new_added_question(question) {
+			this.addQuestion(question);
+		},
 		new_added_question_reply(reply) {
 			this.addQuestionReply(reply);
 		},
@@ -61,6 +64,7 @@ export default {
 	methods: {
 		...mapMutations({
 			setQuestions: 'guest/questions/SET_QUESTIONS',
+			addQuestion: 'guest/questions/ADD_QUESTION',
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
 			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY'

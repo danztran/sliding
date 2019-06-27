@@ -95,6 +95,9 @@ export default {
 		});
 	},
 	sockets: {
+		new_added_question(question) {
+			this.addQuestion(question);
+		},
 		new_added_question_reply(reply) {
 			this.addQuestionReply(reply);
 		},
@@ -109,6 +112,7 @@ export default {
 	methods: {
 		...mapMutations({
 			setQuestions: 'admin/questions/SET_QUESTIONS',
+			addQuestion: 'admin/questions/ADD_QUESTION',
 			addQuestionReply: 'admin/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'admin/questions/MERGE_EDIT_REPLY',
 			deleteQuestionReply: 'admin/questions/DELETE_QUESTION_REPLY'

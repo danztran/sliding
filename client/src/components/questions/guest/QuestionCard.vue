@@ -15,7 +15,7 @@
 
 				<!-- @desc: user info -->
 				<v-list-tile-content>
-					<span class="body-2">
+					<span class="body-2 text-capitalize">
 						{{ question.user.name }}
 					</span>
 					<span class="body-1 grey--text font-weight-light">

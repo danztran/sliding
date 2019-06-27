@@ -6,6 +6,7 @@ const SET_QUESTIONS = (state, questions) => {
 	state.questions = questions;
 };
 
+
 /* ------------------------------------------------------------------------
 	@desc: get all replies in question, set to state
 	@socket: emiter 'get-question-replies'
@@ -14,6 +15,16 @@ const SET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id === dataReplies.id);
 	Object.assign(question, { replies: dataReplies.replies });
 };
+
+
+/* ------------------------------------------------------------------------
+	@desc: receive new question, add to state
+	@socket: listen guest 'new_added_question'
+------------------------------------------------------------------------*/
+const ADD_QUESTION = (state, question) => {
+	state.questions.push(Object.assign(question, { count_replies: 0 }));
+};
+
 
 // @desc: socket return data question had editted, then merge
 const MERGE_QUESTION = (state, resQ) => {
@@ -109,6 +120,7 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 	}
 };
 
+
 /* ------------------------------------------------------------------------
 	@desc: when leave event clear state
 ------------------------------------------------------------------------*/
@@ -116,9 +128,11 @@ const RESET = (state) => {
 	state.questions = [];
 };
 
+
 export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
+	ADD_QUESTION,
 	ADD_QUESTION_REPLY,
 	MERGE_QUESTION,
 	DELETE_QUESTION,
