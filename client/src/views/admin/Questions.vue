@@ -7,7 +7,7 @@
 				@desc: check question Panel Moderation view
 				@hidden panel in XS-SM
 			-->
-			<v-flex v-if="!showSMnXS" class="pr-1" xs12 md6>
+			<v-flex v-if="!isSMnXS" class="pr-1" xs12 md6>
 				<question-panel--review :empty-question="true">
 					<question-card--review />
 				</question-panel--review>
@@ -18,14 +18,14 @@
 				@show tab moderation in XS-SM
 			-->
 			<v-flex
-				:class="{'pl-1': !showSMnXS}"
+				:class="{'pl-1': !isSMnXS}"
 				xs12
 				md6>
 				<question-panel--main
 					:empty-live="Boolean(questions.length)"
 					:empty-archive="true">
 					<template
-						v-if="showSMnXS"
+						v-if="isSMnXS"
 						#for-review-moderation-tab>
 						<!-- <question-card--review /> -->
 					</template>
@@ -69,9 +69,6 @@ export default {
 			questions: 'admin/questions/getQuestions',
 			event: 'admin/event/getEventInfo'
 		}),
-		showSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		},
 		forReviewQuestions() {
 			return this.questions.filter(q => q.stage === 'private');
 		},

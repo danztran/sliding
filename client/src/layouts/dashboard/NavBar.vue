@@ -11,7 +11,7 @@
 				justify-space-between
 				fill-height>
 				<v-toolbar-side-icon
-					v-if="hiddenXS"
+					v-if="isXS"
 					@click="toggleDrawer" />
 
 				<v-toolbar-title class="white--text ml-0">
@@ -25,7 +25,7 @@
 								{{ user ? user.name : '' }}
 							</div>
 						</div>
-						<div v-if="hiddenXS" class="text-xs-center">
+						<div v-if="isXS" class="text-xs-center">
 							Sliding
 						</div>
 					</v-list-tile-content>
@@ -34,7 +34,7 @@
 				<v-spacer class="hidden-xs-only" />
 
 				<v-text-field
-					v-if="!hiddenXS"
+					v-if="!isXS"
 					class="pt-2"
 					flat
 					solo-inverted
@@ -102,10 +102,7 @@ export default {
 	computed: {
 		...mapGetters({
 			user: 'auth/user'
-		}),
-		hiddenXS() {
-			return this.$vuetify.breakpoint.xs;
-		}
+		})
 	},
 	created() {
 		this.tabs.forEach((e) => {

@@ -121,11 +121,6 @@ export default {
 	data: () => ({
 		iconSize: 25
 	}),
-	computed: {
-		isXS() {
-			return this.$vuetify.breakpoint.xs;
-		}
-	},
 	methods: {
 		formatDate(date) {
 			return new Date(date).toLocaleDateString();

@@ -76,10 +76,7 @@ export default {
 	computed: {
 		...mapGetters({
 			eventInfo: 'guest/event/getEventInfo'
-		}),
-		isSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		}
+		})
 	},
 	methods: {
 		toggleDialogProfile() {

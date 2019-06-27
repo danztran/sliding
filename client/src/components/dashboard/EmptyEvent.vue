@@ -16,11 +16,11 @@
 			order-md1>
 			<div
 				v-t="'welcome'"
-				:class="{'headline mt-3': showSMnXS}"
+				:class="{'headline mt-3': isSMnXS}"
 				class="display-1 font-weight-light" />
 			<div
 				v-t="'event-welcome'"
-				:class="{'mt-2 subheading': showSMnXS, 'mt-4': !showSMnXS}"
+				:class="{'mt-2 subheading': isSMnXS, 'mt-4': !isSMnXS}"
 				class="title font-weight-light" />
 			<v-btn
 				v-t="'btn-create-event'"
@@ -37,11 +37,6 @@
 <script>
 export default {
 	name: 'EmptyEvent',
-	computed: {
-		showSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		}
-	},
 	methods: {
 		toggleCreateEventDialog() {
 			this.$root.$emit('dialog-create-new-event');

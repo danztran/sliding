@@ -142,10 +142,7 @@ export default {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
 			tempSettings: 'admin/event/getTempSettings'
-		}),
-		isSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		}
+		})
 	},
 	mounted() {
 		this.$root.$on('save-settings', () => {

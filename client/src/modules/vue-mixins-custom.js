@@ -1,6 +1,7 @@
 import handleMessages from '@/mixins/handleMessages';
+import handleBreakpoint from '@/mixins/handleBreakpoint';
 
-const mixins = [handleMessages];
+const mixins = [handleMessages, handleBreakpoint];
 
 export default {
 	install(Vue, options) {

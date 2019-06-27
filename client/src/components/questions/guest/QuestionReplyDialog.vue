@@ -50,13 +50,14 @@
 					<!-- <div @keydown.enter.capture.prevent.stop> -->
 					<text-area class="field-reply"
 						:field="form.reply"
+						:disabled="!allowQReply"
 						@keydown.native.enter.capture="onReplyEnter" />
 					<!-- </div> -->
 					<v-btn
 						flat
 						icon
 						color="primary"
-						:disabled="checkValidReply"
+						:disabled="checkValidReply || !allowQReply"
 						@click="sendReply">
 						<v-icon v-text="'$vuetify.icons.send'" />
 					</v-btn>
@@ -113,11 +114,9 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			getQuestionReplies: 'guest/questions/getQuestionReplies'
+			getQuestionReplies: 'guest/questions/getQuestionReplies',
+			allowQReply: 'guest/event/allowQReply'
 		}),
-		isSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		},
 		checkValidReply() {
 			const { reply } = this.form;
 			if (reply.value && reply.value.length > reply.counter) {

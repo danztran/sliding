@@ -148,9 +148,6 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(reply.value);
-		},
-		isSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
 		}
 	},
 	watch: {

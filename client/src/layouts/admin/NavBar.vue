@@ -11,12 +11,12 @@
 				justify-space-between
 				fill-height>
 				<v-toolbar-side-icon
-					v-if="hiddenXS"
+					v-if="isXS"
 					@click="toggleDrawer" />
 
 				<v-list-tile>
 					<v-list-tile-avatar
-						v-if="!hiddenXS"
+						v-if="!isXS"
 						size="35"
 						color="white">
 						<router-link
@@ -97,9 +97,6 @@ export default {
 		]
 	}),
 	computed: {
-		hiddenXS() {
-			return this.$vuetify.breakpoint.xs;
-		},
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo'
 		})

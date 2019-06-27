@@ -3,36 +3,6 @@
 		<div
 			v-t="'guest-ask-title'"
 			class="px-3 py-1 body-1 grey--text" />
-		<!-- <div id="guest-ask">
-			<text-area
-				class="custom-area-field pt-3 px-3"
-				:class="{'blur': !allowQuestion}"
-				:field="form.ask"
-				:disabled="!allowQuestion" />
-			<v-divider />
-			<v-layout
-				align-center
-				justify-space-between
-				class="px-3 py-1"
-				:class="{'blur': !allowQuestion}">
-				<span class="grey--text">
-					{{ countCharacters }}
-				</span>
-				<v-btn
-					v-t="'btn-send'"
-					color="primary"
-					small
-					round
-					:disabled="checkValidLength || !allowQuestion"
-					@click="sendQuestion" />
-			</v-layout>
-			<div v-if="!allowQuestion" class="question-not-allow">
-				<div class="centered">
-					<v-icon size="50" v-text="'$vuetify.icons.lock'" />
-					<div v-t="'guest-ask-disable'" />
-				</div>
-			</div>
-		</div> -->
 		<div id="guest-ask">
 			<v-layout
 				class="pt-3 px-3"

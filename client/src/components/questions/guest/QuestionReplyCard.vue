@@ -63,12 +63,6 @@ export default {
 		}
 	}),
 	computed: {
-		isXS() {
-			return this.$vuetify.breakpoint.xs;
-		},
-		isSM() {
-			return this.$vuetify.breakpoint.sm;
-		},
 		dateRCreated() {
 			return this._cm.dayCreate(this.replyData.created_at);
 		}

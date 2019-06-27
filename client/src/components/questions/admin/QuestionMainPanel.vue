@@ -21,7 +21,7 @@
 				slider-color="primary"
 				right>
 				<v-tab
-					v-if="showSMnXS"
+					v-if="isSMnXS"
 					active-class="primary--text font-weight-medium">
 					{{ $t('moderation-view-title') }}
 				</v-tab>
@@ -42,7 +42,7 @@
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
 						<v-btn
-							v-if="!showSMnXS"
+							v-if="!isSMnXS"
 							class="ma-0"
 							icon
 							v-on="on">
@@ -58,7 +58,7 @@
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
 						<v-btn
-							v-if="currentTab === 0 && !showSMnXS"
+							v-if="currentTab === 0 && !isSMnXS"
 							class="ma-0"
 							icon
 							v-on="on">
@@ -89,7 +89,7 @@
 		<v-tabs-items v-model="currentTab" class="w-100">
 			<!-- @tab: moderation tab in XS-SM -->
 			<v-tab-item
-				v-if="showSMnXS"
+				v-if="isSMnXS"
 				class="list-scroll"
 				:transition="false"
 				:reverse-transition="false">
@@ -172,11 +172,6 @@ export default {
 			small: 20
 		}
 	}),
-	computed: {
-		showSMnXS() {
-			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		}
-	},
 	methods: {
 		replyQuestion() {
 			this.$root.$emit('dialog-reply-question');

@@ -164,12 +164,6 @@ export default {
 		loadingState: ''
 	}),
 	computed: {
-		isXS() {
-			return this.$vuetify.breakpoint.xs;
-		},
-		isSM() {
-			return this.$vuetify.breakpoint.sm;
-		},
 		checkValidEdit() {
 			const { editReply } = this.form;
 			if (editReply.value && editReply.value.length > editReply.maxLength) {
