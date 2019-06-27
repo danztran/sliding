@@ -48,7 +48,7 @@
 			</v-card-title>
 			<v-divider />
 
-			<!-- @desc: Replies message content -->
+			<!-- @desc: Replies message -->
 			<div class="max-height-sm-down">
 				<div
 					id="qrd"

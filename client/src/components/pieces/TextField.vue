@@ -13,6 +13,7 @@
 		:error-messages="field.errmsg"
 		:disabled="disabled"
 		:prefix="field.prefix"
+		autocapitalize="off"
 		@input="onInput" />
 </template>
 <style scoped>

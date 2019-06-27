@@ -5,6 +5,9 @@ html, body {
 	overflow-y: auto;
 	box-sizing: border-box;
 	scroll-behavior: smooth;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .no-underline, .no-undeline a {

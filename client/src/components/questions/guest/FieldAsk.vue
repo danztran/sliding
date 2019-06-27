@@ -3,7 +3,7 @@
 		<div
 			v-t="'guest-ask-title'"
 			class="px-3 py-1 body-1 grey--text" />
-		<div id="guest-ask">
+		<!-- <div id="guest-ask">
 			<text-area
 				class="custom-area-field pt-3 px-3"
 				:class="{'blur': !allowQuestion}"
@@ -32,6 +32,58 @@
 					<div v-t="'guest-ask-disable'" />
 				</div>
 			</div>
+		</div> -->
+		<div id="guest-ask">
+			<v-layout
+				class="pt-3 px-3"
+				:class="{'blur': !allowQuestion}">
+				<v-expand-x-transition>
+					<v-icon
+						v-if="!expand"
+						color="primary"
+						class="pt-1 ask-icon d-block"
+						v-text="'$vuetify.icons.ask_question'" />
+				</v-expand-x-transition>
+
+				<v-expand-x-transition>
+					<v-textarea
+						v-model="form.ask.value"
+						class="custom-area-field pt-0 mt-0"
+						rows="1"
+						:auto-grow="true"
+						:placeholder="$t('lb-question')"
+						:errmsg="form.ask.errmsg"
+						:disabled="!allowQuestion"
+						@focus="expand=true"
+						@blur="expand=false" />
+				</v-expand-x-transition>
+			</v-layout>
+			<v-divider />
+			<v-expand-transition>
+				<div v-show="expand">
+					<v-layout
+						align-center
+						justify-space-between
+						class="px-3 py-1"
+						:class="{'blur': !allowQuestion}">
+						<span class="grey--text">
+							{{ countCharacters }}
+						</span>
+						<v-btn
+							v-t="'btn-send'"
+							color="primary"
+							small
+							round
+							:disabled="checkValidLength || !allowQuestion"
+							@click="sendQuestion" />
+					</v-layout>
+				</div>
+			</v-expand-transition>
+			<div v-if="!allowQuestion" class="question-not-allow">
+				<div class="centered">
+					<v-icon size="50" v-text="'$vuetify.icons.lock'" />
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -42,10 +94,7 @@ const askForm = () => ({
 	ask: {
 		value: '',
 		placeholder: 'lb-question',
-		type: 'text',
-		prepend: 'message',
 		rows: 2,
-		autogrow: true,
 		maxLength: 160,
 		errmsg: ''
 	}
@@ -54,7 +103,8 @@ const askForm = () => ({
 export default {
 	name: 'FieldAsk',
 	data: () => ({
-		form: askForm()
+		form: askForm(),
+		expand: false
 	}),
 	computed: {
 		...mapGetters({
@@ -90,6 +140,10 @@ export default {
 	background-color: #fff;
 	position: relative;
 	z-index: 1;
+
+	.ask-icon {
+		width: 40px;
+	}
 
 	.question-not-allow {
 		position: absolute;

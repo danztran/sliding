@@ -35,6 +35,7 @@ const icons = {
 	ideas: 'new_releases',
 	analytics: 'poll',
 	polls: 'sort',
+	ask_question: 'comment',
 	questions: 'question_answer',
 	switch_event: 'compare_arrows',
 	home: 'home',

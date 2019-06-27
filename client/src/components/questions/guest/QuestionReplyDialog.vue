@@ -28,7 +28,11 @@
 			<v-divider />
 
 			<div class="max-height-sm-down">
-				<div class="wrapper-card">
+				<div
+					id="qrd"
+					ref="qrd"
+					v-scroll:#qrd="onScrollDialog"
+					class="wrapper-card">
 					<question-card :question="question" reply />
 					<div class="wrapper-card--reply">
 						<template v-for="reply in replies">
@@ -39,6 +43,24 @@
 						<bouncy-loader v-if="loading" />
 					</div>
 				</div>
+
+				<!-- @desc: reply field -->
+				<v-divider />
+				<v-card-actions style="padding: 5px 24px;">
+					<!-- <div @keydown.enter.capture.prevent.stop> -->
+					<text-area class="field-reply"
+						:field="form.reply"
+						@keydown.native.enter.capture="onReplyEnter" />
+					<!-- </div> -->
+					<v-btn
+						flat
+						icon
+						color="primary"
+						:disabled="checkValidReply"
+						@click="sendReply">
+						<v-icon v-text="'$vuetify.icons.send'" />
+					</v-btn>
+				</v-card-actions>
 			</div>
 		</v-card>
 	</v-dialog>
@@ -49,6 +71,19 @@ import { mapGetters, mapMutations } from 'vuex';
 import QuestionCard from '@/components/questions/guest/QuestionCard.vue';
 import QuestionReplyCard from '@/components/questions/guest/QuestionReplyCard.vue';
 
+const initForm = () => ({
+	reply: {
+		label: 'lb-reply',
+		value: '',
+		prepend: 'person',
+		errmsg: '',
+		rows: 1,
+		counter: 160,
+		autogrow: true,
+		autofocus: true
+	}
+});
+
 export default {
 	name: 'QuestionReplyDialog',
 	components: {
@@ -56,10 +91,11 @@ export default {
 		'reply-card': QuestionReplyCard
 	},
 	data: () => ({
+		dialogReplyQuestion: false,
 		icon: {
 			sm: 20
 		},
-		dialogReplyQuestion: false,
+		form: initForm(),
 		loading: false,
 		question: {
 			content: '',
@@ -71,7 +107,9 @@ export default {
 				name: ''
 			}
 		},
-		replies: []
+		replies: [],
+		autoscroll: true,
+		qrd: null
 	}),
 	computed: {
 		...mapGetters({
@@ -79,13 +117,30 @@ export default {
 		}),
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
+		},
+		checkValidReply() {
+			const { reply } = this.form;
+			if (reply.value && reply.value.length > reply.counter) {
+				reply.errmsg = this.$t('err-reply-limit');
+				return true;
+			}
+			return !this._cm.notEmpty(reply.value);
+		}
+	},
+	watch: {
+		replies() {
+			if (this.autoscroll) {
+				this.$nextTick(this.toLatestReply);
+			}
 		}
 	},
 	mounted() {
+		this.qrd = this.$refs.qrd;
 		this.$root.$on('dialog-reply-question', (question) => {
 			this.dialogReplyQuestion = true;
 			if (this.question && this.question.id === question.id) return;
 			this.question = question;
+			this.autoscroll = true;
 			this.replies = this.question.replies || [];
 			if (this.question.replies === undefined && this.question.count_replies > 0) {
 				this.loading = true;
@@ -97,9 +152,68 @@ export default {
 		...mapMutations({
 			setQReplies: 'guest/questions/SET_QUESTION_REPLIES'
 		}),
+		toLatestReply() {
+			this.qrd.scrollBy({
+				top: this.qrd.scrollHeight - this.qrd.offsetHeight,
+				left: 0,
+				behavior: 'smooth'
+			});
+		},
+		onScrollDialog(e) {
+			const { qrd } = this.$refs;
+			this.autoscroll = qrd.scrollTop + 20 > qrd.scrollHeight - qrd.offsetHeight;
+		},
+		onReplyEnter(e) {
+			// if (e && !e.shiftKey) {
+			// 	e.preventDefault();
+			// 	if (this.form.reply.value.trim() === '') {
+			// 		return;
+			// 	}
+			// 	this.sendReply();
+			// }
+		},
 		updateReplies() {
 			this.replies = this.getQuestionReplies(this.question.id);
 			this._cm.customSort(this.replies, 'asc', 'created_at');
+		},
+		sendReply() {
+			let key = null;
+			do {
+				key = Math.random().toString(36).substring(7);
+			} while (this.tempReplyID.includes(key));
+			this.tempReplyID.push(key);
+			const replyId = key;
+			const replyInfo = {
+				question_id: this.question.id,
+				data: {
+					id: replyId,
+					content: this.form.reply.value.trim(),
+					question_id: this.question.id,
+					created_at: new Date().toISOString(),
+					user: {
+						id: this.user.id,
+						name: this.user.name
+					}
+				}
+			};
+			this.addTempReply(replyInfo);
+			this.form.reply.value = '';
+			const emiter = 'add-question-reply';
+			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
+				const infoReply = {
+					question_id: this.question.id,
+					temp_id: replyId
+				};
+				this.tempReplyID = this.tempReplyID.filter(id => id !== replyId);
+				if (!reply) {
+					if (errmsg) {
+						this.form.reply.errmsg = errmsg;
+					}
+					return this.deleteErrorQReply(infoReply);
+				}
+				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
+				return this.updateReplies();
+			});
 		},
 		emitReplies() {
 			const emiter = 'get-question-replies';
