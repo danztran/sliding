@@ -135,6 +135,9 @@ export default {
 	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
+		this.$root.$on('update-replies', () => {
+			this.updateReplies();
+		});
 		this.$root.$on('dialog-reply-question', (question) => {
 			this.dialogReplyQuestion = true;
 			if (this.question && this.question.id === question.id) return;

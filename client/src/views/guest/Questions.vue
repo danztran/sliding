@@ -46,9 +46,24 @@ export default {
 			this.setQuestions(questions);
 		});
 	},
+	sockets: {
+		new_added_question_reply(reply) {
+			this.addQuestionReply(reply);
+		},
+		new_edited_question_reply(reply) {
+			this.mergeQuestionReply(reply);
+		},
+		new_deleted_question_reply(reply) {
+			this.deleteQuestionReply(reply);
+			this.$root.$emit('update-replies');
+		}
+	},
 	methods: {
 		...mapMutations({
-			setQuestions: 'guest/questions/SET_QUESTIONS'
+			setQuestions: 'guest/questions/SET_QUESTIONS',
+			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
+			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
+			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY'
 		})
 	}
 };

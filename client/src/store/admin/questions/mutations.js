@@ -1,9 +1,15 @@
-// @desc: after get all question in event via socket, set to state
+/* ------------------------------------------------------------------------
+	@desc: get all questions in event set to state
+	@socket: emiter 'get-questions'
+------------------------------------------------------------------------*/
 const SET_QUESTIONS = (state, questions) => {
 	state.questions = questions;
 };
 
-// @desc: after get all question replies via socket, set to state
+/* ------------------------------------------------------------------------
+	@desc: get all replies in question, set to state
+	@socket: emiter 'get-question-replies'
+------------------------------------------------------------------------*/
 const SET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id === dataReplies.id);
 	Object.assign(question, { replies: dataReplies.replies });
@@ -15,12 +21,21 @@ const MERGE_QUESTION = (state, resQ) => {
 	Object.assign(question, resQ);
 };
 
+
+/* ------------------------------------------------------------------------
+	@desc: receive 'id' question, then remove
+	@socket: listen
+------------------------------------------------------------------------*/
 const DELETE_QUESTION = (state, delQuestion) => {
 	state.questions = state.questions.filter(q => q.id !== delQuestion.id);
 };
 
-// @desc: socket listen orther user add new question reply
-// then add to state
+
+/* ------------------------------------------------------------------------
+	@desc: listen other user add new reply,
+				then find question by 'id' and add
+	@socket: listen 'new_added_question_reply'
+------------------------------------------------------------------------*/
 const ADD_QUESTION_REPLY = (state, reply) => {
 	const question = state.questions.find(q => q.id === reply.question_id);
 	if (question.replies) {
@@ -31,8 +46,11 @@ const ADD_QUESTION_REPLY = (state, reply) => {
 	}
 };
 
-// @desc: before socket return reply data had added,
-// 	add temp reply for showing in UI
+
+/* ------------------------------------------------------------------------
+	@desc: add temp reply for showing in UI
+	@socket: before emiter 'add-question-reply'
+------------------------------------------------------------------------*/
 const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
 	const question = state.questions.find(q => q.id === tempReply.question_id);
 	if (!question) return;
@@ -40,8 +58,12 @@ const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
 	question.replies.push(tempReply.data);
 };
 
-// @desc: after socket return success reply data
-// merge(override) success reply into temp reply
+
+/* ------------------------------------------------------------------------
+	@desc: receive success reply data,
+				merge(override) to temp reply
+	@socket: after emiter 'add-question-reply'
+------------------------------------------------------------------------*/
 const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
 	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
@@ -49,13 +71,21 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	Object.assign(reply, resReply);
 };
 
-// @desc: if socket return error, then remove(delete) temp error reply
+
+/* ------------------------------------------------------------------------
+	@desc: if receive error, remove temp reply
+	@socket: after emiter 'add-question-reply'
+------------------------------------------------------------------------*/
 const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 	const question = state.questions.find(q => q.id === infoErrReply.question_id);
 	question.replies = question.replies.filter(r => r.id !== infoErrReply.temp_id);
 };
 
-// @desc: socket return success reply editted, merge(override) into temp
+
+/* ------------------------------------------------------------------------
+	@desc: receive success reply editted, mergo into temp
+	@socket: after emiter 'edit-question-reply'
+------------------------------------------------------------------------*/
 const MERGE_EDIT_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
 	if (!question.replies) return;
@@ -63,6 +93,12 @@ const MERGE_EDIT_REPLY = (state, resReply) => {
 	Object.assign(reply, resReply);
 };
 
+
+/* ------------------------------------------------------------------------
+	@desc: receive 'id' reply, then remove
+				and reduce count_replies
+	@socket: listen 'new_deleted_question_reply'
+------------------------------------------------------------------------*/
 const DELETE_QUESTION_REPLY = (state, res) => {
 	const question = state.questions.find(q => q.id === res.question_id);
 	if (question.replies) {
@@ -73,6 +109,9 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 	}
 };
 
+/* ------------------------------------------------------------------------
+	@desc: when leave event clear state
+------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.questions = [];
 };
