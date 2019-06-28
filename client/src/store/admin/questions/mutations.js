@@ -35,7 +35,7 @@ const MERGE_QUESTION = (state, resQ) => {
 
 /* ------------------------------------------------------------------------
 	@desc: receive 'id' question, then remove
-	@socket: listen
+	@socket: emiter 'delete-question'
 ------------------------------------------------------------------------*/
 const DELETE_QUESTION = (state, delQuestion) => {
 	state.questions = state.questions.filter(q => q.id !== delQuestion.id);

@@ -350,7 +350,7 @@ export default {
 	methods: {
 		...mapMutations({
 			mergeQuestion: 'admin/questions/MERGE_QUESTION',
-			deleteQuestion: 'admin/questions/DELETE_QUESTION'
+			delQuestion: 'admin/questions/DELETE_QUESTION'
 		}),
 		resetForm() {
 			this.cache = '';
@@ -422,6 +422,7 @@ export default {
 			});
 		},
 		deleteQuestion() {
+			this.deleting = true;
 			const emiter = 'delete-question';
 			this.$socket.emit(emiter, { id: this.question.id }, ({ errmsg, question }) => {
 				if (errmsg) {
@@ -429,7 +430,7 @@ export default {
 					// show notify
 					return;
 				}
-				this.deleteQuestion(question);
+				this.delQuestion(question);
 			});
 		},
 		changeLoadingState(state) {

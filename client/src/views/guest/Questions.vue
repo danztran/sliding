@@ -50,6 +50,9 @@ export default {
 		new_added_question(question) {
 			this.addQuestion(question);
 		},
+		new_deleted_question(question) {
+			this.delQuestion(question);
+		},
 		new_added_question_reply(reply) {
 			this.addQuestionReply(reply);
 		},
@@ -65,6 +68,7 @@ export default {
 		...mapMutations({
 			setQuestions: 'guest/questions/SET_QUESTIONS',
 			addQuestion: 'guest/questions/ADD_QUESTION',
+			delQuestion: 'guest/questions/DELETE_QUESTION',
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
 			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY'

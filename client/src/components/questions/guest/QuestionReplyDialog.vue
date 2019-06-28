@@ -228,6 +228,7 @@ export default {
 				this.loading = false;
 				if (errmsg) {
 					// notify
+					console.warn(errmsg);
 					return;
 				}
 				const data = {

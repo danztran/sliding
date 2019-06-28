@@ -27,6 +27,15 @@ const ADD_QUESTION = (state, question) => {
 
 
 /* ------------------------------------------------------------------------
+	@desc: receive 'id' question, then remove
+	@socket: listen 'new_deleted_question'
+------------------------------------------------------------------------*/
+const DELETE_QUESTION = (state, delQuestion) => {
+	state.questions = state.questions.filter(q => q.id !== delQuestion.id);
+};
+
+
+/* ------------------------------------------------------------------------
 	@desc: add temp question for showing in UI
 	@socket: before emiter 'add-question'
 ------------------------------------------------------------------------*/
@@ -147,6 +156,7 @@ export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
 	ADD_QUESTION,
+	DELETE_QUESTION,
 	ADD_TEMP_QUESTION,
 	MERGE_SUCCESS_QUESTION,
 	DELETE_ERROR_QUESTION,
