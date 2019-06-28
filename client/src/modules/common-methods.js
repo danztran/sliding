@@ -49,6 +49,10 @@ const _cm = {
 				if (typeof m === 'number' && typeof n === 'number') {
 					return m - n;
 				}
+				if (Array.isArray(m) && Array.isArray(n)) {
+					m = m.length;
+					n = n.length;
+				}
 				return (`${m}`).localeCompare(`${n}`);
 			});
 		}

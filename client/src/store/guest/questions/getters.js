@@ -1,4 +1,9 @@
+import _cm from '@/modules/common-methods';
+
 const getQuestions = state => state.questions;
+const getPopularQuestions = state => _cm.customSort([...state.questions], 'desc', 'reactions');
+const getRecentQuestions = state => _cm.customSort([...state.questions], 'desc', 'created_at');
+
 const getQuestionReplies = state => (id) => {
 	const question = state.questions.find(q => q.id === id);
 	return question ? question.replies : [];
@@ -6,5 +11,7 @@ const getQuestionReplies = state => (id) => {
 
 export default {
 	getQuestions,
+	getPopularQuestions,
+	getRecentQuestions,
 	getQuestionReplies
 };

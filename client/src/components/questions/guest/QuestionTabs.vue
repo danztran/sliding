@@ -47,7 +47,10 @@
 				<v-card class="guest-list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
-							<slot name="popular-tab" />
+							<question-card
+								v-for="question in popularQuestions"
+								:key="question.id"
+								:question="question" />
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -61,7 +64,10 @@
 					class="guest-list-scroll scrollbar-primary">
 					<v-layout row wrap>
 						<v-flex xs12>
-							<slot name="recent-tab" />
+							<question-card
+								v-for="question in recentQuestions"
+								:key="question.id"
+								:question="question" />
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -72,14 +78,21 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import QuestionCard from './QuestionCard.vue';
+
 export default {
 	name: 'QuestionTabs',
+	components: {
+		'question-card': QuestionCard
+	},
 	data: () => ({
 		currentTab: null
 	}),
 	computed: {
 		...mapGetters({
-			questions: 'guest/questions/getQuestions'
+			questions: 'guest/questions/getQuestions',
+			popularQuestions: 'guest/questions/getPopularQuestions',
+			recentQuestions: 'guest/questions/getRecentQuestions'
 		})
 	}
 };

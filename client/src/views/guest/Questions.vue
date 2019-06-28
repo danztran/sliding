@@ -1,48 +1,23 @@
 <template>
 	<div>
+		<question-reply--dialog />
 		<field-ask />
-		<question-tabs>
-			<template #popular-tab>
-				<question-card
-					v-for="question in popularQuestions"
-					:key="question.id"
-					:question="question" />
-			</template>
-
-			<template #recent-tab>
-				<question-card
-					v-for="question in recentQuestions"
-					:key="question.id"
-					:question="question" />
-			</template>
-		</question-tabs>
+		<question-tabs />
 	</div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 import FieldAsk from '@/components/questions/guest/FieldAsk.vue';
 import QuestionTabs from '@/components/questions/guest/QuestionTabs.vue';
-import QuestionCard from '@/components/questions/guest/QuestionCard.vue';
+import QuestionReplyDialog from '@/components/questions/guest/QuestionReplyDialog.vue';
 
 export default {
 	name: 'Questions',
 	components: {
 		'field-ask': FieldAsk,
 		'question-tabs': QuestionTabs,
-		'question-card': QuestionCard
-	},
-	computed: {
-		...mapGetters({
-			questions: 'guest/questions/getQuestions'
-		}),
-		popularQuestions() {
-			return this._cm.customSort([...this.questions], 'desc', 'reactions');
-		},
-		recentQuestions() {
-			return this._cm.customSort([...this.questions], 'desc', 'created_at');
-		}
-
+		'question-reply--dialog': QuestionReplyDialog
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {

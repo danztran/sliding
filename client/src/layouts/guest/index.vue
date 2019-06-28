@@ -3,7 +3,6 @@
 		<!-- <v-navigation-drawer app hide-overlay ></v-navigation-drawer> -->
 		<nav-bar />
 		<profile-dialog />
-		<reply-question-dialog />
 		<v-content v-if="ready" id="my-guest-content" class="mt-2">
 			<v-slide-y-transition mode="out-in">
 				<keep-alive>
@@ -19,13 +18,11 @@ import { mapMutations } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
 import ProfileDialog from '@/components/guest/ProfileDialog.vue';
-import QuestionReplyDialog from '@/components/questions/guest/QuestionReplyDialog.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'profile-dialog': ProfileDialog,
-		'reply-question-dialog': QuestionReplyDialog
+		'profile-dialog': ProfileDialog
 	},
 	mixins: [handleSockets],
 	data: () => ({
