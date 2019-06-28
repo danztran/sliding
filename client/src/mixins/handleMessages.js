@@ -16,7 +16,8 @@ export default {
 					this.errorMessage = dataMsg;
 				}
 				else {
-					this.$root.$emit('notifyErrorMessage', dataMsg);
+					// this.$root.$emit('notifyErrorMessage', dataMsg);
+					this.showNotify(dataMsg, 'danger');
 				}
 			}
 			else if (typeof dataMsg === 'object') {
@@ -32,9 +33,16 @@ export default {
 				}
 
 				if (messages.length > 0) {
-					this.$root.$emit('notifyErrorMessage', messages.join('\n\r'));
+					// this.$root.$emit('notifyErrorMessage', messages.join('\n\r'));
+					this.showNotify(messages.join('\n\r'), 'danger');
 				}
 			}
+		},
+		showNotify(msg, type) {
+			this.$root.$emit('show-noti', {
+				msg,
+				type: type || ''
+			});
 		}
 	}
 };

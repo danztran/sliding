@@ -12,7 +12,6 @@ import BouncyBallLoader from '@/components/pieces/BouncyBallLoader.vue';
 const theme = {
 	primary: '#3da4b5',
 	secondary: '#5282BD',
-	accent: '#8c9eff',
 	error: '#832800',
 	grey: '#777',
 	yellow: '#f9cd8b',

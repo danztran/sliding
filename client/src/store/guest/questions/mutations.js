@@ -36,23 +36,11 @@ const DELETE_QUESTION = (state, delQuestion) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: add temp question for showing in UI
-	@socket: before emiter 'add-question'
-------------------------------------------------------------------------*/
-const ADD_TEMP_QUESTION = (state, tempQuestion) => {
-	state.questions.push(tempQuestion);
-};
-
-
-/* ------------------------------------------------------------------------
-	@desc: receive success question data,
-				merge to temp question above.
+	@desc: receive success question, add to state
 	@socket: after emiter 'add-question'
 ------------------------------------------------------------------------*/
-const MERGE_SUCCESS_QUESTION = (state, resQuestion) => {
-	const question = state.questions.find(q => q.id === resQuestion.temp_id);
-	delete resQuestion.temp_id;
-	Object.assign(question, resQuestion);
+const ADD_SUCCESS_QUESTION = (state, question) => {
+	state.questions.push(Object.assign(question, { reactions: null }));
 };
 
 
@@ -94,15 +82,6 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
 	delete resReply.temp_id;
 	Object.assign(reply, resReply);
-};
-
-
-/* ------------------------------------------------------------------------
-	@desc: if receive error, remove temp question added before
-	@socket: after emiter 'add-question-reply'
-------------------------------------------------------------------------*/
-const DELETE_ERROR_QUESTION = (state, tempID) => {
-	state.questions = state.questions.filter(q => q.id !== tempID);
 };
 
 
@@ -157,9 +136,7 @@ export default {
 	SET_QUESTION_REPLIES,
 	ADD_QUESTION,
 	DELETE_QUESTION,
-	ADD_TEMP_QUESTION,
-	MERGE_SUCCESS_QUESTION,
-	DELETE_ERROR_QUESTION,
+	ADD_SUCCESS_QUESTION,
 	ADD_QUESTION_REPLY,
 	ADD_TEMP_QUESTION_REPLY,
 	MERGE_SUCCESS_QUESTION_REPLY,

@@ -44,8 +44,14 @@
 							color="primary"
 							small
 							round
-							:disabled="checkValidLength || !allowQuestion"
-							@click="sendQuestion" />
+							:disabled="checkValidLength || !allowQuestion || loadingState !== ''"
+							:loading="loadingState !== ''"
+							@click="sendQuestion">
+							<span v-t="'btn-send'" />
+							<template v-slot:loader>
+								<icon-loading-circle :state.sync="loadingState" />
+							</template>
+						</v-btn>
 					</v-layout>
 				</div>
 			</v-expand-transition>
@@ -61,6 +67,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 const askForm = () => ({
 	ask: {
 		value: '',
@@ -73,10 +80,13 @@ const askForm = () => ({
 
 export default {
 	name: 'FieldAsk',
+	components: {
+		'icon-loading-circle': IconLoadingCircle
+	},
 	data: () => ({
 		expand: false,
 		form: askForm(),
-		tempQuestionID: []
+		loadingState: ''
 	}),
 	computed: {
 		...mapGetters({
@@ -99,44 +109,31 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			addTempQuestion: 'guest/questions/ADD_TEMP_QUESTION',
-			mergeQuestion: 'guest/questions/MERGE_SUCCESS_QUESTION',
-			deleteErrQuestion: 'guest/questions/DELETE_ERROR_QUESTION'
+			addQuestion: 'guest/questions/ADD_SUCCESS_QUESTION'
 		}),
 		sendQuestion() {
-			let key = null;
-			do {
-				key = Math.random().toString(36).substring(7);
-			} while (this.tempQuestionID.includes(key));
-			const questionID = key;
-			const tempQuestionInfo = {
-				content: this.form.ask.value.trim(),
-				count_replies: 0,
-				created_at: new Date().toISOString(),
-				id: questionID,
-				reactions: null,
-				stage: 'public',
-				user: {
-					id: this.user.id,
-					name: this.user.name
-				}
-			};
-			this.form.ask.value = '';
-			this.addTempQuestion(tempQuestionInfo);
+			this.loadingState = 'loading';
 			const emiter = 'add-question';
 			this.$socket.emit(emiter, {
 				event_id: this.eventInfo.id,
 				user_id: this.user.id,
-				content: tempQuestionInfo.content,
-				stage: 'public'
+				content: this.form.ask.value.trim(),
+				stage: this.eventInfo.on_moderation ? 'private' : 'public'
 			}, ({ errmsg, question }) => {
 				if (!question) {
 					if (errmsg) {
 						this.form.ask.errmsg = errmsg;
+						this.showNotify(errmsg, 'danger');
 					}
-					return this.deleteErrQuestion(questionID);
+					this.loadingState = 'fail';
 				}
-				return this.mergeQuestion(Object.assign(question, { temp_id: questionID }));
+				this.form.ask.value = '';
+				this.loadingState = 'success';
+				if (this.eventInfo.on_moderation) {
+					this.showNotify(this.$t('guest-question-on-moderation'));
+					return;
+				}
+				this.addQuestion(question);
 			});
 		}
 	}
