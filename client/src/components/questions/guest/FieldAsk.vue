@@ -30,7 +30,7 @@
 			</v-layout>
 			<v-divider />
 			<v-expand-transition>
-				<div v-show="expand">
+				<div v-show="expand || form.ask.value !== ''">
 					<v-layout
 						align-center
 						justify-space-between

@@ -42,12 +42,11 @@
 						<!-- *dislike -->
 						<v-btn
 							v-if="allowQDislike"
+							color="grey lighten-2"
 							flat
 							icon
-							small
-							color="red lighten-1">
+							small>
 							<v-icon
-								:color="!!isLike ? 'primary' : 'grey lighten-2'"
 								:size="icon.sm"
 								@click="dislikeQuestion"
 								v-text="'$vuetify.icons.dislike'" />
@@ -148,8 +147,7 @@ export default {
 		isLike() {
 			const { reactions } = this.question;
 			if (this._cm.notEmpty(reactions)) {
-				const isLike = reactions.some(el => el.like && el.user_id === this.user.id);
-				return isLike;
+				return reactions.some(el => el.like && (el.user_id).toString() === this.user.id);
 			}
 			return false;
 		}
@@ -162,12 +160,12 @@ export default {
 			// ...
 		},
 		likeQuestion() {
-			// ..
+			// .....
 		},
 		reactionQuestion(info) {
 			const emiter = 'add-question-reaction';
 			this.$socket.emit(emiter, {
-				id: this.question.id,
+				question_id: this.question.id,
 				...info
 			}, (data) => {
 				console.warn(data);
