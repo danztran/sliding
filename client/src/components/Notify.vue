@@ -23,7 +23,7 @@ export default {
 	name: 'Notify',
 	data() {
 		return {
-			show: false,
+			show: true,
 			message: ''
 		};
 	},

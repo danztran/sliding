@@ -52,6 +52,7 @@ export default {
 		},
 		new_deleted_question(question) {
 			this.delQuestion(question);
+			this.$root.$emit('delquestion-in-dialog', question.id);
 		},
 		new_added_question_reply(reply) {
 			this.addQuestionReply(reply);

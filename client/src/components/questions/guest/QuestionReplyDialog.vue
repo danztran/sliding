@@ -137,6 +137,11 @@ export default {
 	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
+		this.$root.$on('delquestion-in-dialog', (delQuesID) => {
+			if (this.question.id === delQuesID) {
+				this.dialogReplyQuestion = false;
+			}
+		});
 		this.$root.$on('update-replies', () => {
 			this.updateReplies();
 		});
