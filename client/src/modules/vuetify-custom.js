@@ -65,7 +65,10 @@ const icons = {
 	privacy: 'security',
 	multiple: 'add_to_photos',
 	copy: 'file_copy',
-	lock: 'lock'
+	lock: 'lock',
+	archive: 'archive',
+	unarchive: 'unarchive',
+	mark_answered: 'spellcheck'
 };
 
 // custom components

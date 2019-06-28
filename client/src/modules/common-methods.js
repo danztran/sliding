@@ -23,6 +23,9 @@ const _cm = {
 		const result = `${date[1]} ${date[2]}, ${toTimeString}`;
 		return result;
 	},
+	resultColor(result) {
+		return result ? 'success' : 'error';
+	},
 	customSort(array = [], order = 'asc', field) {
 		if (Array.isArray(array) && array.length > 0) {
 			array.sort((_a, _b) => {

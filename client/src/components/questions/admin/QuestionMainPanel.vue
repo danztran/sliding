@@ -99,8 +99,7 @@
 							<question-card--review
 								v-for="question of reviewQuestions"
 								:key="question.id"
-								:question="question"
-								reply />
+								:question="question" />
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -117,8 +116,7 @@
 							<question-card--live
 								v-for="question of liveQuestions"
 								:key="question.id"
-								:question="question"
-								reply />
+								:question="question" />
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -132,7 +130,10 @@
 					<empty-state-archived v-if="!archivedQuestions.length" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>
-							<!-- archived questions -->
+							<question-card--archived
+								v-for="question of archivedQuestions"
+								:key="question.id"
+								:question="question" />
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -146,8 +147,9 @@ import { mapGetters } from 'vuex';
 import EmptyLive from './EmptyLiveQuestion.vue';
 import EmptyReview from './EmptyReviewQuestion.vue';
 import EmptyArchived from './EmptyArchivedQuestion.vue';
-import LiveQuestionCard from '@/components/questions/admin/LiveQuestionCard.vue';
-import ReviewQuestionCard from '@/components/questions/admin/ReviewQuestionCard.vue';
+import LiveQuestionCard from './LiveQuestionCard.vue';
+import ReviewQuestionCard from './ReviewQuestionCard.vue';
+import ArchivedQuestionCard from './ArchivedQuestionCard.vue';
 
 export default {
 	name: 'QuestionMainPanel',
@@ -156,7 +158,8 @@ export default {
 		'empty-state-live': EmptyLive,
 		'empty-state-archived': EmptyArchived,
 		'question-card--live': LiveQuestionCard,
-		'question-card--review': ReviewQuestionCard
+		'question-card--review': ReviewQuestionCard,
+		'question-card--archived': ArchivedQuestionCard
 	},
 	data: () => ({
 		currentTab: null,

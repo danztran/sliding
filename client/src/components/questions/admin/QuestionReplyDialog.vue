@@ -55,7 +55,7 @@
 					ref="qrd"
 					v-scroll:#qrd="onScrollDialog"
 					class="wrapper-card">
-					<question-card--live :question="question" />
+					<question-card :question="question" :reply="false" />
 					<div class="wrapper-card--reply">
 						<template v-for="reply in replies">
 							<reply-card
@@ -92,7 +92,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import LiveQuestionCard from './LiveQuestionCard.vue';
+import QuestionCard from './QuestionCard.vue';
 import QuestionReplyCard from './QuestionReplyCard.vue';
 
 const initForm = () => ({
@@ -111,7 +111,7 @@ const initForm = () => ({
 export default {
 	name: 'QuestionReplyDialog',
 	components: {
-		'question-card--live': LiveQuestionCard,
+		'question-card': QuestionCard,
 		'reply-card': QuestionReplyCard
 	},
 	data: () => ({

@@ -44,11 +44,6 @@ export default {
 			this.setQuestions(questions);
 		});
 	},
-	mounted() {
-		this.$root.$on('toggle-mode-moderation', () => {
-			this.onModeration = !this.onModeration;
-		});
-	},
 	sockets: {
 		new_added_question(question) {
 			this.addQuestion(question);
