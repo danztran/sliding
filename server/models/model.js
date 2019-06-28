@@ -100,13 +100,13 @@ class Model {
 	}
 
 	createOrUpdate(uniqueInfo, otherInfo, {
-		select
+		select = '*'
 	} = {}) {
 		this.setQuery(`
-		   ${this.createOne({ ...uniqueInfo, ...otherInfo }).getQuery()}
+		   ${this.createOne({ ...uniqueInfo, ...otherInfo }, { select: null }).getQuery()}
 			${qh.toConflictClause(uniqueInfo)}
-			DO
-			${this.updateOne(...arguments).getQuery()}
+			DO UPDATE
+			${qh.toSetClause(otherInfo)}
 			${qh.toReturningClause(select)}
 		`);
 		if (select) {

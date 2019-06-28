@@ -19,7 +19,7 @@ class QuestionReactionModel extends Model {
 	createOrUpdate(info, opt) {
 		return super.createOrUpdate({
 			question_id: info.question_id,
-			user: info.user_id
+			user_id: info.user_id
 		}, {
 			like: info.like
 		}, opt);
