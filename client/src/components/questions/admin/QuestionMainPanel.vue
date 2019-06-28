@@ -90,7 +90,6 @@
 			<!-- @tab: moderation tab in XS-SM -->
 			<v-tab-item
 				v-if="isSMnXS"
-				class="list-scroll"
 				:transition="false"
 				:reverse-transition="false">
 				<v-card class="card-parent list-scroll scrollbar-primary">
@@ -107,7 +106,6 @@
 
 			<!-- @tab: live tabs -->
 			<v-tab-item
-				class="list-scroll"
 				:transition="false"
 				:reverse-transition="false">
 				<v-card
@@ -123,7 +121,6 @@
 
 			<!-- @tab: archive tab -->
 			<v-tab-item
-				class="list-scroll"
 				:transition="false"
 				:reverse-transition="false">
 				<v-card class="card-parent list-scroll scrollbar-primary">
