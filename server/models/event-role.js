@@ -71,12 +71,12 @@ class EventRoleModel extends Model {
 		return this;
 	}
 
-	create(info) {
+	create(info, opt) {
 		return this.createOne({
 			user_id: info.user_id,
 			event_id: info.event_id,
 			role: info.role
-		}, '*');
+		}, opt);
 	}
 }
 

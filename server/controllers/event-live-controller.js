@@ -119,12 +119,16 @@ module.exports = {
 			}).exec();
 			if (role) throw socket.$fn.t('userModeratorAlready');
 
-			await EventRole.create({
+			const admin = await EventRole.create({
 				user_id: result.user.id,
 				event_id: event.id,
 				role: 'moderator'
+			}, {
+				select: '"user_id", "role"'
 			}).exec();
 
+			socket.$fn.addAdmin(admin);
+			socket.to(event.rooms.main).emit('new_added_admin', admin);
 			return callback(result);
 		}
 		catch (e) {

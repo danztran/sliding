@@ -98,6 +98,19 @@ module.exports = {
 			isGuest() {
 				return !this.isAdmin();
 			},
+			addAdmin(admin) {
+				const event = this.getCurrentEvent();
+				event.admins.push(admin);
+				io.$fn.saveEvent(event);
+				return true;
+			},
+			removeAdmin(admin) {
+				const event = this.getCurrentEvent();
+				const index = event.admins.findIndex(e => e.id === admin.id);
+				event.admins.splice(index, 1);
+				io.$fn.saveEvent(event);
+				return true;
+			},
 			// check role permissions
 			can(permission) {
 				const role = this.getRole();
