@@ -1,47 +1,16 @@
 <template>
 	<div id="admin-question">
 		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
+
 		<question-reply--dialog />
+
 		<v-layout row wrap>
-			<!--
-				@desc: check question Panel Moderation view
-				@hidden panel in XS-SM
-			-->
 			<v-flex v-if="!isSMnXS" class="pr-1" xs12 md6>
-				<question-panel--review :empty-question="true">
-					<question-card--review />
-				</question-panel--review>
+				<question-panel--review />
 			</v-flex>
 
-			<!--
-				@desc: tab question live/archived panel
-				@show tab moderation in XS-SM
-			-->
-			<v-flex
-				:class="{'pl-1': !isSMnXS}"
-				xs12
-				md6>
-				<question-panel--main
-					:empty-live="Boolean(questions.length)"
-					:empty-archive="true">
-					<template
-						v-if="isSMnXS"
-						#for-review-moderation-tab>
-						<!-- <question-card--review /> -->
-					</template>
-
-					<template #live-tab>
-						<question-card--live
-							v-for="question in questions"
-							:key="question.id"
-							:question="question"
-							reply />
-					</template>
-
-					<template #archived-tab>
-						<!-- <question-card archived/> -->
-					</template>
-				</question-panel--main>
+			<v-flex :class="{'pl-1': !isSMnXS}" xs12 md6>
+				<question-panel--main />
 			</v-flex>
 		</v-layout>
 	</div>
@@ -51,8 +20,6 @@
 import { mapMutations, mapGetters } from 'vuex';
 import QuestionReviewPanel from '@/components/questions/admin/QuestionReviewPanel.vue';
 import QuestionMainPanel from '@/components/questions/admin/QuestionMainPanel.vue';
-import LiveQuestionCard from '@/components/questions/admin/LiveQuestionCard.vue';
-import ReviewQuestionCard from '@/components/questions/admin/ReviewQuestionCard.vue';
 import QuestionReplyDialog from '@/components/questions/admin/QuestionReplyDialog.vue';
 
 export default {
@@ -60,24 +27,13 @@ export default {
 	components: {
 		'question-panel--review': QuestionReviewPanel,
 		'question-panel--main': QuestionMainPanel,
-		'question-card--live': LiveQuestionCard,
-		'question-card--review': ReviewQuestionCard,
 		'question-reply--dialog': QuestionReplyDialog
 	},
 	computed: {
 		...mapGetters({
-			questions: 'admin/questions/getQuestions',
+			reviewQuestions: 'admin/questions/getReviewQuestions',
 			event: 'admin/event/getEventInfo'
-		}),
-		forReviewQuestions() {
-			return this.questions.filter(q => q.stage === 'private');
-		},
-		liveQuestions() {
-			return this.questions.filter(q => q.stage === 'public');
-		},
-		archivedQuestions() {
-			return this.questions.filter(q => q.stage === 'archived');
-		}
+		})
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
@@ -85,7 +41,6 @@ export default {
 				// notify
 				return;
 			}
-			// this.$store.dispatch('admin/questions/getQuestions', questions);
 			this.setQuestions(questions);
 		});
 	},

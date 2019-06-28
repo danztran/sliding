@@ -268,10 +268,7 @@ export default {
 				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
 				return this.updateReplies();
 			});
-		},
-		editQuestion() {},
-		deleteQuestion() {},
-		archiveQuestion() {}
+		}
 	}
 };
 </script>

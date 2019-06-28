@@ -1,6 +1,6 @@
 <template>
 	<v-layout
-		v-if="emptyQuestion"
+		v-if="!reviewQuestions.length"
 		align-center
 		justify-center
 		column
@@ -13,7 +13,7 @@
 				v-text="'$vuetify.icons.approve'" />
 			<img
 				v-else
-				class="emptyQuestion"
+				class="empty-question"
 				:src="require('@/assets/moderationOff.svg')">
 		</template>
 
@@ -38,18 +38,9 @@
 import { mapGetters, mapMutations } from 'vuex';
 export default {
 	name: 'EmptyModerationQuestion',
-	props: {
-		// onModeration: {
-		// 	type: Boolean,
-		// 	default: false
-		// },
-		emptyQuestion: {
-			type: Boolean,
-			default: false
-		}
-	},
 	computed: {
 		...mapGetters({
+			reviewQuestions: 'admin/questions/getReviewQuestions',
 			onModeration: 'admin/event/onModeration'
 		})
 	},
@@ -66,8 +57,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
-	.emptyQuestion {
-		height: 112px;
-		width: 192px;
-	}
+.empty-question {
+	height: 112px;
+	width: 192px;
+}
 </style>

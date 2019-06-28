@@ -93,14 +93,16 @@
 				:transition="false"
 				:reverse-transition="false">
 				<v-card class="card-parent list-scroll scrollbar-primary">
+					<empty-state-review v-if="!reviewQuestions.length" />
 					<v-layout row wrap>
 						<v-flex xs12>
-							<slot name="for-review-moderation-tab" />
+							<question-card--review
+								v-for="question of reviewQuestions"
+								:key="question.id"
+								:question="question"
+								reply />
 						</v-flex>
 					</v-layout>
-					<empty-state-review
-						:on-moderation="onModeration"
-						:empty-question="true" />
 				</v-card>
 			</v-tab-item>
 
@@ -108,14 +110,17 @@
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
-				<v-card
-					class="card-parent list-scroll scrollbar-primary">
-					<v-layout v-if="emptyLive" row wrap>
+				<v-card class="card-parent list-scroll scrollbar-primary">
+					<empty-state-live v-if="!liveQuestions.length" />
+					<v-layout v-else row wrap>
 						<v-flex xs12>
-							<slot name="live-tab" />
+							<question-card--live
+								v-for="question of liveQuestions"
+								:key="question.id"
+								:question="question"
+								reply />
 						</v-flex>
 					</v-layout>
-					<empty-state-live v-else />
 				</v-card>
 			</v-tab-item>
 
@@ -124,10 +129,10 @@
 				:transition="false"
 				:reverse-transition="false">
 				<v-card class="card-parent list-scroll scrollbar-primary">
-					<empty-state-archived v-if="emptyArchive" />
+					<empty-state-archived v-if="!archivedQuestions.length" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>
-							<slot name="archive-tab" />
+							<!-- archived questions -->
 						</v-flex>
 					</v-layout>
 				</v-card>
@@ -137,30 +142,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EmptyLive from './EmptyLiveQuestion.vue';
 import EmptyReview from './EmptyReviewQuestion.vue';
 import EmptyArchived from './EmptyArchivedQuestion.vue';
+import LiveQuestionCard from '@/components/questions/admin/LiveQuestionCard.vue';
+import ReviewQuestionCard from '@/components/questions/admin/ReviewQuestionCard.vue';
 
 export default {
 	name: 'QuestionMainPanel',
 	components: {
 		'empty-state-review': EmptyReview,
 		'empty-state-live': EmptyLive,
-		'empty-state-archived': EmptyArchived
-	},
-	props: {
-		emptyLive: {
-			type: Boolean,
-			default: false
-		},
-		emptyArchive: {
-			type: Boolean,
-			default: false
-		},
-		onModeration: {
-			type: Boolean,
-			default: false
-		}
+		'empty-state-archived': EmptyArchived,
+		'question-card--live': LiveQuestionCard,
+		'question-card--review': ReviewQuestionCard
 	},
 	data: () => ({
 		currentTab: null,
@@ -169,10 +165,13 @@ export default {
 			small: 20
 		}
 	}),
-	methods: {
-		replyQuestion() {
-			this.$root.$emit('dialog-reply-question');
-		}
+	computed: {
+		...mapGetters({
+			onModeration: 'admin/event/onModeration',
+			reviewQuestions: 'admin/questions/getReviewQuestions',
+			liveQuestions: 'admin/questions/getLiveQuestions',
+			archivedQuestions: 'admin/questions/getArchivedQuestions'
+		})
 	}
 };
 </script>

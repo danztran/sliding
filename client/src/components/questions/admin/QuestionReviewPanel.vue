@@ -68,19 +68,17 @@
 		<v-card
 			:class="{'bg-grey': !onModeration}"
 			class="w-100 card-parent list-scroll scrollbar-primary list-scroll">
-			<v-layout
-				v-if="onModeration && !emptyQuestion"
-				row
-				wrap>
+			<empty-review v-if="!reviewQuestions.length" />
+			<v-layout v-else row wrap>
 				<v-flex xs12>
 					<!-- @desc: question review -->
-					<slot />
+					<question-card--review
+						v-for="question of reviewQuestions"
+						:key="question.id"
+						:question="question"
+						reply />
 				</v-flex>
 			</v-layout>
-
-			<empty-review
-				:on-moderation="onModeration"
-				:empty-question="emptyQuestion" />
 		</v-card>
 	</v-layout>
 </template>
@@ -88,17 +86,13 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import EmptyReview from './EmptyReviewQuestion.vue';
+import ReviewQuestionCard from './ReviewQuestionCard.vue';
 
 export default {
 	name: 'QuestionModerationPanel',
 	components: {
-		'empty-review': EmptyReview
-	},
-	props: {
-		emptyQuestion: {
-			type: Boolean,
-			default: false
-		}
+		'empty-review': EmptyReview,
+		'question-card--review': ReviewQuestionCard
 	},
 	data: () => ({
 		icon: {
@@ -109,6 +103,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			reviewQuestions: 'admin/questions/getReviewQuestions',
 			onModeration: 'admin/event/onModeration'
 		})
 	},
@@ -125,11 +120,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-	.bg-grey {
-		background-color: #efefef !important;
-	}
-	.emptyQuestion {
-		height: 112px;
-		width: 192px;
-	}
+.bg-grey {
+	background-color: #efefef !important;
+}
 </style>
