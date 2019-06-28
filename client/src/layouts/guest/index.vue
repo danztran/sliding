@@ -91,10 +91,12 @@ export default {
 
 <style lang="scss">
 #my-guest-content {
+	margin-top: 60px !important;
 	.v-content__wrap {
 		padding: 0 25% !important;
 	}
 	@media only screen and (max-width: 960px) {
+		margin-top: 10px !important;
 		.v-content__wrap {
 			padding: 0 !important;
 		}

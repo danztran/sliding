@@ -88,8 +88,7 @@ export default {
 <style lang="scss">
 	#guest-tabs {
 		.guest-list-scroll {
-			height: 59vh;
-			overflow-y: scroll;
+			overflow-y: auto;
 			scroll-behavior: smooth;
 			box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 			-webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);

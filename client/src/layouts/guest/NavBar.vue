@@ -4,12 +4,15 @@
 		<v-toolbar
 			class="pa-0"
 			dark
+			fixed
 			color="primary">
 			<v-container
 				:class="{'pa-0': isSMnXS}"
 				fluid
 				grid-list
-				py-0>
+				py-0
+				mt-0
+				mb-0>
 				<v-layout
 					row
 					align-center
@@ -91,22 +94,23 @@ export default {
 	.right {
 		text-align: right;
 	}
-	.v-toolbar {
-		height: 58px;
-	}
 	.v-toolbar__content {
 		padding: 0;
+		height: 54px !important;
+		.v-tabs__container {
+			height: 54px !important;
+		}
 	}
 	@media only screen and (max-width: 960px) {
 		.v-toolbar {
-			height: 40px;
+			height: 48px;
 			.v-toolbar__content {
 				padding: 0;
-				height: 40px;
+				height: 48px;
+				.v-tabs__container {
+					height: 48px;
+				}
 			}
-		}
-		.v-tabs__container {
-			height: 35px;
 		}
 	}
 }

@@ -31,7 +31,7 @@ const _cm = {
 					if (typeof a === 'number' && typeof b === 'number') {
 						return a - b;
 					}
-					return a.toString().localeCompare(b.toString());
+					return (`${a}`).localeCompare(`${b}`);
 				}
 				const props = field.split('.');
 				let m = JSON.parse(JSON.stringify(a));
@@ -49,7 +49,7 @@ const _cm = {
 				if (typeof m === 'number' && typeof n === 'number') {
 					return m - n;
 				}
-				return m.toString().localeCompare(n.toString());
+				return (`${m}`).localeCompare(`${n}`);
 			});
 		}
 		return array;

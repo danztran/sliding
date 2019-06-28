@@ -4,13 +4,16 @@
 		<question-tabs>
 			<template #popular-tab>
 				<question-card
-					v-for="question in questionsPublic"
+					v-for="question in popularQuestions"
 					:key="question.id"
 					:question="question" />
 			</template>
 
 			<template #recent-tab>
-				<question-card />
+				<question-card
+					v-for="question in recentQuestions"
+					:key="question.id"
+					:question="question" />
 			</template>
 		</question-tabs>
 	</div>
@@ -33,9 +36,13 @@ export default {
 		...mapGetters({
 			questions: 'guest/questions/getQuestions'
 		}),
-		questionsPublic() {
-			return this.questions.filter(q => q.stage === 'public');
+		popularQuestions() {
+			return this._cm.customSort([...this.questions], 'desc', 'reactions');
+		},
+		recentQuestions() {
+			return this._cm.customSort([...this.questions], 'desc', 'created_at');
 		}
+
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
