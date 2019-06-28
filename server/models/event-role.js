@@ -17,6 +17,15 @@ class EventRoleModel extends Model {
 		});
 	}
 
+	findAdmins(eid) {
+		return this.find([
+			{ event_id: eid, role: 'host' },
+			{ event_id: eid, role: 'moderator' }
+		], {
+			select: '"user_id", "role"'
+		});
+	}
+
 	findEventsByUserId(uid, {
 		select = '*',
 		order,

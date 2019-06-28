@@ -16,7 +16,7 @@ module.exports = {
 			if (!event) {
 				event = await Event.findByCode(code).exec();
 				if (!event) throw socket.$fn.t('eventNotFound');
-
+				event.admins = await EventRole.findAdmins(event.id).exec();
 				ioEvent = io.$fn.saveEvent(event);
 			}
 			result.event = event;
