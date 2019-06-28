@@ -20,31 +20,15 @@
 				</template>
 
 				<v-spacer />
-
-				<!-- @desc: show edit/delete/archive button
-									hide close button in small device -->
-				<template v-if="isSMnXS">
-					<v-btn icon @click="editQuestion">
-						<v-icon :size="icon.sm" v-text="'$vuetify.icons.edit'" />
-					</v-btn>
-					<v-btn icon @click="deleteQuestion">
-						<v-icon :size="icon.sm" v-text="'$vuetify.icons.delete'" />
-					</v-btn>
-					<v-btn icon @click="archiveQuestion">
-						<v-icon :size="icon.sm" v-text="'$vuetify.icons.archive_all'" />
-					</v-btn>
-				</template>
 				<!-- @desc: button close -->
-				<template v-else>
-					<v-btn
-						v-if="!isSMnXS"
-						icon
-						@click="dialogReplyQuestion=false">
-						<v-icon
-							:size="icon.sm"
-							v-text="'$vuetify.icons.close'" />
-					</v-btn>
-				</template>
+				<v-btn
+					v-if="!isSMnXS"
+					icon
+					@click="dialogReplyQuestion=false">
+					<v-icon
+						:size="icon.sm"
+						v-text="'$vuetify.icons.close'" />
+				</v-btn>
 			</v-card-title>
 			<v-divider />
 
