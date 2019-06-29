@@ -150,6 +150,8 @@
 		"guest-question-count-likes": "likes",
 		"guest-question-disable": "Ask Question have been turn off by Admin.",
 		"guest-question-on-moderation": "Câu hỏi của bạn đang được quản trị viên phê duyệt",
+		"guest-empty-question": "There are no questions asked yet.",
+		"guest-let-ask": "Ask the first one!",
 		"card-header-title": "The best way to make your speech perfect",
 		"card-subheader-title": "No more restrictions, no more limits",
 		"card-intro-title1": "Group meetings",

@@ -1,23 +1,31 @@
 <template>
 	<div>
-		<question-reply--dialog />
 		<field-ask />
-		<question-tabs />
+		<empty-state-question v-if="!questions.length" />
+		<question--tabs v-else />
+		<question-reply--dialog />
 	</div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import FieldAsk from '@/components/questions/guest/FieldAsk.vue';
 import QuestionTabs from '@/components/questions/guest/QuestionTabs.vue';
 import QuestionReplyDialog from '@/components/questions/guest/QuestionReplyDialog.vue';
+import EmptyQuestion from '@/components/questions/guest/EmptyQuestion.vue';
 
 export default {
 	name: 'Questions',
 	components: {
 		'field-ask': FieldAsk,
-		'question-tabs': QuestionTabs,
+		'empty-state-question': EmptyQuestion,
+		'question--tabs': QuestionTabs,
 		'question-reply--dialog': QuestionReplyDialog
+	},
+	computed: {
+		...mapGetters({
+			questions: 'guest/questions/getQuestions'
+		})
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {

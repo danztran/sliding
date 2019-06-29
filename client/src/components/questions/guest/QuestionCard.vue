@@ -2,7 +2,7 @@
 	<v-card class="no-shadow">
 		<v-list subheader class="py-1">
 			<v-list-tile>
-				<!-- @desc: avatar -->
+				<!-- *avatar -->
 				<v-list-tile-avatar
 					class="pl-2"
 					:size="icon.lg"
@@ -13,7 +13,7 @@
 						v-text="'$vuetify.icons.person'" />
 				</v-list-tile-avatar>
 
-				<!-- @desc: user info -->
+				<!-- *info: usename & date_created -->
 				<v-list-tile-content>
 					<span class="body-2 text-capitalize">
 						{{ question.user.name }}
@@ -34,7 +34,9 @@
 							color="primary lighten-1"
 							@click="likeQuestion">
 							<v-icon
-								:color="isLike ? 'primary' : 'grey lighten-2'"
+								:color="react === true
+									? 'primary'
+									: 'grey lighten-2'"
 								:size="icon.sm"
 								v-text="'$vuetify.icons.like'" />
 						</v-btn>
@@ -47,6 +49,9 @@
 							icon
 							small>
 							<v-icon
+								:color="react === false
+									? 'primary'
+									: 'grey lighten-2'"
 								:size="icon.sm"
 								@click="dislikeQuestion"
 								v-text="'$vuetify.icons.dislike'" />
@@ -56,14 +61,14 @@
 			</v-list-tile>
 		</v-list>
 
-		<!-- @desc: content -->
+		<!-- *content -->
 		<v-card-title class="py-0 px-4">
 			<p class="body-1 mb-0">
 				{{ question.content }}
 			</p>
 		</v-card-title>
 
-		<!-- @desc: footer count reply, btn dialog reply -->
+		<!-- *footer: count_replies & replies dialog -->
 		<v-card-actions class="py-0">
 			<v-list-tile class="grow">
 				<span class="grey--text caption">
@@ -130,7 +135,8 @@ export default {
 			xs: 14,
 			sm: 17,
 			lg: 25
-		}
+		},
+		react: null
 	}),
 	computed: {
 		...mapGetters({
@@ -143,13 +149,13 @@ export default {
 		count_likes() {
 			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
 			return [];
-		},
-		isLike() {
+		}
+	},
+	mounted() {
+		if (this._cm.notEmpty(this.question.reactions)) {
 			const { reactions } = this.question;
-			if (this._cm.notEmpty(reactions)) {
-				return reactions.some(el => el.like && (el.user_id).toString() === this.user.id);
-			}
-			return false;
+			const rs = reactions.find(r => (r.user_id).toString() === this.user.id);
+			this.react = null || rs.like;
 		}
 	},
 	methods: {
@@ -157,10 +163,20 @@ export default {
 			this.$root.$emit('dialog-reply-question', question);
 		},
 		dislikeQuestion() {
-			// ...
+			if (this.react === false) {
+				this.react = null;
+				return this.reactionQuestion({ like: null });
+			}
+			this.react = false;
+			return this.reactionQuestion({ like: false });
 		},
 		likeQuestion() {
-			// .....
+			if (this.react === true) {
+				this.react = null;
+				return this.reactionQuestion({ like: null });
+			}
+			this.react = true;
+			return this.reactionQuestion({ like: true });
 		},
 		reactionQuestion(info) {
 			const emiter = 'add-question-reaction';
