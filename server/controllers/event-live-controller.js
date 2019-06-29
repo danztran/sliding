@@ -79,8 +79,8 @@ module.exports = {
 				code: event.code
 			};
 			const editedEvent = await Event.update(newInfo).exec();
-			io.$fn.saveEvent(editedEvent);
-			result.event = { ...editedEvent };
+			io.$fn.saveEvent({ ...event, ...newInfo });
+			result.event = newInfo;
 			delete result.event.password;
 
 			socket.to(event.rooms.main).emit('new_edited_event', newInfo);

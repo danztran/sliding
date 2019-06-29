@@ -48,12 +48,6 @@
 							</span>
 						</v-list-tile-content>
 
-						<!--
-						@desc: questions managerment funcs
-						@contains: funcs
-							*archive: restore question
-							*live: mark star, mark answered
-					-->
 						<v-list-tile-action
 							v-if="hover"
 							class="hidden-sm-and-down">
@@ -80,7 +74,7 @@
 
 					<!--@desc:
 						*reply question by open dialog
-						*options: mark start, edit/delete/archive question -->
+						*options: mark start, edit/delete question -->
 					<v-card-actions class="py-0">
 						<v-list-tile class="grow">
 							<!-- *edit: text length -->
@@ -232,10 +226,6 @@ export default {
 			type: Boolean,
 			default: true
 		},
-		archive: {
-			type: Boolean,
-			default: false
-		},
 		question: {
 			type: Object,
 			default: () => ({
@@ -312,11 +302,6 @@ export default {
 			this.tempQuestion = { ...this.question };
 			this.question.is_star = !this.question.is_star;
 			this.emitEdit({ is_star: this.question.is_star });
-		},
-		archiveQuestion() {
-			this.tempQuestion = { ...this.question };
-			this.question.stage = 'archived';
-			this.emitEdit({ stage: 'archived' });
 		},
 		editQuestion() {
 			this.onEdit = true;
