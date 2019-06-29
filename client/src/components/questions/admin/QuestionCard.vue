@@ -159,7 +159,7 @@
 											</v-btn>
 										</template>
 
-										<v-list class="py-0" dense>
+										<v-list class="py-0 custom-list" dense>
 											<slot name="menu-items" />
 
 											<!-- *options: edit -->
@@ -372,9 +372,6 @@ export default {
 	}
 	.is-star {
 		background: rgba(162, 209, 218, 0.231372549) !important;
-	}
-	.v-list__tile {
-		padding: 0 5px 0 0 !important;
 	}
 	.v-chip--small {
 		height: 21px !important;

@@ -17,12 +17,12 @@
 import { mapMutations } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
-import ProfileDialog from '@/components/guest/ProfileDialog.vue';
+import GuestActionSignupDialog from '@/components/user/GuestActionSignupDialog.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'profile-dialog': ProfileDialog
+		'profile-dialog': GuestActionSignupDialog
 	},
 	mixins: [handleSockets],
 	data: () => ({

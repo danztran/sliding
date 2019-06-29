@@ -22,6 +22,7 @@
 				right>
 				<v-tab
 					v-if="isSMnXS"
+					:class="{'new': currentTab !== 0 && reviewQuestions.length}"
 					active-class="primary--text font-weight-medium">
 					{{ $t('moderation-view-title') }}
 				</v-tab>
@@ -179,5 +180,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+$color-noti: #e54731;
+.v-tabs__div.new {
+    position: relative;
+    a.v-tabs__item::before {
+		content: '*';
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: $color-noti;
+	}
+}
 </style>

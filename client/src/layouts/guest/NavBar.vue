@@ -21,7 +21,7 @@
 					<v-flex sm4>
 						<v-toolbar-side-icon />
 						<div class="d-inline subheading font-weight-medium">
-							event name
+							{{ eventInfo.name }}
 						</div>
 					</v-flex>
 
@@ -40,7 +40,16 @@
 						</v-tabs>
 					</v-flex>
 
-					<v-flex sm4 class="right">
+					<v-flex
+						v-if="user"
+						sm4
+						class="right">
+						<user-actions-avatar />
+					</v-flex>
+					<v-flex
+						v-else
+						sm4
+						class="right">
 						<v-btn
 							icon
 							@click="toggleDialogProfile">
@@ -67,8 +76,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
+
 export default {
 	name: 'NavBar',
+	components: {
+		'user-actions-avatar': UserActionsAvatar
+	},
 	data: () => ({
 		tabs: [
 			{ name: 'questions', url: 'questions' },
@@ -78,12 +92,18 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'guest/event/getEventInfo'
+			eventInfo: 'guest/event/getEventInfo',
+			user: 'auth/user'
 		})
+	},
+	created() {
+		this.tabs.forEach((e) => {
+			e.name = this.$t(e.name);
+		});
 	},
 	methods: {
 		toggleDialogProfile() {
-			this.$root.$emit('guest-profile-dialog');
+			this.$root.$emit('guest-signup-dialog');
 		}
 	}
 };

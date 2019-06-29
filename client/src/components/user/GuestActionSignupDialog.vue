@@ -86,13 +86,13 @@ const initForm = () => ({
 });
 
 export default {
-	name: 'ProfileDialog',
+	name: 'GuestActionSignupDialog',
 	data: () => ({
 		guestDialogProfile: false,
 		form: initForm()
 	}),
 	mounted() {
-		this.$root.$on('guest-profile-dialog', () => {
+		this.$root.$on('guest-signup-dialog', () => {
 			this.guestDialogProfile = true;
 		});
 	}

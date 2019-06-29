@@ -80,7 +80,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import UserActionsAvatar from '@/components/UserActionsAvatar.vue';
+import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 
 export default {
 	name: 'NavBar',
