@@ -79,7 +79,7 @@ module.exports = {
 				code: event.code
 			};
 			const editedEvent = await Event.update(newInfo).exec();
-			io.$fn.saveEvent({ ...event, ...newInfo });
+			io.$fn.saveEvent({ ...event, ...editedEvent });
 			result.event = newInfo;
 			delete result.event.password;
 

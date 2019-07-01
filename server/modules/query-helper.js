@@ -27,8 +27,11 @@ const queryHelper = {
 		const prefix = alias ? `${alias}.` : '';
 		for (const key in object) {
 			if (Object.prototype.hasOwnProperty.call(object, key)) {
-				if (object[key] !== undefined) {
-					states.push(`${prefix}"${key}"=${this.toDollarQuoted(object[key])}`);
+				const value = object[key];
+				switch (value) {
+					case undefined: break;
+					case null: states.push(`${prefix}"${key}"=NULL`); break;
+					default: states.push(`${prefix}"${key}"=${this.toDollarQuoted(object[key])}`);
 				}
 			}
 		}
@@ -71,8 +74,18 @@ const queryHelper = {
 		const values = [];
 		for (const key in info) {
 			if (Object.prototype.hasOwnProperty.call(info, key)) {
-				keys.push(`"${key}"`);
-				values.push(this.toDollarQuoted(info[key]));
+				const value = info[key];
+				// ignore undefined value
+				if (value !== undefined) {
+					keys.push(`"${key}"`);
+					// handle null value
+					if (value === null) {
+						values.push('NULL');
+					}
+					else {
+						values.push(this.toDollarQuoted(info[key]));
+					}
+				}
 			}
 		}
 		return `(${keys.join(',')}) VALUES (${values.join(',')})`;
