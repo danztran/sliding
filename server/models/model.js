@@ -115,19 +115,24 @@ class Model {
 		return this;
 	}
 
-	exec(rowReturn) {
-		return new Promise((resolve, reject) => {
-			this.setRowReturn(rowReturn || this.getRowReturn());
-			pool.query(this.getQuery())
-				.then((result) => {
-					switch (this._rowReturn) {
-						case 1: return resolve(result.rows[0]);
-						case 0: return resolve(result.rows);
-						default: return resolve(result);
-					}
-				})
-				.catch(reject);
-		});
+	async exec(rowReturn) {
+		try {
+			const query = await pool.query(this.getQuery());
+			if (rowReturn) {
+				this.setRowReturn(rowReturn);
+			}
+
+			let result;
+			switch (this.getRowReturn()) {
+				case 1: [result] = query.rows; break;
+				case 0: result = query.rows; break;
+				default: result = query;
+			}
+			return result;
+		}
+		catch (error) {
+			return error;
+		}
 	}
 }
 
