@@ -134,5 +134,29 @@ module.exports = {
 		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
+	},
+
+	async removeModerator({ io, socket }, info, callback) {
+		if (socket.$fn.cannot('removeModerator', callback)) return;
+		// VALIDATE INFO HERE
+		// ...
+		const event = socket.$fn.getCurrentEvent();
+		try {
+			const EventRole = new EventRoleModel();
+
+			await EventRole.createOrUpdate({
+				event_id: event.id,
+				user_id: info.user_id
+			}, {
+				role: 'guest'
+			});
+
+			socket.$fn.removeAdmin({ id: info.user_id });
+			socket.to(event.rooms.main).emit('new_removed_admin', info);
+			return callback(true);
+		}
+		catch (e) {
+			return socket.$fn.handleError(e, callback);
+		}
 	}
 };

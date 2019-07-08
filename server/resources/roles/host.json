@@ -3,6 +3,7 @@
 	"permissions": {
 		"editEvent": true,
 		"addModerator": true,
+		"removeModerator": true,
 		"seeAllQuestions": true,
 		"addQuestionReply": true,
 		"editQuestionReply": true,
