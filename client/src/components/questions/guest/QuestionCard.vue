@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
 	name: 'QuestionCard',
@@ -147,7 +147,9 @@ export default {
 			return this._cm.dayCreate(this.question.created_at);
 		},
 		count_likes() {
-			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
+			if (this._cm.notEmpty(this.question.reactions)) {
+				return this.question.reactions.filter(r => r.like === true);
+			}
 			return [];
 		}
 	},
@@ -155,27 +157,42 @@ export default {
 		if (this._cm.notEmpty(this.question.reactions)) {
 			const { reactions } = this.question;
 			const rs = reactions.find(r => (r.user_id).toString() === this.user.id);
-			this.react = null || rs.like;
+			this.react = (rs !== undefined) ? null || rs.like : null;
 		}
 	},
 	methods: {
+		...mapMutations({
+			mergeQReact: 'guest/questions/MERGE_QUESTION_REACT'
+		}),
 		showDialogReplies(question) {
 			this.$root.$emit('dialog-reply-question', question);
+		},
+		updateQReact(react) {
+			const qInfo = {
+				question_id: this.question.id,
+				like: react,
+				user_id: this.user.id
+			};
+			this.mergeQReact(qInfo);
 		},
 		dislikeQuestion() {
 			if (this.react === false) {
 				this.react = null;
+				this.updateQReact(this.react);
 				return this.reactionQuestion({ like: null });
 			}
 			this.react = false;
+			this.updateQReact(this.react);
 			return this.reactionQuestion({ like: false });
 		},
 		likeQuestion() {
 			if (this.react === true) {
 				this.react = null;
+				this.updateQReact(this.react);
 				return this.reactionQuestion({ like: null });
 			}
 			this.react = true;
+			this.updateQReact(this.react);
 			return this.reactionQuestion({ like: true });
 		},
 		reactionQuestion(info) {

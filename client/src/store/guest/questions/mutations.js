@@ -124,6 +124,24 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 };
 
 
+const MERGE_QUESTION_REACT = (state, react) => {
+	const question = state.questions.find(q => q.id === react.question_id);
+	if (!question.reactions) {
+		question.reactions = [];
+		question.reactions.push(react);
+	}
+	else {
+		const reaction = question.reactions.find(r => r.user_id === react.user_id);
+		if (reaction) {
+			Object.assign(reaction, react.like);
+		}
+		else {
+			question.reactions.push(react);
+		}
+	}
+};
+
+
 /* ------------------------------------------------------------------------
 	@desc: when leave event clear state
 ------------------------------------------------------------------------*/
@@ -143,5 +161,6 @@ export default {
 	DELETE_ERROR_QUESTION_REPLY,
 	MERGE_EDIT_REPLY,
 	DELETE_QUESTION_REPLY,
+	MERGE_QUESTION_REACT,
 	RESET
 };

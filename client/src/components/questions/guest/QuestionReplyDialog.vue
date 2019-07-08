@@ -104,6 +104,7 @@ export default {
 			count_replies: null,
 			id: null,
 			likes: [],
+			reactions: [],
 			user: {
 				id: null,
 				name: ''
