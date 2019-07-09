@@ -1,10 +1,10 @@
 <template>
-	<v-card class="no-shadow">
+	<v-card class="no-shadow guest-question-card">
 		<v-list subheader class="py-1">
 			<v-list-tile>
 				<!-- *avatar -->
 				<v-list-tile-avatar
-					class="pl-2"
+					class="pl-2 mw-50"
 					:size="icon.lg"
 					color="grey lighten-2">
 					<v-icon
@@ -27,12 +27,18 @@
 					<v-list-tile>
 						<!-- *like -->
 						<v-btn
-							class="mx-1"
+							class="mx-1 mw-50"
+							round
+							outline
 							flat
-							icon
 							small
-							color="primary lighten-1"
+							:color="react === true
+								? 'primary'
+								: 'grey lighten-2'"
 							@click="likeQuestion">
+							<span>
+								{{ count_likes.length }}
+							</span>
 							<v-icon
 								:color="react === true
 									? 'primary'
@@ -44,9 +50,13 @@
 						<!-- *dislike -->
 						<v-btn
 							v-if="allowQDislike"
-							color="grey lighten-2"
+							class="mw-50"
+							round
+							outline
 							flat
-							icon
+							:color="react === false
+								? 'primary'
+								: 'grey lighten-2'"
 							small>
 							<v-icon
 								:color="react === false
@@ -62,41 +72,30 @@
 		</v-list>
 
 		<!-- *content -->
-		<v-card-title class="py-0 px-4">
+		<v-card-title
+			class="py-0 px-4"
+			:class="{'pb-2': reply}">
 			<p class="body-1 mb-0">
 				{{ question.content }}
 			</p>
 		</v-card-title>
 
 		<!-- *footer: count_replies & replies dialog -->
-		<v-card-actions class="py-0">
+		<v-card-actions v-if="!reply" class="py-0">
 			<v-list-tile class="grow">
-				<span class="grey--text caption">
-					{{ count_likes.length }}&nbsp;
-				</span>
 				<span
-					v-t="count_likes.length > 2
-						? 'guest-question-count-likes'
-						: 'guest-question-count-like'"
-					class="grey--text caption text-lowercase" />
-
-				<v-btn
-					v-if="!reply"
-					color="grey lighten-1"
-					class="text-lowercase"
-					flat
-					small
+					class="grey--text text-lighten-2 text-lowercase btn-replies"
 					@click="showDialogReplies(question)">
-					<v-icon size="13" v-text="'$vuetify.icons.guest_reply'" />
+					<v-icon size="14" v-text="'$vuetify.icons.guest_reply'" />
 					<span class="caption text-lowercase">
-						&nbsp;{{ question.count_replies }}&nbsp;
+						{{ question.count_replies }}&nbsp;
 					</span>
 					<span
 						v-t="question.count_replies > 2
 							? 'btn-reply'
 							: 'btn-replies'"
 						class="caption" />
-				</v-btn>
+				</span>
 			</v-list-tile>
 		</v-card-actions>
 	</v-card>
@@ -209,4 +208,20 @@ export default {
 </script>
 
 <style lang="scss">
+.guest-question-card {
+	.mw-50 {
+		min-width: 50px;
+
+		.v-btn__content {
+			justify-content: space-evenly;
+		}
+	}
+
+	.btn-replies {
+		&:hover {
+			cursor: pointer;
+			background-color: #f3f3f3;
+		};
+	}
+}
 </style>
