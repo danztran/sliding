@@ -32,7 +32,7 @@
 							outline
 							flat
 							small
-							:color="react === true
+							:color="currentGuestReact === true
 								? 'primary'
 								: 'grey lighten-2'"
 							@click="likeQuestion">
@@ -40,7 +40,7 @@
 								{{ count_likes.length }}
 							</span>
 							<v-icon
-								:color="react === true
+								:color="currentGuestReact === true
 									? 'primary'
 									: 'grey lighten-2'"
 								:size="icon.sm"
@@ -54,12 +54,12 @@
 							round
 							outline
 							flat
-							:color="react === false
+							:color="currentGuestReact === false
 								? 'primary'
 								: 'grey lighten-2'"
 							small>
 							<v-icon
-								:color="react === false
+								:color="currentGuestReact === false
 									? 'primary'
 									: 'grey lighten-2'"
 								:size="icon.sm"
@@ -135,7 +135,7 @@ export default {
 			sm: 17,
 			lg: 25
 		},
-		react: null
+		currentGuestReact: null
 	}),
 	computed: {
 		...mapGetters({
@@ -156,42 +156,42 @@ export default {
 		if (this._cm.notEmpty(this.question.reactions)) {
 			const { reactions } = this.question;
 			const rs = reactions.find(r => (r.user_id).toString() === this.user.id);
-			this.react = (rs !== undefined) ? null || rs.like : null;
+			this.currentGuestReact = (rs !== undefined) ? null || rs.like : null;
 		}
 	},
 	methods: {
 		...mapMutations({
-			mergeQReact: 'guest/questions/MERGE_QUESTION_REACT'
+			mergeQReaction: 'guest/questions/MERGE_QUESTION_REACTION'
 		}),
 		showDialogReplies(question) {
 			this.$root.$emit('dialog-reply-question', question);
 		},
-		updateQReact(react) {
+		updateQReact(currentGuestReact) {
 			const qInfo = {
 				question_id: this.question.id,
-				like: react,
+				like: currentGuestReact,
 				user_id: this.user.id
 			};
-			this.mergeQReact(qInfo);
+			this.mergeQReaction(qInfo);
 		},
 		dislikeQuestion() {
-			if (this.react === false) {
-				this.react = null;
-				this.updateQReact(this.react);
+			if (this.currentGuestReact === false) {
+				this.currentGuestReact = null;
+				this.updateQReact(this.currentGuestReact);
 				return this.reactionQuestion({ like: null });
 			}
-			this.react = false;
-			this.updateQReact(this.react);
+			this.currentGuestReact = false;
+			this.updateQReact(this.currentGuestReact);
 			return this.reactionQuestion({ like: false });
 		},
 		likeQuestion() {
-			if (this.react === true) {
-				this.react = null;
-				this.updateQReact(this.react);
+			if (this.currentGuestReact === true) {
+				this.currentGuestReact = null;
+				this.updateQReact(this.currentGuestReact);
 				return this.reactionQuestion({ like: null });
 			}
-			this.react = true;
-			this.updateQReact(this.react);
+			this.currentGuestReact = true;
+			this.updateQReact(this.currentGuestReact);
 			return this.reactionQuestion({ like: true });
 		},
 		reactionQuestion(info) {

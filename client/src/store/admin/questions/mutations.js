@@ -122,6 +122,28 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 
 
 /* ------------------------------------------------------------------------
+	@desc: receive 'question_id' and 'like', then merge
+				into question reactions
+	@socket: listen 'new_question_reaction'
+------------------------------------------------------------------------*/
+const MERGE_QUESTION_REACTION = (state, react) => {
+	const question = state.questions.find(q => Number(q.id) === Number(react.question_id));
+	if (!question.reactions) {
+		question.reactions = [];
+		question.reactions.push(react);
+	}
+	else {
+		const reaction = question.reactions.find(r => Number(r.user_id) === Number(react.user_id));
+		if (reaction) {
+			Object.assign(reaction, { like: react.like });
+		}
+		else {
+			question.reactions.push(react);
+		}
+	}
+};
+
+/* ------------------------------------------------------------------------
 	@desc: when leave event clear state
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
@@ -141,5 +163,6 @@ export default {
 	DELETE_ERROR_QUESTION_REPLY,
 	DELETE_QUESTION_REPLY,
 	MERGE_EDIT_REPLY,
+	MERGE_QUESTION_REACTION,
 	RESET
 };

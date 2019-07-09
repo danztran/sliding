@@ -2,6 +2,7 @@ $primary-color: #3da4b5;
 $black-color: #000000de;
 
 html, body {
+	overflow-x: hidden;
 	overflow-y: auto;
 	box-sizing: border-box;
 	scroll-behavior: smooth;

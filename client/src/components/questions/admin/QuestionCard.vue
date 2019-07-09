@@ -250,6 +250,7 @@ export default {
 			lg: 25
 		},
 		form: initForm(),
+		reactions: [],
 		onEdit: false,
 		cache: '',
 		loadingState: '',
@@ -279,8 +280,13 @@ export default {
 			return this.question.is_answered;
 		},
 		likes() {
-			if (this.question.reactions) return this.question.reactions.filter(r => r.like === true);
+			if (this.reactions) return this.reactions.filter(r => r.like === true);
 			return [];
+		}
+	},
+	mounted() {
+		if (this._cm.notEmpty(this.question.reactions)) {
+			this.reactions = this.question.reactions;
 		}
 	},
 	methods: {

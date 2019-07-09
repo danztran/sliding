@@ -53,6 +53,9 @@ export default {
 		new_deleted_question_reply(reply) {
 			this.deleteQuestionReply(reply);
 			this.$root.$emit('update-replies');
+		},
+		new_question_reaction(questionReact) {
+			this.mergeQuestionReaction(questionReact);
 		}
 	},
 	methods: {
@@ -62,6 +65,7 @@ export default {
 			delQuestion: 'guest/questions/DELETE_QUESTION',
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
+			mergeQuestionReaction: 'guest/questions/MERGE_QUESTION_REACTIONS',
 			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY'
 		})
 	}
