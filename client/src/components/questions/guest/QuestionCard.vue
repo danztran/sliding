@@ -1,6 +1,6 @@
 <template>
 	<v-card class="no-shadow guest-question-card">
-		<v-list subheader class="py-1">
+		<v-list subheader class="py-1" :class="{ bganimation }">
 			<v-list-tile>
 				<!-- *avatar -->
 				<v-list-tile-avatar
@@ -74,14 +74,14 @@
 		<!-- *content -->
 		<v-card-title
 			class="py-0 px-4"
-			:class="{'pb-2': reply}">
+			:class="{'pb-2': reply, bganimation }">
 			<p class="body-1 mb-0">
 				{{ question.content }}
 			</p>
 		</v-card-title>
 
 		<!-- *footer: count_replies & replies dialog -->
-		<v-card-actions v-if="!reply" class="py-0">
+		<v-card-actions v-if="!reply" class="py-0" :class="{ bganimation }">
 			<v-list-tile class="grow">
 				<span
 					class="grey--text text-lighten-2 text-lowercase btn-replies"
@@ -135,7 +135,8 @@ export default {
 			sm: 17,
 			lg: 25
 		},
-		currentGuestReact: null
+		currentGuestReact: null,
+		bganimation: false
 	}),
 	computed: {
 		...mapGetters({
@@ -167,6 +168,7 @@ export default {
 			this.$root.$emit('dialog-reply-question', question);
 		},
 		updateQReact(currentGuestReact) {
+			this.bganimation = true;
 			const qInfo = {
 				question_id: this.question.id,
 				like: currentGuestReact,
@@ -200,6 +202,7 @@ export default {
 				question_id: this.question.id,
 				...info
 			}, (data) => {
+				this.bganimation = false;
 				console.warn(data);
 			});
 		}
@@ -222,6 +225,34 @@ export default {
 			cursor: pointer;
 			background-color: #f3f3f3;
 		};
+	}
+
+	.bganimation {
+		-webkit-animation-name: color-transition;
+		animation-name: color-transition;
+		-webkit-animation-duration: 4s;
+		animation-duration: 4s;
+		-webkit-animation-direction: alternate;
+		animation-direction: alternate;
+		-webkit-animation-iteration-count: infinite;
+		animation-iteration-count: infinite;
+		-webkit-animation-timing-function: linear;
+		animation-timing-function: linear;
+	}
+
+	@-webkit-keyframes color-transition {
+		0% {
+			background-color: #7dd1ce;
+			border-color: #7dd1ce;
+		}
+		50% {
+			background-color: #e6f9fc;
+			border-color: #e6f9fc;
+		}
+		100% {
+			background-color: #f5feff;
+			border-color: #f5feff;
+		}
 	}
 }
 </style>
