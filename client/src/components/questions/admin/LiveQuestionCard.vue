@@ -7,13 +7,13 @@
 					<template v-slot:activator="{ on }">
 						<v-btn flat icon :color="_cm.resultColor(!isAnswered)" v-on="on"
 							@click="toggleAnswered">
-							<v-icon :color="_cm.resultColor(!isAnswered)"
+							<v-icon
+								:color="_cm.resultColor(!isAnswered)"
 								:size="icon.lg"
 								v-text="'$vuetify.icons.mark_answered'" />
 						</v-btn>
 					</template>
-					<span
-						v-t="answerText" />
+					<span v-t="answerText" />
 				</v-tooltip>
 
 				<v-tooltip bottom>

@@ -79,7 +79,7 @@
 							:disabled="loadingState !== ''"
 							:loading="loadingState !== ''"
 							@click="saveSettings">
-							<span v-t="'btn-save'" />
+							<span v-t="'btn-save'" class="first-letter-uppercase" />
 							<template v-slot:loader>
 								<icon-loading-circle :state.sync="loadingState" />
 							</template>
@@ -107,7 +107,7 @@
 							:disabled="loadingState !== ''"
 							:loading="loadingState !== ''"
 							@click="saveSettings">
-							<span v-t="'btn-save'" />
+							<span v-t="'btn-save'" class="first-letter-uppercase" />
 							<template v-slot:loader>
 								<icon-loading-circle :state.sync="loadingState" />
 							</template>

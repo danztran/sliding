@@ -19,7 +19,7 @@
 						round
 						small
 						@click.stop="createEvent">
-						{{ $t('btn-create-event') }}
+						<span v-t="'btn-create-event'" class="first-letter-uppercase" />
 					</v-btn>
 
 					<v-menu bottom nudge-bottom offset-y left>

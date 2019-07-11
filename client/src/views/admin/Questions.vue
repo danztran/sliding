@@ -78,26 +78,12 @@ export default {
 <style lang="scss">
 	$primary: #3da4b5;
 	#admin-question {
-		.list-scroll {
-			max-height: 75vh;
-			height: 75vh;
-			overflow-y: auto;
-			box-shadow: 0 3px 10px rgba(0,0,0,.1) !important;
-			scroll-behavior: smooth;
-			-webkit-overflow-scrolling: touch;
-		}
 		.v-input--switch label {
 			font-size: 14px !important;
 		}
 		.v-tabs__div {
 			text-transform: capitalize;
 			font-weight: 400;
-		}
-		.card-parent {
-			margin: .1px 0 !important;
-			border: .5px solid rgb(224, 224, 224);
-			box-shadow: none;
-			overflow-x: hidden;
 		}
 		.no-shadow.v-card:hover {
 			background-color: #efefef;

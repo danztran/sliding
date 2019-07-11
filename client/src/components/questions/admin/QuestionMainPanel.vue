@@ -93,7 +93,7 @@
 				v-if="isSMnXS"
 				:transition="false"
 				:reverse-transition="false">
-				<v-card class="card-parent list-scroll scrollbar-primary">
+				<v-card class="card-wrapper list-scroll scrollbar-primary">
 					<empty-state-review v-if="!reviewQuestions.length" />
 					<v-layout row wrap>
 						<v-flex xs12>
@@ -110,7 +110,7 @@
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
-				<v-card class="card-parent list-scroll scrollbar-primary">
+				<v-card class="card-wrapper list-scroll scrollbar-primary">
 					<empty-state-live v-if="!liveQuestions.length" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>
@@ -127,7 +127,7 @@
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
-				<v-card class="card-parent list-scroll scrollbar-primary">
+				<v-card class="card-wrapper list-scroll scrollbar-primary">
 					<empty-state-archived v-if="!archivedQuestions.length" />
 					<v-layout v-else row wrap>
 						<v-flex xs12>

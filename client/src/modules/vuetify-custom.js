@@ -68,7 +68,8 @@ const icons = {
 	lock: 'lock',
 	archive: 'archive',
 	unarchive: 'unarchive',
-	mark_answered: 'spellcheck'
+	mark_answered: 'spellcheck',
+	add_new: 'add_circle_outline'
 };
 
 // custom components

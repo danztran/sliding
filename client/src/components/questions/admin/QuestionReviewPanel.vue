@@ -67,7 +67,7 @@
 
 		<v-card
 			:class="{'bg-grey': !onModeration}"
-			class="w-100 card-parent list-scroll scrollbar-primary list-scroll">
+			class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
 			<empty-review v-if="!reviewQuestions.length" />
 			<v-layout v-else row wrap>
 				<v-flex xs12>
@@ -120,7 +120,4 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.bg-grey {
-	background-color: #efefef !important;
-}
 </style>
