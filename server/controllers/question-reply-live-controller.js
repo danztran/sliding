@@ -51,6 +51,7 @@ module.exports = {
 		// VALIDATE INFO HERE
 		// ...
 		const event = socket.$fn.getCurrentEvent();
+		const user = socket.$fn.getUser();
 		const result = {};
 		try {
 			const QuestionReply = new QuestionReplyModel();
@@ -58,7 +59,13 @@ module.exports = {
 				id: info.id,
 				is_deleted: false
 			}).exec();
-			if (!reply) throw socket.$fn.t('replyNotFound');
+			if (!reply) {
+				throw socket.$fn.t('replyNotFound');
+			}
+
+			if (reply.user_id !== user.id) {
+				throw socket.$fn.t('cannotEditReply');
+			}
 
 			const editedReply = await QuestionReply.update(info).exec();
 			result.reply = editedReply;

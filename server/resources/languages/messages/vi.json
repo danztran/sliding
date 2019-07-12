@@ -26,6 +26,7 @@
 	"userHostAlready": "Bạn đang là Host của sự kiện này",
 	"addQuestionReply": "Trả lời câu hỏi",
 	"editQuestionReply": "Sửa câu trả lời",
+	"cannotEditReply": "Bạn không thể chỉnh sửa câu trả lời của người khác",
 	"deleteQuestionReply": "Xóa trả lời",
 	"addQuestion": "Đặt câu hỏi",
 	"editQuestion": "Sửa nội dung câu hỏi",

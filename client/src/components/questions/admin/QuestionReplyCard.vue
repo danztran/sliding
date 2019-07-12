@@ -88,7 +88,7 @@
 
 							<v-list class="py-0" dense>
 								<!-- *options: edit -->
-								<v-list-tile @click="editReply">
+								<v-list-tile v-if="canEdit" @click="editReply">
 									<v-list-tile-action>
 										<v-icon v-text="'$vuetify.icons.edit'" />
 									</v-list-tile-action>
@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 const initForm = () => ({
@@ -164,6 +165,9 @@ export default {
 		loadingState: ''
 	}),
 	computed: {
+		...mapGetters({
+			user: 'auth/user'
+		}),
 		checkValidEdit() {
 			const { editReply } = this.form;
 			if (editReply.value && editReply.value.length > editReply.maxLength) {
@@ -178,6 +182,10 @@ export default {
 		},
 		dateRCreated() {
 			return this._cm.dayCreate(this.replyData.created_at);
+		},
+		canEdit() {
+			// eslint-disable-next-line
+			return this.replyData.user.id == this.user.id;
 		}
 	},
 	methods: {

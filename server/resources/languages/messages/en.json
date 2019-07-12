@@ -26,6 +26,7 @@
 	"userHostAlready": "You are the Host of this event",
 	"addQuestionReply": "Reply question",
 	"editQuestionReply": "Edit question reply",
+	"cannotEditReply": "You can not edit reply of other user",
 	"deleteQuestionReply": "Delete question reply",
 	"addQuestion": "Write question",
 	"editQuestion": "Edit question content",
