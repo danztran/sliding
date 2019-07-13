@@ -11,16 +11,14 @@
 			<div v-t="'btn-live'" class="grey--text" />
 
 			<!-- *actions: show dialog poll result -->
-			<div>
-				<v-btn
-					small
-					flat
-					round
-					outline
-					color="grey lighten-2">
-					<span v-t="'btn-poll-result'" class="first-letter-uppercase" />
-				</v-btn>
-			</div>
+			<v-btn
+				small
+				flat
+				round
+				outline
+				color="grey">
+				<span v-t="'btn-poll-result'" class="first-letter-uppercase" />
+			</v-btn>
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">

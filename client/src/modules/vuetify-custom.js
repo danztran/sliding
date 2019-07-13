@@ -66,10 +66,16 @@ const icons = {
 	multiple: 'add_to_photos',
 	copy: 'file_copy',
 	lock: 'lock',
+	unlock: 'lock_open',
 	archive: 'archive',
 	unarchive: 'unarchive',
 	mark_answered: 'spellcheck',
-	add_new: 'add_circle_outline'
+	add_new: 'add_circle_outline',
+	multiple_choice: 'format_list_numbered',
+	word_cloud: 'cloud_queue',
+	start_outline: 'play_circle_outline',
+	pause_fill: 'pause_circle_filled',
+	result_off: 'grid_off'
 };
 
 // custom components

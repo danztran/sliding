@@ -1,5 +1,5 @@
 <template>
-	<v-card class="no-shadow guest-question-card">
+	<v-card class="no-shadow card-hover guest-question-card">
 		<v-list subheader class="py-1" :class="{ bganimation }">
 			<v-list-tile>
 				<!-- *avatar -->

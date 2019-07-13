@@ -4,7 +4,7 @@
 			slot-scope="{ hover }"
 			class="no-shadow bg-grey hover-pointer"
 			@click="toggleCreatePollDialog">
-			<v-list-tile class="grow py-3">
+			<v-list-tile class="grow py-3 px-2">
 				<v-icon
 					v-if="!hover"
 					medium

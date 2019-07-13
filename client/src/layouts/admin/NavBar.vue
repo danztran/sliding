@@ -32,7 +32,7 @@
 
 					<v-list-tile-content>
 						<div class="subheading text-capitalize font-weight-medium">
-							{{ eventInfo ? eventInfo.name : '' }}
+							{{ eventInfo.name !== undefined ? eventInfo.name : '...' }}
 						</div>
 						<div
 							class="caption text-uppercase hidden-xs-only">

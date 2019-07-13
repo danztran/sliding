@@ -23,8 +23,8 @@ const _cm = {
 		const result = `${date[1]} ${date[2]}, ${toTimeString}`;
 		return result;
 	},
-	resultColor(result) {
-		return result ? 'success' : 'error';
+	resultColor(rs, cl1 = 'success', cl2 = 'error') {
+		return rs ? cl1 : cl2;
 	},
 	customSort(array = [], order = 'asc', field) {
 		if (Array.isArray(array) && array.length > 0) {

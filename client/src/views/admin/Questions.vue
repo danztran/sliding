@@ -85,12 +85,6 @@ export default {
 			text-transform: capitalize;
 			font-weight: 400;
 		}
-		.no-shadow.v-card:hover {
-			background-color: #efefef;
-			.v-list {
-				background-color: #efefef;
-			}
-		}
 		.v-list__tile__action {
 			min-width: 35px !important
 		}

@@ -5,7 +5,7 @@
 			<v-card
 				slot-scope="{ hover }"
 				:class="{ deleting }"
-				class="no-shadow">
+				class="no-shadow card-hover">
 				<v-list
 					subheader
 					class="py-1"

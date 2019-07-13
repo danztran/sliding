@@ -22,6 +22,14 @@ html, body {
 	text-decoration: none;
 }
 
+// Card hover 
+.no-shadow.card-hover:hover {
+	background-color: #efefef;
+	.v-list {
+		background-color: #efefef;
+	}
+}
+
 .bg-grey {
 	background-color: #efefef !important;
 }
