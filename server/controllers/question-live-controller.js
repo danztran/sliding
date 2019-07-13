@@ -6,7 +6,7 @@ module.exports = {
 		const result = {};
 		const query = {
 			event_id: event.id,
-			is_deleted: false
+			is_deleted: false,
 		};
 		if (!socket.$fn.can('seeAllQuestions')) {
 			query.stage = 'public';
@@ -36,11 +36,11 @@ module.exports = {
 			const question = await Question.create({
 				...info,
 				user_id: user.id,
-				stage: event.on_moderation ? 'private' : 'public'
+				stage: event.on_moderation ? 'private' : 'public',
 			}).exec();
 			question.user = {
 				id: user.id,
-				name: user.name
+				name: user.name,
 			};
 			result.question = question;
 
@@ -66,7 +66,7 @@ module.exports = {
 			const Question = new QuestionModel();
 			const question = await Question.findOne({
 				id: info.id,
-				is_deleted: false
+				is_deleted: false,
 			}).exec();
 			if (!question) throw socket.$fn.t('questionNotFound');
 
@@ -109,7 +109,7 @@ module.exports = {
 			const Question = new QuestionModel();
 			const question = await Question.findOne({
 				id: info.id,
-				is_deleted: false
+				is_deleted: false,
 			}).exec();
 			if (!question) throw socket.$fn.t('questionNotFound');
 
@@ -127,6 +127,6 @@ module.exports = {
 		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
-	}
+	},
 
 };

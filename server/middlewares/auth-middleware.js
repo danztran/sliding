@@ -5,7 +5,7 @@ const mdw = {
 			return res.status(401).sendwm();
 		}
 		return next();
-	}
+	},
 };
 
 module.exports = mdw;

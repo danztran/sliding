@@ -12,5 +12,5 @@ export default {
 	getAdmins,
 	allowQuestion,
 	allowQDislike,
-	allowQReply
+	allowQReply,
 };

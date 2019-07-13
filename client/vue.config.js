@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
 module.exports = {
 	outputDir: '../server/vue-dist',
 	devServer: {
-		port: process.env.PORT || 8080
+		port: process.env.PORT || 8080,
 	},
 	chainWebpack: (config) => {
 		config.module
@@ -17,5 +17,5 @@ module.exports = {
 			.use('vue-loader')
 			.loader('vue-loader')
 			.tap(options => options);
-	}
+	},
 };

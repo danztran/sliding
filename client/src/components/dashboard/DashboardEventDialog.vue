@@ -221,7 +221,7 @@ const initForm = () => ({
 		type: 'text',
 		required: true,
 		autofocus: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	description: {
 		value: '',
@@ -229,16 +229,16 @@ const initForm = () => ({
 		type: 'text',
 		errmsg: '',
 		outline: true,
-		rows: 3
+		rows: 3,
 	},
 	start: {
 		defaultTime: null,
-		defaultDate: null
+		defaultDate: null,
 	},
 	end: {
 		defaultTime: null,
-		defaultDate: null
-	}
+		defaultDate: null,
+	},
 });
 
 export default {
@@ -252,13 +252,13 @@ export default {
 			dateStart: false,
 			dateEnd: false,
 			timeStart: false,
-			timeEnd: false
+			timeEnd: false,
 		},
 		dialogDateStart: false,
 		dialogDateEnd: false,
 		dialogTimeStart: false,
 		dialogTimeEnd: false,
-		errorMessage: ''
+		errorMessage: '',
 	}),
 	created() {
 		const date = new Date();
@@ -285,7 +285,7 @@ export default {
 				name: form.name.value,
 				description: form.description.value,
 				start_at: form.start.defaultDate,
-				end_at: form.end.defaultDate
+				end_at: form.end.defaultDate,
 			};
 
 			this.$axios
@@ -299,8 +299,8 @@ export default {
 					this.handleErrorMessages(err.messages);
 					this.loading = false;
 				});
-		}
-	}
+		},
+	},
 };
 </script>
 

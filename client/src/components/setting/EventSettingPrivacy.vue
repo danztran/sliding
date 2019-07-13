@@ -59,32 +59,32 @@ const initForm = () => ({
 		type: 'text',
 		prepend: 'lock',
 		required: true,
-		errmsg: ''
-	}
+		errmsg: '',
+	},
 });
 
 export default {
 	name: 'EventSettingPrivacy',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
 	},
 	data: () => ({
 		privacyExpand: {
 			icon: 'privacy',
 			title: 'event-setting-privacy-title',
-			subtitle: 'event-setting-privacy-subtitle'
+			subtitle: 'event-setting-privacy-subtitle',
 		},
 		form: initForm(),
 		privacySettings: {
 			search_hidden: false,
-			require_passcode: false
+			require_passcode: false,
 			// require_login: false
-		}
+		},
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	watch: {
 		tempSettings(val) {
@@ -104,16 +104,16 @@ export default {
 				if (!val.require_passcode) {
 					this.mergeTempSettings(val);
 				}
-			}
-		}
+			},
+		},
 	},
 	methods: {
 		...mapMutations({
-			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
 		}),
 		toggleEnblePasscode() {
 			this.privacySettings.require_passcode = !this.privacySettings.require_passcode;
-		}
-	}
+		},
+	},
 };
 </script>

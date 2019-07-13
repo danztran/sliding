@@ -19,9 +19,9 @@ class QuestionReactionModel extends Model {
 	createOrUpdate(info, opt) {
 		return super.createOrUpdate({
 			question_id: info.question_id,
-			user_id: info.user_id
+			user_id: info.user_id,
 		}, {
-			like: info.like
+			like: info.like,
 		}, opt);
 	}
 
@@ -29,16 +29,16 @@ class QuestionReactionModel extends Model {
 		return this.createOne({
 			question_id: info.question_id,
 			user_id: info.user_id,
-			like: info.like
+			like: info.like,
 		}, opt);
 	}
 
 	update(info, opt) {
 		return this.updateOne({
 			question_id: info.question_id,
-			user_id: info.user_id
+			user_id: info.user_id,
 		}, {
-			like: info.like
+			like: info.like,
 		}, opt);
 	}
 }

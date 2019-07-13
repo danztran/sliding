@@ -1,7 +1,7 @@
 const {
 	pgRandomDollarQuotedLength: rdqLength,
 	pgRandomDollarQuotedCharacters: rdqCharacters,
-	pgDollarQuotedPrefix: rdqPrefix
+	pgDollarQuotedPrefix: rdqPrefix,
 } = requireWrp('config');
 const rdqCharactersLength = rdqCharacters.length;
 
@@ -21,7 +21,7 @@ const queryHelper = {
 
 	toClause(object, {
 		symbol = ' ',
-		alias
+		alias,
 	} = {}) {
 		const states = [];
 		const prefix = alias ? `${alias}.` : '';
@@ -135,7 +135,7 @@ const queryHelper = {
 
 	toConflictClause(info) {
 		return `ON CONFLICT (${Object.keys(info).map(e => `"${e}"`).join(', ')})`;
-	}
+	},
 };
 
 module.exports = queryHelper;

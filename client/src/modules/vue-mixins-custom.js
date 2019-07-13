@@ -8,5 +8,5 @@ export default {
 		for (const mixin of mixins) {
 			Vue.mixin(mixin);
 		}
-	}
+	},
 };

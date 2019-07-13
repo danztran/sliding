@@ -51,7 +51,7 @@ const initForm = () => ({
 		type: 'text',
 		required: true,
 		autofocus: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	description: {
 		value: '',
@@ -59,7 +59,7 @@ const initForm = () => ({
 		label: 'event-description',
 		type: 'text',
 		outline: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	code: {
 		value: '',
@@ -67,7 +67,7 @@ const initForm = () => ({
 		type: 'text',
 		prefix: '#',
 		readonly: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	link: {
 		value: '',
@@ -76,20 +76,20 @@ const initForm = () => ({
 		append: 'file_copy',
 		readonly: true,
 		required: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	start_at: {
 		labelDate: 'event-start-date',
 		labelTime: 'event-start-time',
 		date: null,
-		time: null
+		time: null,
 	},
 	end_at: {
 		labelDate: 'event-end-date',
 		labelTime: 'event-end-time',
 		date: null,
-		time: null
-	}
+		time: null,
+	},
 });
 
 export default {
@@ -97,21 +97,21 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand,
 		'date-picker--menu': DatePickerMenu,
-		'time-picker--menu': TimePickerMenu
+		'time-picker--menu': TimePickerMenu,
 	},
 	data: () => ({
 		basicExpand: {
 			icon: 'info',
-			title: 'event-setting-basic-title'
+			title: 'event-setting-basic-title',
 		},
 		basicSettings: {
-			form: initForm()
-		}
+			form: initForm(),
+		},
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	watch: {
 		tempSettings(val) {
@@ -130,12 +130,12 @@ export default {
 
 			form.end_at.date = tempSettings.end_at;
 			form.end_at.time = tempSettings.end_at;
-		}
+		},
 	},
 	methods: {
 		formatDate(date) {
 			return new Date(date).toISOString().substr(0, 10);
-		}
-	}
+		},
+	},
 };
 </script>

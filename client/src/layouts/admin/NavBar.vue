@@ -85,7 +85,7 @@ import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 export default {
 	name: 'NavBar',
 	components: {
-		'user-actions-avatar': UserActionsAvatar
+		'user-actions-avatar': UserActionsAvatar,
 	},
 	data: () => ({
 		date: '',
@@ -93,13 +93,13 @@ export default {
 			{ name: 'questions', url: 'questions' },
 			{ name: 'polls', url: 'polls' },
 			{ name: 'ideas', url: 'ideas' },
-			{ name: 'analytics', url: 'analytics' }
-		]
+			{ name: 'analytics', url: 'analytics' },
+		],
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
-		})
+			eventInfo: 'admin/event/getEventInfo',
+		}),
 	},
 	created() {
 		this.tabs.forEach((e) => {
@@ -112,8 +112,8 @@ export default {
 		},
 		toggleEventSettingDialog() {
 			this.$root.$emit('toggle-event-setting');
-		}
-	}
+		},
+	},
 };
 </script>
 

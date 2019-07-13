@@ -19,8 +19,8 @@ export default {
 	name: 'AdminPolls',
 	components: {
 		'poll-panel--list': PollListPanel,
-		'poll-panel--live': PollLivePanel
-	}
+		'poll-panel--live': PollLivePanel,
+	},
 };
 </script>
 

@@ -85,28 +85,28 @@ export default {
 	name: 'Events',
 	components: {
 		'event-card': EventCard,
-		'empty-event': EmptyEvent
+		'empty-event': EmptyEvent,
 	},
 	data: () => ({
 		queryOpt: {
 			offset: 0,
 			limit: 0,
 			order: '-created_at',
-			role: 'host'
+			role: 'host',
 		},
 		isEmpty: false,
-		loading: false
+		loading: false,
 	}),
 	computed: {
 		...mapGetters({
-			events: 'dashboard/getEvents'
-		})
+			events: 'dashboard/getEvents',
+		}),
 	},
 	watch: {
 		events(val) {
 			this.loading = false;
 			this.isEmpty = val.length === 0;
-		}
+		},
 	},
 	mounted() {
 		if (this.events.length === 0) {
@@ -120,8 +120,8 @@ export default {
 		},
 		toEventLive(code) {
 			this.$router.push({ name: 'admin-event', params: { code } });
-		}
-	}
+		},
+	},
 };
 </script>
 

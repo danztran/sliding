@@ -67,35 +67,35 @@ const initForm = () => ({
 		type: 'text',
 		prepend: 'person',
 		autofocus: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	company: {
 		label: 'lb-company',
 		value: '',
 		type: 'text',
 		prepend: 'business',
-		errmsg: ''
+		errmsg: '',
 	},
 	email: {
 		label: 'lb-email',
 		value: '',
 		type: 'text',
 		prepend: 'mail',
-		errmsg: ''
-	}
+		errmsg: '',
+	},
 });
 
 export default {
 	name: 'GuestActionSignupDialog',
 	data: () => ({
 		guestDialogProfile: false,
-		form: initForm()
+		form: initForm(),
 	}),
 	mounted() {
 		this.$root.$on('guest-signup-dialog', () => {
 			this.guestDialogProfile = true;
 		});
-	}
+	},
 };
 </script>
 

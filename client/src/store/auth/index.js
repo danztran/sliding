@@ -12,8 +12,8 @@ const state = {
 	userData: null,
 	fillInfo: {
 		username: '',
-		password: ''
-	}
+		password: '',
+	},
 };
 
 const user = cookies.get(process.env.VUE_APP_CK_USER);
@@ -27,5 +27,5 @@ export default {
 	state,
 	actions,
 	getters,
-	mutations
+	mutations,
 };

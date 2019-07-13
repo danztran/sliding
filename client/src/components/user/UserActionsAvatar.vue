@@ -136,15 +136,15 @@ export default {
 	data: () => ({}),
 	computed: {
 		...mapGetters({
-			user: 'auth/user'
-		})
+			user: 'auth/user',
+		}),
 	},
 	methods: {
 		editProfile() {},
 		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -7,5 +7,5 @@ export default {
 	getEventInfo,
 	getRole,
 	getTempSettings,
-	onModeration
+	onModeration,
 };

@@ -40,5 +40,5 @@ export default {
 	setAuth,
 	checkAuth,
 	logout,
-	signup
+	signup,
 };

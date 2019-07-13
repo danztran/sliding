@@ -26,7 +26,7 @@ export default {
 	props: {
 		disabled: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		field: {
 			type: Object,
@@ -42,14 +42,14 @@ export default {
 					rows: 2,
 					autofocus: false,
 					required: false,
-					autogrow: false
+					autogrow: false,
 				};
-			}
+			},
 		},
 		outline: {
 			type: Boolean,
-			default: false
-		}
+			default: false,
+		},
 	},
 	methods: {
 		fieldRequired(field) {
@@ -57,7 +57,7 @@ export default {
 		},
 		onInput() {
 			this.field.errmsg = '';
-		}
-	}
+		},
+	},
 };
 </script>

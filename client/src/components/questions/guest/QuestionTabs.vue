@@ -83,18 +83,18 @@ import QuestionCard from './QuestionCard.vue';
 export default {
 	name: 'QuestionTabs',
 	components: {
-		'question-card': QuestionCard
+		'question-card': QuestionCard,
 	},
 	data: () => ({
-		currentTab: null
+		currentTab: null,
 	}),
 	computed: {
 		...mapGetters({
 			questions: 'guest/questions/getQuestions',
 			popularQuestions: 'guest/questions/getPopularQuestions',
-			recentQuestions: 'guest/questions/getRecentQuestions'
-		})
-	}
+			recentQuestions: 'guest/questions/getRecentQuestions',
+		}),
+	},
 };
 </script>
 

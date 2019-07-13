@@ -9,7 +9,7 @@ import mutations from './mutations';
 const state = {
 	eventInfo: {},
 	role: {},
-	tempSettings: {}
+	tempSettings: {},
 };
 
 export default {
@@ -17,5 +17,5 @@ export default {
 	state,
 	actions,
 	getters,
-	mutations
+	mutations,
 };

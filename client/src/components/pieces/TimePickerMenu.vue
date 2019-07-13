@@ -42,24 +42,24 @@ export default {
 				prepend: '',
 				time: null,
 				min: null,
-				max: null
-			})
-		}
+				max: null,
+			}),
+		},
 	},
 	data: () => ({
 		menuPickTime: false,
-		time: null
+		time: null,
 	}),
 	watch: {
 		'timeInfo.time': function t(val) {
 			this.time = this.formatTime(val);
-		}
+		},
 	},
 	methods: {
 		formatTime(time) {
 			if (!time) return null;
 			return new Date(time).toTimeString().substr(0, 5);
-		}
-	}
+		},
+	},
 };
 </script>

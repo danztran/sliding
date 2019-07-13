@@ -109,7 +109,7 @@ export default {
 	props: {
 		reply: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		question: {
 			type: Object,
@@ -124,24 +124,24 @@ export default {
 				// stage: "public"
 				user: {
 					id: null,
-					name: ''
-				}
-			})
-		}
+					name: '',
+				},
+			}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
+			lg: 25,
 		},
 		currentGuestReact: null,
-		bganimation: false
+		bganimation: false,
 	}),
 	computed: {
 		...mapGetters({
 			allowQDislike: 'guest/event/allowQDislike',
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		dateQCreated() {
 			return this._cm.dayCreate(this.question.created_at);
@@ -151,7 +151,7 @@ export default {
 				return this.question.reactions.filter(r => r.like === true);
 			}
 			return [];
-		}
+		},
 	},
 	mounted() {
 		if (this._cm.notEmpty(this.question.reactions)) {
@@ -162,7 +162,7 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			mergeQReaction: 'guest/questions/MERGE_QUESTION_REACTION'
+			mergeQReaction: 'guest/questions/MERGE_QUESTION_REACTION',
 		}),
 		showDialogReplies(question) {
 			this.$root.$emit('dialog-reply-question', question);
@@ -172,7 +172,7 @@ export default {
 			const qInfo = {
 				question_id: this.question.id,
 				like: currentGuestReact,
-				user_id: this.user.id
+				user_id: this.user.id,
 			};
 			this.mergeQReaction(qInfo);
 		},
@@ -200,13 +200,13 @@ export default {
 			const emiter = 'add-question-reaction';
 			this.$socket.emit(emiter, {
 				question_id: this.question.id,
-				...info
+				...info,
 			}, (data) => {
 				this.bganimation = false;
 				console.warn(data);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -99,26 +99,26 @@ export default {
 				to: 'my-events',
 				icon: 'event',
 				name: 'my-events',
-				color: 'primary'
+				color: 'primary',
 			},
 			{
 				to: 'coop-events',
 				icon: 'person',
 				name: 'coop-events',
-				color: 'success'
+				color: 'success',
 			},
 			{
 				to: 'activity-logs',
 				icon: 'analytics',
 				name: 'activity-logs',
-				color: 'red'
-			}
-		]
+				color: 'red',
+			},
+		],
 	}),
 	computed: {
 		...mapGetters({
-			user: 'auth/user'
-		})
+			user: 'auth/user',
+		}),
 	},
 	created() {
 		this.links.forEach((e) => {
@@ -129,7 +129,7 @@ export default {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = !this.drawer;
 		});
-	}
+	},
 };
 </script>
 

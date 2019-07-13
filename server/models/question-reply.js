@@ -19,7 +19,7 @@ class QuestionReplyModel extends Model {
 				qr."created_at",
 				( ${User.findAsJsonById('qr."user_id"', { select: '"id", "name"' }).getQuery()} ) AS "user"
 			`,
-			...opt
+			...opt,
 		});
 		this.setRowReturn(0);
 		return this;
@@ -42,31 +42,31 @@ class QuestionReplyModel extends Model {
 			user_id: info.user_id,
 			content: info.content,
 			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, {
-			select: '"id", "question_id", "content", "created_at"'
+			select: '"id", "question_id", "content", "created_at"',
 		});
 	}
 
 	update(info, opt) {
 		return this.updateOne({
-			id: info.id
+			id: info.id,
 		}, {
 			content: info.content,
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, {
-			select: '"id", "question_id", "content", "created_at"'
+			select: '"id", "question_id", "content", "created_at"',
 		});
 	}
 
 	setDeleted(info, opt) {
 		return this.updateOne({
-			id: info.id
+			id: info.id,
 		}, {
 			is_deleted: true,
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, {
-			select: '"id", "question_id"'
+			select: '"id", "question_id"',
 		});
 	}
 }

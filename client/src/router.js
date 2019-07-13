@@ -49,8 +49,8 @@ const router = new Router({
 					name: 'home',
 					component: Home,
 					meta: {
-						title: 'Sliding - Event Supporter'
-					}
+						title: 'Sliding - Event Supporter',
+					},
 				},
 				{
 					path: '/',
@@ -64,8 +64,8 @@ const router = new Router({
 							beforeEnter: AuthMdw.beforeEnterLogin,
 							component: Login,
 							meta: {
-								title: 'Login'
-							}
+								title: 'Login',
+							},
 						},
 						{
 							path: 'signup',
@@ -73,18 +73,18 @@ const router = new Router({
 							beforeEnter: AuthMdw.beforeEnterLogin,
 							component: Signup,
 							meta: {
-								title: 'Signup'
-							}
+								title: 'Signup',
+							},
 						},
 						{
 							path: 'logout',
 							name: 'logout',
 							component: Logout,
 							meta: {
-								title: 'Logout...'
-							}
-						}
-					]
+								title: 'Logout...',
+							},
+						},
+					],
 				},
 				{
 					path: 'dashboard',
@@ -98,26 +98,26 @@ const router = new Router({
 							name: 'my-events',
 							component: MyEvents,
 							meta: {
-								title: 'My Events'
-							}
+								title: 'My Events',
+							},
 						},
 						{
 							path: 'coop-events',
 							name: 'coop-events',
 							component: CoopEvents,
 							meta: {
-								title: 'Co-op Events'
-							}
+								title: 'Co-op Events',
+							},
 						},
 						{
 							path: 'activity-logs',
 							name: 'activity-logs',
 							component: ActivityLogs,
 							meta: {
-								title: 'Activity Logs'
-							}
-						}
-					]
+								title: 'Activity Logs',
+							},
+						},
+					],
 				},
 				{
 					path: 'admin/event/:code',
@@ -130,34 +130,34 @@ const router = new Router({
 							name: 'admin-questions',
 							component: AdminQuestions,
 							meta: {
-								title: 'Questions'
-							}
+								title: 'Questions',
+							},
 						},
 						{
 							path: 'polls',
 							name: 'admin-polls',
 							component: AdminPolls,
 							meta: {
-								title: 'Polls'
-							}
+								title: 'Polls',
+							},
 						},
 						{
 							path: 'ideas',
 							name: 'admin-ideas',
 							component: AdminIdeas,
 							meta: {
-								title: 'Ideas'
-							}
+								title: 'Ideas',
+							},
 						},
 						{
 							path: 'analytics',
 							name: 'admin-analytics',
 							component: AdminAnalytics,
 							meta: {
-								title: 'Analytics'
-							}
-						}
-					]
+								title: 'Analytics',
+							},
+						},
+					],
 				},
 				{
 					path: 'guest/event/:code',
@@ -170,38 +170,38 @@ const router = new Router({
 							name: 'guest-questions',
 							component: GuestQuestions,
 							meta: {
-								title: 'Questions'
-							}
+								title: 'Questions',
+							},
 						},
 						{
 							path: 'polls',
 							name: 'guest-polls',
 							component: GuestPolls,
 							meta: {
-								title: 'Polls'
-							}
+								title: 'Polls',
+							},
 						},
 						{
 							path: 'ideas',
 							name: 'guest-ideas',
 							component: GuestIdeas,
 							meta: {
-								title: 'Ideas'
-							}
-						}
-					]
+								title: 'Ideas',
+							},
+						},
+					],
 				},
 				{
 					path: '*',
 					name: 'page-not-found',
 					component: PageNotFound,
 					meta: {
-						title: 'Page Not Found'
-					}
-				}
-			]
-		}
-	]
+						title: 'Page Not Found',
+					},
+				},
+			],
+		},
+	],
 });
 
 router.afterEach((to, from) => {

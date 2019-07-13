@@ -137,31 +137,31 @@ export default {
 	props: {
 		multipleChoice: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		openText: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		wordCloud: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		rating: {
 			type: Boolean,
-			default: false
-		}
+			default: false,
+		},
 	},
 	data: () => ({
 		allow_voting: false,
 		allow_show_voting_result: false,
-		activate_poll: false
+		activate_poll: false,
 	}),
 	computed: {
 		...mapGetters({
 			// map settings polls
-		})
-	}
+		}),
+	},
 };
 </script>
 

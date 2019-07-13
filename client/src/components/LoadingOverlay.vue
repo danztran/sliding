@@ -9,7 +9,7 @@
 export default {
 	name: 'LoadingOverlay',
 	data: () => ({
-		loading: false
+		loading: false,
 	}),
 	created() {
 		this.$root.$on('show-loading-overlay', this.show);
@@ -25,8 +25,8 @@ export default {
 		},
 		set(status) {
 			this.loading = !!status;
-		}
-	}
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>

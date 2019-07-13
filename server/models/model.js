@@ -36,7 +36,7 @@ class Model {
 		select = '*',
 		order,
 		limit,
-		offset
+		offset,
 	} = {}) {
 		this.setQuery(`
 			SELECT ${select}
@@ -54,7 +54,7 @@ class Model {
 		this.find(object, {
 			alias,
 			select,
-			limit: 1
+			limit: 1,
 		});
 		this.setRowReturn(1);
 		return this;
@@ -64,7 +64,7 @@ class Model {
 		this.find(null, {
 			select,
 			order: `-${column}`,
-			limit: 1
+			limit: 1,
 		});
 		this.setRowReturn(1);
 		return this;
@@ -82,7 +82,7 @@ class Model {
 
 	updateOne(object, newInfo, {
 		alias,
-		select
+		select,
 	} = {}) {
 		const column = Object.keys(object)[0];
 		this.setQuery(`
@@ -100,7 +100,7 @@ class Model {
 	}
 
 	createOrUpdate(uniqueInfo, otherInfo, {
-		select = '*'
+		select = '*',
 	} = {}) {
 		this.setQuery(`
 		   ${this.createOne({ ...uniqueInfo, ...otherInfo }, { select: null }).getQuery()}

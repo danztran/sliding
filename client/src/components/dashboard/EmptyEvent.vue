@@ -40,8 +40,8 @@ export default {
 	methods: {
 		toggleCreateEventDialog() {
 			this.$root.$emit('dialog-create-new-event');
-		}
-	}
+		},
+	},
 };
 </script>
 

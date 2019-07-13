@@ -21,18 +21,18 @@ class EventModel extends Model {
 			start_at: new Date(event.start_at).toISOString(),
 			end_at: new Date(event.end_at).toISOString(),
 			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, opt);
 	}
 
 	update(info, opt) {
 		return this.updateOne({
-			id: info.id
+			id: info.id,
 		}, {
 			...info,
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, {
-			select: '*'
+			select: '*',
 		});
 	}
 }

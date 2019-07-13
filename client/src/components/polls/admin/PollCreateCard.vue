@@ -31,8 +31,8 @@ export default {
 	methods: {
 		toggleCreatePollDialog() {
 			this.$root.$on('dialog-create-poll');
-		}
-	}
+		},
+	},
 };
 </script>
 

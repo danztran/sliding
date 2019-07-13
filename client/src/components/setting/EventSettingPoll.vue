@@ -56,30 +56,30 @@ import EventSettingExpand from './EventSettingExpand.vue';
 export default {
 	name: 'EventSettingPoll',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
 	},
 	props: {
 		data: {
 			type: Object,
-			default() {}
-		}
+			default() {},
+		},
 	},
 	data: () => ({
 		pollExpand: {
 			icon: 'polls',
 			title: 'polls',
-			subtitle: 'event-setting-polls-des'
+			subtitle: 'event-setting-polls-des',
 		},
 		pollSettings: {
 			allow_poll: false,
 			allow_poll_counter: false,
-			allow_poll_result: false
-		}
+			allow_poll_result: false,
+		},
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	watch: {
 		// tempSettings(val) {
@@ -101,6 +101,6 @@ export default {
 		// ...mapMutations({
 		// 	mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
 		// })
-	}
+	},
 };
 </script>

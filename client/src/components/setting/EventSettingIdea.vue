@@ -74,25 +74,25 @@ import EventSettingExpand from './EventSettingExpand.vue';
 export default {
 	name: 'EventSettingIdea',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
 	},
 	data: () => ({
 		ideaExpand: {
 			icon: 'ideas',
 			title: 'ideas',
-			subtitle: 'event-setting-ideas-des'
+			subtitle: 'event-setting-ideas-des',
 		},
 		ideaData: {
 			allow_idea: false,
 			allow_idea_dislikes: false,
 			allow_idea_reply: false,
-			allow_anonymous_idea: true
-		}
+			allow_anonymous_idea: true,
+		},
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
-		})
+			eventInfo: 'admin/event/getEventInfo',
+		}),
 	},
 	watch: {
 		eventInfo(val) {
@@ -102,7 +102,7 @@ export default {
 			// ideaData.allow_idea_dislikes = val.allow_idea_dislikes;
 			// ideaData.allow_idea_reply = val.allow_idea_reply;
 			// ideaData.allow_anonymous_idea = val.allow_anonymous_idea;
-		}
-	}
+		},
+	},
 };
 </script>

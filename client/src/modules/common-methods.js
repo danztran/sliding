@@ -60,7 +60,7 @@ const _cm = {
 			});
 		}
 		return array;
-	}
+	},
 };
 
 export default _cm;

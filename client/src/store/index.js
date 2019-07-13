@@ -22,16 +22,16 @@ export default new Vuex.Store({
 			namespaced: true,
 			modules: {
 				event: adminEvent,
-				questions: adminQuestions
-			}
+				questions: adminQuestions,
+			},
 		},
 		guest: {
 			namespaced: true,
 			modules: {
 				event: guestEvent,
-				questions: guestQuestions
-			}
-		}
+				questions: guestQuestions,
+			},
+		},
 	},
 	actions: {
 		resetAll({ commit }) {
@@ -39,6 +39,6 @@ export default new Vuex.Store({
 			commit('dashboard/RESET');
 			commit('admin/event/RESET');
 			commit('admin/questions/RESET');
-		}
-	}
+		},
+	},
 });

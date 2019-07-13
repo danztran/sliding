@@ -92,30 +92,30 @@ export default {
 	name: 'QuestionModerationPanel',
 	components: {
 		'empty-review': EmptyReview,
-		'question-card--review': ReviewQuestionCard
+		'question-card--review': ReviewQuestionCard,
 	},
 	data: () => ({
 		icon: {
 			xs: 20,
 			sm: 30,
-			lg: 35
-		}
+			lg: 35,
+		},
 	}),
 	computed: {
 		...mapGetters({
 			reviewQuestions: 'admin/questions/getReviewQuestions',
-			onModeration: 'admin/event/onModeration'
-		})
+			onModeration: 'admin/event/onModeration',
+		}),
 	},
 	methods: {
 		...mapMutations({
-			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
 		}),
 		toggleModeModeration() {
 			this.mergeTempSettings({ on_moderation: !this.onModeration });
 			this.$root.$emit('save-settings');
-		}
-	}
+		},
+	},
 };
 </script>
 

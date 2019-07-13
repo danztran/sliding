@@ -11,7 +11,7 @@ import Notify from '@/components/Notify.vue';
 export default {
 	components: {
 		'loading-overlay': LoadingOverlay,
-		notify: Notify
-	}
+		notify: Notify,
+	},
 };
 </script>

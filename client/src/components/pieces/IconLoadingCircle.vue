@@ -34,8 +34,8 @@ export default {
 		state: {
 			type: String,
 			default: '',
-			validator: val => ['loading', 'success', 'fail', ''].includes(val)
-		}
+			validator: val => ['loading', 'success', 'fail', ''].includes(val),
+		},
 	},
 	watch: {
 		state(val) {
@@ -44,8 +44,8 @@ export default {
 					this.$emit('update:state', '');
 				}, 1000);
 			}
-		}
-	}
+		},
+	},
 };
 </script>
 

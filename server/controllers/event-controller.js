@@ -31,7 +31,7 @@ module.exports = {
 			limit: 'integer|between:0,50',
 			offset: 'integer|min:0',
 			order: 'alpha_dash',
-			role: 'alpha|in:host,moderator,guest'
+			role: 'alpha|in:host,moderator,guest',
 		};
 		if (!res.$v.rif(rules)) return;
 
@@ -43,7 +43,7 @@ module.exports = {
 				order: opt.order,
 				limit: Number(opt.limit || 10),
 				offset: Number(opt.offset || 0),
-				role: opt.role
+				role: opt.role,
 			}).exec();
 			result.events = events;
 		}
@@ -60,7 +60,7 @@ module.exports = {
 			allow_search: 'boolean',
 			require_auth: 'boolean',
 			start_at: 'date|required',
-			end_at: 'date|required|after_or_equal:start_at'
+			end_at: 'date|required|after_or_equal:start_at',
 		};
 		if (!res.$v.rif(rules)) return;
 
@@ -76,7 +76,7 @@ module.exports = {
 			await EventRole.create({
 				user_id: req.user.id,
 				event_id: event.id,
-				role: 'host'
+				role: 'host',
 			}).exec();
 			result.code = event.code;
 		}
@@ -85,5 +85,5 @@ module.exports = {
 		}
 
 		return res.sendwm(result);
-	}
+	},
 };

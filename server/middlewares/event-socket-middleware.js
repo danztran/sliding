@@ -5,7 +5,7 @@ module.exports = {
 	setIO(io) {
 		// init state
 		io.$state = {
-			events: {}
+			events: {},
 		};
 
 		// init func
@@ -17,8 +17,8 @@ module.exports = {
 					rooms: {
 						main: `/${code}`,
 						admin: `/${code}/admin`,
-						guest: `/${code}/guest`
-					}
+						guest: `/${code}/guest`,
+					},
 				};
 				io.$state.events[code] = _event;
 				return { ..._event };
@@ -35,7 +35,7 @@ module.exports = {
 				if (event && !io.adapter.rooms[event.rooms.main]) {
 					delete io.$state.events[code];
 				}
-			}
+			},
 		};
 	},
 	setSocket({ io, socket }) {
@@ -50,7 +50,7 @@ module.exports = {
 		// init state
 		socket.$state = socket.$state || {
 			locale: translator.locale,
-			user: socket.request.session.user || null
+			user: socket.request.session.user || null,
 		};
 
 		// functions
@@ -120,7 +120,7 @@ module.exports = {
 			cannot(permission, callback) {
 				if (this.can(permission)) return false;
 				const message = this.t('noPermissionTo', {
-					permission: this.t(permission)
+					permission: this.t(permission),
 				});
 				this.handleError(message, callback);
 				return true;
@@ -134,7 +134,7 @@ module.exports = {
 			forbid(action, callback) {
 				if (this.allow(action)) return false;
 				const message = this.t('forbidTo', {
-					action: this.t(action)
+					action: this.t(action),
 				});
 				this.handleError(message, callback);
 				return true;
@@ -158,7 +158,7 @@ module.exports = {
 					errmsg = 'Callback must be a function!';
 				}
 				return socket.emit('event_errmsg', { errmsg });
-			}
+			},
 		};
-	}
+	},
 };

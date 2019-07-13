@@ -80,7 +80,7 @@ export default {
 				required: true,
 				prepend: 'person',
 				autofocus: true,
-				errmsg: ''
+				errmsg: '',
 			},
 			password: {
 				value: '',
@@ -88,14 +88,14 @@ export default {
 				type: 'password',
 				required: true,
 				prepend: 'lock',
-				errmsg: ''
-			}
-		}
+				errmsg: '',
+			},
+		},
 	}),
 	computed: {
 		...mapGetters({
-			fillInfo: 'auth/fillInfo'
-		})
+			fillInfo: 'auth/fillInfo',
+		}),
 	},
 	created() {
 		if (this.fillInfo.username !== '') {
@@ -110,7 +110,7 @@ export default {
 			this.flashMessage = '';
 			const loginFormData = {
 				username: this.form.username.value,
-				password: this.form.password.value
+				password: this.form.password.value,
 			};
 
 			this.$axios
@@ -123,7 +123,7 @@ export default {
 				.then(() => {
 					this.loading = false;
 				});
-		}
-	}
+		},
+	},
 };
 </script>

@@ -25,7 +25,7 @@ function Validator(locale = defLocale, req = {}, res = {}) {
 			validation.fails(() => {
 				if (this._res) {
 					this._res.status(422).send({
-						messages: { ...validation.errors.errors }
+						messages: { ...validation.errors.errors },
 					});
 				}
 			});
@@ -36,7 +36,7 @@ function Validator(locale = defLocale, req = {}, res = {}) {
 			const data = _data || this._data;
 			const validation = new Validatorjs(data, rules);
 			return validation.passes();
-		}
+		},
 	};
 }
 

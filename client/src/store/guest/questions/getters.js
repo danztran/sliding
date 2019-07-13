@@ -13,5 +13,5 @@ export default {
 	getQuestions,
 	getPopularQuestions,
 	getRecentQuestions,
-	getQuestionReplies
+	getQuestionReplies,
 };

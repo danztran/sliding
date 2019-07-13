@@ -13,16 +13,16 @@ class EventRoleModel extends Model {
 
 	findRole(info) {
 		return this.findOne(info, {
-			select: 'role'
+			select: 'role',
 		});
 	}
 
 	findAdmins(eid) {
 		return this.find([
 			{ event_id: eid, role: 'host' },
-			{ event_id: eid, role: 'moderator' }
+			{ event_id: eid, role: 'moderator' },
 		], {
-			select: '"user_id", "role"'
+			select: '"user_id", "role"',
 		});
 	}
 
@@ -31,7 +31,7 @@ class EventRoleModel extends Model {
 		order,
 		limit,
 		offset,
-		role
+		role,
 	} = {}) {
 		this.setQuery(`
 			SELECT ${select}
@@ -55,7 +55,7 @@ class EventRoleModel extends Model {
 		select = '*',
 		order,
 		limit,
-		offset
+		offset,
 	} = {}) {
 		this.setQuery(`
 			SELECT ${select}
@@ -75,7 +75,7 @@ class EventRoleModel extends Model {
 		return this.createOne({
 			user_id: info.user_id,
 			event_id: info.event_id,
-			role: info.role
+			role: info.role,
 		}, opt);
 	}
 }

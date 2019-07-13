@@ -12,7 +12,7 @@ module.exports = {
 			const QuestionReaction = new QuestionReactionModel();
 			const reaction = await QuestionReaction.createOrUpdate({
 				...info,
-				user_id: user.id
+				user_id: user.id,
 			}).exec();
 			result.reaction = reaction;
 			socket.to(event.rooms.main).emit('new_question_reaction', reaction);
@@ -21,5 +21,5 @@ module.exports = {
 		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
-	}
+	},
 };

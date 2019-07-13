@@ -9,7 +9,7 @@
 				<v-list
 					subheader
 					class="py-1"
-					:class="{ 'is-star': isStar }">
+					:class="{ 'is-pinned': isPinned }">
 					<v-list-tile>
 						<!-- @desc: avatar -->
 						<v-list-tile-avatar
@@ -60,7 +60,7 @@
 				</v-list>
 
 				<!-- @desc: on edit field / content -->
-				<div :class="{ 'is-star': isStar }">
+				<div :class="{ 'is-pinned': isPinned }">
 					<v-card-title v-if="onEdit" class="py-0 px-4">
 						<span class="v-textarea-override no-shadow w-100">
 							<text-area :field="form.editQuestion" />
@@ -208,23 +208,23 @@ const initForm = () => ({
 		outline: true,
 		maxLength: 1000,
 		required: true,
-		autogrow: true
-	}
+		autogrow: true,
+	},
 });
 
 export default {
 	name: 'QuestionCard',
 	components: {
-		'icon-loading-circle': IconLoadingCircle
+		'icon-loading-circle': IconLoadingCircle,
 	},
 	props: {
 		showReaction: {
 			type: Boolean,
-			default: true
+			default: true,
 		},
 		reply: {
 			type: Boolean,
-			default: true
+			default: true,
 		},
 		question: {
 			type: Object,
@@ -237,17 +237,17 @@ export default {
 				is_answered: false,
 				user: {
 					id: null,
-					name: ''
+					name: '',
 				},
-				replies: []
-			})
-		}
+				replies: [],
+			}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
+			lg: 25,
 		},
 		form: initForm(),
 		reactions: [],
@@ -255,7 +255,7 @@ export default {
 		cache: '',
 		loadingState: '',
 		tempQuestion: null,
-		deleting: false
+		deleting: false,
 	}),
 	computed: {
 		checkValidEdit() {
@@ -276,13 +276,16 @@ export default {
 		isStar() {
 			return this.question.is_star;
 		},
+		isPinned() {
+			return this.question.is_pinned;
+		},
 		isAnswered() {
 			return this.question.is_answered;
 		},
 		likes() {
 			if (this.reactions) return this.reactions.filter(r => r.like === true);
 			return [];
-		}
+		},
 	},
 	mounted() {
 		if (this._cm.notEmpty(this.question.reactions)) {
@@ -292,7 +295,7 @@ export default {
 	methods: {
 		...mapMutations({
 			mergeQuestion: 'admin/questions/MERGE_QUESTION',
-			delQuestion: 'admin/questions/DELETE_QUESTION'
+			delQuestion: 'admin/questions/DELETE_QUESTION',
 		}),
 		resetForm() {
 			this.cache = '';
@@ -323,7 +326,7 @@ export default {
 			this.onEdit = false;
 			this.question.content = this.form.editQuestion.value;
 			const infoQEdit = {
-				content: this.form.editQuestion.value.trim()
+				content: this.form.editQuestion.value.trim(),
 			};
 			this.emitEdit(infoQEdit);
 		},
@@ -331,7 +334,7 @@ export default {
 			const emiter = 'edit-question';
 			this.$socket.emit(emiter, {
 				id: this.question.id,
-				...info
+				...info,
 			}, ({ errmsg, question }) => {
 				if (errmsg) {
 					if (this.cache) {
@@ -365,8 +368,8 @@ export default {
 			if (this.loadingState === 'loading') {
 				this.loadingState = state;
 			}
-		}
-	}
+		},
+	},
 };
 </script>
 
@@ -376,7 +379,7 @@ export default {
 		opacity: .4;
 		cursor: not-allowed;
 	}
-	.is-star {
+	.is-pinned {
 		background: rgba(162, 209, 218, 0.231372549) !important;
 	}
 	.v-chip--small {

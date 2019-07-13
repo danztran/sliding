@@ -355,67 +355,67 @@ export default {
 				id: 1,
 				urlImg: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80',
 				title: 'card-intro-title1',
-				description: 'card-intro-des1'
+				description: 'card-intro-des1',
 			},
 			{
 				id: 2,
 				urlImg: 'https://images.unsplash.com/photo-1532190795157-3f983fb7fa3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80',
 				title: 'card-intro-title2',
-				description: 'card-intro-des2'
+				description: 'card-intro-des2',
 			},
 			{
 				id: 3,
 				urlImg: 'https://images.unsplash.com/photo-1551731409-43eb3e517a1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2252&q=80',
 				title: 'card-intro-title3',
-				description: 'card-intro-des3'
-			}
+				description: 'card-intro-des3',
+			},
 		],
 		phone: {
 			title: 'phone-intro-title',
 			description: 'phone-intro-description',
-			urlImg: 'https://images.unsplash.com/photo-1543582890-139a4ff9946e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1301&q=80'
+			urlImg: 'https://images.unsplash.com/photo-1543582890-139a4ff9946e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1301&q=80',
 		},
 		partners: [
 			{
 				id: 1,
-				urlImg: 'https://www.stickpng.com/assets/images/580b57fcd9996e24bc43c516.png'
+				urlImg: 'https://www.stickpng.com/assets/images/580b57fcd9996e24bc43c516.png',
 			},
 			{
 				id: 2,
-				urlImg: 'http://pluspng.com/img-png/google-logo-png-open-2000.png'
+				urlImg: 'http://pluspng.com/img-png/google-logo-png-open-2000.png',
 			},
 			{
 				id: 3,
-				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/bmw-2-logo-png-transparent.png'
+				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/bmw-2-logo-png-transparent.png',
 			},
 			{
 				id: 4,
-				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/mercedes-benz-1-logo-png-transparent.png'
-			}
+				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/mercedes-benz-1-logo-png-transparent.png',
+			},
 		],
 		footerProducts: [
 			{ title: 'footer-product-item1', url: '/questions' },
 			{ title: 'footer-product-item2', url: '/polls' },
 			{ title: 'footer-product-item3', url: '/ideas' },
-			{ title: 'footer-product-item4', url: '/analytics' }
+			{ title: 'footer-product-item4', url: '/analytics' },
 		],
 		footerCustomer: [
 			{ title: 'footer-customer-item1', url: '/' },
-			{ title: 'footer-customer-item2', url: '/' }
+			{ title: 'footer-customer-item2', url: '/' },
 		],
 		footerAbout: [
 			{ title: 'footer-about-item1', url: '/' },
 			{ title: 'footer-about-item2', url: '/' },
-			{ title: 'footer-about-item3', url: '/' }
-		]
+			{ title: 'footer-about-item3', url: '/' },
+		],
 	}),
 	computed: {
 		...mapGetters({
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		locale() {
 			return this.$i18n.locale;
-		}
+		},
 	},
 	methods: {
 		changeLocale(locale) {
@@ -423,8 +423,8 @@ export default {
 		},
 		callLogout() {
 			this.$store.dispatch('auth/logout');
-		}
-	}
+		},
+	},
 };
 </script>
 

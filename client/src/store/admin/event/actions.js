@@ -3,5 +3,5 @@ const setCurrentEvent = (context, event) => {
 };
 
 export default {
-	setCurrentEvent
+	setCurrentEvent,
 };

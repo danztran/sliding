@@ -5,7 +5,7 @@ module.exports = {
 		const result = {};
 		const query = {
 			question_id: qid,
-			is_deleted: false
+			is_deleted: false,
 		};
 		try {
 			const QuestionReply = new QuestionReplyModel();
@@ -30,11 +30,11 @@ module.exports = {
 			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.create({
 				...info,
-				user_id: user.id
+				user_id: user.id,
 			}).exec();
 			reply.user = {
 				id: user.id,
-				name: user.name
+				name: user.name,
 			};
 			result.reply = reply;
 			socket.to(event.rooms.main).emit('new_added_question_reply', result.reply);
@@ -57,7 +57,7 @@ module.exports = {
 			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.findOne({
 				id: info.id,
-				is_deleted: false
+				is_deleted: false,
 			}).exec();
 			if (!reply) {
 				throw socket.$fn.t('replyNotFound');
@@ -88,7 +88,7 @@ module.exports = {
 			const QuestionReply = new QuestionReplyModel();
 			const reply = await QuestionReply.findOne({
 				id: info.id,
-				is_deleted: false
+				is_deleted: false,
 			}).exec();
 			if (!reply) throw socket.$fn.t('replyNotFound');
 
@@ -101,5 +101,5 @@ module.exports = {
 		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
-	}
+	},
 };

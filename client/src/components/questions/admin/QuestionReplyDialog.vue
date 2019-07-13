@@ -88,20 +88,20 @@ const initForm = () => ({
 		rows: 1,
 		counter: 1000,
 		autogrow: true,
-		autofocus: true
-	}
+		autofocus: true,
+	},
 });
 
 export default {
 	name: 'QuestionReplyDialog',
 	components: {
 		'question-card': QuestionCard,
-		'reply-card': QuestionReplyCard
+		'reply-card': QuestionReplyCard,
 	},
 	data: () => ({
 		dialogReplyQuestion: false,
 		icon: {
-			sm: 20
+			sm: 20,
 		},
 		form: initForm(),
 		loading: false,
@@ -113,17 +113,17 @@ export default {
 			likes: [],
 			user: {
 				id: null,
-				name: ''
-			}
+				name: '',
+			},
 		},
 		replies: [],
 		autoscroll: true,
-		qrd: null
+		qrd: null,
 	}),
 	computed: {
 		...mapGetters({
 			getQuestionReplies: 'admin/questions/getQuestionReplies',
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		checkValidReply() {
 			const { reply } = this.form;
@@ -132,14 +132,14 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(reply.value);
-		}
+		},
 	},
 	watch: {
 		replies() {
 			if (this.autoscroll) {
 				this.$nextTick(this.toLatestReply);
 			}
-		}
+		},
 	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
@@ -165,7 +165,7 @@ export default {
 			setQReplies: 'admin/questions/SET_QUESTION_REPLIES',
 			mergeQReply: 'admin/questions/MERGE_SUCCESS_QUESTION_REPLY',
 			deleteErrorQReply: 'admin/questions/DELETE_ERROR_QUESTION_REPLY',
-			addTempReply: 'admin/questions/ADD_TEMP_QUESTION_REPLY'
+			addTempReply: 'admin/questions/ADD_TEMP_QUESTION_REPLY',
 		}),
 		updateReplies() {
 			this.replies = this.getQuestionReplies(this.question.id);
@@ -182,7 +182,7 @@ export default {
 			this.qrd.scrollBy({
 				top: this.qrd.scrollHeight - this.qrd.offsetHeight,
 				left: 0,
-				behavior: 'smooth'
+				behavior: 'smooth',
 			});
 		},
 		onScrollDialog(e) {
@@ -208,7 +208,7 @@ export default {
 				}
 				const data = {
 					id: this.question.id,
-					replies
+					replies,
 				};
 				this.setQReplies(data);
 				this.updateReplies();
@@ -230,9 +230,9 @@ export default {
 					created_at: new Date().toISOString(),
 					user: {
 						id: this.user.id,
-						name: this.user.name
-					}
-				}
+						name: this.user.name,
+					},
+				},
 			};
 			this.addTempReply(replyInfo);
 			this.form.reply.value = '';
@@ -240,7 +240,7 @@ export default {
 			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
 				const infoReply = {
 					question_id: this.question.id,
-					temp_id: replyId
+					temp_id: replyId,
 				};
 				this.tempReplyID = this.tempReplyID.filter(id => id !== replyId);
 				if (!reply) {
@@ -252,8 +252,8 @@ export default {
 				this.mergeQReply(Object.assign(reply, { temp_id: infoReply.temp_id }));
 				return this.updateReplies();
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -3,10 +3,10 @@ export default {
 		login: '/auth/login',
 		logout: '/auth/logout',
 		info: '/auth/info',
-		signup: '/auth/signup'
+		signup: '/auth/signup',
 	},
 	event: {
 		query: '/event/query',
-		create: '/event/create'
-	}
+		create: '/event/create',
+	},
 };

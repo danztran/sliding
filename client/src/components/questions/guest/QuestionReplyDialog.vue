@@ -81,20 +81,20 @@ const initForm = () => ({
 		rows: 1,
 		counter: 160,
 		autogrow: true,
-		autofocus: true
-	}
+		autofocus: true,
+	},
 });
 
 export default {
 	name: 'QuestionReplyDialog',
 	components: {
 		'question-card': QuestionCard,
-		'reply-card': QuestionReplyCard
+		'reply-card': QuestionReplyCard,
 	},
 	data: () => ({
 		dialogReplyQuestion: false,
 		icon: {
-			sm: 20
+			sm: 20,
 		},
 		form: initForm(),
 		loading: false,
@@ -107,18 +107,18 @@ export default {
 			reactions: [],
 			user: {
 				id: null,
-				name: ''
-			}
+				name: '',
+			},
 		},
 		replies: [],
 		autoscroll: true,
-		qrd: null
+		qrd: null,
 	}),
 	computed: {
 		...mapGetters({
 			getQuestionReplies: 'guest/questions/getQuestionReplies',
 			allowQReply: 'guest/event/allowQReply',
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		checkValidReply() {
 			const { reply } = this.form;
@@ -127,14 +127,14 @@ export default {
 				return true;
 			}
 			return !this._cm.notEmpty(reply.value);
-		}
+		},
 	},
 	watch: {
 		replies() {
 			if (this.autoscroll) {
 				this.$nextTick(this.toLatestReply);
 			}
-		}
+		},
 	},
 	mounted() {
 		this.qrd = this.$refs.qrd;
@@ -164,13 +164,13 @@ export default {
 			setQReplies: 'guest/questions/SET_QUESTION_REPLIES',
 			addTempReply: 'guest/questions/ADD_TEMP_QUESTION_REPLY',
 			mergeQReply: 'guest/questions/MERGE_SUCCESS_QUESTION_REPLY',
-			deleteErrorQReply: 'guest/questions/DELETE_ERROR_QUESTION_REPLY'
+			deleteErrorQReply: 'guest/questions/DELETE_ERROR_QUESTION_REPLY',
 		}),
 		toLatestReply() {
 			this.qrd.scrollBy({
 				top: this.qrd.scrollHeight - this.qrd.offsetHeight,
 				left: 0,
-				behavior: 'smooth'
+				behavior: 'smooth',
 			});
 		},
 		onScrollDialog(e) {
@@ -206,9 +206,9 @@ export default {
 					created_at: new Date().toISOString(),
 					user: {
 						id: this.user.id,
-						name: this.user.name
-					}
-				}
+						name: this.user.name,
+					},
+				},
 			};
 			this.addTempReply(replyInfo);
 			this.form.reply.value = '';
@@ -216,7 +216,7 @@ export default {
 			this.$socket.emit(emiter, replyInfo.data, ({ reply, errmsg }) => {
 				const infoReply = {
 					question_id: this.question.id,
-					temp_id: replyId
+					temp_id: replyId,
 				};
 				this.tempReplyID = this.tempReplyID.filter(id => id !== replyId);
 				if (!reply) {
@@ -240,13 +240,13 @@ export default {
 				}
 				const data = {
 					id: this.question.id,
-					replies
+					replies,
 				};
 				this.setQReplies(data);
 				this.updateReplies();
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

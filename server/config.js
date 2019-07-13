@@ -69,17 +69,17 @@ module.exports = {
 		email: 'email|required|max:320',
 		username: 'alpha_num|required|min:6|max:50|regex:/^[a-z][a-z0-9]*$/g',
 		password: 'string|required|min:6|max:50',
-		rePassword: 'string|required|min:6|max:50|same:password'
+		rePassword: 'string|required|min:6|max:50|same:password',
 	},
 	logInRules: {
 		username: 'string|required',
-		password: 'string|required'
+		password: 'string|required',
 	},
 
 	// ========== EVENT MODEL
 	// auto generate the next event code with auto increment characters
 	eventCodeBone: 'abcdefghijklmnopqrstuvwxyz0123456789',
-	eventCodeStart: 'aaa'
+	eventCodeStart: 'aaa',
 
 
 };

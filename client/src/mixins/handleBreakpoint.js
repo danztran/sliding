@@ -9,6 +9,6 @@ export default {
 		},
 		isSMnXS() {
 			return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
-		}
-	}
+		},
+	},
 };

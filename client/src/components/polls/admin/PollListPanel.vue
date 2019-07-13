@@ -115,13 +115,13 @@ export default {
 	name: 'PollListPanel',
 	components: {
 		'poll-card--create': PollCreateCard,
-		'poll-list--card': PollListCard
+		'poll-list--card': PollListCard,
 	},
 	methods: {
 		pollVia(otp) {
 			// ... open modal via user choice otp
-		}
-	}
+		},
+	},
 };
 </script>
 

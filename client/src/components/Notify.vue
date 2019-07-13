@@ -30,7 +30,7 @@ export default {
 	data: () => ({
 		show: false,
 		type: '',
-		message: ''
+		message: '',
 	}),
 	mounted() {
 		this.$root.$on('show-noti', ({ msg, type }) => {
@@ -38,7 +38,7 @@ export default {
 			this.message = msg;
 			this.type = type || '';
 		});
-	}
+	},
 };
 </script>
 

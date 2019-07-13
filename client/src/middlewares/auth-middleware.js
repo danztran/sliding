@@ -17,6 +17,6 @@ const AuthMdw = {
 
 	isAuthenticated(to, from, next) {
 		return Boolean(cookies.get(process.env.VUE_APP_CK_USER));
-	}
+	},
 };
 export default AuthMdw;

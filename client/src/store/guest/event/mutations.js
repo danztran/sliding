@@ -15,5 +15,5 @@ const RESET = (state) => {
 export default {
 	SET_CURRENT_EVENT,
 	MERGE_CURRENT_EVENT,
-	RESET
+	RESET,
 };

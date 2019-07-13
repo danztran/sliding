@@ -113,7 +113,7 @@ const Ctlr = {
 		req.logout();
 		res.messages['auth.logout'] = res.$t('successLoggedOut');
 		return res.sendwm();
-	}
+	},
 };
 
 module.exports = Ctlr;

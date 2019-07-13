@@ -9,7 +9,7 @@ const {
 	fileStorePath,
 	fileStoreSecret,
 	fileStoreExtension,
-	fileStoreMaxAge
+	fileStoreMaxAge,
 } = requireWrp('./config');
 
 module.exports = session({
@@ -18,12 +18,12 @@ module.exports = session({
 	resave: sessionResave,
 	saveUninitialized: sessionSaveUninitialized,
 	cookie: {
-		maxAge: sessionMaxAge
+		maxAge: sessionMaxAge,
 	},
 	store: new FileStore({
 		path: fileStorePath,
 		secret: fileStoreSecret,
 		ttl: fileStoreMaxAge,
-		fileExtension: fileStoreExtension
-	})
+		fileExtension: fileStoreExtension,
+	}),
 });

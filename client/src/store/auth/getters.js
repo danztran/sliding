@@ -7,5 +7,5 @@ const fillInfo = state => state.fillInfo;
 
 export default {
 	user,
-	fillInfo
+	fillInfo,
 };

@@ -60,7 +60,7 @@ const _cm = {
 			}
 		}
 		return array.join('');
-	}
+	},
 };
 
 module.exports = _cm;

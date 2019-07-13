@@ -27,7 +27,7 @@ module.exports = {
 				const user = socket.$fn.getUser();
 				const eventRole = await EventRole.findRole({
 					event_id: result.event.id,
-					user_id: user.id
+					user_id: user.id,
 				}).exec();
 				if (eventRole) {
 					result.role = Roles[eventRole.role];
@@ -36,14 +36,14 @@ module.exports = {
 					EventRole.create({
 						user_id: user.id,
 						event_id: event.id,
-						role: 'guest'
+						role: 'guest',
 					}).exec();
 					result.role = Roles.guest;
 				}
 			}
 			else {
 				throw {
-					expected: 'Unauthenticated'
+					expected: 'Unauthenticated',
 				};
 			}
 			socket.$fn.setRole(result.role.name);
@@ -76,7 +76,7 @@ module.exports = {
 			const newInfo = {
 				...info,
 				id: event.id,
-				code: event.code
+				code: event.code,
 			};
 			const editedEvent = await Event.update(newInfo).exec();
 			io.$fn.saveEvent({ ...event, ...editedEvent });
@@ -115,16 +115,16 @@ module.exports = {
 			// check role exists
 			const role = await EventRole.findOne({
 				event_id: event.id,
-				user_id: result.user.id
+				user_id: result.user.id,
 			}).exec();
 			if (role) throw socket.$fn.t('userModeratorAlready');
 
 			const admin = await EventRole.create({
 				user_id: result.user.id,
 				event_id: event.id,
-				role: 'moderator'
+				role: 'moderator',
 			}, {
-				select: '"user_id", "role"'
+				select: '"user_id", "role"',
 			}).exec();
 
 			socket.$fn.addAdmin(admin);
@@ -146,9 +146,9 @@ module.exports = {
 
 			await EventRole.createOrUpdate({
 				event_id: event.id,
-				user_id: info.user_id
+				user_id: info.user_id,
 			}, {
-				role: 'guest'
+				role: 'guest',
 			});
 
 			socket.$fn.removeAdmin({ id: info.user_id });
@@ -158,5 +158,5 @@ module.exports = {
 		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
-	}
+	},
 };

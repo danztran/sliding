@@ -5,7 +5,7 @@ const {
 	pgDatabase,
 	pgUser,
 	pgPassword,
-	pgMaxPool
+	pgMaxPool,
 } = requireWrp('config');
 
 const pool = new Pool({
@@ -15,7 +15,7 @@ const pool = new Pool({
 	database: pgDatabase,
 	password: pgPassword,
 	port: pgPort,
-	max: pgMaxPool
+	max: pgMaxPool,
 });
 
 pool.query('SELECT NOW()', (err, res) => {

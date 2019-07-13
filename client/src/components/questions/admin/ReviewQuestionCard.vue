@@ -61,25 +61,25 @@ import QuestionCard from './QuestionCard.vue';
 export default {
 	name: 'ReviewQuestionCard',
 	components: {
-		'question-card': QuestionCard
+		'question-card': QuestionCard,
 	},
 	props: {
 		question: {
 			type: Object,
-			default: () => ({})
-		}
+			default: () => ({}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
-		}
+			lg: 25,
+		},
 	}),
 	methods: {
 		...mapMutations({
 			mergeQuestion: 'admin/questions/MERGE_QUESTION',
-			delQuestion: 'admin/questions/DELETE_QUESTION'
+			delQuestion: 'admin/questions/DELETE_QUESTION',
 		}),
 		approveQuestion() {
 			this.emitEdit({ stage: 'public' });
@@ -90,7 +90,7 @@ export default {
 		emitEdit(info) {
 			const formData = {
 				...info,
-				id: this.question.id
+				id: this.question.id,
 			};
 			const emiter = 'edit-question';
 			this.$socket.emit(emiter, formData, ({ errmsg, question }) => {
@@ -111,8 +111,8 @@ export default {
 				}
 				this.delQuestion(question);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

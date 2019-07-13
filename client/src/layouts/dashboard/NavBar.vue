@@ -80,29 +80,29 @@ import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 
 export default {
 	components: {
-		'user-actions-avatar': UserActionsAvatar
+		'user-actions-avatar': UserActionsAvatar,
 	},
 	data() {
 		return {
 			tabs: [
 				{ id: 1, name: 'my-events', url: '/dashboard/my-events' },
 				{ id: 2, name: 'coop-events', url: '/dashboard/coop-events' },
-				{ id: 3, name: 'activity-logs', url: '/dashboard/activity-logs' }
+				{ id: 3, name: 'activity-logs', url: '/dashboard/activity-logs' },
 			],
 			activeTab: '',
 			actions: [
 				{
 					id: 1,
 					name: 'logout',
-					icon: 'signout'
-				}
-			]
+					icon: 'signout',
+				},
+			],
 		};
 	},
 	computed: {
 		...mapGetters({
-			user: 'auth/user'
-		})
+			user: 'auth/user',
+		}),
 	},
 	created() {
 		this.tabs.forEach((e) => {
@@ -112,8 +112,8 @@ export default {
 	methods: {
 		toggleDrawer() {
 			this.$root.$emit('toggle-drawer');
-		}
-	}
+		},
+	},
 };
 </script>
 

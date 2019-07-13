@@ -41,8 +41,8 @@ export default {
 		showNotify(msg, type) {
 			this.$root.$emit('show-noti', {
 				msg,
-				type: type || ''
+				type: type || '',
 			});
-		}
-	}
+		},
+	},
 };

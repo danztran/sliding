@@ -81,20 +81,20 @@ import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 export default {
 	name: 'NavBar',
 	components: {
-		'user-actions-avatar': UserActionsAvatar
+		'user-actions-avatar': UserActionsAvatar,
 	},
 	data: () => ({
 		tabs: [
 			{ name: 'questions', url: 'questions' },
 			{ name: 'ideas', url: 'polls' },
-			{ name: 'polls', url: 'ideas' }
-		]
+			{ name: 'polls', url: 'ideas' },
+		],
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'guest/event/getEventInfo',
-			user: 'auth/user'
-		})
+			user: 'auth/user',
+		}),
 	},
 	created() {
 		this.tabs.forEach((e) => {
@@ -104,8 +104,8 @@ export default {
 	methods: {
 		toggleDialogProfile() {
 			this.$root.$emit('guest-signup-dialog');
-		}
-	}
+		},
+	},
 };
 </script>
 

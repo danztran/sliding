@@ -30,18 +30,18 @@ export default {
 		navbar: NavBar,
 		drawer: Drawer,
 		'event-dialog': DashboardEventDialog,
-		'event-setting-dialog': EventSettingDialog
+		'event-setting-dialog': EventSettingDialog,
 	},
 	mixins: [handleSockets],
 	data: () => ({
-		ready: false
+		ready: false,
 	}),
 	watch: {
 		ready(val) {
 			if (val) {
 				this.$root.$emit('hide-loading-overlay');
 			}
-		}
+		},
 	},
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');
@@ -80,7 +80,7 @@ export default {
 		},
 		new_edited_event(newSettings) {
 			this.mergeAdminCurrentEvent(newSettings);
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -88,9 +88,9 @@ export default {
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
 			mergeAdminCurrentEvent: 'admin/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'admin/event/RESET',
-			resetQuestions: 'admin/questions/RESET'
-		})
-	}
+			resetQuestions: 'admin/questions/RESET',
+		}),
+	},
 };
 </script>
 

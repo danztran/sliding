@@ -57,11 +57,11 @@ export default {
 				return {
 					icon: '',
 					title: '',
-					subtitle: ''
+					subtitle: '',
 				};
-			}
-		}
-	}
+			},
+		},
+	},
 };
 </script>
 

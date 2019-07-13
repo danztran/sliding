@@ -26,37 +26,37 @@ const initForm = () => ({
 		label: 'lb-admin-access-mail',
 		placeholderz: 'email@example.com',
 		prepend: 'person',
-		errmsg: ''
-	}
+		errmsg: '',
+	},
 });
 
 export default {
 	name: 'EventSettingInviteAdmin',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
 	},
 	data: () => ({
 		adminExpand: {
 			icon: 'group_people',
 			title: 'event-setting-share-access',
-			subtitle: 'event-setting-share-access-des'
+			subtitle: 'event-setting-share-access-des',
 		},
-		form: initForm()
+		form: initForm(),
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	watch: {
 		tempSettings(val) {
 			// ...
-		}
+		},
 	},
 	methods: {
 		submitInvite() {
 			// ...
-		}
-	}
+		},
+	},
 };
 </script>

@@ -74,25 +74,25 @@ const askForm = () => ({
 		placeholder: 'lb-question',
 		rows: 2,
 		maxLength: 160,
-		errmsg: ''
-	}
+		errmsg: '',
+	},
 });
 
 export default {
 	name: 'FieldAsk',
 	components: {
-		'icon-loading-circle': IconLoadingCircle
+		'icon-loading-circle': IconLoadingCircle,
 	},
 	data: () => ({
 		expand: false,
 		form: askForm(),
-		loadingState: ''
+		loadingState: '',
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'guest/event/getEventInfo',
 			allowQuestion: 'guest/event/allowQuestion',
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		checkValidLength() {
 			const { ask } = this.form;
@@ -105,11 +105,11 @@ export default {
 		countCharacters() {
 			const { ask } = this.form;
 			return ask.maxLength - ask.value.length;
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
-			addQuestion: 'guest/questions/ADD_SUCCESS_QUESTION'
+			addQuestion: 'guest/questions/ADD_SUCCESS_QUESTION',
 		}),
 		sendQuestion() {
 			this.loadingState = 'loading';
@@ -118,7 +118,7 @@ export default {
 				event_id: this.eventInfo.id,
 				user_id: this.user.id,
 				content: this.form.ask.value.trim(),
-				stage: this.eventInfo.on_moderation ? 'private' : 'public'
+				stage: this.eventInfo.on_moderation ? 'private' : 'public',
 			}, ({ errmsg, question }) => {
 				if (!question) {
 					if (errmsg) {
@@ -135,8 +135,8 @@ export default {
 				}
 				this.addQuestion(question);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -22,18 +22,18 @@ import GuestActionSignupDialog from '@/components/user/GuestActionSignupDialog.v
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'profile-dialog': GuestActionSignupDialog
+		'profile-dialog': GuestActionSignupDialog,
 	},
 	mixins: [handleSockets],
 	data: () => ({
-		ready: false
+		ready: false,
 	}),
 	watch: {
 		ready(val) {
 			if (val) {
 				this.$root.$emit('hide-loading-overlay');
 			}
-		}
+		},
 	},
 	beforeCreate() {
 		this.$root.$emit('show-loading-overlay');
@@ -72,7 +72,7 @@ export default {
 		},
 		new_edited_event(newSettings) {
 			this.mergeGuestCurrentEvent(newSettings);
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -80,9 +80,9 @@ export default {
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
 			mergeGuestCurrentEvent: 'guest/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'guest/event/RESET',
-			resetQuestions: 'guest/questions/RESET'
-		})
-	}
+			resetQuestions: 'guest/questions/RESET',
+		}),
+	},
 };
 </script>
 

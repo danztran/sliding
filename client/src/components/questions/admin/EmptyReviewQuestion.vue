@@ -41,18 +41,18 @@ export default {
 	computed: {
 		...mapGetters({
 			reviewQuestions: 'admin/questions/getReviewQuestions',
-			onModeration: 'admin/event/onModeration'
-		})
+			onModeration: 'admin/event/onModeration',
+		}),
 	},
 	methods: {
 		...mapMutations({
-			mergeTemptSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+			mergeTemptSettings: 'admin/event/MERGE_TEMP_SETTINGS',
 		}),
 		toggleModerationMode() {
 			this.mergeTemptSettings({ on_moderation: !this.onModeration });
 			this.$root.$emit('save-settings');
-		}
-	}
+		},
+	},
 };
 </script>
 

@@ -31,7 +31,7 @@ export default {
 		'event-setting-expand--question': EventSettingQuestion,
 		'event-setting-expand--poll': EventSettingPoll,
 		'event-setting-expand--idea': EventSettingIdea,
-		'event-setting-expand--invite': EventSettingInviteAdmin
-	}
+		'event-setting-expand--invite': EventSettingInviteAdmin,
+	},
 };
 </script>

@@ -90,26 +90,26 @@ import EventSettingExpand from './EventSettingExpand.vue';
 export default {
 	name: 'EventSettingQuestion',
 	components: {
-		'event-setting--expand': EventSettingExpand
+		'event-setting--expand': EventSettingExpand,
 	},
 	data: () => ({
 		questionExpand: {
 			icon: 'questions',
 			title: 'questions',
-			subtitle: 'event-setting-questions-des'
+			subtitle: 'event-setting-questions-des',
 		},
 		questionSettings: {
 			on_question: false,
 			on_moderation: false,
 			allow_question: false,
 			allow_question_reply: true,
-			allow_question_dislike: false
-		}
+			allow_question_dislike: false,
+		},
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	watch: {
 		tempSettings(val) {
@@ -122,13 +122,13 @@ export default {
 			deep: true,
 			handler(val) {
 				this.mergeTempSettings(val);
-			}
-		}
+			},
+		},
 	},
 	methods: {
 		...mapMutations({
-			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
-		})
-	}
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
+		}),
+	},
 };
 </script>

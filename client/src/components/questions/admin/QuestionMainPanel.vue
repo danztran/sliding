@@ -115,7 +115,11 @@
 					<v-layout v-else row wrap>
 						<v-flex xs12>
 							<question-card--live
-								v-for="question of liveQuestions"
+								v-for="question of livePinnedQuestions"
+								:key="question.id"
+								:question="question" />
+							<question-card--live
+								v-for="question of liveOtherQuestions"
 								:key="question.id"
 								:question="question" />
 						</v-flex>
@@ -160,23 +164,25 @@ export default {
 		'empty-state-archived': EmptyArchived,
 		'question-card--live': LiveQuestionCard,
 		'question-card--review': ReviewQuestionCard,
-		'question-card--archived': ArchivedQuestionCard
+		'question-card--archived': ArchivedQuestionCard,
 	},
 	data: () => ({
 		currentTab: null,
 		icon: {
 			xsSmall: 17,
-			small: 20
-		}
+			small: 20,
+		},
 	}),
 	computed: {
 		...mapGetters({
 			onModeration: 'admin/event/onModeration',
 			reviewQuestions: 'admin/questions/getReviewQuestions',
 			liveQuestions: 'admin/questions/getLiveQuestions',
-			archivedQuestions: 'admin/questions/getArchivedQuestions'
-		})
-	}
+			livePinnedQuestions: 'admin/questions/getLivePinnedQuestions',
+			liveOtherQuestions: 'admin/questions/getLiveOtherQuestions',
+			archivedQuestions: 'admin/questions/getArchivedQuestions',
+		}),
+	},
 };
 </script>
 

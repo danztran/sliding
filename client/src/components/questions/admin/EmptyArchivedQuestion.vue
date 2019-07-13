@@ -18,7 +18,7 @@
 
 <script>
 export default {
-	name: 'EmptyArchiveQuestion'
+	name: 'EmptyArchiveQuestion',
 };
 </script>
 

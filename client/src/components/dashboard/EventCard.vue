@@ -114,12 +114,12 @@ export default {
 				name: 'Name Event',
 				code: 'Event code',
 				start_at: '',
-				end_at: ''
-			})
-		}
+				end_at: '',
+			}),
+		},
 	},
 	data: () => ({
-		iconSize: 25
+		iconSize: 25,
 	}),
 	methods: {
 		formatDate(date) {
@@ -131,8 +131,8 @@ export default {
 		toEventLive() {
 			const { code } = this.info;
 			this.$router.push({ name: 'admin-event', params: { code } });
-		}
-	}
+		},
+	},
 };
 </script>
 

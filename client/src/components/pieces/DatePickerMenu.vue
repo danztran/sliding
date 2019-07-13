@@ -51,22 +51,22 @@ export default {
 				prepend: '',
 				date: null,
 				max: null,
-				min: null
-			})
+				min: null,
+			}),
 		},
 		markDaysEvent: {
 			type: Boolean,
-			default: false
-		}
+			default: false,
+		},
 	},
 	data: () => ({
-		menuPickTime: false
+		menuPickTime: false,
 	}),
 	computed: {
 		formattedDate() {
 			const { date } = this.dateInfo;
 			return this.formatToDash(this.formatToISO(date));
-		}
+		},
 	},
 	methods: {
 		formatToDash(date) {
@@ -79,7 +79,7 @@ export default {
 			if (!date) return null;
 
 			return new Date(date).toISOString().substr(0, 10);
-		}
-	}
+		},
+	},
 };
 </script>

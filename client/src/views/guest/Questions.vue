@@ -20,12 +20,12 @@ export default {
 		'field-ask': FieldAsk,
 		'empty-state-question': EmptyQuestion,
 		'question--tabs': QuestionTabs,
-		'question-reply--dialog': QuestionReplyDialog
+		'question-reply--dialog': QuestionReplyDialog,
 	},
 	computed: {
 		...mapGetters({
-			questions: 'guest/questions/getQuestions'
-		})
+			questions: 'guest/questions/getQuestions',
+		}),
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
@@ -56,7 +56,7 @@ export default {
 		},
 		new_question_reaction(questionReact) {
 			this.mergeQuestionReaction(questionReact);
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -66,9 +66,9 @@ export default {
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
 			mergeQuestionReaction: 'guest/questions/MERGE_QUESTION_REACTIONS',
-			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY'
-		})
-	}
+			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY',
+		}),
+	},
 };
 </script>
 

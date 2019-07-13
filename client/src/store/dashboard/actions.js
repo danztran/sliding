@@ -16,5 +16,5 @@ const createEvent = (context, newEvent) => {
 
 export default {
 	queryEvent,
-	createEvent
+	createEvent,
 };

@@ -24,8 +24,8 @@ export 	default {
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
-		'event-dialog': DashboardEventDialog
-	}
+		'event-dialog': DashboardEventDialog,
+	},
 };
 </script>
 

@@ -39,13 +39,13 @@ import EmptyPoll from './EmptyPoll.vue';
 export default {
 	name: 'PollLivePanel',
 	components: {
-		'empty-state--poll': EmptyPoll
+		'empty-state--poll': EmptyPoll,
 	},
 	computed: {
 		...mapGetters({
 			// ....
-		})
-	}
+		}),
+	},
 };
 </script>
 

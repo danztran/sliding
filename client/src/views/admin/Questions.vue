@@ -27,13 +27,13 @@ export default {
 	components: {
 		'question-panel--review': QuestionReviewPanel,
 		'question-panel--main': QuestionMainPanel,
-		'question-reply--dialog': QuestionReplyDialog
+		'question-reply--dialog': QuestionReplyDialog,
 	},
 	computed: {
 		...mapGetters({
 			reviewQuestions: 'admin/questions/getReviewQuestions',
-			event: 'admin/event/getEventInfo'
-		})
+			event: 'admin/event/getEventInfo',
+		}),
 	},
 	created() {
 		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
@@ -60,7 +60,7 @@ export default {
 		},
 		new_question_reaction(questionReact) {
 			this.mergeQuestionReaction(questionReact);
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -69,9 +69,9 @@ export default {
 			addQuestionReply: 'admin/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'admin/questions/MERGE_EDIT_REPLY',
 			mergeQuestionReaction: 'admin/questions/MERGE_QUESTION_REACTION',
-			deleteQuestionReply: 'admin/questions/DELETE_QUESTION_REPLY'
-		})
-	}
+			deleteQuestionReply: 'admin/questions/DELETE_QUESTION_REPLY',
+		}),
+	},
 };
 </script>
 

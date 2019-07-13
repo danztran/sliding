@@ -54,21 +54,21 @@ export default {
 				id: '',
 				user: {
 					id: null,
-					name: ''
-				}
-			})
-		}
+					name: '',
+				},
+			}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
-		}
+			lg: 25,
+		},
 	}),
 	computed: {
 		...mapGetters({
-			admins: 'guest/event/getAdmins'
+			admins: 'guest/event/getAdmins',
 		}),
 		dateRCreated() {
 			return this._cm.dayCreate(this.replyData.created_at);
@@ -77,8 +77,8 @@ export default {
 			return this.admins
 				? this.admins.some(el => Number(el.user_id) === Number(this.replyData.user.id))
 				: [];
-		}
-	}
+		},
+	},
 };
 </script>
 

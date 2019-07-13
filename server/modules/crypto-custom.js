@@ -11,7 +11,7 @@ const crypto = {
 		const decryptedObj = CryptoJS.AES.decrypt(encrypted, secretKey);
 		const decrypted = decryptedObj.toString(CryptoJS.enc.Utf8);
 		return decrypted;
-	}
+	},
 };
 
 module.exports = crypto;

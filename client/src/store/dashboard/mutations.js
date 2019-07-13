@@ -14,5 +14,5 @@ const RESET = (state) => {
 export default {
 	SET_EVENTS,
 	RESET,
-	ADD_NEW_EVENT
+	ADD_NEW_EVENT,
 };

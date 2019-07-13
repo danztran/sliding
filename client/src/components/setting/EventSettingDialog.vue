@@ -129,20 +129,20 @@ export default {
 	name: 'EventSettingDialog',
 	components: {
 		'icon-loading-circle': IconLoadingCircle,
-		'event-settings-content': EventSettingsContent
+		'event-settings-content': EventSettingsContent,
 	},
 	data: () => ({
 		icon: {
-			sm: 20
+			sm: 20,
 		},
 		settingDialog: false,
-		loadingState: ''
+		loadingState: '',
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
-			tempSettings: 'admin/event/getTempSettings'
-		})
+			tempSettings: 'admin/event/getTempSettings',
+		}),
 	},
 	mounted() {
 		this.$root.$on('save-settings', () => {
@@ -155,7 +155,7 @@ export default {
 	methods: {
 		...mapMutations({
 			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT',
-			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS'
+			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
 		}),
 		saveSettings() {
 			this.loadingState = 'loading';
@@ -178,8 +178,8 @@ export default {
 				this.loadingState = 'success';
 				this.mergeEventInfo(event);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

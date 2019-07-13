@@ -18,10 +18,11 @@
 
 				<v-tooltip bottom>
 					<template v-slot:activator="{ on }">
-						<v-btn class="mx-1" flat icon color="primary lighten-1" v-on="on"
-							@click="highlightQuestion">
+						<v-btn class="mx-1" flat icon :color="_cm.resultColor(!isPinned)" v-on="on"
+							@click="togglePinned">
 							<v-icon
-								color="primary lighten-1"
+								class="btn-pin"
+								:color="_cm.resultColor(!isPinned)"
 								:size="icon.lg"
 								v-text="'$vuetify.icons.highlight_question'" />
 						</v-btn>
@@ -63,7 +64,7 @@
 					</v-list-tile-content>
 				</v-list-tile>
 
-				<v-list-tile @click="highlightQuestion">
+				<v-list-tile @click="togglePinned">
 					<v-list-tile-action>
 						<v-icon v-text="'$vuetify.icons.highlight_question'" />
 					</v-list-tile-action>
@@ -83,36 +84,41 @@ import QuestionCard from './QuestionCard.vue';
 export default {
 	name: 'LiveQuestionCard',
 	components: {
-		'question-card': QuestionCard
+		'question-card': QuestionCard,
 	},
 	props: {
 		question: {
 			type: Object,
-			default: () => ({})
-		}
+			default: () => ({}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
+			lg: 25,
 		},
-		tempQuestion: null
+		tempQuestion: null,
 	}),
 	computed: {
 		isAnswered() {
 			return this.question.is_answered;
 		},
+		isPinned() {
+			return this.question.is_pinned;
+		},
 		answerText() {
 			return this.isAnswered ? 'btn-unmark-answer' : 'btn-mark-answer';
-		}
+		},
 	},
 	methods: {
 		...mapMutations({
-			mergeQuestion: 'admin/questions/MERGE_QUESTION'
+			mergeQuestion: 'admin/questions/MERGE_QUESTION',
 		}),
-		highlightQuestion() {
-			// ...this should emit to change pinned_question_id event setting
+		togglePinned() {
+			this.tempQuestion = { ...this.question };
+			this.question.is_pinned = !this.question.is_pinned;
+			this.emitEdit({ is_pinned: this.question.is_pinned });
 		},
 		archiveQuestion() {
 			this.emitEdit({ stage: 'archived' });
@@ -125,7 +131,7 @@ export default {
 		emitEdit(info) {
 			const formData = {
 				...info,
-				id: this.question.id
+				id: this.question.id,
 			};
 			const emiter = 'edit-question';
 			this.$socket.emit(emiter, formData, ({ errmsg, question }) => {
@@ -138,8 +144,8 @@ export default {
 				}
 				this.mergeQuestion(question);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

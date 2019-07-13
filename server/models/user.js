@@ -37,7 +37,7 @@ class UserModel extends Model {
 			username: user.username,
 			password: crypto.enc(user.password),
 			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, opt);
 	}
 
@@ -45,7 +45,7 @@ class UserModel extends Model {
 		return this.createOne({
 			name: user.name,
 			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString()
+			updated_at: new Date().toISOString(),
 		}, opt);
 	}
 

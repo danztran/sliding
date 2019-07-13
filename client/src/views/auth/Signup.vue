@@ -71,7 +71,7 @@ const initForm = () => ({
 		required: true,
 		prepend: 'tag_faces',
 		autofocus: true,
-		errmsg: ''
+		errmsg: '',
 	},
 	email: {
 		value: '',
@@ -79,14 +79,14 @@ const initForm = () => ({
 		required: true,
 		type: 'email',
 		prepend: 'alternate_email',
-		errmsg: ''
+		errmsg: '',
 	},
 	username: {
 		value: '',
 		label: 'lb-username',
 		required: true,
 		prepend: 'person',
-		errmsg: ''
+		errmsg: '',
 	},
 	password: {
 		value: '',
@@ -94,7 +94,7 @@ const initForm = () => ({
 		required: true,
 		type: 'password',
 		prepend: 'lock',
-		errmsg: ''
+		errmsg: '',
 	},
 	rePassword: {
 		value: '',
@@ -102,8 +102,8 @@ const initForm = () => ({
 		required: true,
 		type: 'password',
 		prepend: 'lock',
-		errmsg: ''
-	}
+		errmsg: '',
+	},
 });
 
 export default {
@@ -111,7 +111,7 @@ export default {
 	data: () => ({
 		loading: false,
 		errorMessage: '',
-		form: initForm()
+		form: initForm(),
 	}),
 	watch: {
 		'form.rePassword.value': function checkPwd(val) {
@@ -124,7 +124,7 @@ export default {
 			if (!emailPattern.test(val)) {
 				this.form.email.errmsg = this.$t('invalid-email');
 			}
-		}
+		},
 	},
 	methods: {
 		handleSignup() {
@@ -136,7 +136,7 @@ export default {
 				email: form.email.value.trim(),
 				username: form.username.value.trim(),
 				password: form.password.value.trim(),
-				rePassword: form.rePassword.value.trim()
+				rePassword: form.rePassword.value.trim(),
 			};
 			this.$axios
 				.post(this.$api.auth.signup, signupFormData)
@@ -147,7 +147,7 @@ export default {
 				.then(() => {
 					this.loading = false;
 				});
-		}
-	}
+		},
+	},
 };
 </script>

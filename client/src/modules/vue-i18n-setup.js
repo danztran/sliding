@@ -14,7 +14,7 @@ if (!['vi', 'en'].includes(locale)) {
 export const i18n = new VueI18n({
 	fallbackLocale: defLocale,
 	silentTranslationWarn: NODE_ENV === 'production',
-	missing: () => ''
+	missing: () => '',
 });
 
 const loadedLanguages = [];

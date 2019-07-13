@@ -130,14 +130,14 @@ const initForm = () => ({
 		outline: true,
 		maxLength: 1000,
 		required: true,
-		autogrow: true
-	}
+		autogrow: true,
+	},
 });
 
 export default {
 	name: 'ReplyCard',
 	components: {
-		'icon-loading-circle': IconLoadingCircle
+		'icon-loading-circle': IconLoadingCircle,
 	},
 	props: {
 		replyData: {
@@ -147,26 +147,26 @@ export default {
 				id: '',
 				user: {
 					id: null,
-					name: ''
-				}
-			})
-		}
+					name: '',
+				},
+			}),
+		},
 	},
 	data: () => ({
 		icon: {
 			xs: 14,
 			sm: 17,
-			lg: 25
+			lg: 25,
 		},
 		form: initForm(),
 		cache: '',
 		deleting: false,
 		onEdit: false,
-		loadingState: ''
+		loadingState: '',
 	}),
 	computed: {
 		...mapGetters({
-			user: 'auth/user'
+			user: 'auth/user',
 		}),
 		checkValidEdit() {
 			const { editReply } = this.form;
@@ -186,7 +186,7 @@ export default {
 		canEdit() {
 			// eslint-disable-next-line
 			return this.replyData.user.id == this.user.id;
-		}
+		},
 	},
 	methods: {
 		resetForm() {
@@ -210,7 +210,7 @@ export default {
 			this.replyData.content = this.form.editReply.value;
 			const infoREdit = {
 				id: this.replyData.id,
-				content: this.form.editReply.value
+				content: this.form.editReply.value,
 			};
 			const emiter = 'edit-question-reply';
 			this.$socket.emit(emiter, infoREdit, ({ reply, errmsg }) => {
@@ -228,7 +228,7 @@ export default {
 		deleteReply() {
 			this.deleting = true;
 			const infoRDelete = {
-				id: this.replyData.id
+				id: this.replyData.id,
 			};
 			const emiter = 'delete-question-reply';
 			this.$socket.emit(emiter, infoRDelete, ({ reply, errmsg }) => {
@@ -239,8 +239,8 @@ export default {
 				}
 				this.$emit('delete-reply', reply);
 			});
-		}
-	}
+		},
+	},
 };
 </script>
 

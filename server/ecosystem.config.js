@@ -2,15 +2,15 @@ const config = require('./config');
 
 const envConfig = {
 	production: {
-		log_date_format: config.pm2ProdLogDateFormat
+		log_date_format: config.pm2ProdLogDateFormat,
 	},
 	development: {
 		watch: config.pm2Watch,
 		ignore_watch: config.pm2IgnoreWatch,
 		log_date_format: config.pm2DevLogDateFormat,
 		out_file: config.pm2OutLogDir,
-		error_file: config.pm2ErrorLogDir
-	}
+		error_file: config.pm2ErrorLogDir,
+	},
 };
 
 module.exports = {
@@ -22,6 +22,6 @@ module.exports = {
 		exec_mode: config.pm2ExecMode,
 		autorestart: config.pm2AutoRestart,
 		max_memory_restart: config.pm2MMR,
-		merge_logs: config.pm2MergeLog
-	}]
+		merge_logs: config.pm2MergeLog,
+	}],
 };

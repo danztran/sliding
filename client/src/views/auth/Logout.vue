@@ -11,7 +11,7 @@ export default {
 			.then((res) => {
 				this.$store.dispatch('auth/logout', res.data);
 			});
-	}
+	},
 };
 </script>
 <style lang="scss">

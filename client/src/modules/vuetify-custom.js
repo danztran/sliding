@@ -15,7 +15,7 @@ const theme = {
 	error: '#832800',
 	grey: '#777',
 	yellow: '#f9cd8b',
-	red: '#e54731'
+	red: '#e54731',
 };
 
 // icons
@@ -75,7 +75,7 @@ const icons = {
 	word_cloud: 'cloud_queue',
 	start_outline: 'play_circle_outline',
 	pause_fill: 'pause_circle_filled',
-	result_off: 'grid_off'
+	result_off: 'grid_off',
 };
 
 // custom components
@@ -83,7 +83,7 @@ const components = {
 	'text-field': TextField,
 	'text-area': TextArea,
 	'loading-linear': LoadingLinear,
-	'bouncy-loader': BouncyBallLoader
+	'bouncy-loader': BouncyBallLoader,
 };
 
 export default {
@@ -98,8 +98,8 @@ export default {
 			theme,
 			icons,
 			directives: {
-				Scroll
-			}
+				Scroll,
+			},
 		});
-	}
+	},
 };

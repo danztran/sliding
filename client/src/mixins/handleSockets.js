@@ -6,11 +6,11 @@ export default {
 				transportOptions: {
 					polling: {
 						extraHeaders: {
-							'accept-language': this.$i18n.locale
-						}
-					}
-				}
+							'accept-language': this.$i18n.locale,
+						},
+					},
+				},
 			};
-		}
-	}
+		},
+	},
 };

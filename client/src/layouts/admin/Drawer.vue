@@ -101,37 +101,37 @@ export default {
 				to: 'questions',
 				icon: 'question_answer',
 				name: 'questions',
-				color: 'yellow'
+				color: 'yellow',
 			},
 			{
 				to: 'polls',
 				icon: 'sort',
 				name: 'polls',
-				color: 'primary'
+				color: 'primary',
 			},
 			{
 				to: 'ideas',
 				icon: 'new_releases',
 				name: 'ideas',
-				color: 'secondary'
+				color: 'secondary',
 			},
 			{
 				to: 'analytics',
 				icon: 'poll',
 				name: 'analytics',
-				color: 'red'
-			}
-		]
+				color: 'red',
+			},
+		],
 	}),
 	computed: {
 		...mapGetters({
-			eventInfo: 'admin/event/getEventInfo'
-		})
+			eventInfo: 'admin/event/getEventInfo',
+		}),
 	},
 	watch: {
 		eventInfo(val) {
 			this.loading = true;
-		}
+		},
 	},
 	created() {
 		this.links.forEach((e) => {
@@ -146,8 +146,8 @@ export default {
 	methods: {
 		switchEvent() {
 			this.$router.push({ name: 'my-events' });
-		}
-	}
+		},
+	},
 };
 </script>
 
