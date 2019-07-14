@@ -11,6 +11,7 @@
 	"usernameTaken": "This username have been taken",
 	"emailTaken": "This email have been used on other account",
 	"successSignUp": "Your new account has been created",
+	"successUpdate": "Your account has been updated",
 	"unauthenticated": "Sorry. You have to login again.",
 	"eventNotFound": "The event is not exists",
 	"replyNotFound": "The reply is not exists anymore",

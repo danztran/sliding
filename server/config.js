@@ -75,6 +75,12 @@ module.exports = {
 		username: 'string|required',
 		password: 'string|required',
 	},
+	updateRules: {
+		name: ['min:3', 'max:100', 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g'],
+		curPassword: 'string|required_with:password|min:6|max:50',
+		password: 'string|min:6|max:50',
+		rePassword: 'string|required_with:password|min:6|max:50|same:password',
+	},
 
 	// ========== EVENT MODEL
 	// auto generate the next event code with auto increment characters

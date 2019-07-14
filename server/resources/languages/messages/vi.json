@@ -11,6 +11,7 @@
 	"usernameTaken": "Kí danh đã tồn tại",
 	"emailTaken": "Email này đã liên kết với tài khoản khác",
 	"successSignUp": "Tạo tài khoản mới thành công",
+	"successUpdate": "Cập nhật tài khoản thành công",
 	"unauthenticated": "Xin lỗi. Bạn cần phải đăng nhập lại.",
 	"eventNotFound": "Không tìm thấy sự kiện",
 	"replyNotFound": "Câu trả lời này không còn tồn tại",

@@ -1,6 +1,7 @@
 const passport = requireWrp('modules/passport-custom');
 const UserModel = requireWrp('models/user');
-const { signUpRules, logInRules } = requireWrp('config');
+const crypto = requireWrp('modules/crypto-custom');
+const { signUpRules, logInRules, updateRules } = requireWrp('config');
 
 const Ctlr = {
 	getSafeInfo(user) {
@@ -70,7 +71,31 @@ const Ctlr = {
 	},
 
 	async update(req, res, next) {
-		// ...
+		if (!res.$v.rif(updateRules)) return;
+		const result = {};
+		const { id } = req.user;
+		const { curPassword } = req.body;
+		try {
+			// get current user info
+			const User = new UserModel();
+			const user = await User.findById(id).exec();
+			// if current password from body is not equal password from user
+			if (curPassword !== crypto.dec(user.password)) {
+				res.status(409);
+				throw { password: res.$t('passwordIncorrect') };
+			}
+			await User.update(req.user, req.body).exec();
+			res.messages['auth.update'] = res.$t('successUpdate');
+
+			// userUpdate = await User.findById(id).exec();
+			// res.messages['userUpdate'] = userUpdate;
+			// res.messages['pw'] = crypto.dec(userUpdate.password);
+			return res.sendwm(result);
+		}
+		catch (error) {
+			res.messages = { ...res.messages, ...error };
+			return next(error);
+		}
 	},
 
 	login(req, res, next) {

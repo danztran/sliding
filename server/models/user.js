@@ -49,9 +49,17 @@ class UserModel extends Model {
 		}, opt);
 	}
 
-	// update(user) {
-	//  ...
-	// }
+	update(user, newInfo, opt) {
+		return this.updateOne({
+			id: user.id,
+		}, {
+			name: newInfo.name ? newInfo.name : user.name,
+			password: newInfo.password ? crypto.enc(newInfo.password) : user.password,
+			updated_at: new Date().toISOString(),
+		}, {
+			select: '*',
+		});
+	}
 
 	setLastAccessed(user) {
 		const { id } = user;
