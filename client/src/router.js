@@ -35,6 +35,10 @@ const GuestQuestions = () => import(/* webpackChunkName: "guest-questions" */ '.
 const GuestIdeas = () => import(/* webpackChunkName: "guest-ideas" */ './views/guest/Ideas.vue');
 const GuestPolls = () => import(/* webpackChunkName: "guest-polls" */ './views/guest/Polls.vue');
 
+// Search
+const SearchLayout = () => import(/* webpackChunkName: "search" */ './layouts/search');
+const Search = () => import(/* webpackChunkName: "search-event" */ './views/search/Search.vue');
+
 const router = new Router({
 	mode: 'history',
 	base: process.env.BASE_URL,
@@ -51,6 +55,22 @@ const router = new Router({
 					meta: {
 						title: 'Sliding - Event Supporter',
 					},
+				},
+				{
+					path: '/',
+					name: 'search',
+					component: SearchLayout,
+					redirect: { name: 'search-event' },
+					children: [
+						{
+							path: 'search',
+							name: 'search-event',
+							component: Search,
+							meta: {
+								title: 'Sliding - Search event',
+							},
+						},
+					],
 				},
 				{
 					path: '/',

@@ -76,6 +76,8 @@ const icons = {
 	start_outline: 'play_circle_outline',
 	pause_fill: 'pause_circle_filled',
 	result_off: 'grid_off',
+	signup: 'person_add',
+	arrow_forward: 'arrow_forward',
 };
 
 // custom components

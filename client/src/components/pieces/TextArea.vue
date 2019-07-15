@@ -7,7 +7,7 @@
 		:append-outer-icon="field.outerIcon"
 		:rules="[fieldRequired(field)]"
 		:error-messages="field.errmsg"
-		:label="$t(field.label)"
+		:label="field.label !== '' ? $t(field.label) : ''"
 		:placeholder="$t(field.placeholder)"
 		:rows="field.rows"
 		:outline="field.outline"

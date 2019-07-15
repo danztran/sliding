@@ -6,13 +6,14 @@
 		:prepend-icon="field.prepend"
 		:append-icon="field.append"
 		:rules="[fieldRequired(field)]"
-		:label="$t(field.label)"
+		:label="field.label !== '' ? $t(field.label) : ''"
 		:placeholder="field.placeholderz || $t(field.placeholder)"
 		:readonly="field.readonly"
 		:validate-on-blur="true"
 		:error-messages="field.errmsg"
 		:disabled="disabled"
 		:prefix="field.prefix"
+		:solo="field.solo"
 		autocapitalize="off"
 		@input="onInput" />
 </template>
@@ -33,13 +34,14 @@ export default {
 			type: Object,
 			default() {
 				return {
-					label: 'label',
+					label: '',
 					type: 'text',
 					value: '',
 					errmsg: '',
 					prepend: '',
 					append: '',
 					prefix: '',
+					solo: false,
 					autofocus: false,
 					required: false,
 				};

@@ -5,14 +5,14 @@
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
-			<v-card-title class="py-0">
+			<v-card-title class="py-0 pl-4">
 				<template v-if="isSMnXS">
 					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
 						<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
 					</v-btn>
 				</template>
 				<!-- @desc: title -->
-				<span v-else v-t="'dialog-reply-question-title'" />
+				<span v-else v-t="'dialog-reply-question-guest-title'" />
 
 				<v-spacer />
 				<!-- @desc: button close -->

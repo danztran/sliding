@@ -10,7 +10,9 @@
 		<!-- @desc: avatar -->
 		<template v-slot:activator="{ on }">
 			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
-				<v-icon color="white" v-text="'$vuetify.icons.person'" />
+				<v-icon
+					:color="_cm.resultColor(inSearch, 'grey', 'white')"
+					v-text="'$vuetify.icons.person'" />
 			</v-avatar>
 		</template>
 
@@ -112,6 +114,17 @@
 
 					<v-divider />
 					<!-- @desc: logout -->
+					<v-list-tile :to="{ name: 'search' }">
+						<v-list-tile-action>
+							<v-icon
+								class="pl-1"
+								size="20"
+								v-text="'$vuetify.icons.search'" />
+						</v-list-tile-action>
+
+						<v-list-tile-title v-t="'btn-search-event'" />
+					</v-list-tile>
+					<!-- @desc: logout -->
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
@@ -133,6 +146,12 @@ import { mapGetters } from 'vuex';
 
 export default {
 	name: 'UserActionsAvatar',
+	props: {
+		inSearch: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	data: () => ({}),
 	computed: {
 		...mapGetters({
