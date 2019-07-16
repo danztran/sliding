@@ -38,6 +38,7 @@ const GuestPolls = () => import(/* webpackChunkName: "guest-polls" */ './views/g
 // Search
 const SearchLayout = () => import(/* webpackChunkName: "search" */ './layouts/search');
 const Search = () => import(/* webpackChunkName: "search-event" */ './views/search/Search.vue');
+const EventVerify = () => import(/* webpackChunkName: "search-event-verify" */ './views/search/EventVerify.vue');
 
 const router = new Router({
 	mode: 'history',
@@ -57,17 +58,25 @@ const router = new Router({
 					},
 				},
 				{
-					path: '/',
+					path: 'search',
 					name: 'search',
 					component: SearchLayout,
 					redirect: { name: 'search-event' },
 					children: [
 						{
-							path: 'search',
+							path: '/',
 							name: 'search-event',
 							component: Search,
 							meta: {
 								title: 'Sliding - Search event',
+							},
+						},
+						{
+							path: 'event/verify',
+							name: 'event-verify',
+							component: EventVerify,
+							meta: {
+								title: 'Sliding - Welcome',
 							},
 						},
 					],

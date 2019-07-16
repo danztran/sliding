@@ -50,7 +50,7 @@ export default {
 			errmsg: '',
 			prefix: '#',
 			autofocus: true,
-			placeholder: 'lb-event-code',
+			placeholder: 'search',
 			solo: true,
 		},
 		loadingState: '',

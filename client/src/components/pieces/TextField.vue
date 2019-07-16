@@ -4,6 +4,7 @@
 		:autofocus="field.autofocus"
 		:type="field.type"
 		:prepend-icon="field.prepend"
+		:prepend-inner-icon="field.inprepend"
 		:append-icon="field.append"
 		:rules="[fieldRequired(field)]"
 		:label="field.label !== '' ? $t(field.label) : ''"
@@ -39,6 +40,7 @@ export default {
 					value: '',
 					errmsg: '',
 					prepend: '',
+					inprepend: '',
 					append: '',
 					prefix: '',
 					solo: false,

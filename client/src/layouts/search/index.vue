@@ -9,7 +9,9 @@
 			fill-height>
 			<v-layout align-center column fill-height>
 				<div class="search-wrapper">
-					<router-view />
+					<transition name="page" mode="out-in">
+						<router-view />
+					</transition>
 				</div>
 			</v-layout>
 		</v-container>

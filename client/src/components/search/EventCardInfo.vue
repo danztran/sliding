@@ -2,7 +2,8 @@
 	<v-hover>
 		<v-card
 			slot-scope="{ hover }"
-			class="no-shadow search-card mb-1">
+			class="no-shadow search-card mb-1"
+			@click="toVerifyEvent">
 			<v-list three-line>
 				<v-list-tile>
 					<v-list-tile-content>
@@ -53,6 +54,11 @@ export default {
 			const end = new Date(this.eventInfo.end_at);
 			const dateEnd = end.toUTCString().toString().substr(4, 12);
 			return `${start.getDate()} ${start.getMonth() !== end.getMonth() ? start.toLocaleString('default', { month: 'long' }) : ''} - ${dateEnd}`;
+		},
+	},
+	methods: {
+		toVerifyEvent() {
+			this.$router.push({ name: 'event-verify', params: { eventInfo: this.eventInfo } });
 		},
 	},
 };
