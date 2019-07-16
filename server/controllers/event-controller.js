@@ -107,7 +107,7 @@ module.exports = {
 
 			if (!event) {
 				res.status(404);
-				res.messages['find-event'] = res.$t('notFoundEventByCode');
+				throw { 'find-event': res.$t('notFoundEventByCode') };
 			}
 			result.event = event;
 
@@ -124,6 +124,7 @@ module.exports = {
 			return res.sendwm(result);
 		}
 		catch (error) {
+			res.messages = { ...res.messages, ...error };
 			return next(error);
 		}
 	},
