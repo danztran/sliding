@@ -31,5 +31,6 @@
 	"deleteQuestionReply": "Delete question reply",
 	"addQuestion": "Write question",
 	"editQuestion": "Edit question content",
-	"deleteQuestion": "Delete question"
+	"deleteQuestion": "Delete question",
+	"notFoundEventByCode": "Not found any event match this code"
 }

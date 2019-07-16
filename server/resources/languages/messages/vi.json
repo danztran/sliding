@@ -31,5 +31,6 @@
 	"deleteQuestionReply": "Xóa trả lời",
 	"addQuestion": "Đặt câu hỏi",
 	"editQuestion": "Sửa nội dung câu hỏi",
-	"deleteQuestion": "Xóa câu hỏi"
+	"deleteQuestion": "Xóa câu hỏi",
+	"notFoundEventByCode": "Không tìm thấy sự kiện nào"
 }

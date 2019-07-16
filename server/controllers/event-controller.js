@@ -86,4 +86,45 @@ module.exports = {
 
 		return res.sendwm(result);
 	},
+
+	async find(req, res, next) {
+		const rules = {
+			code: 'string|min:3',
+		};
+		if (!res.$v.rif(rules)) return;
+
+		const {
+			code,
+		} = req.query;
+		const result = {};
+
+		try {
+			const EventRole = new EventRoleModel();
+			const Event = new EventModel();
+			const event = await Event.findByCode(code, {
+				select: 'id, code, name, description, start_at, end_at, require_passcode',
+			}).exec();
+
+			if (!event) {
+				res.status(404);
+				res.messages['find-event'] = res.$t('notFoundEventByCode');
+			}
+			result.event = event;
+
+			if (req.user) {
+				const role = await EventRole.findOne({
+					user_id: req.user.id,
+					event_id: event.id,
+				}, {
+					select: 'role',
+				}).exec();
+				result.role = role;
+			}
+
+			return res.sendwm(result);
+		}
+		catch (error) {
+			return next(error);
+		}
+	},
 };
