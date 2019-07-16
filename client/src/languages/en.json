@@ -164,6 +164,7 @@
 		"err-reply-limit": "You have exceed the maximum number of characters allowed for reply",
 		"err-reply": "Could not send message. Sorry, try again!",
 		"err-empty-inputcode": "Please enter an event code",
+		"err-event-not-found": "Sorry, there is no such event active right now",
 		"guest-del-question-dialog": "Sorry, the question has been deleted by the administrator",
 		"guest-reply-disable": "Reply have been turn off by Admin",
 		"guest-profile-title-dialog": "My profile",

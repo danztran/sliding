@@ -57,10 +57,7 @@
 			</v-layout>
 		</v-toolbar>
 		<v-content>
-			<!--
-				@desc: Main picture introduce, input event code
-				@contains: sologan, signup btn, input event code
-			-->
+			<!-- @desc: Main picture introduce, input event code -->
 			<v-parallax
 				class="pa-0"
 				height="500"
@@ -71,9 +68,7 @@
 					align-center
 					justify-center>
 					<v-container grid-list-xs>
-						<!--
-							@desc: sologan
-						-->
+						<!-- *sologan -->
 						<v-flex
 							xs12
 							text-xs-center
@@ -83,9 +78,7 @@
 							<span v-t="'sub-sologan'" class="font-weight-light headline" />
 						</v-flex>
 
-						<!--
-							@desc: Input code
-						-->
+						<!-- *Input code -->
 						<v-layout row justify-center>
 							<div class="my-input-code w-3">
 								<v-text-field
@@ -93,8 +86,9 @@
 									height="60"
 									solo
 									:label="$t('plhEnterCode')"
-									prefix="#" />
-								<v-btn color="primary" :to="inputEventCode">
+									prefix="#"
+									@keydown.native.enter.capture="findEventByCode" />
+								<v-btn color="primary" @click="findEventByCode">
 									<span v-t="'btn-join'" />
 								</v-btn>
 							</div>
@@ -114,9 +108,7 @@
 				</v-layout>
 			</v-parallax>
 
-			<!--
-				@desc: 3 card introduce product
-			-->
+			<!-- *3 card introduce product -->
 			<section class="white-bg">
 				<v-layout
 					row
@@ -155,9 +147,7 @@
 				</v-layout>
 			</section>
 
-			<!--
-				@desc: intro reponsive device
-			-->
+			<!-- *intro reponsive device -->
 			<section>
 				<v-layout
 					row
@@ -200,9 +190,7 @@
 				</v-layout>
 			</section>
 
-			<!--
-				@desc: partner
-			-->
+			<!-- *partner -->
 			<section class="white-bg">
 				<v-layout
 					row
@@ -238,9 +226,7 @@
 				</v-layout>
 			</section>
 
-			<!--
-				@desc: title uses product
-			-->
+			<!-- *title uses product -->
 			<section id="primary-bg">
 				<v-layout
 					row
@@ -280,9 +266,7 @@
 					<v-flex xs12>
 						<v-container grid-list-xl>
 							<v-layout row wrap>
-								<!--
-									@desc: advertise products
-								-->
+								<!-- *advertise products -->
 								<v-flex xs6 sm3>
 									<ul>
 										<span v-t="'footer-product'" class="subheading pb-2 font-weight-medium" />
@@ -293,9 +277,7 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!--
-									@desc: customer
-								-->
+								<!-- *customer -->
 								<v-flex xs6 sm3>
 									<ul>
 										<span v-t="'footer-customer'" class="subheading pb-2 font-weight-medium" />
@@ -306,9 +288,7 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!--
-									@desc: about us
-								-->
+								<!-- *about us -->
 								<v-flex xs6 sm3>
 									<ul>
 										<span v-t="'footer-about'" class="subheading pb-2 font-weight-medium" />
@@ -319,9 +299,7 @@
 										</template>
 									</ul>
 								</v-flex>
-								<!--
-									@desc: contact
-								-->
+								<!-- *contact -->
 								<v-flex xs6 sm3>
 									<ul>
 										<span
@@ -424,6 +402,10 @@ export default {
 		callLogout() {
 			this.$store.dispatch('auth/logout');
 		},
+		findEventByCode() {
+			if (this.inputEventCode === '') return;
+			this.$router.push({ name: 'search', query: { code: this.inputEventCode } });
+		},
 	},
 };
 </script>
@@ -457,9 +439,6 @@ export default {
 				top: .1em;
 				right: -.2em;
 				height: 45px;
-			}
-			input[type="text"] {
-				text-transform: uppercase;
 			}
 		}
 		.white-bg {

@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<div id="input-code">
-			<text-field :field="inputCode" />
+			<text-field
+				:field="keySearch"
+				@keydown.native.enter.capture="searchEvent"
+				@keydown.native="showNotFoundMsg=false" />
 			<v-btn
 				class="btn-append-icon"
 				color="primary"
@@ -17,8 +20,16 @@
 					<icon-loading-circle :state.sync="loadingState" />
 				</template>
 			</v-btn>
+			<v-slide-y-transition>
+				<div
+					v-if="showNotFoundMsg"
+					v-t="'err-event-not-found'"
+					class="error--text text-xs-center" />
+			</v-slide-y-transition>
 		</div>
-		<event-card--info />
+		<v-slide-y-transition>
+			<event-card--info v-if="_cm.notEmpty(eventInfo)" :event-info="eventInfo" />
+		</v-slide-y-transition>
 	</div>
 </template>
 
@@ -33,7 +44,7 @@ export default {
 		'event-card--info': EventCardInfo,
 	},
 	data: () => ({
-		inputCode: {
+		keySearch: {
 			type: 'text',
 			value: '',
 			errmsg: '',
@@ -43,14 +54,38 @@ export default {
 			solo: true,
 		},
 		loadingState: '',
+		showNotFoundMsg: false,
+		eventInfo: {},
 	}),
+	mounted() {
+		if (this.$route.query.code !== undefined) {
+			this.keySearch.value = this.$route.query.code;
+			this.searchEvent();
+		}
+	},
 	methods: {
 		searchEvent() {
-			if (this.inputCode.value === '') {
-				this.inputCode.errmsg = this.$t('err-empty-inputcode');
+			if (this.keySearch.value === '') {
+				this.keySearch.errmsg = this.$t('err-empty-inputcode');
 				return;
 			}
+			this.eventInfo = {};
 			this.loadingState = 'loading';
+
+			const params = {
+				code: this.keySearch.value,
+			};
+			this.$axios
+				.get(this.$api.event.search, { params })
+				.then((res) => {
+					this.loadingState = 'success';
+					this.eventInfo = res.data.event;
+					console.warn(res);
+				})
+				.catch((err) => {
+					this.showNotFoundMsg = true;
+					this.loadingState = 'fail';
+				});
 		},
 	},
 };

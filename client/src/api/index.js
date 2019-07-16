@@ -8,5 +8,6 @@ export default {
 	event: {
 		query: '/event/query',
 		create: '/event/create',
+		search: '/event/find',
 	},
 };

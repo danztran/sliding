@@ -166,6 +166,7 @@
 		"err-reply-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép trả lời",
 		"err-reply": "Tin nhắn của bạn chưa được gửi. Xin lỗi, bạn hãy thử lại!",
 		"err-empty-inputcode": "Vui lòng nhập mã sự kiện",
+		"err-event-not-found": "Xin lỗi, hiện tại sự kiện bạn tìm kiếm không hoạt động",
 		"guest-del-question-dialog": "Xin lỗi, câu hỏi bạn đang xem đã bị quản trị viên xóa",
 		"guest-reply-disable": "Quản trị viên đã khóa chức năng Trả lời",
 		"guest-profile-title-dialog": "Thông tin của tôi",

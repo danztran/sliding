@@ -16,7 +16,6 @@ export default {
 					this.errorMessage = dataMsg;
 				}
 				else {
-					// this.$root.$emit('notifyErrorMessage', dataMsg);
 					this.showNotify(dataMsg, 'danger');
 				}
 			}
@@ -33,7 +32,6 @@ export default {
 				}
 
 				if (messages.length > 0) {
-					// this.$root.$emit('notifyErrorMessage', messages.join('\n\r'));
 					this.showNotify(messages.join('\n\r'), 'danger');
 				}
 			}

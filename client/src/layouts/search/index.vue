@@ -38,7 +38,7 @@ $backgroundImg: url(~@/assets/search_bg.svg);
 	max-height: 100vh;
 	overflow: hidden;
 	.search-wrapper {
-		margin-top: 35vh;
+		margin-top: 30vh;
 		width: 400px;
 	}
 }

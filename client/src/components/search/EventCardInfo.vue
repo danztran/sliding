@@ -6,14 +6,16 @@
 			<v-list three-line>
 				<v-list-tile>
 					<v-list-tile-content>
-						<v-list-tile-title>
-							event name
+						<v-list-tile-title :class="{'grey--text text--darken-2': !hover, 'black--text': hover}">
+							{{ eventInfo.name }}
 						</v-list-tile-title>
-						<v-list-tile-sub-title>
-							# 1234
+						<v-list-tile-sub-title
+							class="text-uppercase"
+							:class="{'grey--text text--darken-2': !hover, 'black--text': hover}">
+							# {{ eventInfo.code }}
 						</v-list-tile-sub-title>
-						<v-list-tile-sub-title>
-							15 - 19 Jul 2019
+						<v-list-tile-sub-title class="grey--text text--lighten-2">
+							{{ eventDate }}
 						</v-list-tile-sub-title>
 					</v-list-tile-content>
 
@@ -33,6 +35,26 @@
 <script>
 export default {
 	name: 'EventCardInfo',
+	props: {
+		eventInfo: {
+			type: Object,
+			default: () => ({
+				code: '',
+				name: '',
+				description: '',
+				end_at: '2019-06-02T00:00:00.000Z',
+				start_at: '2019-06-02T00:00:00.000Z',
+			}),
+		},
+	},
+	computed: {
+		eventDate() {
+			const start = new Date(this.eventInfo.start_at);
+			const end = new Date(this.eventInfo.end_at);
+			const dateEnd = end.toUTCString().toString().substr(4, 12);
+			return `${start.getDate()} ${start.getMonth() !== end.getMonth() ? start.toLocaleString('default', { month: 'long' }) : ''} - ${dateEnd}`;
+		},
+	},
 };
 </script>
 
