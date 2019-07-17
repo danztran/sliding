@@ -49,6 +49,18 @@ class UserModel extends Model {
 		}, opt);
 	}
 
+	completeCreate(user, opt) {
+		return this.updateOne({
+			id: user.id,
+		}, {
+			name: user.name,
+			email: user.email,
+			username: user.username,
+			password: crypto.enc(user.password),
+			updated_at: new Date().toISOString(),
+		}, opt);
+	}
+
 	update(user, newInfo, opt) {
 		return this.updateOne({
 			id: user.id,

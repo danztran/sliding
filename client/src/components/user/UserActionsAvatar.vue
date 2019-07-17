@@ -31,7 +31,7 @@
 								{{ user ? user.name : '' }}
 							</div>
 							<div class="caption grey--text">
-								{{ user.email !== null ? user.email : $t('anonymous-empty-email') }}
+								{{ user ? user.email : $t('anonymous-empty-email') }}
 							</div>
 						</v-list-tile-content>
 

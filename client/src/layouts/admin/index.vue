@@ -47,12 +47,17 @@ export default {
 		this.$root.$emit('show-loading-overlay');
 	},
 	created() {
-		this.$socket_updateHeaders();
-		if (this.$socket.disconnected) {
-			this.$socket.connect();
+		if (!this.user) {
+			this.$router.push({ name: 'search-event', query: this.$route.params });
 		}
 		else {
-			this.ready = true;
+			this.$socket_updateHeaders();
+			if (this.$socket.disconnected) {
+				this.$socket.connect();
+			}
+			else {
+				this.ready = true;
+			}
 		}
 	},
 	beforeRouteLeave(to, from, next) {

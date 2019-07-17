@@ -70,6 +70,44 @@ const Ctlr = {
 		}
 	},
 
+	async completeSignup(req, res, next) {
+		if (!res.$v.rif(signUpRules)) return;
+		const { username, email } = req.body;
+		const result = {};
+		try {
+			if (req.user.username || req.user.email) {
+				res.status(400);
+				throw { auth: 'rejected' };
+			}
+
+			const User = new UserModel();
+			const checkExistUsername = await User.findOne({ username }).exec();
+			if (checkExistUsername) {
+				res.status(409);
+				throw { username: res.$t('usernameTaken') };
+			}
+
+			const checkExistEmail = await User.findOne({ email }).exec();
+			if (checkExistEmail) {
+				res.status(409);
+				throw { email: res.$t('emailTaken') };
+			}
+
+			await User.completeCreate({
+				...req.body,
+				id: req.user.id,
+			}).exec();
+
+			res.messages['auth.complete-signup'] = res.$t('successSignUp');
+
+			return res.sendwm(result);
+		}
+		catch (error) {
+			res.messages = { ...res.messages, ...error };
+			return next(error);
+		}
+	},
+
 	async update(req, res, next) {
 		if (!res.$v.rif(updateRules)) return;
 		const result = {};

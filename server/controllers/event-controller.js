@@ -89,7 +89,7 @@ module.exports = {
 
 	async find(req, res, next) {
 		const rules = {
-			code: 'string|min:3',
+			code: 'alpha_numeric|min:3',
 		};
 		if (!res.$v.rif(rules)) return;
 
@@ -101,7 +101,7 @@ module.exports = {
 		try {
 			const EventRole = new EventRoleModel();
 			const Event = new EventModel();
-			const event = await Event.findByCode(code, {
+			const event = await Event.findByCode(code.toLowerCase(), {
 				select: 'id, code, name, description, start_at, end_at, require_passcode',
 			}).exec();
 

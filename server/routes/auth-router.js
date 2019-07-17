@@ -10,5 +10,6 @@ router.get('/logout', AuthCtlr.logout);
 
 router.use(AuthMdw.authen);
 router.patch('/update', AuthCtlr.update);
+router.patch('/complete-signup', AuthCtlr.completeSignup);
 
 module.exports = router;

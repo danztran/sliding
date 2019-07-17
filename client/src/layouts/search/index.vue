@@ -25,6 +25,9 @@ export default {
 	components: {
 		navbar: NavBar,
 	},
+	created() {
+		this.$root.$emit('hide-loading-overlay');
+	},
 };
 </script>
 

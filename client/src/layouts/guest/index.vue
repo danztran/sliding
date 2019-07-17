@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
 import GuestActionSignupDialog from '@/components/user/GuestActionSignupDialog.vue';
@@ -28,6 +28,11 @@ export default {
 	data: () => ({
 		ready: false,
 	}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user',
+		}),
+	},
 	watch: {
 		ready(val) {
 			if (val) {
@@ -39,12 +44,17 @@ export default {
 		this.$root.$emit('show-loading-overlay');
 	},
 	created() {
-		this.$socket_updateHeaders();
-		if (this.$socket.disconnected) {
-			this.$socket.connect();
+		if (!this.user) {
+			this.$router.push({ name: 'search-event', query: this.$route.params });
 		}
 		else {
-			this.ready = true;
+			this.$socket_updateHeaders();
+			if (this.$socket.disconnected) {
+				this.$socket.connect();
+			}
+			else {
+				this.ready = true;
+			}
 		}
 	},
 	beforeRouteLeave(to, from, next) {
