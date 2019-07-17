@@ -36,6 +36,7 @@ module.exports = {
 			const question = await Question.create({
 				...info,
 				user_id: user.id,
+				event_id: event.id,
 				stage: event.on_moderation ? 'private' : 'public',
 			}).exec();
 			question.user = {
@@ -66,6 +67,7 @@ module.exports = {
 			const Question = new QuestionModel();
 			const question = await Question.findOne({
 				id: info.id,
+				event_id: event.id,
 				is_deleted: false,
 			}).exec();
 			if (!question) throw socket.$fn.t('questionNotFound');
@@ -109,6 +111,7 @@ module.exports = {
 			const Question = new QuestionModel();
 			const question = await Question.findOne({
 				id: info.id,
+				event_id: event.id,
 				is_deleted: false,
 			}).exec();
 			if (!question) throw socket.$fn.t('questionNotFound');

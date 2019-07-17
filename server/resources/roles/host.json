@@ -10,6 +10,9 @@
 		"deleteQuestionReply": true,
 		"addQuestion": false,
 		"editQuestion": true,
-		"deleteQuestion": true
+		"deleteQuestion": true,
+		"addPoll": true,
+		"editPoll": true,
+		"deletePoll": true
 	}
 }

@@ -3,6 +3,7 @@ const EventLive = require('./event-live');
 const QuestionLive = require('./question-live');
 const QuestionReplyLive = require('./question-reply-live');
 const QuestionReactionLive = require('./question-reaction-live');
+const PollLive = require('./poll-live');
 
 module.exports = (io) => {
 	EventSocketMdw.setIO(io);
@@ -25,6 +26,7 @@ module.exports = (io) => {
 			QuestionLive({ io, socket });
 			QuestionReplyLive({ io, socket });
 			QuestionReactionLive({ io, socket });
+			PollLive({ io, socket });
 		});
 	});
 };

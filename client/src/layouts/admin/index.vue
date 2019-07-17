@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import handleSockets from '@/mixins/handleSockets';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
@@ -36,6 +36,11 @@ export default {
 	data: () => ({
 		ready: false,
 	}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user',
+		}),
+	},
 	watch: {
 		ready(val) {
 			if (val) {
