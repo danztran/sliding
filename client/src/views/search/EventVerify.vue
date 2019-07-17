@@ -20,17 +20,37 @@
 			column>
 			<text-field :field="passcode" />
 		</v-layout>
-		<v-btn
-			class="mt-5"
-			color="success"
-			medium
-			round
-			:disabled="eventInfo.require_passcode && passcode.value !== ''">
-			<span v-t="'btn-join'" class="first-letter-uppercase" />
-		</v-btn>
+		<div class="mt-5">
+			<v-btn
+				color="success"
+				medium
+				round
+				:disabled="eventInfo.require_passcode && passcode.value !== '' || loadingState !== ''"
+				:loading="loadingState !== ''"
+				@click="toJoinEvent">
+				<span
+					v-show="loadingState === ''"
+					v-t="'btn-join'"
+					class="first-letter-uppercase" />
+				<template v-slot:loader>
+					<icon-loading-circle :state.sync="loadingState" />
+				</template>
+			</v-btn>
+
+			<v-btn
+				v-if="!user"
+				color="success"
+				round
+				flat
+				medium
+				outline
+				@click="toLogin">
+				<span v-t="'loginFormTitle'" class="first-letter-uppercase" />
+			</v-btn>
+		</div>
 
 		<router-link
-			tag="div"
+			tag="span"
 			to="/search"
 			class="grey--text text--lighten-1 caption bt-1 hover-pointer to-search">
 			<span v-t="'btn-back-search'" />
@@ -39,8 +59,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+
 export default {
 	name: 'EventVerify',
+	components: {
+		'icon-loading-circle': IconLoadingCircle,
+	},
 	data: () => ({
 		eventInfo: {
 			name: '',
@@ -57,8 +83,12 @@ export default {
 			autofocus: true,
 		},
 		ready: false,
+		loadingState: '',
 	}),
 	computed: {
+		...mapGetters({
+			user: 'auth/user',
+		}),
 		startDate() {
 			return new Date(this.eventInfo.end_at).toUTCString().toString().substr(4, 12);
 		},
@@ -71,6 +101,41 @@ export default {
 		else {
 			this.$router.push({ name: 'search' });
 		}
+	},
+	methods: {
+		toLogin() {
+			// @params: ecfs (event code from search)
+			this.$router.push({
+				name: 'login',
+				params: { ecfs: this.eventInfo.code },
+			});
+		},
+		toJoinEvent() {
+			if (!this.user) {
+				this.quickSignup();
+				return;
+			}
+			this.$router.push({
+				name: 'guest-event',
+				params: { code: this.eventInfo.code },
+			});
+		},
+		quickSignup() {
+			this.loadingState = 'loading';
+			this.$axios
+				.post(this.$api.auth.quickSignup, {})
+				.then((res) => {
+					this.$store.dispatch('auth/setAuth', res.data.user);
+					this.loadingState = 'success';
+					this.$router.push({
+						name: 'guest-event',
+						params: { code: this.eventInfo.code },
+					});
+				})
+				.catch((err) => {
+					console.warn(err);
+				});
+		},
 	},
 };
 </script>

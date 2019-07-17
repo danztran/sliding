@@ -19,7 +19,8 @@
 						<div class="hidden-xs-only">
 							<div class="body-2">
 								<v-icon size="20" v-text="'$vuetify.icons.user'" />
-								{{ user ? user.email : '' }}
+								<!-- {{ user ? user.email : '' }} -->
+								{{ user.email !== null ? user.email : $t('anonymous-empty-email') }}
 							</div>
 							<div class="caption text-capitalize">
 								{{ user ? user.name : '' }}

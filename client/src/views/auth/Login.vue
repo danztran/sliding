@@ -89,6 +89,7 @@ export default {
 				errmsg: '',
 			},
 		},
+		redirectWEC: null,
 	}),
 	computed: {
 		...mapGetters({
@@ -99,6 +100,15 @@ export default {
 		if (this.fillInfo.username !== '') {
 			this.form.username.value = this.fillInfo.username;
 			this.form.password.value = this.fillInfo.password;
+		}
+	},
+	mounted() {
+		/*
+			@params: ecfs: event code from search
+							 redirectWEC: redirect with event code
+		*/
+		if (this.$route.params.ecfs !== undefined) {
+			this.redirectWEC = this.$route.params.ecfs;
 		}
 	},
 	methods: {
@@ -115,6 +125,13 @@ export default {
 				.post(this.$api.auth.login, loginFormData)
 				.then((res) => {
 					this.$store.dispatch('auth/setAuth', res.data.user);
+					if (this.redirectWEC !== null) {
+						this.$router.push({
+							name: 'guest-event',
+							params: { code: this.redirectWEC },
+						});
+						return;
+					}
 					this.$router.push({ name: 'my-events' });
 				})
 				.catch(err => this.handleErrorMessages(err.messages))
