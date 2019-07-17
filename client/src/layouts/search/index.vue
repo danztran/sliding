@@ -43,5 +43,13 @@ $backgroundImg: url(~@/assets/search_bg.svg);
 		margin-top: 30vh;
 		width: 400px;
 	}
+	.page-enter-active, .page-leave-active {
+		transition: all .5s ease-out;
+		overflow: hidden;
+	}
+	.page-enter, .page-leave-to {
+		transform: translateY(-15px);
+		opacity: 0;
+	}
 }
 </style>

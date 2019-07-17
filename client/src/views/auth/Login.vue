@@ -13,14 +13,12 @@
 				fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
-						<div class="headline font-weight-regular">
-							{{ $t('loginFormTitle') }}
-						</div>
+						<div v-t="'loginFormTitle'" class="headline font-weight-regular" />
 						<span v-t="'or'" class="grey--text">
 							&nbsp;
 						</span>
 						<router-link tag="a" class="primary--text body-2 no-underline" to="/signup">
-							{{ $t('signUp') }}
+							<span v-t="'signUp'" class="text-lowercase" />
 						</router-link>
 					</div>
 				</v-card-title>
@@ -55,7 +53,7 @@
 					justify-center
 					fill-height>
 					<v-btn color="primary" type="submit">
-						{{ $t('loginFormTitle') }}
+						<span v-t="'loginFormTitle'" class="first-letter-uppercase" />
 					</v-btn>
 				</v-layout>
 			</v-card-actions>

@@ -8,7 +8,7 @@
 			:top="isSMnXS"
 			:multi-line="isSMnXS"
 			:class="type ? `snackbar-${type}` : ''"
-			:timeout="6000">
+			:timeout="10000">
 			<span
 				class="body-1 black--text"
 				v-text="message" />

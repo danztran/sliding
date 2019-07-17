@@ -9,6 +9,9 @@
 		<div class="grey--text text--darken-1">
 			{{ startDate }}
 		</div>
+		<div v-if="eventInfo.description !== ''" class="grey--text text--darken-1 caption pt-2">
+			{{ eventInfo.description }}
+		</div>
 		<v-layout
 			v-if="eventInfo.require_passcode"
 			id="my-input-passcode"
@@ -43,6 +46,7 @@ export default {
 			name: '',
 			end_at: '2019-06-02T00:00:00.000Z',
 			require_passcode: false,
+			description: '',
 		},
 		passcode: {
 			placeholder: 'lb-passcode',
