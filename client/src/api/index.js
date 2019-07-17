@@ -5,6 +5,7 @@ export default {
 		info: '/auth/info',
 		signup: '/auth/signup',
 		quickSignup: '/auth/quick-signup',
+		updateQSignup: '/auth/complete-signup',
 	},
 	event: {
 		query: '/event/query',

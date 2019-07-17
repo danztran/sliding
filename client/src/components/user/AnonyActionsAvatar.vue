@@ -52,7 +52,7 @@
 
 <script>
 export default {
-	name: 'AnonymousActionsAvatar',
+	name: 'AnonyActionsAvatar',
 	methods: {
 		toggleQickSignUpDialog() {
 			// ...

@@ -34,12 +34,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import AnonymousActionsAvatar from '@/components/user/AnonymousActionsAvatar.vue';
+import AnonyActionsAvatar from '@/components/user/AnonyActionsAvatar.vue';
 import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 
 export default {
 	components: {
-		'actions-avatar--anonymous': AnonymousActionsAvatar,
+		'actions-avatar--anonymous': AnonyActionsAvatar,
 		'actions-avatar--user': UserActionsAvatar,
 	},
 	computed: {

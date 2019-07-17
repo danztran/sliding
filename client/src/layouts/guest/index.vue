@@ -2,7 +2,7 @@
 	<v-app>
 		<!-- <v-navigation-drawer app hide-overlay ></v-navigation-drawer> -->
 		<nav-bar />
-		<profile-dialog />
+		<anony-dialog--update-signup />
 		<v-content v-if="ready" id="my-guest-content" class="mt-2">
 			<v-slide-y-transition mode="out-in">
 				<keep-alive>
@@ -17,12 +17,12 @@
 import { mapMutations, mapGetters } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
-import GuestActionSignupDialog from '@/components/user/GuestActionSignupDialog.vue';
+import AnonyUpdateSignupDialog from '@/components/user/AnonyUpdateSignupDialog.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'profile-dialog': GuestActionSignupDialog,
+		'anony-dialog--update-signup': AnonyUpdateSignupDialog,
 	},
 	mixins: [handleSockets],
 	data: () => ({

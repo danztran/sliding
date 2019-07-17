@@ -41,10 +41,10 @@
 					</v-flex>
 
 					<v-flex
-						v-if="user"
+						v-if="user && user.email !== null"
 						sm4
 						class="right">
-						<user-actions-avatar />
+						<actions-avatar--user />
 					</v-flex>
 					<v-flex
 						v-else
@@ -81,7 +81,7 @@ import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 export default {
 	name: 'NavBar',
 	components: {
-		'user-actions-avatar': UserActionsAvatar,
+		'actions-avatar--user': UserActionsAvatar,
 	},
 	data: () => ({
 		tabs: [
