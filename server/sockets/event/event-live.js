@@ -6,8 +6,4 @@ module.exports = (args) => {
 	EventLiveCtlr.getEvent(args);
 	// change event info & settings
 	socket.on('edit-event', (info, callback) => EventLiveCtlr.editEvent(args, info, callback));
-	// add moderator
-	socket.on('add-moderator', (info, callback) => EventLiveCtlr.addModerator(args, info, callback));
-	// remove moderator
-	socket.on('remove-moderator', (info, callback) => EventLiveCtlr.removeModerator(args, info, callback));
 };

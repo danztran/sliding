@@ -8,7 +8,9 @@ let getEventCode;
 new EventModel().findLastOf('id', { select: 'code' })
 	.exec()
 	.then((lastEvent) => {
-		console.warn(`Last event code: ${lastEvent.code}`);
+		if (lastEvent) {
+			console.warn(`Last event code: ${lastEvent.code}`);
+		}
 		getEventCode = (function* () {
 			let code = eventCodeStart;
 			if (lastEvent) {
@@ -74,7 +76,7 @@ module.exports = {
 			// generate new code
 			info.code = getEventCode.next().value;
 
-			const event = await Event.create(info).exec(1);
+			const event = await Event.create(info).exec();
 			await EventRole.create({
 				user_id: req.user.id,
 				event_id: event.id,

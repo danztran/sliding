@@ -4,7 +4,7 @@ const crypto = requireWrp('modules/crypto-custom');
 
 class UserModel extends Model {
 	constructor() {
-		super('_.user');
+		super('public.user');
 	}
 
 	findById(id, opt) {

@@ -7,8 +7,8 @@ import getters from './getters';
 import mutations from './mutations';
 
 const state = {
-	eventInfo: {},
-	role: {},
+	eventInfo: null,
+	role: null,
 	tempSettings: {},
 };
 

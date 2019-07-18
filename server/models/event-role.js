@@ -8,7 +8,7 @@ const User = new UserModel();
 
 class EventRoleModel extends Model {
 	constructor() {
-		super('_.event_role');
+		super('event_role');
 	}
 
 	findRole(info) {
@@ -74,6 +74,8 @@ class EventRoleModel extends Model {
 				e.id = r.event_id
 				AND r.user_id = u.id
 				AND r.user_id = ${qh.toDollarQuoted(user_id)}
+				AND e.is_deleted = FALSE
+				AND r.is_deleted = FALSE
 				${role ? `AND r.role = (${qh.toDollarQuoted(role)})` : ''}
 			${qh.toOrderClause(order)}
 			${qh.toLimitClause(limit)}

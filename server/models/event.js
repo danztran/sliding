@@ -2,7 +2,7 @@ const Model = require('./model');
 
 class EventModel extends Model {
 	constructor() {
-		super('_.event');
+		super('event');
 	}
 
 	findById(id, opt) {

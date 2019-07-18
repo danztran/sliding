@@ -9,7 +9,6 @@ router.use(MessageMdw);
 router.use('/', routes('home-router'));
 router.use('/auth', routes('auth-router'));
 router.use('/event', routes('event-router'));
-router.use('/role', routes('role-router'));
 router.use('/', routes('vue-router'));
 router.use(ErrorHandlerMdw);
 

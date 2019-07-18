@@ -11,15 +11,24 @@ module.exports = (io) => {
 	io.on('connection', (socket) => {
 		EventSocketMdw.setSocket({ io, socket });
 
+		socket.on('update-authen', () => {
+			socket.$fn.reloadSession();
+		});
+
 		// join event
 		socket.on('join-event', (code) => {
 			socket.on('disconnect', () => {
-				delete io.sockets[socket.id];
 				io.$fn.removeEventIfNoClient({ code });
 			});
 
 			socket.on('leave-event', () => {
-				socket.disconnect();
+				const event = socket.$fn.getCurrentEvent();
+				if (event) {
+					for (const room of Object.values(event.rooms)) {
+						socket.leave(room);
+					}
+					io.$fn.removeEventIfNoClient({ code });
+				}
 			});
 
 			EventLive({ io, socket, code });

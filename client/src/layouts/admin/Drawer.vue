@@ -21,10 +21,10 @@
 					shrink>
 					<div class="d-inline-block w-100">
 						<div class="body-2">
-							{{ eventInfo ? eventInfo.name : 'loading' }}
+							{{ eventInfo ? eventInfo.name : '...' }}
 						</div>
 						<div class="caption text-uppercase">
-							{{ eventInfo ? `#${eventInfo.code}` : 'loading' }}
+							{{ eventInfo ? `#${eventInfo.code}` : '...' }}
 						</div>
 					</div>
 					<v-tooltip top>

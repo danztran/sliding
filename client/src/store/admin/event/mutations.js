@@ -13,8 +13,8 @@ const MERGE_CURRENT_EVENT = (state, newInfo) => {
 };
 
 const RESET = (state) => {
-	state.eventInfo = {};
-	state.role = {};
+	state.eventInfo = null;
+	state.role = null;
 	state.tempSettings = {};
 };
 

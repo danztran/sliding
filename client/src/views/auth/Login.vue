@@ -132,6 +132,7 @@ export default {
 						});
 						return;
 					}
+					this.$socket.emit('update-authen');
 					this.$router.push({ name: 'my-events' });
 				})
 				.catch(err => this.handleErrorMessages(err.messages))

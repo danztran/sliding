@@ -10,6 +10,7 @@ export default {
 		this.$axios.get(this.$api.auth.logout)
 			.then((res) => {
 				this.$store.dispatch('auth/logout', res.data);
+				this.$socket.emit('update-authen');
 			});
 	},
 };

@@ -12,14 +12,14 @@ const tests = {
 			'nodeVar',
 			'username',
 			'email_address',
-			'  listUsers'
+			'  listUsers',
 		];
 
 		const outputs = [
 			'Node Var',
 			'Username',
 			'Email address',
-			'List Users'
+			'List Users',
 		];
 
 		const len = inputs.length;
@@ -36,13 +36,13 @@ const tests = {
 		const inputs = [
 			['Welcome to {name}', { name: 'Sliding' }],
 			['Welcome back <fullname>', { fullname: 'Charles' }, { s: '<', e: '>' }],
-			['{object} {code} not found', { object: 'Event', code: 'K317' }, { rs: '#', re: '' }]
+			['{object} {code} not found', { object: 'Event', code: 'K317' }, { rs: '#', re: '' }],
 		];
 
 		const outputs = [
 			'Welcome to Sliding',
 			'Welcome back Charles',
-			'#Event #K317 not found'
+			'#Event #K317 not found',
 		];
 
 		const len = inputs.length;
@@ -61,15 +61,15 @@ const tests = {
 			['wxyz', 'srtvuwxyz'],
 			['fff', 'abcdef'],
 			['2546', 'abc012637'],
-			['999', '0123456789']
+			['999', '0123456789'],
 		];
 
 		const outputs = [
 			'aab',
-			'wxzz',
+			'wxzs',
 			'aaaa',
 			'2543',
-			'0000'
+			'0000',
 		];
 
 		const len = inputs.length;
@@ -79,7 +79,7 @@ const tests = {
 		}
 
 		return test.result();
-	}
+	},
 };
 
 testModule.add(tests.varToText());

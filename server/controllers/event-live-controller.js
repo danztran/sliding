@@ -1,6 +1,5 @@
 const EventModel = requireWrp('models/event');
 const EventRoleModel = requireWrp('models/event-role');
-const UserModel = requireWrp('models/user');
 const Roles = requireDir('resources/roles/');
 
 module.exports = {
@@ -88,75 +87,6 @@ module.exports = {
 		}
 		catch (e) {
 			socket.$fn.handleError(e, callback);
-		}
-	},
-
-	async addModerator({ io, socket }, info, callback) {
-		if (socket.$fn.cannot('addModerator', callback)) return;
-		// VALIDATE INFO HERE
-		// ...
-		const event = socket.$fn.getCurrentEvent();
-		const result = {};
-		try {
-			const User = new UserModel();
-			const EventRole = new EventRoleModel();
-
-			if (socket.$fn.getUser().email === info.email) {
-				throw socket.$fn.t('userHostAlready');
-			}
-
-			// find user
-			const query = [{ email: info.email }, { select: '"id", "name"' }];
-			const user = await User.findOne(...query).exec();
-			if (!user) throw socket.$fn.t('userNotFoundByEmail');
-
-			result.user = { ...user, email: info.email };
-
-			// check role exists
-			const role = await EventRole.findOne({
-				event_id: event.id,
-				user_id: result.user.id,
-			}).exec();
-			if (role) throw socket.$fn.t('userModeratorAlready');
-
-			const admin = await EventRole.create({
-				user_id: result.user.id,
-				event_id: event.id,
-				role: 'moderator',
-			}, {
-				select: '"user_id", "role"',
-			}).exec();
-
-			socket.$fn.addAdmin(admin);
-			socket.to(event.rooms.main).emit('new_added_admin', admin);
-			return callback(result);
-		}
-		catch (e) {
-			return socket.$fn.handleError(e, callback);
-		}
-	},
-
-	async removeModerator({ io, socket }, info, callback) {
-		if (socket.$fn.cannot('removeModerator', callback)) return;
-		// VALIDATE INFO HERE
-		// ...
-		const event = socket.$fn.getCurrentEvent();
-		try {
-			const EventRole = new EventRoleModel();
-
-			await EventRole.createOrUpdate({
-				event_id: event.id,
-				user_id: info.user_id,
-			}, {
-				role: 'guest',
-			});
-
-			socket.$fn.removeAdmin({ id: info.user_id });
-			socket.to(event.rooms.main).emit('new_removed_admin', info);
-			return callback(true);
-		}
-		catch (e) {
-			return socket.$fn.handleError(e, callback);
 		}
 	},
 };
