@@ -31,6 +31,7 @@ export default {
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
+			eventInfo: 'guest/event/getEventInfo',
 		}),
 	},
 	watch: {
@@ -49,16 +50,16 @@ export default {
 		}
 		else {
 			this.$socket_updateHeaders();
-			if (this.$socket.disconnected) {
-				this.$socket.connect();
+			if (this.eventInfo) {
+				this.ready = true;
 			}
 			else {
-				this.ready = true;
+				this.$socket.emit('join-event', this.$route.params.code);
 			}
 		}
 	},
 	beforeRouteLeave(to, from, next) {
-		if (to.name !== 'admin-event') {
+		if (!['admin-event', 'admin-questions'].includes(to.name)) {
 			this.$socket.emit('leave-event');
 		}
 		this.resetEvent();
@@ -66,10 +67,6 @@ export default {
 		next();
 	},
 	sockets: {
-		connect() {
-			this.$socket.emit('join-event', this.$route.params.code);
-			// ..
-		},
 		get_event(data) {
 			if (data.role.name !== 'guest') {
 				this.setAdminCurrentEvent(data);
