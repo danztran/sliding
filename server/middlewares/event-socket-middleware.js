@@ -32,7 +32,13 @@ module.exports = {
 			},
 			removeEventIfNoClient({ code }) {
 				const event = io.$state.events[code];
-				if (event && io.adapter.rooms && !io.adapter.rooms[event.rooms.main]) {
+				if ((
+					event
+					&& io.adapter.rooms
+					&& !io.adapter.rooms[event.rooms.main]
+				)
+					||	!io.adapter.rooms
+				) {
 					delete io.$state.events[code];
 				}
 			},
@@ -52,6 +58,11 @@ module.exports = {
 			locale: translator.locale,
 			user: socket.request.session.user || null,
 		};
+
+		const { user } = socket.$state;
+		if (user) {
+			socket.join(`user#${user.username}`);
+		}
 
 		// functions
 		socket.$fn = {
@@ -77,8 +88,8 @@ module.exports = {
 			getCurrentEvent() {
 				return io.$fn.getEvent(this.getEventCode());
 			},
-			setUser(user) {
-				socket.$state.user = { ...user };
+			setUser(_user) {
+				socket.$state.user = { ..._user };
 			},
 			getUser() {
 				return { ...socket.$state.user };
