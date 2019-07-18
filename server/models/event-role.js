@@ -118,7 +118,7 @@ class EventRoleModel extends Model {
 			event_id: info.event_id,
 			role: info.role,
 			created_at: new Date().toISOString(),
-			updated_at: new Date().toISOString,
+			updated_at: new Date().toISOString(),
 		}, opt);
 	}
 

@@ -141,7 +141,7 @@ export default {
 		this.$root.$on('delquestion-in-dialog', (delQuesID) => {
 			if (this.question.id === delQuesID) {
 				this.dialogReplyQuestion = false;
-				this.showNotify(this.$t('guest-del-question-dialog'));
+				this.showNotify(this.$t('guest-del-question-dialog'), 'danger');
 			}
 		});
 		this.$root.$on('update-replies', () => {

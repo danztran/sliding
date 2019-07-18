@@ -80,7 +80,6 @@ export default {
 				.then((res) => {
 					this.loadingState = 'success';
 					this.eventInfo = res.data.event;
-					console.warn(res);
 				})
 				.catch((err) => {
 					this.showNotFoundMsg = true;

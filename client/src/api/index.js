@@ -12,4 +12,8 @@ export default {
 		create: '/event/create',
 		search: '/event/find',
 	},
+	role: {
+		query: '/role/query',
+		resRequest: '/role/response',
+	},
 };

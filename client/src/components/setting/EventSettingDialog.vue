@@ -119,7 +119,6 @@
 	</v-dialog>
 </template>
 
-
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import EventSettingsContent from './EventSettingsContent.vue';
