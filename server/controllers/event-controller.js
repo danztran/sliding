@@ -74,7 +74,7 @@ module.exports = {
 			// generate new code
 			info.code = getEventCode.next().value;
 
-			const event = await Event.create(info).exec(1);
+			const event = await Event.create(info).exec();
 			await EventRole.create({
 				user_id: req.user.id,
 				event_id: event.id,
