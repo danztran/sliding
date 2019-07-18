@@ -32,7 +32,7 @@ module.exports = {
 			},
 			removeEventIfNoClient({ code }) {
 				const event = io.$state.events[code];
-				if (event && !io.adapter.rooms[event.rooms.main]) {
+				if (event && io.adapter.rooms && !io.adapter.rooms[event.rooms.main]) {
 					delete io.$state.events[code];
 				}
 			},

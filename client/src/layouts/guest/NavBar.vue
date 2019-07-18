@@ -21,7 +21,7 @@
 					<v-flex sm4>
 						<v-toolbar-side-icon />
 						<div class="d-inline subheading font-weight-medium">
-							{{ eventInfo.name }}
+							{{ eventInfo ? eventInfo.name : '...' }}
 						</div>
 					</v-flex>
 

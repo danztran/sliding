@@ -1,6 +1,6 @@
 const io = require('socket.io')();
 const EventNsp = require('./event');
 
-EventNsp(io.of('event'));
+EventNsp(io);
 
 module.exports = io;
