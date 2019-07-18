@@ -39,11 +39,13 @@ module.exports = {
 		const result = {};
 		try {
 			const EventRole = new EventRoleModel();
-			const events = await EventRole.findEventsByUserId(req.user.id, {
-				order: opt.order,
+			const events = await EventRole.findEvents({
+				user_id: req.user.id,
+				role: opt.role,
+			}, {
+				order: opt.order || 'created_at',
 				limit: Number(opt.limit || 10),
 				offset: Number(opt.offset || 0),
-				role: opt.role,
 			}).exec();
 			result.events = events;
 		}

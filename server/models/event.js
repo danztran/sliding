@@ -1,4 +1,4 @@
-const Model = requireWrp('models/model');
+const Model = require('./model');
 
 class EventModel extends Model {
 	constructor() {
@@ -33,6 +33,7 @@ class EventModel extends Model {
 			updated_at: new Date().toISOString(),
 		}, {
 			select: '*',
+			...opt,
 		});
 	}
 }

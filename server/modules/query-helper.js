@@ -94,15 +94,15 @@ const queryHelper = {
 	// @order: String
 	// e.g.: "username -id"
 	// => ORDER BY "username" ASC, "id" DESC
-	toOrderClause(order) {
+	toOrderClause(order, { alias } = {}) {
 		if (!order) return '';
 		const orders = [];
 		for (const column of order.split(' ')) {
 			if (column.charAt(0) === '-') {
-				orders.push(`"${column.substr(1)}" DESC`);
+				orders.push(`${this.pre()}"${column.substr(1)}" DESC`);
 			}
 			else {
-				orders.push(`"${column}" ASC`);
+				orders.push(`${this.pre()}"${column}" ASC`);
 			}
 		}
 		return `ORDER BY ${orders.join(', ')}`;
@@ -135,6 +135,10 @@ const queryHelper = {
 
 	toConflictClause(info) {
 		return `ON CONFLICT (${Object.keys(info).map(e => `"${e}"`).join(', ')})`;
+	},
+
+	pre(str) {
+		return str ? `${str}.` : '';
 	},
 };
 
