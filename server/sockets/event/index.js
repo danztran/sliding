@@ -11,6 +11,10 @@ module.exports = (io) => {
 	io.on('connection', (socket) => {
 		EventSocketMdw.setSocket({ io, socket });
 
+		socket.on('update-authen', () => {
+			socket.$fn.reloadSession();
+		});
+
 		// join event
 		socket.on('join-event', (code) => {
 			socket.on('disconnect', () => {
