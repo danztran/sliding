@@ -63,7 +63,7 @@ module.exports = {
 
 	// ========== USER MODEL
 	// This settings will combined with package validatorjs for validation
-	// checke at modules/validator-custom.js
+	// check at modules/validator-custom.js
 	signUpRules: {
 		name: ['required', 'min:3', 'max:100', 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g'],
 		email: 'email|required|max:320',

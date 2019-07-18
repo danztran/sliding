@@ -3,7 +3,7 @@ const Model = requireWrp('models/model');
 
 class QuestionReactionModel extends Model {
 	constructor() {
-		super('_.question_reaction');
+		super('question_reaction');
 	}
 
 	findAsJsonByQid(qid) {
