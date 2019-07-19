@@ -113,6 +113,7 @@ export default {
 		}),
 		sendQuestion() {
 			this.loadingState = 'loading';
+			this.expand = true;
 			const emiter = 'add-question';
 			this.$socket.emit(emiter, {
 				event_id: this.eventInfo.id,
@@ -126,9 +127,11 @@ export default {
 						this.showNotify(errmsg, 'danger');
 					}
 					this.loadingState = 'fail';
+					this.expand = false;
 				}
 				this.form.ask.value = '';
 				this.loadingState = 'success';
+				this.expand = false;
 				if (this.eventInfo.on_moderation) {
 					this.showNotify(this.$t('guest-question-on-moderation'));
 					return;

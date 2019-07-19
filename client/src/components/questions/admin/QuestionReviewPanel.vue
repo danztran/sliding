@@ -34,14 +34,16 @@
 						<v-btn
 							class="ma-0"
 							icon
+							medium
 							v-on="on">
 							<v-icon
 								:size="icon.xs"
+								color="grey lighten-1"
 								v-text="'$vuetify.icons.options_dot'" />
 						</v-btn>
 					</template>
 
-					<v-list class="py-0" dense subheader>
+					<v-list class="py-0 custom-list" dense subheader>
 						<v-subheader v-t="'opt-sort-by-title'" />
 						<v-list-tile>
 							<v-list-tile-action>

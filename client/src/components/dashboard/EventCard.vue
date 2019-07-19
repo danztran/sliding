@@ -56,11 +56,11 @@
 					justify-end>
 					<span class="otp hidden-sm-and-down pl-5">
 						<v-icon
-							class="iconAction"
+							class="iconHover"
 							:size="iconSize - 3"
 							v-text="'$vuetify.icons.web_slide_event'" />
 						<v-icon
-							class="iconAction"
+							class="iconHover"
 							:size="iconSize - 3"
 							v-text="'$vuetify.icons.mobile_slide_event'" />
 					</span>
@@ -70,7 +70,7 @@
 							<v-tooltip top>
 								<template #activator="{ on: tooltip }">
 									<v-icon
-										class="iconAction right px-2"
+										class="iconHover right px-2"
 										:size="iconSize"
 										v-on="{ ...tooltip, ...menu }"
 										v-text="'$vuetify.icons.more_vert'" />
@@ -78,9 +78,17 @@
 								<span v-t="'action-tooltip'" />
 							</v-tooltip>
 						</template>
-						<v-list dense>
-							<v-list-tile class="iconAction">
-								<v-list-tile-title v-t="'btn-delete'" />
+						<v-list class="py-0 custom-list" dense>
+							<!-- *delete event -->
+							<v-list-tile @click="deleteEvent">
+								<v-list-tile-action>
+									<v-icon small v-text="'$vuetify.icons.delete'" />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title
+										v-t="'btn-delete'"
+										class="first-letter-uppercase" />
+								</v-list-tile-content>
 							</v-list-tile>
 						</v-list>
 					</v-menu>
@@ -132,6 +140,9 @@ export default {
 			const { code } = this.info;
 			this.$router.push({ name: 'admin-event', params: { code } });
 		},
+		deleteEvent() {
+			// ...
+		},
 	},
 };
 </script>
@@ -157,7 +168,7 @@ export default {
 		visibility: visible;
 	}
 }
-.iconAction.material-icons.theme--light:hover {
+.iconHover.material-icons.theme--light:hover {
 	color: #3595BE;
 }
 </style>

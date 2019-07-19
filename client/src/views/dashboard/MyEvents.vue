@@ -22,7 +22,11 @@
 						<span v-t="'btn-create-event'" class="first-letter-uppercase" />
 					</v-btn>
 
-					<v-menu bottom nudge-bottom offset-y left>
+					<v-menu
+						bottom
+						nudge-bottom="5"
+						offset-y
+						left>
 						<template v-slot:activator="{ on }">
 							<v-btn
 								class="ma-0"
@@ -34,23 +38,35 @@
 							</v-btn>
 						</template>
 
-						<v-list class="py-0" dense subheader>
+						<v-list class="py-0 custom-list" dense subheader>
 							<v-subheader v-t="'opt-sort-by-title'" />
-							<v-list-tile>
+							<!-- *oldest -->
+							<v-list-tile @click="sortEvent">
 								<v-list-tile-action>
-									<v-icon />
+									<v-icon
+										v-show="queryOpt.order === 'created_at'"
+										color="primary"
+										v-text="'$vuetify.icons.check'" />
 								</v-list-tile-action>
 								<v-list-tile-content>
-									<v-list-tile-title v-t="'btn-oldest'" />
+									<v-list-tile-title
+										v-t="'btn-oldest'"
+										class="first-letter-uppercase" />
 								</v-list-tile-content>
 							</v-list-tile>
 
-							<v-list-tile>
+							<!-- *recent (newest) -->
+							<v-list-tile @click="sortEvent">
 								<v-list-tile-action>
-									<v-icon />
+									<v-icon
+										v-show="queryOpt.order === '-created_at'"
+										color="primary"
+										v-text="'$vuetify.icons.check'" />
 								</v-list-tile-action>
 								<v-list-tile-content>
-									<v-list-tile-title v-t="'btn-recent'" />
+									<v-list-tile-title
+										v-t="'btn-recent'"
+										class="first-letter-uppercase" />
 								</v-list-tile-content>
 							</v-list-tile>
 						</v-list>
@@ -111,10 +127,22 @@ export default {
 	mounted() {
 		if (this.events.length === 0) {
 			this.loading = true;
-			this.$store.dispatch('dashboard/queryEvent', this.queryOpt);
+			this.queryEvent();
 		}
 	},
 	methods: {
+		sortEvent() {
+			if (this.queryOpt.order === '-created_at') {
+				this.queryOpt.order = 'created_at';
+				this.queryEvent();
+				return;
+			}
+			this.queryOpt.order = '-created_at';
+			this.queryEvent();
+		},
+		queryEvent() {
+			this.$store.dispatch('dashboard/queryEvent', this.queryOpt);
+		},
 		createEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},

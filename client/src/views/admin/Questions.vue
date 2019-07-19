@@ -82,7 +82,7 @@ export default {
 			font-size: 14px !important;
 		}
 		.v-tabs__div {
-			text-transform: capitalize;
+			text-transform: lowercase;
 			font-weight: 400;
 		}
 		.v-list__tile__action {

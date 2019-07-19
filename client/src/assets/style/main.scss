@@ -30,6 +30,10 @@ html, body {
 	}
 }
 
+.custom-list .v-list__tile .v-list__tile__action {
+	min-width: 35px !important;
+}
+
 .bg-grey {
 	background-color: #efefef !important;
 }

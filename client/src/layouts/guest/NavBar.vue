@@ -41,7 +41,7 @@
 					</v-flex>
 
 					<v-flex
-						v-if="user && user.email !== null"
+						v-if="userActive"
 						sm4
 						class="right">
 						<actions-avatar--user />
@@ -95,6 +95,12 @@ export default {
 			eventInfo: 'guest/event/getEventInfo',
 			user: 'auth/user',
 		}),
+		userActive() {
+			if (this.user && this.user.email !== null) {
+				return true;
+			}
+			return false;
+		},
 	},
 	created() {
 		this.tabs.forEach((e) => {

@@ -42,6 +42,7 @@ const icons = {
 	options_dot: 'more_horiz',
 	archive_all: 'save_alt',
 	approve: 'check_circle_outline',
+	check: 'check',
 	dismiss: 'highlight_off',
 	star_border: 'star_border',
 	star: 'star',
@@ -78,6 +79,7 @@ const icons = {
 	result_off: 'grid_off',
 	signup: 'person_add',
 	arrow_forward: 'arrow_forward',
+	access_invite: 'share',
 };
 
 // custom components

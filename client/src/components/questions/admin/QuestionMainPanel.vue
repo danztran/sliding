@@ -24,17 +24,17 @@
 					v-if="isSMnXS"
 					:class="{'new': currentTab !== 0 && reviewQuestions.length}"
 					active-class="primary--text font-weight-medium">
-					{{ $t('moderation-view-title') }}
+					<span v-t="'moderation-view-title'" class="first-letter-uppercase" />
 				</v-tab>
 
 				<v-tab
 					active-class="primary--text font-weight-medium">
-					{{ $t('btn-live') }}
+					<span v-t="'btn-live'" class="first-letter-uppercase" />
 				</v-tab>
 
 				<v-tab
 					active-class="primary--text font-weight-medium">
-					{{ $t('btn-archive') }}
+					<span v-t="'btn-archive'" class="first-letter-uppercase" />
 				</v-tab>
 			</v-tabs>
 
