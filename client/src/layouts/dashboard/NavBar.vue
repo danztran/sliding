@@ -65,9 +65,9 @@
 						:key="tab.id"
 						:to="tab.url"
 						fixed-tabs
-						class="font-weight-medium"
+						class="font-weight-regular"
 						active-class="primary--text font-weight-bold">
-						{{ tab.name }}
+						<span class="first-letter-uppercase" v-text="tab.name" />
 					</v-tab>
 				</v-tabs>
 			</template>

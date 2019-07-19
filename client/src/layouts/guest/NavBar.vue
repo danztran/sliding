@@ -34,8 +34,9 @@
 							<v-tab
 								v-for="(tab, i) in tabs"
 								:key="i"
-								:to="tab.url">
-								{{ tab.name }}
+								:to="tab.url"
+								active-class="white--text font-weight-medium">
+								<span class="first-letter-uppercase" v-text="tab.name" />
 							</v-tab>
 						</v-tabs>
 					</v-flex>
@@ -60,15 +61,17 @@
 			</v-container>
 		</v-toolbar>
 		<v-tabs
-			color="primary hidden-md-and-up"
+			class="hidden-md-and-up"
+			color="primary"
 			centered
 			dark
 			slider-color="white">
 			<v-tab
 				v-for="(tab, i) in tabs"
 				:key="i"
-				:to="tab.url">
-				{{ tab.name }}
+				:to="tab.url"
+				active-class="white--text font-weight-medium">
+				<span class="first-letter-uppercase" v-text="tab.name" />
 			</v-tab>
 		</v-tabs>
 	</div>

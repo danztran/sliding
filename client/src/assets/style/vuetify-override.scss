@@ -32,7 +32,9 @@ $success-color: #4caf50;
 i.v-icon.loading-success.material-icons.theme--light {
     color: $success-color !important;
 }
-
+.v-tabs__div {
+	text-transform: lowercase;
+}
 .v-toolbar--fixed, .v-toolbar--extended, .v-toolbar__extension {
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2) !important;
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2) !important;

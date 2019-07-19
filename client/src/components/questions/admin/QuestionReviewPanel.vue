@@ -16,12 +16,12 @@
 			row
 			fill-height>
 			<!-- @desc: title -->
-			<div v-t="'moderation-view-title'" class="pt-1 body-1 grey--text" />
+			<div v-t="'moderation-view-title'" class="pt-1 body-1 grey--text first-letter-uppercase" />
 			<!-- @desc: moderation mode/sorting -->
 			<div class="d-flex">
 				<!-- moderation mode -->
 				<v-switch
-					class="ma-0 pt-2"
+					class="ma-0 pt-2 first-letter-uppercase"
 					color="primary"
 					:label="$t('moderation-view-stt')"
 					hide-details
@@ -50,7 +50,9 @@
 								<v-icon />
 							</v-list-tile-action>
 							<v-list-tile-content>
-								<v-list-tile-title v-t="'btn-oldest'" />
+								<v-list-tile-title
+									v-t="'btn-oldest'"
+									class="first-letter-uppercase" />
 							</v-list-tile-content>
 						</v-list-tile>
 
@@ -59,7 +61,9 @@
 								<v-icon />
 							</v-list-tile-action>
 							<v-list-tile-content>
-								<v-list-tile-title v-t="'btn-recent'" />
+								<v-list-tile-title
+									v-t="'btn-recent'"
+									class="first-letter-uppercase" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>

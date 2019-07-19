@@ -81,10 +81,6 @@ export default {
 		.v-input--switch label {
 			font-size: 14px !important;
 		}
-		.v-tabs__div {
-			text-transform: lowercase;
-			font-weight: 400;
-		}
 		.v-list__tile__action {
 			min-width: 35px !important
 		}

@@ -23,16 +23,19 @@
 				<v-tab
 					v-if="isSMnXS"
 					:class="{'new': currentTab !== 0 && reviewQuestions.length}"
+					class="font-weight-regular"
 					active-class="primary--text font-weight-medium">
 					<span v-t="'moderation-view-title'" class="first-letter-uppercase" />
 				</v-tab>
 
 				<v-tab
+					class="font-weight-regular"
 					active-class="primary--text font-weight-medium">
 					<span v-t="'btn-live'" class="first-letter-uppercase" />
 				</v-tab>
 
 				<v-tab
+					class="font-weight-regular"
 					active-class="primary--text font-weight-medium">
 					<span v-t="'btn-archive'" class="first-letter-uppercase" />
 				</v-tab>
