@@ -21,6 +21,13 @@
 					</template>
 				</v-btn>
 			</div>
+
+			<!-- *list moderator -->
+			<div class="d-flex w-100">
+				<v-slide-y-transition>
+					<invite-card--info />
+				</v-slide-y-transition>
+			</div>
 		</template>
 	</event-setting--expand>
 </template>
@@ -28,6 +35,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
+import InviteInfoCard from './pieces/InviteInfoCard.vue';
 import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 const initForm = () => ({
@@ -45,6 +53,7 @@ export default {
 	name: 'EventSettingInviteAdmin',
 	components: {
 		'event-setting--expand': EventSettingExpand,
+		'invite-card--info': InviteInfoCard,
 		'icon-loading-circle': IconLoadingCircle,
 	},
 	data: () => ({

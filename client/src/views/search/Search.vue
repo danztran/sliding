@@ -78,6 +78,7 @@ export default {
 			this.$axios
 				.get(this.$api.event.search, { params })
 				.then((res) => {
+					this.$socket.emit('update-authen');
 					this.loadingState = 'success';
 					this.eventInfo = res.data.event;
 				})

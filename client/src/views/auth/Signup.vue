@@ -112,7 +112,18 @@ export default {
 		form: initForm(),
 	}),
 	watch: {
-		'form.rePassword.value': function checkPwd(val) {
+		'form.password.value': function cpPwd(val) {
+			const rePassword = this.form.rePassword.value;
+			if (val !== '' && rePassword !== '') {
+				if (rePassword !== val && val !== rePassword) {
+					this.form.rePassword.errmsg = this.$t('password-not-match');
+				}
+				else {
+					this.form.rePassword.errmsg = '';
+				}
+			}
+		},
+		'form.rePassword.value': function cpPwd(val) {
 			if (val !== this.form.password.value) {
 				this.form.rePassword.errmsg = this.$t('password-not-match');
 			}
@@ -125,9 +136,28 @@ export default {
 		},
 	},
 	methods: {
+		fieldValid() {
+			for (const key of Object.keys(this.form)) {
+				if (Object.prototype.hasOwnProperty.call(this.form, key)) {
+					if (this.form[key].errmsg !== '' || this.form[key].value === '') {
+						return false;
+					}
+				}
+			}
+			return true;
+		},
 		handleSignup() {
 			this.errorMessage = '';
 			this.loading = true;
+			if (!this.fieldValid()) {
+				this.loading = false;
+				this.errorMessage = this.$t('err-some-field');
+				setTimeout(() => {
+					this.errorMessage = '';
+				}, 2000);
+				return;
+			}
+
 			const { form } = this;
 			const signupFormData = {
 				name: form.name.value.trim(),

@@ -18,7 +18,7 @@
 							<v-list-tile-title v-text="$t(info.title)" />
 
 							<!-- subtitle translate -->
-							<v-list-tile-sub-title v-text="$t(info.subtitle)" />
+							<v-list-tile-sub-title class="hide-subtitle" v-text="$t(info.subtitle)" />
 
 							<!-- for subtitle text -->
 							<slot name="subtitle-text" />

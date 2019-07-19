@@ -6,6 +6,7 @@
 		left
 		offset-y
 		:nudge-width="250"
+		nudge-bottom="5"
 		content-class="dropdown-menu">
 		<!-- @desc: avatar -->
 		<template v-slot:activator="{ on }">

@@ -8,7 +8,7 @@ const User = new UserModel();
 
 class EventRoleModel extends Model {
 	constructor() {
-		super('_.event_role');
+		super('event_role');
 	}
 
 	findRole(info) {

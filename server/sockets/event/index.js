@@ -23,10 +23,12 @@ module.exports = (io) => {
 
 			socket.on('leave-event', () => {
 				const event = socket.$fn.getCurrentEvent();
-				for (const room of Object.values(event.rooms)) {
-					socket.leave(room);
+				if (event) {
+					for (const room of Object.values(event.rooms)) {
+						socket.leave(room);
+					}
+					io.$fn.removeEventIfNoClient({ code });
 				}
-				io.$fn.removeEventIfNoClient({ code });
 			});
 
 			EventLive({ io, socket, code });
