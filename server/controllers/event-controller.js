@@ -8,7 +8,9 @@ let getEventCode;
 new EventModel().findLastOf('id', { select: 'code' })
 	.exec()
 	.then((lastEvent) => {
-		console.warn(`Last event code: ${lastEvent.code}`);
+		if (lastEvent) {
+			console.warn(`Last event code: ${lastEvent.code}`);
+		}
 		getEventCode = (function* () {
 			let code = eventCodeStart;
 			if (lastEvent) {

@@ -144,6 +144,8 @@
 		"btn-recent": "Vừa đây",
 		"btn-edit-profile": "Sửa",
 		"btn-invite": "Mời",
+		"btn-revoke-access": "Thu hồi quyền truy cập",
+		"btn-resend-invite": "Gửi lại lời mời",
 		"opt-sort-by-title": "Sắp xếp theo",
 		"dialog-reply-question-title": "Trả lời",
 		"dialog-reply-question-guest-title": "Chi tiết câu hỏi",

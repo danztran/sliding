@@ -79,7 +79,9 @@ module.exports = {
 			reloadSession() {
 				socket.request.session.reload((err) => {
 					this.setUser(socket.request.session.user || null);
-					console.error(err);
+					if (err) {
+						console.error(err);
+					}
 				});
 			},
 			setLocale(locale) {

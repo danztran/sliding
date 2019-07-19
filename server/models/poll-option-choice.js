@@ -2,7 +2,7 @@ const Model = requireWrp('models/model');
 
 class PollOptionChoiceModel extends Model {
 	constructor() {
-		super('_.poll_option_choice');
+		super('poll_option_choice');
 	}
 
 	createOrUpdate(info, opt) {

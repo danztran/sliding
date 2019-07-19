@@ -141,7 +141,11 @@
 									</v-btn>
 
 									<!-- *options button -->
-									<v-menu bottom nudge-bottom offset-y left>
+									<v-menu
+										bottom
+										nudge-bottom="5"
+										offset-y
+										left>
 										<template v-slot:activator="{ on }">
 											<v-btn
 												class="ma-0"

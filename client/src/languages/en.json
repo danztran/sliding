@@ -142,6 +142,8 @@
 		"btn-recent": "Recent",
 		"btn-edit-profile": "Edit",
 		"btn-invite": "Invite",
+		"btn-revoke-access": "Revoke access",
+		"btn-resend-invite": "Resend invite",
 		"opt-sort-by-title": "Order by",
 		"dialog-reply-question-title": "Replies",
 		"dialog-reply-question-guest-title": "Question detail",

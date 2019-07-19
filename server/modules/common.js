@@ -47,9 +47,10 @@ const _cm = {
 			const replaceCharacter = str[replaceIndex];
 			const index = bone.indexOf(replaceCharacter);
 			if (index === bonelen - 1) {
+				[array[replaceIndex]] = bone;
 				replaceIndex--;
 				if (replaceIndex === -1) {
-					array = array.map(e => bone[0]);
+					array = array.map(() => bone[0]);
 					array.push(bone[0]);
 					break;
 				}

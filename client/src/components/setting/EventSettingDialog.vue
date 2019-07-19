@@ -201,7 +201,7 @@ $grey: #f3f3f3;
 			white-space: unset;
 		}
 
-		.v-expansion-panel__container--active .v-list__tile__sub-title {
+		.v-expansion-panel__container--active .v-list__tile__sub-title.hide-subtitle {
 			opacity: 0;
 			display: none;
 		}
@@ -250,7 +250,7 @@ $grey: #f3f3f3;
 			}
 		}
 
-		.v-expansion-panel__container--active .v-list__tile__sub-title {
+		.v-expansion-panel__container--active .v-list__tile__sub-title.hide-subtitle {
 			opacity: 0;
 			display: none;
 		}

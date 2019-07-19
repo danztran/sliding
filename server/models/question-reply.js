@@ -6,7 +6,7 @@ const User = new UserModel();
 
 class QuestionReplyModel extends Model {
 	constructor() {
-		super('_.question_reply');
+		super('question_reply');
 	}
 
 	find(info, opt) {

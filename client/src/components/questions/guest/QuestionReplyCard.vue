@@ -74,7 +74,7 @@ export default {
 			return this._cm.dayCreate(this.replyData.created_at);
 		},
 		isModerator() {
-			return this.admins
+			return this._cm.notEmpty(this.admins)
 				? this.admins.some(el => Number(el.user_id) === Number(this.replyData.user.id))
 				: [];
 		},

@@ -5,6 +5,7 @@
 		left
 		offset-y
 		:nudge-width="250"
+		nudge-bottom="5"
 		class="pr-0"
 		content-class="dropdown-menu">
 		<!-- *icon dropdown -->

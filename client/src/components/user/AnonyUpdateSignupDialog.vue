@@ -160,7 +160,6 @@ export default {
 		fieldValid() {
 			for (const key of Object.keys(this.form)) {
 				if (Object.prototype.hasOwnProperty.call(this.form, key)) {
-					// console.log(this.form[key].errmsg !== '');
 					if (this.form[key].errmsg !== '' || this.form[key].value === '') {
 						return false;
 					}
@@ -190,7 +189,12 @@ export default {
 			this.$axios
 				.patch(this.$api.auth.updateQSignup, infoFormData)
 				.then((res) => {
-					this.$store.dispatch('auth/setAuth', infoFormData);
+					const updateInfo = {
+						...this.user,
+						...infoFormData,
+					};
+					this.$socket.emit('update-authen');
+					this.$store.dispatch('auth/setAuth', updateInfo);
 					this.guestDialogProfile = false;
 					this.showNotify(this.$t('anonymous-info-update-success'), 'success');
 				})

@@ -10,7 +10,7 @@ const QuestionReaction = new QuestionReactionModel();
 
 class QuestionModel extends Model {
 	constructor() {
-		super('_.question');
+		super('question');
 		this._queryOpt = {
 			alias: 'q',
 			select: `
