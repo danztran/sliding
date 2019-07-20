@@ -50,7 +50,7 @@ class UserModel extends Model {
 	}
 
 	completeCreate(user, opt) {
-		return this.updateOne({
+		this.updateOne({
 			id: user.id,
 		}, {
 			name: user.name,
@@ -58,7 +58,12 @@ class UserModel extends Model {
 			username: user.username,
 			password: crypto.enc(user.password),
 			updated_at: new Date().toISOString(),
-		}, opt);
+		}, {
+			select: '*',
+			...opt,
+		});
+		this.setRowReturn(1);
+		return this;
 	}
 
 	update(user, newInfo, opt) {

@@ -12,6 +12,7 @@
 		<template v-slot:activator="{ on }">
 			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
 				<v-icon
+					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"
 					v-text="'$vuetify.icons.person'" />
 			</v-avatar>

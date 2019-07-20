@@ -40,7 +40,6 @@
 							{{ countCharacters }}
 						</span>
 						<v-btn
-							v-t="'btn-send'"
 							color="primary"
 							small
 							round

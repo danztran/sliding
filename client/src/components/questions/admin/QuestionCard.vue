@@ -198,7 +198,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 const initForm = () => ({
@@ -262,6 +262,9 @@ export default {
 		deleting: false,
 	}),
 	computed: {
+		...mapGetters({
+			getQReactions: 'admin/questions/getQuestionsReactions',
+		}),
 		checkValidEdit() {
 			const { editQuestion } = this.form;
 			if (editQuestion.value && editQuestion.value.length > editQuestion.maxLength) {
@@ -292,9 +295,9 @@ export default {
 		},
 	},
 	mounted() {
-		if (this._cm.notEmpty(this.question.reactions)) {
-			this.reactions = this.question.reactions;
-		}
+		this.$root.$on('update-reactions', () => {
+			this.reactions = this.getQReactions(this.question.id);
+		});
 	},
 	methods: {
 		...mapMutations({

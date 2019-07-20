@@ -193,10 +193,10 @@ export default {
 						...this.user,
 						...infoFormData,
 					};
-					this.$socket.emit('update-authen');
 					this.$store.dispatch('auth/setAuth', updateInfo);
 					this.guestDialogProfile = false;
 					this.showNotify(this.$t('anonymous-info-update-success'), 'success');
+					this.$socket.emit('update-authen');
 				})
 				.catch(err => this.handleErrorMessages(err.messages))
 				.then(() => {

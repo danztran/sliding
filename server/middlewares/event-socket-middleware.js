@@ -78,10 +78,10 @@ module.exports = {
 			},
 			reloadSession() {
 				socket.request.session.reload((err) => {
-					this.setUser(socket.request.session.user || null);
 					if (err) {
 						console.error(err);
 					}
+					this.setUser(socket.request.session.user || null);
 				});
 			},
 			setLocale(locale) {
@@ -97,7 +97,7 @@ module.exports = {
 				return io.$fn.getEvent(this.getEventCode());
 			},
 			setUser(_user) {
-				socket.$state.user = { ..._user };
+				socket.$state.user = _user !== null ? { ..._user } : null;
 			},
 			getUser() {
 				return { ...socket.$state.user };

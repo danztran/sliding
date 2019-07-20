@@ -129,8 +129,7 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 const MERGE_QUESTION_REACTION = (state, react) => {
 	const question = state.questions.find(q => Number(q.id) === Number(react.question_id));
 	if (!question.reactions) {
-		question.reactions = [];
-		question.reactions.push(react);
+		question.reactions = [react];
 	}
 	else {
 		const reaction = question.reactions.find(r => Number(r.user_id) === Number(react.user_id));

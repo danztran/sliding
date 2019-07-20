@@ -60,6 +60,7 @@ export default {
 		},
 		new_question_reaction(questionReact) {
 			this.mergeQuestionReaction(questionReact);
+			this.$root.$emit('update-reactions');
 		},
 	},
 	methods: {

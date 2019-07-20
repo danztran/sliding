@@ -10,6 +10,10 @@ const getQuestionReplies = state => (id) => {
 	const question = state.questions.find(q => q.id === id);
 	return question ? question.replies : [];
 };
+const getQuestionsReactions = state => (id) => {
+	const question = state.questions.find(q => q.id === id);
+	return question ? question.reactions : [];
+};
 
 export default {
 	getQuestions,
@@ -19,4 +23,5 @@ export default {
 	getLiveOtherQuestions,
 	getArchivedQuestions,
 	getQuestionReplies,
+	getQuestionsReactions,
 };

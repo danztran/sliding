@@ -41,17 +41,7 @@
 						</v-btn>
 					</template>
 					<template v-else>
-						<v-btn class="text-capitalize">
-							<router-link class="no-underline" :to="{ name: 'dashboard' }">
-								{{ $t('hello') }}&nbsp;{{ user.name }}
-							</router-link>
-						</v-btn>
-						<v-btn
-							v-t="'logout'"
-							flat
-							medium
-							class="no-underline"
-							@click="callLogout" />
+						<actions-avatar--user in-search />
 					</template>
 				</section>
 			</v-layout>
@@ -322,9 +312,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+import UserActionsAvatar from '@/components/user/UserActionsAvatar.vue';
 
 export default {
 	name: 'Home',
+	components: {
+		'actions-avatar--user': UserActionsAvatar,
+	},
 	data: () => ({
 		inputEventCode: '',
 		backgroundNav: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
@@ -398,9 +392,6 @@ export default {
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
-		},
-		callLogout() {
-			this.$store.dispatch('auth/logout');
 		},
 		findEventByCode() {
 			if (this.inputEventCode === '') return;

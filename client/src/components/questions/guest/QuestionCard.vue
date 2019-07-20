@@ -88,7 +88,7 @@
 					@click="showDialogReplies(question)">
 					<v-icon size="14" v-text="'$vuetify.icons.guest_reply'" />
 					<span class="caption text-lowercase">
-						{{ question.count_replies }}&nbsp;
+						{{ question.count_replies || 0 }}&nbsp;
 					</span>
 					<span
 						v-t="question.count_replies > 2
@@ -115,7 +115,7 @@ export default {
 			type: Object,
 			default: () => ({
 				content: '',
-				count_replies: null,
+				count_replies: 0,
 				created_at: null,
 				id: null,
 				is_answered: false,

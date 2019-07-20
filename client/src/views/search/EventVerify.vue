@@ -125,12 +125,15 @@ export default {
 			this.$axios
 				.post(this.$api.auth.quickSignup, {})
 				.then((res) => {
+					this.$socket.emit('update-authen');
 					this.$store.dispatch('auth/setAuth', res.data.user);
 					this.loadingState = 'success';
-					this.$router.push({
-						name: 'guest-event',
-						params: { code: this.eventInfo.code },
-					});
+					setTimeout(() => {
+						this.$router.push({
+							name: 'guest-event',
+							params: { code: this.eventInfo.code },
+						});
+					}, 300);
 				})
 				.catch((err) => {
 					console.warn(err);

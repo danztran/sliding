@@ -93,11 +93,12 @@ const Ctlr = {
 				throw { email: res.$t('emailTaken') };
 			}
 
-			await User.completeCreate({
+			const user = await User.completeCreate({
 				...req.body,
 				id: req.user.id,
 			}).exec();
-
+			req.user = user;
+			req.session.user = user;
 			res.messages['auth.complete-signup'] = res.$t('successSignUp');
 
 			return res.sendwm(result);
@@ -122,7 +123,9 @@ const Ctlr = {
 				res.status(409);
 				throw { password: res.$t('passwordIncorrect') };
 			}
-			await User.update(req.user, req.body).exec();
+			const newInfo = await User.update(req.user, req.body).exec();
+			req.user = newInfo;
+			res.session.user = newInfo;
 			res.messages['auth.update'] = res.$t('successUpdate');
 
 			// userUpdate = await User.findById(id).exec();
