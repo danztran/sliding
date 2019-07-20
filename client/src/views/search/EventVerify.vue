@@ -37,6 +37,8 @@
 				</template>
 			</v-btn>
 
+			<span v-t="'or'" class="grey--text text--lighten-1" />
+
 			<v-btn
 				v-if="!user"
 				color="success"

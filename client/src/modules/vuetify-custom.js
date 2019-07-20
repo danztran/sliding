@@ -80,6 +80,7 @@ const icons = {
 	signup: 'person_add',
 	arrow_forward: 'arrow_forward',
 	access_invite: 'share',
+	language: 'language',
 };
 
 // custom components

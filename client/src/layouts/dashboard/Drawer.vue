@@ -42,22 +42,47 @@
 		<v-layout
 			column
 			class="fill-height">
+			<!-- *My-event -->
 			<v-list-tile
-				v-for="(link, i) in links"
-				:key="i"
-				:to="link.to"
+				:to="{ name: 'my-events' }"
 				active-class="active-tab"
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
-					<v-icon :color="link.color" v-text="`$vuetify.icons.${link.icon}`" />
+					<v-icon color="primary" v-text="'$vuetify.icons.event'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-text="link.name" />
+				<v-list-tile-title v-t="'my-events'" />
+			</v-list-tile>
+
+			<!-- *Coop-events -->
+			<v-list-tile
+				:to="{ name: 'coop-events' }"
+				active-class="active-tab"
+				avatar
+				class="v-list-item">
+				<v-list-tile-action>
+					<v-icon color="success" v-text="'$vuetify.icons.person'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'coop-events'" />
+			</v-list-tile>
+
+			<!-- *Activity-logs -->
+			<v-list-tile
+				:to="{ name: 'activity-logs' }"
+				active-class="active-tab"
+				avatar
+				class="v-list-item">
+				<v-list-tile-action>
+					<v-icon color="red" v-text="'$vuetify.icons.analytics'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'activity-logs'" />
 			</v-list-tile>
 			<v-divider />
 
-			<!-- HOMEPAGE -->
+			<!-- *Homepage -->
 			<v-list-tile to="/">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.home'" />
@@ -66,7 +91,7 @@
 				<v-list-tile-title v-t="'home-page'" />
 			</v-list-tile>
 
-			<!-- PROFILE -->
+			<!-- *Profile -->
 			<v-list-tile>
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.user'" />
@@ -75,7 +100,46 @@
 				<v-list-tile-title v-t="'btn-your-profile'" />
 			</v-list-tile>
 
-			<!-- LOGOUT -->
+			<!-- *Switch language -->
+			<v-list>
+				<v-list-group
+					v-model="dropList"
+					prepend-icon="language"
+					no-action>
+					<template v-slot:activator>
+						<v-list-tile>
+							<v-list-tile-content>
+								<v-list-tile-title v-t="locale === 'vi' ? 'lang-choose-vi' : 'lang-choose-en'" />
+							</v-list-tile-content>
+						</v-list-tile>
+					</template>
+
+					<!-- *Vietnamese -->
+					<v-list-tile @click="changeLocale('vi')">
+						<v-list-tile-content>
+							<v-list-tile-title v-t="'btn-lang-vi'" />
+						</v-list-tile-content>
+
+						<v-list-tile-action>
+							<v-icon color="primary" v-text="locale === 'vi' ? 'check' : ''" />
+						</v-list-tile-action>
+					</v-list-tile>
+
+					<!-- *English -->
+					<v-list-tile @click="changeLocale('en')">
+						<v-list-tile-content>
+							<v-list-tile-title v-t="'btn-lang-en'" />
+						</v-list-tile-content>
+
+						<v-list-tile-action>
+							<v-icon color="primary" v-text="locale === 'en' ? 'check' : ''" />
+						</v-list-tile-action>
+					</v-list-tile>
+				</v-list-group>
+			</v-list>
+
+			<!-- *Logout -->
+			<v-divider v-show="!dropList" />
 			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.signout'" />
@@ -89,46 +153,32 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
 export default {
 	name: 'Drawer',
 	data: () => ({
 		drawer: false,
-		links: [
-			{
-				to: 'my-events',
-				icon: 'event',
-				name: 'my-events',
-				color: 'primary',
-			},
-			{
-				to: 'coop-events',
-				icon: 'person',
-				name: 'coop-events',
-				color: 'success',
-			},
-			{
-				to: 'activity-logs',
-				icon: 'analytics',
-				name: 'activity-logs',
-				color: 'red',
-			},
-		],
+		dropList: false,
 	}),
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
 		}),
-	},
-	created() {
-		this.links.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
+		locale() {
+			return this.$i18n.locale;
+		},
 	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = !this.drawer;
 		});
+	},
+	methods: {
+		changeLocale(locale) {
+			loadLanguageAsync(locale);
+			this.dropList = false;
+		},
 	},
 };
 </script>

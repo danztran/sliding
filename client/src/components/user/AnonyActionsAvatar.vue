@@ -8,6 +8,9 @@
 		nudge-bottom="5"
 		class="pr-0"
 		content-class="dropdown-menu">
+		<span v-show="false">
+			{{ $t('FOR_A_PURPOSE') }}
+		</span>
 		<!-- *icon dropdown -->
 		<template v-slot:activator="{ on }">
 			<v-btn flat icon color="grey lighten-2" v-on="on">

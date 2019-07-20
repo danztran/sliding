@@ -8,7 +8,10 @@
 		:nudge-width="250"
 		nudge-bottom="5"
 		content-class="dropdown-menu">
-		<!-- @desc: avatar -->
+		<!-- Avatar Actions List -->
+		<span v-show="false">
+			{{ $t('FOR_A_PURPOSE') }}
+		</span>
 		<template v-slot:activator="{ on }">
 			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
 				<v-icon
@@ -49,7 +52,7 @@
 				<v-divider />
 
 				<v-list class="pa-0">
-					<!-- @desc: homepage -->
+					<!-- *Homepage -->
 					<v-list-tile to="/">
 						<v-list-tile-action>
 							<v-icon
@@ -62,8 +65,8 @@
 						<v-list-tile-title v-t="'home-page'" />
 					</v-list-tile>
 
-					<!-- @desc: event -->
-					<v-list-tile to="/dashboard/my-events">
+					<!-- *Event -->
+					<v-list-tile :to="{ name: 'my-events' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -75,7 +78,7 @@
 						<v-list-tile-title v-t="'my-events'" />
 					</v-list-tile>
 
-					<!-- @desc: button for toggle diaog create event -->
+					<!-- *Button for toggle diaog create event -->
 					<v-list-tile @click="toggleDialogCreateEvent">
 						<v-list-tile-action>
 							<v-icon
@@ -88,8 +91,8 @@
 						<v-list-tile-title v-t="'btn-create-event'" />
 					</v-list-tile>
 
-					<!-- @desc: coop-event -->
-					<v-list-tile to="/dashboard/coop-events">
+					<!-- *Coop-event -->
+					<v-list-tile :to="{ name: 'coop-events' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -101,8 +104,8 @@
 						<v-list-tile-title v-t="'coop-events'" />
 					</v-list-tile>
 
-					<!-- @desc: analytic activities -->
-					<v-list-tile to="/dashboard/activity-logs">
+					<!-- *Analytic activities -->
+					<v-list-tile :to="{ name: 'activity-logs' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -115,7 +118,7 @@
 					</v-list-tile>
 
 					<v-divider />
-					<!-- @desc: logout -->
+					<!-- *Search -->
 					<v-list-tile :to="{ name: 'search' }">
 						<v-list-tile-action>
 							<v-icon
@@ -126,7 +129,44 @@
 
 						<v-list-tile-title v-t="'btn-search-event'" />
 					</v-list-tile>
-					<!-- @desc: logout -->
+
+					<!-- *Switch language -->
+					<v-list-tile @click="changeLocale('vi')">
+						<v-list-tile-action>
+							<v-icon
+								v-show="locale === 'vi'"
+								:color="locale === 'vi' ? 'primary' : ''"
+								class="pl-1"
+								size="20"
+								v-text="'$vuetify.icons.language'" />
+						</v-list-tile-action>
+
+						<v-list-tile-content>
+							<v-list-tile-title
+								v-t="'lang-choose-vi'"
+								:class="locale === 'vi' ? 'primary--text' : ''" />
+						</v-list-tile-content>
+					</v-list-tile>
+
+					<!-- *English -->
+					<v-list-tile @click="changeLocale('en')">
+						<v-list-tile-action>
+							<v-icon
+								v-show="locale === 'en'"
+								:color="locale === 'en' ? 'primary' : ''"
+								class="pl-1"
+								size="20"
+								v-text="'$vuetify.icons.language'" />
+						</v-list-tile-action>
+
+						<v-list-tile-content>
+							<v-list-tile-title
+								v-t="'lang-choose-en'"
+								:class="locale === 'en' ? 'primary--text' : ''" />
+						</v-list-tile-content>
+					</v-list-tile>
+
+					<!-- *Logout -->
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
@@ -145,6 +185,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
 export default {
 	name: 'UserActionsAvatar',
@@ -154,14 +195,19 @@ export default {
 			default: false,
 		},
 	},
-	data: () => ({}),
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
 		}),
+		locale() {
+			return this.$i18n.locale;
+		},
 	},
 	methods: {
 		editProfile() {},
+		changeLocale(locale) {
+			loadLanguageAsync(locale);
+		},
 		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},

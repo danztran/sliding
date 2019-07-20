@@ -180,15 +180,15 @@
 
 							<!-- ATENDANCEES DESCRIPTION -->
 							<v-flex xs12>
-								<div class="body-1 font-weight-regular">
-									<span v-t="'event-attendees-info'" class="first-letter-uppercase" />
+								<div class="body-1 font-weight-regular first-letter-uppercase">
+									<span v-t="'event-attendees-info'" />
 								</div>
 							</v-flex>
 						</v-layout>
 					</v-container>
 				</v-card-actions>
 
-				<div class="error--text text-xs-center">
+				<div class="error--text text-xs-center first-letter-uppercase">
 					{{ errorMessage }}
 				</div>
 

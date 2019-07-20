@@ -24,7 +24,7 @@
 							{{ eventInfo ? eventInfo.name : '...' }}
 						</div>
 						<div class="caption text-uppercase">
-							{{ eventInfo ? `#${eventInfo.code}` : '...' }}
+							{{ eventInfo ? `# ${eventInfo.code}` : '...' }}
 						</div>
 					</div>
 					<v-tooltip top>
@@ -42,23 +42,59 @@
 		<v-layout
 			class="fill-height"
 			column>
+			<!-- *Questions -->
 			<v-list-tile
-				v-for="(link, i) in links"
-				:key="i"
-				:to="link.to"
+				:to="{ name: 'admin-questions' }"
 				active-class="active-tab"
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
-					<v-icon :color="link.color">
-						{{ link.icon }}
-					</v-icon>
+					<v-icon color="yellow" v-text="'$vuetify.icons.questions'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-text="link.name" />
+				<v-list-tile-title v-t="'questions'" />
 			</v-list-tile>
 
-			<!-- HOMEPAGE -->
+			<!-- *Polls -->
+			<v-list-tile
+				:to="{ name: 'admin-polls' }"
+				active-class="active-tab"
+				avatar
+				class="v-list-item">
+				<v-list-tile-action>
+					<v-icon color="primary" v-text="'$vuetify.icons.analytics'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'polls'" />
+			</v-list-tile>
+
+			<!-- *Ideas -->
+			<v-list-tile
+				:to="{ name: 'admin-ideas' }"
+				active-class="active-tab"
+				avatar
+				class="v-list-item">
+				<v-list-tile-action>
+					<v-icon color="secondary" v-text="'$vuetify.icons.ideas'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'ideas'" />
+			</v-list-tile>
+
+			<!-- *Analytics -->
+			<v-list-tile
+				:to="{ name: 'admin-analytics' }"
+				active-class="active-tab"
+				avatar
+				class="v-list-item">
+				<v-list-tile-action>
+					<v-icon color="red" v-text="'$vuetify.icons.analytics'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'analytics'" />
+			</v-list-tile>
+
+			<!-- *Homepage -->
 			<v-divider />
 			<v-list-tile to="/">
 				<v-list-tile-action>
@@ -68,8 +104,8 @@
 				<v-list-tile-title v-t="'home-page'" />
 			</v-list-tile>
 
-			<!-- SWITCH EVENT -->
-			<v-list-tile @click="switchEvent">
+			<!-- *Switch event -->
+			<v-list-tile :to="{ name: 'my-events' }">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.switch_event'" />
 				</v-list-tile-action>
@@ -77,7 +113,46 @@
 				<v-list-tile-title v-t="'btn-switch-event'" />
 			</v-list-tile>
 
-			<!-- LOGOUT -->
+			<!-- *Switch language -->
+			<v-list>
+				<v-list-group
+					v-model="dropList"
+					prepend-icon="language"
+					no-action>
+					<template v-slot:activator>
+						<v-list-tile>
+							<v-list-tile-content>
+								<v-list-tile-title v-t="locale === 'vi' ? 'lang-choose-vi' : 'lang-choose-en'" />
+							</v-list-tile-content>
+						</v-list-tile>
+					</template>
+
+					<!-- *Vietnamese -->
+					<v-list-tile @click="changeLocale('vi')">
+						<v-list-tile-content>
+							<v-list-tile-title v-t="'btn-lang-vi'" />
+						</v-list-tile-content>
+
+						<v-list-tile-action>
+							<v-icon color="primary" v-text="locale === 'vi' ? 'check' : ''" />
+						</v-list-tile-action>
+					</v-list-tile>
+
+					<!-- *English -->
+					<v-list-tile @click="changeLocale('en')">
+						<v-list-tile-content>
+							<v-list-tile-title v-t="'btn-lang-en'" />
+						</v-list-tile-content>
+
+						<v-list-tile-action>
+							<v-icon color="primary" v-text="locale === 'en' ? 'check' : ''" />
+						</v-list-tile-action>
+					</v-list-tile>
+				</v-list-group>
+			</v-list>
+
+			<v-divider v-show="!dropList" />
+			<!-- *Logout -->
 			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.signout'" />
@@ -91,52 +166,27 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+
 export default {
 	name: 'Drawer',
 	data: () => ({
 		drawer: false,
 		loading: false,
-		links: [
-			{
-				to: 'questions',
-				icon: 'question_answer',
-				name: 'questions',
-				color: 'yellow',
-			},
-			{
-				to: 'polls',
-				icon: 'sort',
-				name: 'polls',
-				color: 'primary',
-			},
-			{
-				to: 'ideas',
-				icon: 'new_releases',
-				name: 'ideas',
-				color: 'secondary',
-			},
-			{
-				to: 'analytics',
-				icon: 'poll',
-				name: 'analytics',
-				color: 'red',
-			},
-		],
+		dropList: false,
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
 		}),
+		locale() {
+			return this.$i18n.locale;
+		},
 	},
 	watch: {
 		eventInfo(val) {
 			this.loading = true;
 		},
-	},
-	created() {
-		this.links.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
 	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {
@@ -144,6 +194,10 @@ export default {
 		});
 	},
 	methods: {
+		changeLocale(locale) {
+			loadLanguageAsync(locale);
+			this.dropList = false;
+		},
 		switchEvent() {
 			this.$router.push({ name: 'my-events' });
 		},

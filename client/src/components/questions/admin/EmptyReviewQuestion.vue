@@ -21,7 +21,9 @@
 			v-t="onModeration ? 'moderation-view-on' : 'moderation-view-off'"
 			class="title font-weight-regular mt-2" />
 
-		<div v-t="'moderation-view-des'" class="subheading grey--text text--darken-1 px-2" />
+		<div
+			v-t="'moderation-view-des'"
+			class="subheading grey--text text--darken-1 px-2 text-xs-center" />
 
 		<v-btn
 			v-t="onModeration ? 'btn-disable-moderation' : 'btn-enable-moderation'"
