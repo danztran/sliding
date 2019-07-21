@@ -13,7 +13,7 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<template v-slot:activator="{ on }">
-			<v-avatar :size="35" class="hover ml-2 hidden-xs-only" v-on="on">
+			<v-avatar :size="35" class="hover-pointer ml-2 hidden-xs-only" v-on="on">
 				<v-icon
 					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"
@@ -32,12 +32,12 @@
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
-							<div class="body-1 text-capitalize">
+							<v-list-tile-title class="body-1 text-capitalize">
 								{{ user ? user.name : '' }}
-							</div>
-							<div class="caption grey--text">
+							</v-list-tile-title>
+							<v-list-tile-sub-title class="caption grey--text">
 								{{ user ? user.email : $t('anonymous-empty-email') }}
-							</div>
+							</v-list-tile-sub-title>
 						</v-list-tile-content>
 
 						<v-list-tile-action>
@@ -51,7 +51,7 @@
 				</v-list>
 				<v-divider />
 
-				<v-list class="pa-0">
+				<v-list dense class="pa-0">
 					<!-- *Homepage -->
 					<v-list-tile to="/">
 						<v-list-tile-action>
@@ -118,6 +118,26 @@
 					</v-list-tile>
 
 					<v-divider />
+					<!-- *Invite-access-request -->
+					<v-list-tile @click="toggleInviteRequestDialog">
+						<v-list-tile-action>
+							<v-icon
+								class="pl-1"
+								size="20"
+								v-text="'$vuetify.icons.notice'" />
+						</v-list-tile-action>
+
+						<v-list-tile-content>
+							<v-list-tile-title v-t="'invite-request'" />
+						</v-list-tile-content>
+
+						<v-list-tile-action>
+							<v-chip small color="red">
+								<span class="white--text" v-text="'1'" />
+							</v-chip>
+						</v-list-tile-action>
+					</v-list-tile>
+
 					<!-- *Search -->
 					<v-list-tile :to="{ name: 'search' }">
 						<v-list-tile-action>
@@ -167,6 +187,7 @@
 					</v-list-tile>
 
 					<!-- *Logout -->
+					<v-divider />
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
@@ -211,13 +232,18 @@ export default {
 		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},
+		toggleInviteRequestDialog() {
+			this.$root.$emit('dialog-invite-request');
+		},
 	},
 };
 </script>
 
-<style>
-.hover {
-	cursor: pointer;
-	opacity: .8;
+<style lang="css">
+.notice span.v-badge__badge.red {
+	height: 7px;
+	width: 7px;
+	top: -2px;
+	right: -2px;
 }
 </style>

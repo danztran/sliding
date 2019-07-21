@@ -60,14 +60,31 @@
 					color="white">
 					<v-tabs-slider color="primary" />
 
+					<!-- *My events -->
 					<v-tab
-						v-for="tab of tabs"
-						:key="tab.id"
-						:to="tab.url"
+						:to="{ 'name': 'my-events' }"
 						fixed-tabs
 						class="font-weight-regular"
 						active-class="primary--text font-weight-bold">
-						<span class="first-letter-uppercase" v-text="tab.name" />
+						<span v-t="'my-events'" class="first-letter-uppercase" />
+					</v-tab>
+
+					<!-- *Coop events -->
+					<v-tab
+						:to="{ 'name': 'coop-events' }"
+						fixed-tabs
+						class="font-weight-regular"
+						active-class="primary--text font-weight-bold">
+						<span v-t="'coop-events'" class="first-letter-uppercase" />
+					</v-tab>
+
+					<!-- *Activity-logs -->
+					<v-tab
+						:to="{ 'name': 'activity-logs' }"
+						fixed-tabs
+						class="font-weight-regular"
+						active-class="primary--text font-weight-bold">
+						<span v-t="'activity-logs'" class="first-letter-uppercase" />
 					</v-tab>
 				</v-tabs>
 			</template>
@@ -85,30 +102,13 @@ export default {
 	},
 	data() {
 		return {
-			tabs: [
-				{ id: 1, name: 'my-events', url: '/dashboard/my-events' },
-				{ id: 2, name: 'coop-events', url: '/dashboard/coop-events' },
-				{ id: 3, name: 'activity-logs', url: '/dashboard/activity-logs' },
-			],
-			activeTab: '',
-			actions: [
-				{
-					id: 1,
-					name: 'logout',
-					icon: 'signout',
-				},
-			],
+			activeTab: null,
 		};
 	},
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
 		}),
-	},
-	created() {
-		this.tabs.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
 	},
 	methods: {
 		toggleDrawer() {

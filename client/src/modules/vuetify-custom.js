@@ -81,6 +81,8 @@ const icons = {
 	arrow_forward: 'arrow_forward',
 	access_invite: 'share',
 	language: 'language',
+	notice: 'notifications_active',
+	no_notice: 'notifications_none',
 };
 
 // custom components

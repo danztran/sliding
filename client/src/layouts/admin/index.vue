@@ -10,8 +10,9 @@
 					</keep-alive>
 				</v-slide-y-transition>
 			</v-content>
-			<event-dialog />
-			<event-setting-dialog />
+			<dialog--create-event />
+			<dialog--event-settings />
+			<dialog--invite-request />
 		</v-app>
 	</div>
 </template>
@@ -23,14 +24,17 @@ import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
 import EventSettingDialog from '@/components/setting/EventSettingDialog.vue';
+import InviteRequestDialog from '@/components/user/InviteRequestDialog.vue';
+
 
 export default {
 	name: 'AdminLayout',
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
-		'event-dialog': DashboardEventDialog,
-		'event-setting-dialog': EventSettingDialog,
+		'dialog--create-event': DashboardEventDialog,
+		'dialog--event-settings': EventSettingDialog,
+		'dialog--invite-request': InviteRequestDialog,
 	},
 	mixins: [handleSockets],
 	data: () => ({

@@ -35,6 +35,11 @@ i.v-icon.loading-success.material-icons.theme--light {
 .v-tabs__div {
 	text-transform: lowercase;
 }
+.v-tabs__slider {
+	height: 3px;
+	width: 100%;
+	border-radius: 5px 5px 0 0;
+}
 .v-toolbar--fixed, .v-toolbar--extended, .v-toolbar__extension {
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2) !important;
 	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2) !important;
