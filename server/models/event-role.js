@@ -18,12 +18,23 @@ class EventRoleModel extends Model {
 	}
 
 	findAdmins(eid) {
-		return this.find([
-			{ event_id: eid, role: 'host' },
-			{ event_id: eid, role: 'moderator', is_accepted: true },
-		], {
-			select: '"user_id", "role"',
-		});
+		this.setQuery(`
+			SELECT
+				r.user_id,
+				r.role,
+				u.name,
+				u.email,
+				r.updated_at
+			FROM
+				${this.getName()} as "r",
+				${User.getName()} as "u" 
+			WHERE
+				r.event_id = ${qh.toDollarQuoted(eid)}
+				AND r.user_id = u.id
+				AND r.role IN ('moderator', 'host')
+		`);
+		this.setRowReturn(0);
+		return this;
 	}
 
 	findEvents({ user_id, role }, {
@@ -119,6 +130,7 @@ class EventRoleModel extends Model {
 			user_id: info.user_id,
 			event_id: info.event_id,
 			role: info.role,
+			is_accepted: info.is_accepted,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		}, opt);

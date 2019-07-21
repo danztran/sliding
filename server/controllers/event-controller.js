@@ -81,6 +81,7 @@ module.exports = {
 				user_id: req.user.id,
 				event_id: event.id,
 				role: 'host',
+				is_accepted: true,
 			}).exec();
 			result.code = event.code;
 		}
