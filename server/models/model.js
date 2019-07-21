@@ -86,9 +86,10 @@ class Model {
 	} = {}) {
 		const column = Object.keys(object)[0];
 		this.setQuery(`
-			UPDATE ${this._name} ${qh.as(alias)}
+			UPDATE ${this.getName()} ${qh.as(alias)}
 			${qh.toSetClause(newInfo)}
-			WHERE ${column} in (
+			${qh.toWhereClause(object)}
+			AND ${column} in (
 					${this.findOne(object, { select: column }).getQuery()}
 				)
 			${qh.toReturningClause(select)}

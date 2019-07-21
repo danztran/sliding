@@ -131,6 +131,7 @@ class EventRoleModel extends Model {
 			event_id: info.event_id,
 			role: info.role,
 			is_accepted: info.is_accepted,
+			accessed_at: info.accessed_at,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		}, opt);
@@ -144,6 +145,15 @@ class EventRoleModel extends Model {
 			...info,
 			updated_at: new Date().toISOString(),
 		}, opt);
+	}
+
+	setLastAccessed(info) {
+		return this.updateOne({
+			event_id: info.event_id,
+			user_id: info.user_id,
+		}, {
+			accessed_at: new Date().toISOString(),
+		});
 	}
 }
 

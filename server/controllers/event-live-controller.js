@@ -19,23 +19,30 @@ module.exports = {
 				ioEvent = io.$fn.saveEvent(event);
 			}
 			result.event = event;
-			delete result.event.password;
+			delete result.event.passcode;
 
 			// check user role
 			if (socket.$fn.isAuthenticated()) {
 				const user = socket.$fn.getUser();
-				const eventRole = await EventRole.findRole({
-					event_id: result.event.id,
+				const roleQuery = {
+					event_id: event.id,
 					user_id: user.id,
-				}).exec();
+				};
+				const eventRole = await EventRole.findRole(roleQuery).exec();
 				if (eventRole) {
-					result.role = Roles[eventRole.role];
+					if (eventRole.is_accepted || eventRole.role === 'host') {
+						result.role = Roles[eventRole.role];
+					}
+					else {
+						result.role = Roles.guest;
+					}
+					EventRole.setLastAccessed(roleQuery).exec();
 				}
 				else {
 					EventRole.create({
-						user_id: user.id,
-						event_id: event.id,
+						...roleQuery,
 						role: 'guest',
+						accessed_at: new Date().toISOString(),
 					}).exec();
 					result.role = Roles.guest;
 				}
