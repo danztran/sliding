@@ -155,6 +155,8 @@
 		"btn-resend-invite": "Resend invite",
 		"btn-lang-vi": "Vietnamese",
 		"btn-lang-en": "English",
+		"btn-accept": "Accept",
+		"btn-reject": "Reject",
 		"opt-sort-by-title": "Order by",
 		"dialog-reply-question-title": "Replies",
 		"dialog-reply-question-guest-title": "Question detail",

@@ -23,6 +23,7 @@
 					</v-btn>
 
 					<v-menu
+						v-if="events.length > 1"
 						bottom
 						nudge-bottom="5"
 						offset-y
@@ -104,12 +105,6 @@ export default {
 		'empty-event': EmptyEvent,
 	},
 	data: () => ({
-		queryOpt: {
-			offset: 0,
-			limit: 0,
-			order: '-created_at',
-			role: 'host',
-		},
 		orderBy: 'desc',
 		isEmpty: false,
 		loading: false,

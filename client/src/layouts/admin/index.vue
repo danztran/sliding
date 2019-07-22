@@ -96,6 +96,12 @@ export default {
 		new_edited_event(newSettings) {
 			this.mergeAdminCurrentEvent(newSettings);
 		},
+		new_accepted_invite(response) {
+			console.warn('accept: ', response);
+		},
+		new_denied_invite(response) {
+			console.warn('denie: ', response);
+		},
 	},
 	methods: {
 		...mapMutations({

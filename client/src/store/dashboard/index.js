@@ -8,6 +8,7 @@ import mutations from './mutations';
 
 const state = {
 	events: [],
+	invites: [],
 };
 
 export default {

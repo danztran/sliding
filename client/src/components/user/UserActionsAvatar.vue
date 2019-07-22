@@ -124,16 +124,18 @@
 							<v-icon
 								class="pl-1"
 								size="20"
-								v-text="'$vuetify.icons.notice'" />
+								v-text="invites.length > 0
+									? '$vuetify.icons.notice'
+									: '$vuetify.icons.no_notice'" />
 						</v-list-tile-action>
 
 						<v-list-tile-content>
 							<v-list-tile-title v-t="'invite-request'" />
 						</v-list-tile-content>
 
-						<v-list-tile-action>
+						<v-list-tile-action v-show="invites.length > 0">
 							<v-chip small color="red">
-								<span class="white--text" v-text="'1'" />
+								<span class="white--text" v-text="invites.length" />
 							</v-chip>
 						</v-list-tile-action>
 					</v-list-tile>
@@ -205,7 +207,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
 export default {
@@ -219,13 +221,23 @@ export default {
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
+			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
 		},
 	},
+	mounted() {
+		if (this.user
+			&& this.user.username !== null
+			&& this.invites.length === 0) {
+			this.emitQueryInvites();
+		}
+	},
 	methods: {
-		editProfile() {},
+		...mapMutations({
+			setInvites: 'dashboard/SET_INVITES',
+		}),
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
 		},
@@ -237,6 +249,23 @@ export default {
 		},
 		toggleDialogUserUpdateProfile() {
 			this.$root.$emit('dialog-user-update-profile');
+		},
+		emitQueryInvites() {
+			const emiter = 'query-invited';
+			const queryOpt = {
+				order: '-created_at',
+				limit: 0,
+				offset: 0,
+			};
+			this.$socket.emit(emiter, queryOpt, ({ errmsg, events }) => {
+				if (!events) {
+					if (errmsg) {
+						// ...
+					}
+					return;
+				}
+				this.setInvites(events);
+			});
 		},
 	},
 };

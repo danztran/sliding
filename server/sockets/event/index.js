@@ -16,6 +16,8 @@ module.exports = (io) => {
 			socket.$fn.reloadSession();
 		});
 
+		EventRoleLive({ io, socket });
+
 		// join event
 		socket.on('join-event', (code) => {
 			socket.on('disconnect', () => {
@@ -33,7 +35,6 @@ module.exports = (io) => {
 			});
 
 			EventLive({ io, socket, code });
-			EventRoleLive({ io, socket, code });
 			QuestionLive({ io, socket });
 			QuestionReplyLive({ io, socket });
 			QuestionReactionLive({ io, socket });

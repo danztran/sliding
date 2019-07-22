@@ -83,6 +83,8 @@ const icons = {
 	language: 'language',
 	notice: 'notifications_active',
 	no_notice: 'notifications_none',
+	time_start: 'timer',
+	time_end: 'timer_off',
 };
 
 // custom components
