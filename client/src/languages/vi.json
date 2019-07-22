@@ -187,6 +187,8 @@
 		"err-empty-inputcode": "Vui lòng nhập mã sự kiện",
 		"err-event-not-found": "Xin lỗi, hiện tại sự kiện bạn tìm kiếm không hoạt động",
 		"err-some-field": "Xin lỗi, kiểm tra thông tin của bạn",
+		"err-time-end-invalid": "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+		"err-time-end-limit": "Thời gian diễn ra sự kiện tối thiếu 15 phút",
 		"guest-del-question-dialog": "Xin lỗi, câu hỏi bạn đang xem đã bị quản trị viên xóa",
 		"guest-reply-disable": "Quản trị viên đã khóa chức năng Trả lời",
 		"guest-profile-update-title-dialog": "Cập nhật thông tin của bạn",

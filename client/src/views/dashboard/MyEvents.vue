@@ -41,10 +41,10 @@
 						<v-list class="py-0 custom-list" dense subheader>
 							<v-subheader v-t="'opt-sort-by-title'" />
 							<!-- *oldest -->
-							<v-list-tile @click="sortEvent">
+							<v-list-tile @click="sortEvent('asc')">
 								<v-list-tile-action>
 									<v-icon
-										v-show="queryOpt.order === 'created_at'"
+										v-show="orderBy === 'asc'"
 										color="primary"
 										v-text="'$vuetify.icons.check'" />
 								</v-list-tile-action>
@@ -56,10 +56,10 @@
 							</v-list-tile>
 
 							<!-- *recent (newest) -->
-							<v-list-tile @click="sortEvent">
+							<v-list-tile @click="sortEvent('desc')">
 								<v-list-tile-action>
 									<v-icon
-										v-show="queryOpt.order === '-created_at'"
+										v-show="orderBy === 'desc'"
 										color="primary"
 										v-text="'$vuetify.icons.check'" />
 								</v-list-tile-action>
@@ -110,6 +110,7 @@ export default {
 			order: '-created_at',
 			role: 'host',
 		},
+		orderBy: 'desc',
 		isEmpty: false,
 		loading: false,
 	}),
@@ -126,28 +127,27 @@ export default {
 	},
 	mounted() {
 		if (this.events.length === 0) {
+			const queryOpt = {
+				offset: 0,
+				limit: 0,
+				order: '-created_at',
+				role: 'host',
+			};
 			this.loading = true;
-			this.queryEvent();
+			this.$store.dispatch('dashboard/queryEvent', queryOpt);
 		}
 	},
 	methods: {
-		sortEvent() {
-			if (this.queryOpt.order === '-created_at') {
-				this.queryOpt.order = 'created_at';
-				this.queryEvent();
-				return;
-			}
-			this.queryOpt.order = '-created_at';
-			this.queryEvent();
-		},
-		queryEvent() {
-			this.$store.dispatch('dashboard/queryEvent', this.queryOpt);
-		},
 		createEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},
 		toEventLive(code) {
 			this.$router.push({ name: 'admin-event', params: { code } });
+		},
+		sortEvent(order) {
+			this.orderBy = order;
+			this._cm.customSort(this.events, order, 'created_at');
+			console.warn(this.events);
 		},
 	},
 };

@@ -26,7 +26,7 @@
 								<text-area class="pt-2" :field="form.description" />
 							</v-flex>
 
-							<!-- DATE START PICKER -->
+							<!-- *Date start picker -->
 							<v-flex xs6>
 								<v-dialog
 									ref="dialogDateStart"
@@ -46,9 +46,7 @@
 									<v-date-picker
 										v-model="form.start.defaultDate"
 										:min="currentDate"
-										:max="form.end.defaultDate"
 										:locale="this.$i18n.locale"
-										no-title
 										scrollable>
 										<v-spacer />
 										<v-btn
@@ -60,14 +58,15 @@
 										<v-btn
 											flat
 											color="primary"
-											@click="$refs.dialogDateStart.save(form.start.defaultDate)">
+											@click="$refs.dialogDateStart.save(form.start.defaultDate,
+												cbCheckBiggerDateEnd(form.start.defaultDate))">
 											<span v-t="'btn-save'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-date-picker>
 								</v-dialog>
 							</v-flex>
 
-							<!-- DATE END PICKER -->
+							<!-- *Date end picker -->
 							<v-flex xs6>
 								<v-dialog
 									ref="dialogDateEnd"
@@ -88,7 +87,6 @@
 										v-model="form.end.defaultDate"
 										:min="form.start.defaultDate"
 										:locale="this.$i18n.locale"
-										no-title
 										scrollable>
 										<v-spacer />
 										<v-btn
@@ -107,7 +105,7 @@
 								</v-dialog>
 							</v-flex>
 
-							<!-- TIME START PICKER -->
+							<!-- *Time start -->
 							<v-flex xs6>
 								<v-dialog
 									ref="dialogTimeStart"
@@ -141,7 +139,7 @@
 								</v-dialog>
 							</v-flex>
 
-							<!-- TIME END PICKER -->
+							<!-- *Time end -->
 							<v-flex xs6>
 								<v-dialog
 									ref="dialogTimeEnd"
@@ -178,7 +176,7 @@
 								</v-dialog>
 							</v-flex>
 
-							<!-- ATENDANCEES DESCRIPTION -->
+							<!-- *Atendancees description -->
 							<v-flex xs12>
 								<div class="body-1 font-weight-regular first-letter-uppercase">
 									<span v-t="'event-attendees-info'" />
@@ -188,11 +186,12 @@
 					</v-container>
 				</v-card-actions>
 
+				<!-- *Error msg -->
 				<div class="error--text text-xs-center first-letter-uppercase">
 					{{ errorMessage }}
 				</div>
 
-				<!-- ACTION BTN -->
+				<!-- *Cancel/Create -->
 				<v-card-actions>
 					<v-spacer />
 					<v-btn
@@ -248,12 +247,6 @@ export default {
 		loading: false,
 		form: initForm(),
 		currentDate: null,
-		dialog: {
-			dateStart: false,
-			dateEnd: false,
-			timeStart: false,
-			timeEnd: false,
-		},
 		dialogDateStart: false,
 		dialogDateEnd: false,
 		dialogTimeStart: false,
@@ -261,16 +254,7 @@ export default {
 		errorMessage: '',
 	}),
 	created() {
-		const date = new Date();
-		const dayTime = 1000 * 3600 * 24;
-		this.currentDate = date.toISOString().substr(0, 10);
-		this.form.start.defaultDate = date.toISOString().substr(0, 10);
-		this.form.start.defaultTime = date.toTimeString().substr(0, 5);
-		// 3 days next
-		this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
-			.toISOString().substr(0, 10);
-		this.form.end.defaultTime = date.toTimeString().substr(0, 5);
-		// new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit' })
+		this.formatForm();
 	},
 	mounted() {
 		this.$root.$on('dialog-create-new-event', () => {
@@ -278,14 +262,71 @@ export default {
 		});
 	},
 	methods: {
+		formatForm() {
+			const date = new Date();
+			const dayTime = 1000 * 3600 * 24;
+			this.currentDate = date.toISOString().substr(0, 10);
+			this.form.start.defaultDate = date.toISOString().substr(0, 10);
+			this.form.start.defaultTime = date.toTimeString().substr(0, 5);
+			// 3 days next
+			this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
+				.toISOString().substr(0, 10);
+			this.form.end.defaultTime = date.toTimeString().substr(0, 5);
+		},
+		/*
+			@desc: callback when save dateStart compare with dateEnd
+				*if: start are bigger than end set defaultDate for dateEnd
+		*/
+		cbCheckBiggerDateEnd(dateStart) {
+			const start = new Date(dateStart).getTime();
+			const end = new Date(this.form.end.defaultDate).getTime();
+			if (start > end) {
+				this.form.end.defaultDate = dateStart;
+				return true;
+			}
+			return false;
+		},
+		compareTime() {
+			const { form } = this;
+			const start = new Date(`${form.start.defaultDate}T${form.start.defaultTime}`).getTime();
+			const end = new Date(`${form.end.defaultDate}T${form.end.defaultTime}`).getTime();
+			if (start >= end) {
+				this.errorMessage = this.$t('err-time-end-invalid');
+				return false;
+			}
+			const limitTime = end - start; // at least 15mins
+			if (limitTime < (14 * 60000)) {
+				this.errorMessage = this.$t('err-time-end-limit');
+				return false;
+			}
+			return true;
+		},
+		checkValidField() {
+			if (this.form.name.value.trim() === '') {
+				this.form.name.errmsg = this.$t('requireField');
+				return false;
+			}
+			if (new Date(this.form.start.defaultDate).toLocaleDateString()
+				=== new Date(this.form.end.defaultDate).toLocaleDateString()) {
+				if (!this.compareTime()) {
+					return false;
+				}
+			}
+			return true;
+		},
 		createEvent() {
 			this.loading = true;
+			if (!this.checkValidField()) {
+				this.loading = false;
+				return;
+			}
+			this.errorMessage = '';
 			const { form } = this;
 			const eventFormData = {
 				name: form.name.value,
 				description: form.description.value,
-				start_at: form.start.defaultDate,
-				end_at: form.end.defaultDate,
+				start_at: `${form.start.defaultDate}T${form.start.defaultTime}`,
+				end_at: `${form.end.defaultDate}T${form.end.defaultTime}`,
 			};
 
 			this.$axios
@@ -295,6 +336,7 @@ export default {
 					this.$store.dispatch('dashboard/createEvent', Object.assign(eventFormData, { code }));
 					this.loading = false;
 					this.dialogCreate = false;
+					this.form = this.formatForm();
 				})
 				.catch((err) => {
 					this.handleErrorMessages(err.messages);

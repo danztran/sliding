@@ -184,6 +184,8 @@
 		"err-empty-inputcode": "Please enter an event code",
 		"err-event-not-found": "Sorry, there is no such event active right now",
 		"err-some-field": "Sorry, please check your info again",
+		"err-time-end-invalid": "Time end must bigger than time start",
+		"err-time-end-limit": "The event take at least 15 minutes",
 		"guest-del-question-dialog": "Sorry, the question has been deleted by the administrator",
 		"guest-reply-disable": "Reply have been turn off by Admin",
 		"guest-profile-update-title-dialog": "Update your information",
