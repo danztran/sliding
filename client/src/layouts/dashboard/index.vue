@@ -12,6 +12,7 @@
 			</v-content>
 			<dialog--create-event />
 			<dialog--invite-request />
+			<dialog--user-update-profile />
 		</v-app>
 	</div>
 </template>
@@ -20,14 +21,16 @@
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
-import InviteRequestDialog from '@/components/user/InviteRequestDialog.vue';
+import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
+import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
 
 export 	default {
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
 		'dialog--create-event': DashboardEventDialog,
-		'dialog--invite-request': InviteRequestDialog,
+		'dialog--invite-request': DialogInviteRequest,
+		'dialog--user-update-profile': DialogUserUpdateProfile,
 	},
 };
 </script>

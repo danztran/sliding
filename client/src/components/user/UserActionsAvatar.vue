@@ -41,7 +41,7 @@
 						</v-list-tile-content>
 
 						<v-list-tile-action>
-							<v-btn icon>
+							<v-btn icon @click="toggleDialogUserUpdateProfile">
 								<span
 									v-t="'btn-edit-profile'"
 									class="primary--text" />
@@ -119,7 +119,7 @@
 
 					<v-divider />
 					<!-- *Invite-access-request -->
-					<v-list-tile @click="toggleInviteRequestDialog">
+					<v-list-tile @click="toggleDialogAccessInviteRequest">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -232,8 +232,11 @@ export default {
 		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},
-		toggleInviteRequestDialog() {
+		toggleDialogAccessInviteRequest() {
 			this.$root.$emit('dialog-invite-request');
+		},
+		toggleDialogUserUpdateProfile() {
+			this.$root.$emit('dialog-user-update-profile');
 		},
 	},
 };

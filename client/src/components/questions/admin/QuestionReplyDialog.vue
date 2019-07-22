@@ -6,7 +6,7 @@
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
-			<v-card-title class="py-0">
+			<v-card-title class="pr-0 py-1">
 				<!-- @desc: show back button
 									hide title in small device -->
 				<template v-if="isSMnXS">

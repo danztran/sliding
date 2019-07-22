@@ -7,10 +7,10 @@
 		</span>
 		<v-card>
 			<loading-linear :loading="loading" />
-			<v-card-title>
+			<v-card-title class="py-0 pr-0">
 				<span
 					v-t="'guest-profile-update-title-dialog'"
-					class="pl-3 grey--text text--darken-1" />
+					class="grey--text text--darken-1" />
 				<v-spacer />
 				<v-menu
 					bottom
@@ -29,6 +29,7 @@
 					</template>
 				</v-menu>
 			</v-card-title>
+			<v-divider />
 
 			<v-container grid-list-xs class="pt-0">
 				<v-layout
@@ -112,7 +113,7 @@ const initForm = () => ({
 });
 
 export default {
-	name: 'AnonyUpdateSignupDialog',
+	name: 'DialogAnonyUpdateSignup',
 	data: () => ({
 		guestDialogProfile: false,
 		form: initForm(),

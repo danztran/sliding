@@ -25,7 +25,11 @@
 			<!-- *list moderator -->
 			<div class="d-flex w-100">
 				<v-slide-y-transition>
-					<invite-card--info />
+					<template v-for="moderator in moderators">
+						<invite-card--info
+							:key="moderator.user_id"
+							:info="moderator" />
+					</template>
 				</v-slide-y-transition>
 			</div>
 		</template>
@@ -64,15 +68,19 @@ export default {
 		},
 		form: initForm(),
 		loadingState: '',
+		moderators: '',
 	}),
 	computed: {
 		...mapGetters({
+			eventInfo: 'admin/event/getEventInfo',
 			tempSettings: 'admin/event/getTempSettings',
 		}),
 	},
 	watch: {
-		tempSettings(val) {
-			// ...
+		'eventInfo.admins': function getModerators(val) {
+			if (val && val.length > 1) {
+				this.moderators = val.filter(el => el.role === 'moderator');
+			}
 		},
 	},
 	methods: {

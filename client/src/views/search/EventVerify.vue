@@ -30,25 +30,26 @@
 				@click="toJoinEvent">
 				<span
 					v-show="loadingState === ''"
-					v-t="'btn-join'"
+					v-t="'btn-join-now'"
 					class="first-letter-uppercase" />
 				<template v-slot:loader>
 					<icon-loading-circle :state.sync="loadingState" />
 				</template>
 			</v-btn>
 
-			<span v-t="'or'" class="grey--text text--lighten-1" />
 
-			<v-btn
-				v-if="!user"
-				color="success"
-				round
-				flat
-				medium
-				outline
-				@click="toLogin">
-				<span v-t="'loginFormTitle'" class="first-letter-uppercase" />
-			</v-btn>
+			<template v-if="!user">
+				<span v-t="'or'" class="grey--text text--lighten-1" />
+				<v-btn
+					color="success"
+					round
+					flat
+					medium
+					outline
+					@click="toLogin">
+					<span v-t="'loginFormTitle'" class="first-letter-uppercase" />
+				</v-btn>
+			</template>
 		</div>
 
 		<router-link

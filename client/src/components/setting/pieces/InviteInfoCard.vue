@@ -17,8 +17,15 @@
 				<v-list-tile-content>
 					<v-list-tile-title>
 						{{ info.email }}
+						<span class="grey--text text-lowercase">
+							-	{{ info.is_accepted === null ?
+								$t('invite-pending')
+								: info.is_accepted === true
+									? $t('invite-accepted')
+									: $t('invite-rejected') }}
+						</span>
 					</v-list-tile-title>
-					<v-list-tile-sub-title>
+					<v-list-tile-sub-title class="first-letter-uppercase">
 						{{ info.role }}
 					</v-list-tile-sub-title>
 				</v-list-tile-content>
@@ -57,8 +64,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
 	name: 'InviteInfoCard',
 	props: {
@@ -68,13 +73,9 @@ export default {
 				email: '...',
 				role: '...',
 				name: '',
+				is_accepted: null,
 			}),
 		},
-	},
-	computed: {
-		...mapGetters({
-			// ...
-		}),
 	},
 	methods: {
 		revokeAccess() {

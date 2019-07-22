@@ -5,7 +5,7 @@
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
-			<v-card-title class="py-0 pl-4">
+			<v-card-title class="pr-0 py-1">
 				<template v-if="isSMnXS">
 					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
 						<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />

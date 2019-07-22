@@ -21,7 +21,7 @@
 			<div
 				v-t="'event-welcome'"
 				:class="{'mt-2 subheading': isSMnXS, 'mt-4': !isSMnXS}"
-				class="title font-weight-light" />
+				class="title font-weight-light first-letter-uppercase" />
 			<v-btn
 				v-t="'btn-create-event'"
 				class="px-4 ma-0 mt-3"

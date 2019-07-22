@@ -37,7 +37,7 @@
 					</v-list-tile>
 
 					<!-- *Quick signup -->
-					<v-list-tile @click="toggleQickSignUpDialog">
+					<v-list-tile :to="{ name: 'signup' }">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -46,7 +46,7 @@
 								v-text="'$vuetify.icons.signup'" />
 						</v-list-tile-action>
 
-						<v-list-tile-title v-t="'btn-quick-signup'" />
+						<v-list-tile-title v-t="'btn-signup'" />
 					</v-list-tile>
 				</v-list>
 			</v-card>

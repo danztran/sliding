@@ -293,6 +293,7 @@ export default {
 				.then((res) => {
 					const { code } = res.data;
 					this.$store.dispatch('dashboard/createEvent', Object.assign(eventFormData, { code }));
+					this.loading = false;
 					this.dialogCreate = false;
 				})
 				.catch((err) => {

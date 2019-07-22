@@ -17,12 +17,12 @@
 import { mapMutations, mapGetters } from 'vuex';
 import NavBar from './NavBar.vue';
 import handleSockets from '@/mixins/handleSockets';
-import AnonyUpdateSignupDialog from '@/components/user/AnonyUpdateSignupDialog.vue';
+import DialogAnonyUpdateSignup from '@/components/user/DialogAnonyUpdateSignup.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'anony-dialog--update-signup': AnonyUpdateSignupDialog,
+		'anony-dialog--update-signup': DialogAnonyUpdateSignup,
 	},
 	mixins: [handleSockets],
 	data: () => ({
