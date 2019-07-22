@@ -78,7 +78,7 @@ module.exports = {
 	updateRules: {
 		name: ['min:3', 'max:100', 'regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$/g'],
 		curPassword: 'string|required_with:password|min:6|max:50',
-		password: 'string|min:6|max:50',
+		password: 'string|required_with:curPassword|min:6|max:50',
 		rePassword: 'string|required_with:password|min:6|max:50|same:password',
 	},
 

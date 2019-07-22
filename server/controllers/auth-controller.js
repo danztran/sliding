@@ -113,25 +113,37 @@ const Ctlr = {
 		if (!res.$v.rif(updateRules)) return;
 		const result = {};
 		const { id } = req.user;
-		const { curPassword } = req.body;
+		const { curPassword, name } = req.body;
 		try {
 			// get current user info
 			const User = new UserModel();
 			const user = await User.findById(id).exec();
-			// if current password from body is not equal password from user
-			if (curPassword !== crypto.dec(user.password)) {
-				res.status(409);
-				throw { password: res.$t('passwordIncorrect') };
+
+			if ((name === null || name === '') && (curPassword === null || curPassword === '')) {
+				// throw { warning: "Fields are empty!"};
+				res.messages['warning'] = 'Fields are empty';
+				return res.sendwm(result);
 			}
+			// if user inputs current password
+			if (curPassword !== null && curPassword !== '') {
+				// if current password from body is not equal password from user
+				if (curPassword !== crypto.dec(user.password)) {
+					res.status(409);
+					throw { password: res.$t('passwordIncorrect') };
+				}
+			}
+			// update user profile
 			const newInfo = await User.update(req.user, req.body).exec();
 			req.user = newInfo;
-			res.session.user = newInfo;
+			// res.session.user = newInfo;
+			res.messages['newInfo'] = newInfo;
 			res.messages['auth.update'] = res.$t('successUpdate');
+			return res.sendwm(result);
+
 
 			// userUpdate = await User.findById(id).exec();
 			// res.messages['userUpdate'] = userUpdate;
 			// res.messages['pw'] = crypto.dec(userUpdate.password);
-			return res.sendwm(result);
 		}
 		catch (error) {
 			res.messages = { ...res.messages, ...error };
