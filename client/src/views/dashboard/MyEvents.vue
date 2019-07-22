@@ -147,7 +147,6 @@ export default {
 		sortEvent(order) {
 			this.orderBy = order;
 			this._cm.customSort(this.events, order, 'created_at');
-			console.warn(this.events);
 		},
 	},
 };

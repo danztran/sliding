@@ -4,6 +4,9 @@
 		width="800"
 		:transition="false"
 		:fullscreen="isSMnXS">
+		<span v-show="false">
+			{{ $t('FOR_A_PURPOSE') }}
+		</span>
 		<v-card>
 			<loading-linear />
 			<v-card-title class="py-0 pr-0">
