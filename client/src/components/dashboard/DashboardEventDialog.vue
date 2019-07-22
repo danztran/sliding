@@ -8,18 +8,19 @@
 		</span>
 		<v-dialog
 			v-model="dialogCreate"
-			max-width="400px"
+			max-width="450px"
 			no-click-animation>
 			<v-card>
 				<loading-linear :loading="loading" />
-				<v-card-title class="pb-0 ml-3" primary-title>
-					<div class="headline">
-						<span v-t="'btn-create-event'" />
-					</div>
-				</v-card-title>
+				<v-container class="pb-2">
+					<v-card-title class="py-0 px-2" primary-title>
+						<div
+							v-t="'btn-create-event'"
+							class="headline font-weight-light first-letter-uppercase" />
+					</v-card-title>
 
-				<v-card-actions>
-					<v-container grid-list-md class="pt-0">
+					<v-card-actions>
+						<!-- <v-container grid-list-md class="pt-0"> -->
 						<v-layout wrap>
 							<v-flex xs12>
 								<text-field :field="form.name" />
@@ -132,7 +133,8 @@
 										<v-btn
 											flat
 											color="primary"
-											@click="$refs.dialogTimeStart.save(form.start.defaultTime)">
+											@click="$refs.dialogTimeStart.save(form.start.defaultTime,
+												dialogTimeEnd=true)">
 											<span v-t="'btn-save'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-time-picker>
@@ -183,30 +185,33 @@
 								</div>
 							</v-flex>
 						</v-layout>
-					</v-container>
-				</v-card-actions>
+						<!-- </v-container> -->
+					</v-card-actions>
 
-				<!-- *Error msg -->
-				<div class="error--text text-xs-center first-letter-uppercase">
-					{{ errorMessage }}
-				</div>
+					<!-- *Error msg -->
+					<v-card-text class="error--text text-xs-center first-letter-uppercase">
+						{{ errorMessage }}
+					</v-card-text>
 
-				<!-- *Cancel/Create -->
-				<v-card-actions>
-					<v-spacer />
-					<v-btn
-						color="primary"
-						flat
-						@click="dialogCreate = false">
-						<span v-t="'btn-cancel'" class="first-letter-uppercase" />
-					</v-btn>
-					<v-btn
-						color="primary"
-						:disabled="loading"
-						@click="createEvent">
-						<span v-t="'btn-create'" class="first-letter-uppercase" />
-					</v-btn>
-				</v-card-actions>
+					<!-- *Cancel/Create -->
+					<v-card-actions>
+						<v-spacer />
+						<v-btn
+							flat
+							medium
+							@click="dialogCreate = false">
+							<span v-t="'btn-cancel'" class="first-letter-uppercase" />
+						</v-btn>
+						<v-btn
+							flat
+							medium
+							color="success"
+							:disabled="loading"
+							@click="createEvent">
+							<span v-t="'btn-create'" class="first-letter-uppercase" />
+						</v-btn>
+					</v-card-actions>
+				</v-container>
 			</v-card>
 		</v-dialog>
 	</v-layout>
@@ -231,11 +236,11 @@ const initForm = () => ({
 		rows: 3,
 	},
 	start: {
-		defaultTime: null,
+		defaultTime: '07:00',
 		defaultDate: null,
 	},
 	end: {
-		defaultTime: null,
+		defaultTime: '11:00',
 		defaultDate: null,
 	},
 });
@@ -246,13 +251,17 @@ export default {
 		dialogCreate: false,
 		loading: false,
 		form: initForm(),
-		currentDate: null,
 		dialogDateStart: false,
 		dialogDateEnd: false,
 		dialogTimeStart: false,
 		dialogTimeEnd: false,
 		errorMessage: '',
 	}),
+	computed: {
+		currentDate() {
+			return new Date().toISOString().substr(0, 10);
+		},
+	},
 	created() {
 		this.formatForm();
 	},
@@ -265,19 +274,16 @@ export default {
 		formatForm() {
 			const date = new Date();
 			const dayTime = 1000 * 3600 * 24;
-			this.currentDate = date.toISOString().substr(0, 10);
 			this.form.start.defaultDate = date.toISOString().substr(0, 10);
-			this.form.start.defaultTime = date.toTimeString().substr(0, 5);
-			// 3 days next
 			this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
 				.toISOString().substr(0, 10);
-			this.form.end.defaultTime = date.toTimeString().substr(0, 5);
 		},
 		/*
 			@desc: callback when save dateStart compare with dateEnd
 				*if: start are bigger than end set defaultDate for dateEnd
 		*/
 		cbCheckBiggerDateEnd(dateStart) {
+			this.dialogDateEnd = true;
 			const start = new Date(dateStart).getTime();
 			const end = new Date(this.form.end.defaultDate).getTime();
 			if (start > end) {
