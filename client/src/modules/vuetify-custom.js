@@ -58,6 +58,7 @@ const icons = {
 	export: 'present_to_all',
 	delete: 'delete_outline',
 	edit: 'edit',
+	cancel: 'cancel',
 	question_mark: 'help_outline',
 	loading_circle: 'cached',
 	loading_success: 'done',
@@ -85,6 +86,8 @@ const icons = {
 	no_notice: 'notifications_none',
 	time_start: 'timer',
 	time_end: 'timer_off',
+	faces: 'tag_faces',
+	mail: 'alternate_email',
 };
 
 // custom components

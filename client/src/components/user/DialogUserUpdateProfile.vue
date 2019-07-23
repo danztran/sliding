@@ -15,16 +15,133 @@
 						v-t="'dialog-user-edit-info'"
 						class="headline font-weight-light first-letter-uppercase" />
 				</v-card-title>
-				<!-- *Input -->
+
 				<v-card-actions>
 					<v-layout wrap>
 						<v-flex xs12>
-							<text-field :field="form.name" />
-							<text-field :field="form.email" />
-							<text-field :field="form.username" />
-							<text-field :field="form.curPassword" />
-							<text-field :field="form.newPassword" />
-							<text-field :field="form.reNewPassword" />
+							<v-list two-line dense>
+								<!-- *Username read-only -->
+								<v-list-tile>
+									<v-list-tile-avatar size="35">
+										<v-icon
+											small
+											class="primary white--text"
+											v-text="'$vuetify.icons.person'" />
+									</v-list-tile-avatar>
+									<v-list-tile-content>
+										<div v-t="'lb-username'" class="caption grey--text" />
+										<div class="subheading" v-text="form.username.value" />
+									</v-list-tile-content>
+								</v-list-tile>
+
+								<!-- *Email read-only -->
+								<v-list-tile>
+									<v-list-tile-avatar size="35">
+										<v-icon
+											small
+											class="primary white--text"
+											v-text="'$vuetify.icons.mail'" />
+									</v-list-tile-avatar>
+									<v-list-tile-content>
+										<div v-t="'lb-email'" class="caption grey--text" />
+										<div class="subheading" v-text="form.email.value" />
+									</v-list-tile-content>
+								</v-list-tile>
+
+								<!-- *Edit name -->
+								<v-list-tile>
+									<v-list-tile-avatar size="35">
+										<v-icon
+											small
+											:class="{'primary white--text': !editName, 'primary--text': editName}"
+											v-text="'$vuetify.icons.faces'" />
+									</v-list-tile-avatar>
+									<v-list-tile-content>
+										<template v-if="editName">
+											<text-field class="pt-4 w-100" :field="form.name" />
+										</template>
+										<template v-else>
+											<div v-t="'lb-name'" class="caption grey--text" />
+											<div class="subheading" v-text="form.name.value" />
+										</template>
+									</v-list-tile-content>
+									<v-list-tile-action>
+										<v-btn icon ripple @click="handleEditName">
+											<v-tooltip bottom>
+												<template v-slot:activator="{ on }">
+													<span v-on="on">
+														<v-icon
+															small
+															color="grey lighten-1"
+															v-text="editName
+																? '$vuetify.icons.cancel'
+																: '$vuetify.icons.edit'" />
+													</span>
+												</template>
+												<span v-t="editName
+													? 'btn-cancel'
+													: 'btn-edit'" />
+											</v-tooltip>
+										</v-btn>
+									</v-list-tile-action>
+								</v-list-tile>
+
+								<!-- *Edit password -->
+								<v-list-tile
+									v-if="!editPassword"
+									transition="slide-y-reverse-transition"
+									@click="editPassword=true">
+									<v-list-tile-avatar size="35">
+										<v-icon
+											small
+											color="primary"
+											v-text="'$vuetify.icons.edit'" />
+									</v-list-tile-avatar>
+									<v-list-tile-content>
+										<div
+											v-t="'btn-edit-password'"
+											class="subheading primary--text first-letter-uppercase" />
+									</v-list-tile-content>
+								</v-list-tile>
+
+								<v-list v-else>
+									<v-list-tile>
+										<v-list-tile-avatar size="35">
+											<v-icon
+												small
+												class="primary--text"
+												v-text="'$vuetify.icons.lock'" />
+										</v-list-tile-avatar>
+										<v-list-tile-content>
+											<text-field class="pt-4 w-100" :field="form.curPassword" />
+										</v-list-tile-content>
+									</v-list-tile>
+
+									<v-list-tile>
+										<v-list-tile-avatar size="35">
+											<v-icon
+												small
+												class="primary--text"
+												v-text="'$vuetify.icons.lock'" />
+										</v-list-tile-avatar>
+										<v-list-tile-content>
+											<text-field class="pt-4 w-100" :field="form.newPassword" />
+										</v-list-tile-content>
+									</v-list-tile>
+
+									<v-list-tile>
+										<v-list-tile-avatar size="35">
+											<v-icon
+												small
+												class="primary--text"
+												v-text="'$vuetify.icons.lock'" />
+										</v-list-tile-avatar>
+										<v-list-tile-content>
+											<text-field class="pt-4 w-100" :field="form.reNewPassword" />
+										</v-list-tile-content>
+									</v-list-tile>
+								</v-list>
+							</v-list>
 						</v-flex>
 					</v-layout>
 				</v-card-actions>
@@ -59,44 +176,34 @@ const initForm = () => ({
 		value: '',
 		label: 'lb-name',
 		type: 'text',
-		prepend: 'tag_faces',
+		autofocus: true,
 		errmsg: '',
 	},
 	email: {
 		value: '',
-		label: 'lb-email',
-		readonly: true,
-		type: 'email',
-		prepend: 'alternate_email',
 		errmsg: '',
 	},
 	username: {
 		value: '',
-		label: 'lb-username',
-		type: 'text',
-		readonly: true,
-		prepend: 'person',
 		errmsg: '',
 	},
 	curPassword: {
 		value: '',
 		label: 'lb-current-password',
 		type: 'password',
-		prepend: 'lock',
+		autofocus: true,
 		errmsg: '',
 	},
 	newPassword: {
 		value: '',
 		label: 'lb-new-password',
 		type: 'password',
-		prepend: 'lock',
 		errmsg: '',
 	},
 	reNewPassword: {
 		value: '',
 		label: 'lb-re-new-password',
 		type: 'password',
-		prepend: 'lock',
 		errmsg: '',
 	},
 });
@@ -107,6 +214,8 @@ export default {
 		dialog: false,
 		form: initForm(),
 		loading: false,
+		editName: false,
+		editPassword: false,
 	}),
 	computed: {
 		...mapGetters({
@@ -131,7 +240,32 @@ export default {
 		},
 		cancelEdit() {
 			this.dialog = false;
+			this.editName = false;
+			this.editPassword = false;
 			this.fillForm();
+		},
+		handleEditName() {
+			if (this.editName) {
+				this.form.name.value = this.user.name;
+				this.editName = false;
+			}
+			else {
+				this.editName = true;
+			}
+		},
+		handleEditPwd() {
+			if (this.editPassword) {
+				this.editPassword = false;
+				const resetKeys = ['curPassword', 'newPassword', 'reNewPassword'];
+				for (const key of resetKeys) {
+					if (Object.prototype.hasOwnProperty.call(this.form, resetKeys)) {
+						this.form[key].value = '';
+					}
+				}
+			}
+			else {
+				this.editPassword = true;
+			}
 		},
 		sendUpdate() {
 			this.loading = true;
