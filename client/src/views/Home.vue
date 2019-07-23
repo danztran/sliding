@@ -12,7 +12,8 @@
 				<v-toolbar-title v-t="'app-name'" class="mx-0" />
 				<v-spacer />
 				<section class="nav-btn body-2">
-					<template v-if="!user">
+					<actions-avatar--user v-if="user" in-search />
+					<template v-else>
 						<span
 							:class="{ langActive: locale === 'vi' }"
 							class="changeLang"
@@ -25,23 +26,22 @@
 							@click="changeLocale('en')">
 							EN
 						</span>
-						<v-btn
-							to="/login"
-							flat medium>
-							<router-link v-t="'loginFormTitle'" class="no-underline" to="/login" />
+						<v-btn flat medium>
+							<router-link
+								v-t="'loginFormTitle'"
+								class="no-underline"
+								:to="{ name: 'login' }" />
 						</v-btn>
 						<v-btn
-							v-t="'btn-signup'"
-							to="/signup"
 							flat
 							medium
-							class="primary no-underline"
+							class="primary"
 							color="white">
-							<router-link v-t="'signUp'" to="/signup" />
+							<router-link
+								v-t="'btn-signup'"
+								class="no-underline white--text"
+								:to="{ name: 'signup' }" />
 						</v-btn>
-					</template>
-					<template v-else>
-						<actions-avatar--user in-search />
 					</template>
 				</section>
 			</v-layout>
@@ -64,7 +64,7 @@
 							text-xs-center
 							class="mb-5"
 							style="text-shadow: 0.2em 0.4em 9em #000000de">
-							<h1 v-t="'sologan'" class="display-3 font-weight-regular text-capitalize mb-3" />
+							<div v-t="'sologan'" class="display-3 font-weight-regular text-capitalize mb-3" />
 							<span v-t="'sub-sologan'" class="font-weight-light headline" />
 						</v-flex>
 
@@ -82,17 +82,20 @@
 									<span v-t="'btn-join'" />
 								</v-btn>
 							</div>
-							<div class="mx-4 pt-3 hidden-sm-and-down">
-								<span v-t="'or'" class="headline" />
-							</div>
-							<div class="hidden-sm-and-down">
-								<v-btn
-									v-t="'btn-intro-sigup'"
-									outline
-									dark
-									class="w-3 h-6 ma-0"
-									to="/signup" />
-							</div>
+							<template v-if="!user">
+								<div v-t="'or'" class="mx-4 pt-3 headline" />
+								<div>
+									<v-btn
+										outline
+										dark
+										class="w-3 h-6 ma-0">
+										<router-link
+											v-t="'btn-intro-sigup'"
+											class="no-underline white--text"
+											:to="{ name: 'signup' }" />
+									</v-btn>
+								</div>
+							</template>
 						</v-layout>
 					</v-container>
 				</v-layout>

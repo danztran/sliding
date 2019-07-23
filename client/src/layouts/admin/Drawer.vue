@@ -27,14 +27,9 @@
 							{{ eventInfo ? `# ${eventInfo.code}` : '...' }}
 						</div>
 					</div>
-					<v-tooltip top>
-						<template v-slot:activator="{ on }">
-							<v-btn icon v-on="on">
-								<v-icon color="white" v-text="'$vuetify.icons.setting'" />
-							</v-btn>
-						</template>
-						<span v-t="'accountSetting'" />
-					</v-tooltip>
+					<v-btn icon @click="toggleDialogUserUpdateProfile">
+						<v-icon color="white" v-text="'$vuetify.icons.person'" />
+					</v-btn>
 				</v-layout>
 			</v-layout>
 		</v-img>
@@ -94,14 +89,48 @@
 				<v-list-tile-title v-t="'analytics'" />
 			</v-list-tile>
 
-			<!-- *Homepage -->
 			<v-divider />
+			<!-- *Homepage -->
 			<v-list-tile to="/">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.home'" />
 				</v-list-tile-action>
 
 				<v-list-tile-title v-t="'home-page'" />
+			</v-list-tile>
+
+			<!-- *Invite-access-request -->
+			<v-list-tile @click="toggleDialogAccessInviteRequest">
+				<v-list-tile-action>
+					<v-icon
+						class="pl-1"
+						size="20"
+						v-text="invites.length > 0
+							? '$vuetify.icons.notice'
+							: '$vuetify.icons.no_notice'" />
+				</v-list-tile-action>
+
+				<v-list-tile-content>
+					<v-list-tile-title v-t="'invite-request'" />
+				</v-list-tile-content>
+
+				<v-list-tile-action v-show="invites.length > 0">
+					<v-chip small color="red">
+						<span class="white--text" v-text="invites.length" />
+					</v-chip>
+				</v-list-tile-action>
+			</v-list-tile>
+
+			<!-- *Search -->
+			<v-list-tile :to="{ name: 'search' }">
+				<v-list-tile-action>
+					<v-icon
+						class="pl-1"
+						size="20"
+						v-text="'$vuetify.icons.search'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'btn-search-event'" />
 			</v-list-tile>
 
 			<!-- *Switch event -->
@@ -178,6 +207,7 @@ export default {
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
+			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
@@ -190,7 +220,7 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {
-			this.drawer = !this.drawer;
+			this.drawer = true;
 		});
 	},
 	methods: {
@@ -201,24 +231,32 @@ export default {
 		switchEvent() {
 			this.$router.push({ name: 'my-events' });
 		},
+		toggleDialogUserUpdateProfile() {
+			this.drawer = false;
+			this.$root.$emit('dialog-user-update-profile');
+		},
+		toggleDialogAccessInviteRequest() {
+			this.drawer = false;
+			this.$root.$emit('dialog-invite-request');
+		},
 	},
 };
 </script>
 
 <style lang="scss">
-	#admin-navbar {
-		.v-navigation-drawer {
-			transition: all .8s;
-			-webkit-transition: all .8s;
-		}
-
-		.active-tab {
-			background-color: #f3f3f3;
-		};
-
-		.lightbox {
-			box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
-			background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 80px);
-		}
+#admin-navbar {
+	.v-navigation-drawer {
+		transition: all .8s;
+		-webkit-transition: all .8s;
 	}
+
+	.active-tab {
+		background-color: #f3f3f3;
+	};
+
+	.lightbox {
+		box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
+		background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 80px);
+	}
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<v-card class="no-shadow">
+	<v-card class="no-shadow pb-2">
 		<v-layout row wrap>
 			<!-- *Event infomation -->
 			<v-flex sm10 xs12>

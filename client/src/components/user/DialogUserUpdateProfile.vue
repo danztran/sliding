@@ -14,137 +14,144 @@
 					<div
 						v-t="'dialog-user-edit-info'"
 						class="headline font-weight-light first-letter-uppercase" />
+					<v-spacer />
+					<!-- *Button close -->
+					<v-btn
+						icon
+						@click="dialog=false">
+						<v-icon
+							size="20"
+							v-text="'$vuetify.icons.close'" />
+					</v-btn>
 				</v-card-title>
 
-				<v-card-actions>
-					<v-layout wrap>
-						<v-flex xs12>
-							<v-list two-line dense>
-								<!-- *Username read-only -->
+				<v-layout wrap class="content">
+					<v-flex xs12>
+						<v-list two-line dense>
+							<!-- *Username read-only -->
+							<v-list-tile>
+								<v-list-tile-avatar size="35">
+									<v-icon
+										small
+										class="primary white--text"
+										v-text="'$vuetify.icons.person'" />
+								</v-list-tile-avatar>
+								<v-list-tile-content>
+									<div v-t="'lb-username'" class="caption grey--text" />
+									<div class="subheading" v-text="form.username.value" />
+								</v-list-tile-content>
+							</v-list-tile>
+
+							<!-- *Email read-only -->
+							<v-list-tile>
+								<v-list-tile-avatar size="35">
+									<v-icon
+										small
+										class="primary white--text"
+										v-text="'$vuetify.icons.mail'" />
+								</v-list-tile-avatar>
+								<v-list-tile-content>
+									<div v-t="'lb-email'" class="caption grey--text" />
+									<div class="subheading" v-text="form.email.value" />
+								</v-list-tile-content>
+							</v-list-tile>
+
+							<!-- *Edit name -->
+							<v-list-tile>
+								<v-list-tile-avatar size="35">
+									<v-icon
+										small
+										:class="{'primary white--text': !editName, 'primary--text': editName}"
+										v-text="'$vuetify.icons.faces'" />
+								</v-list-tile-avatar>
+								<v-list-tile-content>
+									<template v-if="editName">
+										<text-field class="pt-4 w-100" :field="form.name" />
+									</template>
+									<template v-else>
+										<div v-t="'lb-name'" class="caption grey--text" />
+										<div class="subheading" v-text="form.name.value" />
+									</template>
+								</v-list-tile-content>
+								<v-list-tile-action>
+									<v-btn icon ripple @click="handleEditName">
+										<v-tooltip bottom>
+											<template v-slot:activator="{ on }">
+												<span v-on="on">
+													<v-icon
+														small
+														color="grey lighten-1"
+														v-text="editName
+															? '$vuetify.icons.cancel'
+															: '$vuetify.icons.edit'" />
+												</span>
+											</template>
+											<span v-t="editName
+												? 'btn-cancel'
+												: 'btn-edit'" />
+										</v-tooltip>
+									</v-btn>
+								</v-list-tile-action>
+							</v-list-tile>
+
+							<!-- *Edit password -->
+							<v-list-tile
+								v-if="!editPassword"
+								transition="slide-y-reverse-transition"
+								@click="editPassword=true">
+								<v-list-tile-avatar size="35">
+									<v-icon
+										small
+										color="primary"
+										v-text="'$vuetify.icons.edit'" />
+								</v-list-tile-avatar>
+								<v-list-tile-content>
+									<div
+										v-t="'btn-edit-password'"
+										class="subheading primary--text first-letter-uppercase" />
+								</v-list-tile-content>
+							</v-list-tile>
+
+							<v-list v-else>
 								<v-list-tile>
 									<v-list-tile-avatar size="35">
 										<v-icon
 											small
-											class="primary white--text"
-											v-text="'$vuetify.icons.person'" />
+											class="primary--text"
+											v-text="'$vuetify.icons.lock'" />
 									</v-list-tile-avatar>
 									<v-list-tile-content>
-										<div v-t="'lb-username'" class="caption grey--text" />
-										<div class="subheading" v-text="form.username.value" />
+										<text-field class="pt-4 w-100" :field="form.curPassword" />
 									</v-list-tile-content>
 								</v-list-tile>
 
-								<!-- *Email read-only -->
 								<v-list-tile>
 									<v-list-tile-avatar size="35">
 										<v-icon
 											small
-											class="primary white--text"
-											v-text="'$vuetify.icons.mail'" />
+											class="primary--text"
+											v-text="'$vuetify.icons.lock'" />
 									</v-list-tile-avatar>
 									<v-list-tile-content>
-										<div v-t="'lb-email'" class="caption grey--text" />
-										<div class="subheading" v-text="form.email.value" />
+										<text-field class="pt-4 w-100" :field="form.newPassword" />
 									</v-list-tile-content>
 								</v-list-tile>
 
-								<!-- *Edit name -->
 								<v-list-tile>
 									<v-list-tile-avatar size="35">
 										<v-icon
 											small
-											:class="{'primary white--text': !editName, 'primary--text': editName}"
-											v-text="'$vuetify.icons.faces'" />
+											class="primary--text"
+											v-text="'$vuetify.icons.lock'" />
 									</v-list-tile-avatar>
 									<v-list-tile-content>
-										<template v-if="editName">
-											<text-field class="pt-4 w-100" :field="form.name" />
-										</template>
-										<template v-else>
-											<div v-t="'lb-name'" class="caption grey--text" />
-											<div class="subheading" v-text="form.name.value" />
-										</template>
-									</v-list-tile-content>
-									<v-list-tile-action>
-										<v-btn icon ripple @click="handleEditName">
-											<v-tooltip bottom>
-												<template v-slot:activator="{ on }">
-													<span v-on="on">
-														<v-icon
-															small
-															color="grey lighten-1"
-															v-text="editName
-																? '$vuetify.icons.cancel'
-																: '$vuetify.icons.edit'" />
-													</span>
-												</template>
-												<span v-t="editName
-													? 'btn-cancel'
-													: 'btn-edit'" />
-											</v-tooltip>
-										</v-btn>
-									</v-list-tile-action>
-								</v-list-tile>
-
-								<!-- *Edit password -->
-								<v-list-tile
-									v-if="!editPassword"
-									transition="slide-y-reverse-transition"
-									@click="editPassword=true">
-									<v-list-tile-avatar size="35">
-										<v-icon
-											small
-											color="primary"
-											v-text="'$vuetify.icons.edit'" />
-									</v-list-tile-avatar>
-									<v-list-tile-content>
-										<div
-											v-t="'btn-edit-password'"
-											class="subheading primary--text first-letter-uppercase" />
+										<text-field class="pt-4 w-100" :field="form.reNewPassword" />
 									</v-list-tile-content>
 								</v-list-tile>
-
-								<v-list v-else>
-									<v-list-tile>
-										<v-list-tile-avatar size="35">
-											<v-icon
-												small
-												class="primary--text"
-												v-text="'$vuetify.icons.lock'" />
-										</v-list-tile-avatar>
-										<v-list-tile-content>
-											<text-field class="pt-4 w-100" :field="form.curPassword" />
-										</v-list-tile-content>
-									</v-list-tile>
-
-									<v-list-tile>
-										<v-list-tile-avatar size="35">
-											<v-icon
-												small
-												class="primary--text"
-												v-text="'$vuetify.icons.lock'" />
-										</v-list-tile-avatar>
-										<v-list-tile-content>
-											<text-field class="pt-4 w-100" :field="form.newPassword" />
-										</v-list-tile-content>
-									</v-list-tile>
-
-									<v-list-tile>
-										<v-list-tile-avatar size="35">
-											<v-icon
-												small
-												class="primary--text"
-												v-text="'$vuetify.icons.lock'" />
-										</v-list-tile-avatar>
-										<v-list-tile-content>
-											<text-field class="pt-4 w-100" :field="form.reNewPassword" />
-										</v-list-tile-content>
-									</v-list-tile>
-								</v-list>
 							</v-list>
-						</v-flex>
-					</v-layout>
-				</v-card-actions>
+						</v-list>
+					</v-flex>
+				</v-layout>
 
 				<!-- *Cancel/Save -->
 				<v-card-actions>
@@ -290,4 +297,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+@media only screen and (max-width: 960px) {
+	.layout.wrap.content {
+		height: calc(100vh - 135px);
+	}
+}
 </style>

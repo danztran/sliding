@@ -34,6 +34,7 @@
 
 				<v-spacer class="hidden-xs-only" />
 
+				<!-- *Search events -->
 				<v-text-field
 					v-if="!isXS"
 					class="pt-2"
@@ -49,7 +50,7 @@
 						v-text="'$vuetify.icons.search'" />
 				</v-list-tile>
 
-				<user-actions-avatar />
+				<user-actions-avatar v-if="!isXS" />
 			</v-layout>
 
 			<!-- TAB SLIDER -->

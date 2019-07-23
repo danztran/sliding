@@ -10,7 +10,7 @@
 		</span>
 		<v-card>
 			<loading-linear />
-			<v-container class="pb-2">
+			<v-container class="px-0">
 				<v-card-title class="py-0">
 					<div
 						v-t="'dialog-user-access-invite'"
@@ -19,7 +19,6 @@
 					<v-spacer />
 					<!-- *Button close -->
 					<v-btn
-						v-if="!isSMnXS"
 						icon
 						@click="dialog=false">
 						<v-icon
@@ -27,7 +26,7 @@
 							v-text="'$vuetify.icons.close'" />
 					</v-btn>
 				</v-card-title>
-				<v-card-text class="wrapper-invites">
+				<v-card-text class="scrollbar-primary wrapper-invites">
 					<v-layout wrap>
 						<v-flex xs12>
 							<card--invite-info
@@ -69,6 +68,18 @@ export default {
 
 <style lang="scss">
 .wrapper-invites {
-	min-height: 50vh;
+	height: 50vh;
+	overflow-y: scroll;
+	overflow: auto;
+	scroll-behavior: smooth;
+
+	.v-card:nth-child(n+2) {
+    padding-top: 8px;
+	}
+}
+@media only screen and (max-width: 960px) {
+	.wrapper-invites {
+		height: calc(100vh - 80px);
+	}
 }
 </style>

@@ -43,11 +43,17 @@
 
 				<v-spacer class="hidden-xs-only" />
 				<v-list-tile>
-					<div />
+					<v-icon
+						v-if="isXS && isHost"
+						size="17"
+						color="white"
+						@click="toggleEventSettingDialog"
+						v-text="'$vuetify.icons.setting'" />
+					<div v-else />
 				</v-list-tile>
 
 				<!-- USER DROPDOWN ACTIONS -->
-				<user-actions-avatar />
+				<user-actions-avatar v-if="!isXS" />
 			</v-layout>
 
 			<!-- TAB SLIDER -->
@@ -67,7 +73,7 @@
 					</v-tab>
 				</v-tabs>
 
-				<v-btn icon @click="toggleEventSettingDialog">
+				<v-btn v-if="!isXS && isHost" icon @click="toggleEventSettingDialog">
 					<v-icon
 						size="17"
 						color="grey darken-1"
@@ -99,7 +105,14 @@ export default {
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
+			eventRole: 'admin/event/getRole',
 		}),
+		isHost() {
+			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
+				return true;
+			}
+			return false;
+		},
 	},
 	created() {
 		this.tabs.forEach((e) => {

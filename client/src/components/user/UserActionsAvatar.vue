@@ -1,6 +1,5 @@
 <template>
 	<v-menu
-		class="hidden-xs-only"
 		transition="slide-y-transition"
 		bottom
 		left
@@ -13,7 +12,7 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<template v-slot:activator="{ on }">
-			<v-avatar :size="35" class="hover-pointer ml-2 hidden-xs-only" v-on="on">
+			<v-avatar :size="35" class="hover-pointer ml-2" v-on="on">
 				<v-icon
 					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"
@@ -26,6 +25,7 @@
 			column>
 			<v-card>
 				<v-list>
+					<!-- *Edit profile -->
 					<v-list-tile>
 						<v-list-tile-avatar size="30">
 							<v-icon size="20" v-text="'$vuetify.icons.person'" />
@@ -40,7 +40,7 @@
 							</v-list-tile-sub-title>
 						</v-list-tile-content>
 
-						<v-list-tile-action>
+						<v-list-tile-action v-if="!inSearch">
 							<v-btn icon @click="toggleDialogUserUpdateProfile">
 								<span
 									v-t="'btn-edit-profile'"
@@ -79,7 +79,7 @@
 					</v-list-tile>
 
 					<!-- *Button for toggle diaog create event -->
-					<v-list-tile @click="toggleDialogCreateEvent">
+					<v-list-tile v-if="!inSearch" @click="toggleDialogCreateEvent">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"
@@ -119,7 +119,7 @@
 
 					<v-divider />
 					<!-- *Invite-access-request -->
-					<v-list-tile @click="toggleDialogAccessInviteRequest">
+					<v-list-tile v-if="!inSearch" @click="toggleDialogAccessInviteRequest">
 						<v-list-tile-action>
 							<v-icon
 								class="pl-1"

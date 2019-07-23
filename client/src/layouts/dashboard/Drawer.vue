@@ -27,14 +27,9 @@
 							{{ user.name }}
 						</div>
 					</div>
-					<v-tooltip top>
-						<template v-slot:activator="{ on }">
-							<v-btn icon v-on="on">
-								<v-icon color="white" v-text="'$vuetify.icons.setting'" />
-							</v-btn>
-						</template>
-						<span v-t="'accountSetting'" />
-					</v-tooltip>
+					<v-btn icon @click="toggleDialogUserUpdateProfile">
+						<v-icon color="white" v-text="'$vuetify.icons.person'" />
+					</v-btn>
 				</v-layout>
 			</v-layout>
 		</v-img>
@@ -42,6 +37,15 @@
 		<v-layout
 			column
 			class="fill-height">
+			<!-- *Homepage -->
+			<v-list-tile to="/">
+				<v-list-tile-action>
+					<v-icon color="secondary" v-text="'$vuetify.icons.home'" />
+				</v-list-tile-action>
+
+				<v-list-tile-title v-t="'home-page'" />
+			</v-list-tile>
+
 			<!-- *My-event -->
 			<v-list-tile
 				:to="{ name: 'my-events' }"
@@ -80,30 +84,46 @@
 
 				<v-list-tile-title v-t="'activity-logs'" />
 			</v-list-tile>
-			<v-divider />
 
-			<!-- *Homepage -->
-			<v-list-tile to="/">
+			<v-divider />
+			<!-- *Invite-access-request -->
+			<v-list-tile @click="toggleDialogAccessInviteRequest">
 				<v-list-tile-action>
-					<v-icon v-text="'$vuetify.icons.home'" />
+					<v-icon
+						class="pl-1"
+						size="20"
+						v-text="invites.length > 0
+							? '$vuetify.icons.notice'
+							: '$vuetify.icons.no_notice'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'home-page'" />
+				<v-list-tile-content>
+					<v-list-tile-title v-t="'invite-request'" />
+				</v-list-tile-content>
+
+				<v-list-tile-action v-show="invites.length > 0">
+					<v-chip small color="red">
+						<span class="white--text" v-text="invites.length" />
+					</v-chip>
+				</v-list-tile-action>
 			</v-list-tile>
 
-			<!-- *Profile -->
-			<v-list-tile>
+			<!-- *Search -->
+			<v-list-tile :to="{ name: 'search' }">
 				<v-list-tile-action>
-					<v-icon v-text="'$vuetify.icons.user'" />
+					<v-icon
+						class="pl-1"
+						size="20"
+						v-text="'$vuetify.icons.search'" />
 				</v-list-tile-action>
 
-				<v-list-tile-title v-t="'btn-your-profile'" />
+				<v-list-tile-title v-t="'btn-search-event'" />
 			</v-list-tile>
 
 			<!-- *Switch language -->
 			<v-list>
 				<v-list-group
-					v-model="dropList"
+					v-model="dropListLang"
 					prepend-icon="language"
 					no-action>
 					<template v-slot:activator>
@@ -139,7 +159,7 @@
 			</v-list>
 
 			<!-- *Logout -->
-			<v-divider v-show="!dropList" />
+			<v-divider v-show="!dropListLang" />
 			<v-list-tile :to="{ name: 'logout' }">
 				<v-list-tile-action>
 					<v-icon v-text="'$vuetify.icons.signout'" />
@@ -159,11 +179,12 @@ export default {
 	name: 'Drawer',
 	data: () => ({
 		drawer: false,
-		dropList: false,
+		dropListLang: false,
 	}),
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
+			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
@@ -171,13 +192,21 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('toggle-drawer', () => {
-			this.drawer = !this.drawer;
+			this.drawer = true;
 		});
 	},
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
-			this.dropList = false;
+			this.dropListLang = false;
+		},
+		toggleDialogUserUpdateProfile() {
+			this.drawer = false;
+			this.$root.$emit('dialog-user-update-profile');
+		},
+		toggleDialogAccessInviteRequest() {
+			this.drawer = false;
+			this.$root.$emit('dialog-invite-request');
 		},
 	},
 };
