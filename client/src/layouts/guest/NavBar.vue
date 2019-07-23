@@ -5,21 +5,22 @@
 			class="pa-0"
 			dark
 			fixed
+			clipped-left
 			color="primary">
 			<v-container
 				:class="{'pa-0': isSMnXS}"
 				fluid
 				grid-list
+				ma-0
 				py-0
-				mt-0
-				mb-0>
+				px-1>
 				<v-layout
 					row
 					align-center
 					justify-space-between
 					fill-height>
 					<v-flex sm4>
-						<v-toolbar-side-icon />
+						<v-toolbar-side-icon @click="toggleDrawer" />
 						<div class="d-inline subheading font-weight-medium">
 							{{ eventInfo ? eventInfo.name : '...' }}
 						</div>
@@ -31,12 +32,28 @@
 							dark
 							centered
 							slider-color="white">
+							<!-- *Question -->
 							<v-tab
-								v-for="(tab, i) in tabs"
-								:key="i"
-								:to="tab.url"
+								:to="{ name: 'guest-questions' }"
+								class="font-weight-regular"
 								active-class="white--text font-weight-medium">
-								<span class="first-letter-uppercase" v-text="tab.name" />
+								<span v-t="'questions'" class="first-letter-uppercase" />
+							</v-tab>
+
+							<!-- *Polls -->
+							<v-tab
+								:to="{ name: 'guest-polls' }"
+								class="font-weight-regular"
+								active-class="white--text font-weight-medium">
+								<span v-t="'polls'" class="first-letter-uppercase" />
+							</v-tab>
+
+							<!-- *Ideas -->
+							<v-tab
+								:to="{ name: 'guest-ideas' }"
+								class="font-weight-regular"
+								active-class="white--text font-weight-medium">
+								<span v-t="'ideas'" class="first-letter-uppercase" />
 							</v-tab>
 						</v-tabs>
 					</v-flex>
@@ -66,12 +83,28 @@
 			centered
 			dark
 			slider-color="white">
+			<!-- *Question -->
 			<v-tab
-				v-for="(tab, i) in tabs"
-				:key="i"
-				:to="tab.url"
+				:to="{ name: 'guest-questions' }"
+				class="font-weight-regular"
 				active-class="white--text font-weight-medium">
-				<span class="first-letter-uppercase" v-text="tab.name" />
+				<span v-t="'questions'" class="first-letter-uppercase" />
+			</v-tab>
+
+			<!-- *Polls -->
+			<v-tab
+				:to="{ name: 'guest-polls' }"
+				class="font-weight-regular"
+				active-class="white--text font-weight-medium">
+				<span v-t="'polls'" class="first-letter-uppercase" />
+			</v-tab>
+
+			<!-- *Ideas -->
+			<v-tab
+				:to="{ name: 'guest-ideas' }"
+				class="font-weight-regular"
+				active-class="white--text font-weight-medium">
+				<span v-t="'ideas'" class="first-letter-uppercase" />
 			</v-tab>
 		</v-tabs>
 	</div>
@@ -86,13 +119,6 @@ export default {
 	components: {
 		'actions-avatar--user': UserActionsAvatar,
 	},
-	data: () => ({
-		tabs: [
-			{ name: 'questions', url: 'questions' },
-			{ name: 'ideas', url: 'polls' },
-			{ name: 'polls', url: 'ideas' },
-		],
-	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'guest/event/getEventInfo',
@@ -105,12 +131,10 @@ export default {
 			return false;
 		},
 	},
-	created() {
-		this.tabs.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
-	},
 	methods: {
+		toggleDrawer() {
+			this.$root.$emit('toggle-guest-drawer');
+		},
 		toggleDialogProfile() {
 			this.$root.$emit('guest-signup-dialog');
 		},
@@ -128,6 +152,9 @@ export default {
 		height: 54px !important;
 		.v-tabs__container {
 			height: 54px !important;
+		}
+		.v-tabs__item {
+			opacity: 1;
 		}
 	}
 	@media only screen and (max-width: 960px) {

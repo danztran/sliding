@@ -1,8 +1,7 @@
 <template>
 	<v-app>
-		<!-- <v-navigation-drawer app hide-overlay ></v-navigation-drawer> -->
+		<drawer />
 		<nav-bar />
-		<anony-dialog--update-signup />
 		<v-content v-if="ready" id="my-guest-content" class="mt-2">
 			<v-slide-y-transition mode="out-in">
 				<keep-alive>
@@ -10,19 +9,28 @@
 				</keep-alive>
 			</v-slide-y-transition>
 		</v-content>
+		<dialog--anony-update-profile />
+		<dialog--invite-request />
+		<dialog--user-update-profile />
 	</v-app>
 </template>
 
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import NavBar from './NavBar.vue';
+import Drawer from './Drawer.vue';
 import handleSockets from '@/mixins/handleSockets';
 import DialogAnonyUpdateSignup from '@/components/user/DialogAnonyUpdateSignup.vue';
+import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
+import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
 
 export default {
 	components: {
 		'nav-bar': NavBar,
-		'anony-dialog--update-signup': DialogAnonyUpdateSignup,
+		drawer: Drawer,
+		'dialog--anony-update-profile': DialogAnonyUpdateSignup,
+		'dialog--invite-request': DialogInviteRequest,
+		'dialog--user-update-profile': DialogUserUpdateProfile,
 	},
 	mixins: [handleSockets],
 	data: () => ({

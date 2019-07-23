@@ -12,7 +12,7 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<template v-slot:activator="{ on }">
-			<v-avatar :size="35" class="hover-pointer ml-2" v-on="on">
+			<v-avatar small class="hover-pointer ml-2" v-on="on">
 				<v-icon
 					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"
@@ -28,7 +28,7 @@
 					<!-- *Edit profile -->
 					<v-list-tile>
 						<v-list-tile-avatar size="30">
-							<v-icon size="20" v-text="'$vuetify.icons.person'" />
+							<v-icon class="pl-1" size="20" v-text="'$vuetify.icons.person'" />
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
@@ -56,7 +56,7 @@
 					<v-list-tile to="/">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								color="secondary"
 								size="20"
 								v-text="'$vuetify.icons.home'" />
@@ -69,7 +69,7 @@
 					<v-list-tile :to="{ name: 'my-events' }">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								color="primary"
 								size="20"
 								v-text="'$vuetify.icons.event'" />
@@ -82,7 +82,7 @@
 					<v-list-tile v-if="!inSearch" @click="toggleDialogCreateEvent">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								color="yellow"
 								size="20"
 								v-text="'$vuetify.icons.add'" />
@@ -95,7 +95,7 @@
 					<v-list-tile :to="{ name: 'coop-events' }">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								color="success"
 								size="20"
 								v-text="'$vuetify.icons.person'" />
@@ -108,7 +108,7 @@
 					<v-list-tile :to="{ name: 'activity-logs' }">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								color="red"
 								size="20"
 								v-text="'$vuetify.icons.analytics'" />
@@ -122,7 +122,7 @@
 					<v-list-tile v-if="!inSearch" @click="toggleDialogAccessInviteRequest">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								size="20"
 								v-text="invites.length > 0
 									? '$vuetify.icons.notice'
@@ -144,7 +144,7 @@
 					<v-list-tile :to="{ name: 'search' }">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								size="20"
 								v-text="'$vuetify.icons.search'" />
 						</v-list-tile-action>
@@ -158,7 +158,7 @@
 							<v-icon
 								v-show="locale === 'vi'"
 								:color="locale === 'vi' ? 'primary' : ''"
-								class="pl-1"
+								class="pl-2"
 								size="20"
 								v-text="'$vuetify.icons.language'" />
 						</v-list-tile-action>
@@ -176,7 +176,7 @@
 							<v-icon
 								v-show="locale === 'en'"
 								:color="locale === 'en' ? 'primary' : ''"
-								class="pl-1"
+								class="pl-2"
 								size="20"
 								v-text="'$vuetify.icons.language'" />
 						</v-list-tile-action>
@@ -193,7 +193,7 @@
 					<v-list-tile :to="{ name: 'logout' }">
 						<v-list-tile-action>
 							<v-icon
-								class="pl-1"
+								class="pl-2"
 								size="20"
 								v-text="'$vuetify.icons.signout'" />
 						</v-list-tile-action>
