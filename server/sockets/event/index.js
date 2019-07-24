@@ -17,9 +17,15 @@ module.exports = (io) => {
 		});
 
 		EventRoleLive({ io, socket });
+		QuestionLive({ io, socket });
+		QuestionReplyLive({ io, socket });
+		QuestionReactionLive({ io, socket });
+		PollLive({ io, socket });
 
 		// join event
 		socket.on('join-event', (code) => {
+			EventLive({ io, socket, code });
+
 			socket.on('disconnect', () => {
 				io.$fn.removeEventIfNoClient({ code });
 			});
@@ -33,12 +39,6 @@ module.exports = (io) => {
 					io.$fn.removeEventIfNoClient({ code });
 				}
 			});
-
-			EventLive({ io, socket, code });
-			QuestionLive({ io, socket });
-			QuestionReplyLive({ io, socket });
-			QuestionReactionLive({ io, socket });
-			PollLive({ io, socket });
 		});
 	});
 };

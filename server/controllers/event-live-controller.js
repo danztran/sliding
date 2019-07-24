@@ -10,7 +10,7 @@ module.exports = {
 			const Event = new EventModel();
 			const EventRole = new EventRoleModel();
 			// find event
-			let ioEvent = io.$fn.getEvent(code);
+			let ioEvent = io.$fn.getEvent({ code });
 			let event = ioEvent;
 			if (!event) {
 				event = await Event.findByCode(code).exec();
@@ -24,11 +24,7 @@ module.exports = {
 			// check user role
 			if (socket.$fn.isAuthenticated()) {
 				const user = socket.$fn.getUser();
-				const roleQuery = {
-					event_id: event.id,
-					user_id: user.id,
-				};
-				const eventRole = await EventRole.findRole(roleQuery).exec();
+				const eventRole = event.admins.find(r => Number(r.user_id) === Number(user.id));
 				if (eventRole) {
 					if (eventRole.is_accepted || eventRole.role === 'host') {
 						result.role = Roles[eventRole.role];
@@ -36,11 +32,16 @@ module.exports = {
 					else {
 						result.role = Roles.guest;
 					}
-					EventRole.setLastAccessed(roleQuery).exec();
+					EventRole.setLastAccessed({
+						user_id: user.id,
+						event_id: event.id,
+					}).exec();
 				}
 				else {
-					EventRole.create({
-						...roleQuery,
+					EventRole.createOrUpdate({
+						event_id: event.id,
+						user_id: user.id,
+					}, {
 						role: 'guest',
 						accessed_at: new Date().toISOString(),
 					}).exec();

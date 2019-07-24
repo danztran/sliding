@@ -25,6 +25,7 @@
 	"addModerator": "Thêm Moderator cho sự kiện này",
 	"userNotFoundByEmail": "Không tìm thấy người dùng nào với email này",
 	"userModeratorAlready": "Người này đã là Moderator",
+	"userModeratorPending": "Bạn đã mời người này",
 	"userHostAlready": "Bạn đang là Host của sự kiện này",
 	"addQuestionReply": "Trả lời câu hỏi",
 	"editQuestionReply": "Sửa câu trả lời",

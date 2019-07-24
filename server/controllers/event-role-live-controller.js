@@ -1,4 +1,4 @@
-const EventModel = requireWrp('models/event');
+// const EventModel = requireWrp('models/event');
 const EventRoleModel = requireWrp('models/event-role');
 const UserModel = requireWrp('models/user');
 
@@ -60,16 +60,8 @@ module.exports = {
 				is_accepted,
 			}).exec();
 
-			const Event = new EventModel();
-			const event = await Event.findById(event_id).exec();
-			if (event) {
-				if (is_accepted) {
-					socket.to(`/${event.code}/admin`).emit('new_accepted_invite');
-				}
-				else {
-					socket.to(`/${event.code}/admin`).emit('new_denied_invite');
-				}
-			}
+			io.$fn.emitIfEventLive({ id: event_id }, 'main', 'new_edited_role', newRole);
+			io.$fn.saveAdmin({ id: event_id }, newRole);
 			return callback({ role: newRole });
 		}
 		catch (error) {
@@ -104,20 +96,28 @@ module.exports = {
 				user_id: result.user.id,
 				is_deleted: false,
 			}).exec();
-			if (role) throw socket.$fn.t('userModeratorAlready');
+			if (role) {
+				switch (role.is_accepted) {
+					case true: throw socket.$fn.t('userModeratorAlready');
+					case null: throw socket.$fn.t('userModeratorPending');
+					default: break;
+				}
+			}
 
 			const admin = await EventRole.createOrUpdate({
 				user_id: result.user.id,
 				event_id: event.id,
 			}, {
 				role: 'moderator',
+				is_deleted: false,
 				updated_at: new Date().toISOString(),
 			}, {
 				select: '"user_id", "role"',
 			}).exec();
+			result.admin = admin;
 
 			socket.$fn.addAdmin(admin);
-			socket.to(`user#${user.username}`).emit('new_invited_to_event', event);
+			io.$fn.emitIfUserOnline(user.id, 'new_invited_to_event', event);
 			return callback(result);
 		}
 		catch (e) {
@@ -154,9 +154,7 @@ module.exports = {
 			callback(true);
 
 			// notify to user
-			const User = new UserModel();
-			const user = await User.findById(info.user_id).exec();
-			socket.to(`user#${user.username}`).emit('new_removed_from_event', event);
+			io.$fn.emitIfUserOnline(info.user_id, 'new_removed_from_event', event);
 		}
 		catch (e) {
 			return socket.$fn.handleError(e, callback);

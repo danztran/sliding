@@ -24,6 +24,7 @@ class EventRoleModel extends Model {
 				r.role,
 				u.name,
 				u.email,
+				r.is_accepted,
 				r.updated_at
 			FROM
 				${this.getName()} as "r",
@@ -85,15 +86,14 @@ class EventRoleModel extends Model {
 				e.id = r.event_id
 				AND r.user_id = u.id
 				AND r.user_id = ${qh.toDollarQuoted(user_id)}
-				AND e.is_deleted = FALSE
-				AND r.is_deleted = FALSE
+				AND (e.is_deleted = FALSE OR e.is_deleted is NULL)
+				AND (r.is_deleted = FALSE OR r.is_deleted is NULL)
 				${role ? `AND r.role = (${qh.toDollarQuoted(role)})` : ''}
 			${qh.toOrderClause(order)}
 			${qh.toLimitClause(limit)}
 			${qh.toOffsetClause(offset)}
 		`);
 		this.setRowReturn(0);
-
 		return this;
 	}
 
@@ -142,7 +142,8 @@ class EventRoleModel extends Model {
 			event_id: info.event_id,
 			user_id: info.user_id,
 		}, {
-			...info,
+			role: info.role,
+			is_accepted: info.is_accepted,
 			updated_at: new Date().toISOString(),
 		}, opt);
 	}

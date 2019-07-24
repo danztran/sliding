@@ -25,6 +25,7 @@
 	"addModerator": "Add a Moderator to this event",
 	"userNotFoundByEmail": "Not found any user with this email",
 	"userModeratorAlready": "This user is already a Moderator",
+	"userModeratorPending": "This user have been invited",
 	"userHostAlready": "You are the Host of this event",
 	"addQuestionReply": "Reply question",
 	"editQuestionReply": "Edit question reply",

@@ -14,18 +14,82 @@ module.exports = {
 				const { code } = event;
 				const _event = {
 					...event,
-					rooms: {
-						main: `/${code}`,
-						admin: `/${code}/admin`,
-						guest: `/${code}/guest`,
-					},
+					rooms: this.getEventRooms(code),
 				};
 				io.$state.events[code] = _event;
 				return { ..._event };
 			},
-			getEvent(code) {
-				const event = io.$state.events[code];
+			getEventRooms(code) {
+				return {
+					main: `event#${code}`,
+					admin: `event#${code}/admin`,
+					guest: `event#${code}/guest`,
+				};
+			},
+			getEvent({ id, code }) {
+				let event;
+				if (id) {
+					event = this.getEventById(id);
+				}
+				else if (code) {
+					event = this.getEventByCode(code);
+				}
+				return event;
+			},
+			getEventByCode(code) {
+				return io.$state.events[code];
+			},
+			getEventById(id) {
+				const event = io.$state.events.find(e => e.id === id);
 				return event ? { ...event } : undefined;
+			},
+			getRoomByUserId(id) {
+				return `user#${id}`;
+			},
+			isUserOnline(id) {
+				const room = this.getRoomByUid(id);
+				return io.sockets.adapter.rooms[room] ? room : undefined;
+			},
+			emitIfUserOnline(id, emiter, data) {
+				const room = this.isUserOnline(id);
+				if (room) {
+					io.to(room).emit(emiter, data);
+				}
+				return Boolean(room);
+			},
+			saveAdmin({ id, code }, admin) {
+				const event = this.getEvent({ id, code });
+				if (event) {
+					const index = event.admins.findIndex(e => e.id === admin.id);
+					if (index !== -1) {
+						event.admins.splice(index, 1, {
+							...event.admins[index],
+							admin,
+						});
+					}
+					else {
+						event.admins.push(admin);
+					}
+					io.$fn.saveEvent(event);
+				}
+				return { ...event };
+			},
+			// rooms as string
+			// eq: 'main admin', 'admin guest main'...
+			emitIfEventLive({ id, code }, rooms, emiter, data) {
+				const event = this.getEvent({ id, code });
+				if (event) {
+					if (rooms.includes('main')) {
+						io.to(event.rooms.main).emit(emiter, data);
+					}
+					if (rooms.includes('admin')) {
+						io.to(event.rooms.admin).emit(emiter, data);
+					}
+					if (rooms.includes('guest')) {
+						io.to(event.rooms.guest).emit(emiter, data);
+					}
+				}
+				return Boolean(event);
 			},
 			removeEvent(code) {
 				delete io.$state.events[code];
@@ -61,7 +125,10 @@ module.exports = {
 
 		const { user } = socket.$state;
 		if (user) {
-			socket.join(`user#${user.username}`);
+			if (user.id) {
+				const room = io.$fn.getRoomByUserId(user.id);
+				socket.join(room);
+			}
 		}
 
 		// functions
@@ -94,7 +161,7 @@ module.exports = {
 				return socket.$state.eventCode;
 			},
 			getCurrentEvent() {
-				return io.$fn.getEvent(this.getEventCode());
+				return io.$fn.getEvent({ code: this.getEventCode() });
 			},
 			setUser(_user) {
 				socket.$state.user = _user !== null ? { ..._user } : null;
@@ -119,16 +186,27 @@ module.exports = {
 			},
 			addAdmin(admin) {
 				const event = this.getCurrentEvent();
-				event.admins.push(admin);
+				const index = event.admins.findIndex(e => e.id === admin.id);
+				if (index !== -1) {
+					event.admins.splice(index, 1, {
+						...event.admins[index],
+						admin,
+					});
+				}
+				else {
+					event.admins.push(admin);
+				}
 				io.$fn.saveEvent(event);
 				return true;
 			},
 			removeAdmin(admin) {
 				const event = this.getCurrentEvent();
 				const index = event.admins.findIndex(e => e.id === admin.id);
-				event.admins.splice(index, 1);
-				io.$fn.saveEvent(event);
-				return true;
+				if (index !== -1) {
+					event.admins.splice(index, 1);
+					io.$fn.saveEvent(event);
+				}
+				return index !== -1;
 			},
 			// check role permissions
 			can(permission) {
@@ -147,7 +225,7 @@ module.exports = {
 			// check event rule
 			allow(action) {
 				if (this.isAdmin()) return true;
-				const event = io.$fn.getEvent(this.getEventCode());
+				const event = io.$fn.getEvent({ code: this.getEventCode() });
 				return event && event[action];
 			},
 			forbid(action, callback) {
