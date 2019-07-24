@@ -22,7 +22,7 @@ Vue.config.productionTip = true;
 Vue.use(VueRouter);
 Vue.use(Vuetify);
 Vue.use(VueMixins);
-Vue.use(VueSocketio, io(process.env.VUE_APP_BASE_URL_SOCKET));
+Vue.use(VueSocketio, io(process.env.VUE_APP_BASE_URL_SOCKET || ''));
 
 // Custom proptotype
 Vue.prototype.$env = process.env;
