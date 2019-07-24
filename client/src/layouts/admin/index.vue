@@ -102,6 +102,9 @@ export default {
 		new_denied_invite(response) {
 			console.warn('denie: ', response);
 		},
+		new_removed_admin(response) {
+			console.warn('remove moderator: ', response);
+		},
 	},
 	methods: {
 		...mapMutations({

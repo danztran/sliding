@@ -24,12 +24,12 @@
 
 			<!-- *list moderator -->
 			<div class="d-flex w-100">
-				<v-slide-y-transition>
-					<template v-for="moderator in moderators">
-						<invite-card--info
-							:key="moderator.user_id"
-							:info="moderator" />
-					</template>
+				<v-slide-y-transition group>
+					<invite-card--info
+						v-for="moderator in moderators"
+						:key="moderator.user_id"
+						:info="moderator"
+						@remove-moderator="removeModerator(moderator)" />
 				</v-slide-y-transition>
 			</div>
 		</template>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 import InviteInfoCard from './pieces/InviteInfoCard.vue';
 import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
@@ -84,6 +84,9 @@ export default {
 		},
 	},
 	methods: {
+		...mapMutations({
+			addModerator: 'admin/event/ADD_MODERATOR',
+		}),
 		handleInvite() {
 			const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			if (this.form.email.value === '') {
@@ -108,8 +111,18 @@ export default {
 					return;
 				}
 				this.loadingState = 'success';
-				console.warn(user);
+				this.addModerator({
+					...user,
+					user_id: user.id,
+					role: 'moderator',
+				});
 				this.form.email.value = '';
+			});
+		},
+		removeModerator(info) {
+			const emiter = 'remove-moderator';
+			this.$socket.emit(emiter, { user_id: info.user_id }, (data) => {
+				console.warn(data);
 			});
 		},
 	},

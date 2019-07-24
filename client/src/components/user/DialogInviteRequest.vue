@@ -31,7 +31,7 @@
 						<v-flex xs12>
 							<card--invite-info
 								v-for="invite of invites"
-								:key="invite.user_id"
+								:key="invite.event.id"
 								:info-invite="invite" />
 						</v-flex>
 					</v-layout>

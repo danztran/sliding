@@ -136,7 +136,7 @@ module.exports = {
 			// check role exists
 			const role = await EventRole.findOne({
 				event_id: event.id,
-				user_id: info.user.id,
+				user_id: info.user_id,
 			}).exec();
 
 			if (role) {

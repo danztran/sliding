@@ -78,8 +78,22 @@
 								<span v-t="'action-tooltip'" />
 							</v-tooltip>
 						</template>
+
+						<!-- *Event QRCode -->
 						<v-list class="py-0 custom-list" dense>
-							<!-- *delete event -->
+							<v-list-tile @click="toggleDialogQRCode">
+								<v-list-tile-action>
+									<v-icon small v-text="'$vuetify.icons.dashboard'" />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title
+										v-text="'QRCode'" />
+								</v-list-tile-content>
+							</v-list-tile>
+						</v-list>
+
+						<!-- *delete event -->
+						<v-list class="py-0 custom-list" dense>
 							<v-list-tile @click="deleteEvent">
 								<v-list-tile-action>
 									<v-icon small v-text="'$vuetify.icons.delete'" />
@@ -135,6 +149,9 @@ export default {
 		},
 		formatTime(date) {
 			return new Date(date).toLocaleString([], { hour: '2-digit', minute: '2-digit' });
+		},
+		toggleDialogQRCode() {
+			this.$root.$emit('dialog-qrcode', this.info.code);
 		},
 		toEventLive() {
 			const { code } = this.info;

@@ -12,6 +12,10 @@ const MERGE_CURRENT_EVENT = (state, newInfo) => {
 	state.eventInfo = { ...state.eventInfo, ...newInfo };
 };
 
+const ADD_MODERATOR = (state, moderator) => {
+	state.eventInfo.admins = [...state.eventInfo.admins, moderator];
+};
+
 const RESET = (state) => {
 	state.eventInfo = null;
 	state.role = null;
@@ -22,5 +26,6 @@ export default {
 	SET_CURRENT_EVENT,
 	MERGE_TEMP_SETTINGS,
 	MERGE_CURRENT_EVENT,
+	ADD_MODERATOR,
 	RESET,
 };

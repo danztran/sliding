@@ -2,7 +2,7 @@
 	<v-card
 		class="no-shadow hover-pointer mb-1">
 		<v-list two-line dense class="pa-0 invite-card-info">
-			<v-list-tile class="pa-0">
+			<v-list-tile>
 				<v-list-tile-avatar
 					class="ml-1"
 					size="23"
@@ -46,7 +46,7 @@
 						</template>
 						<v-list dense>
 							<!-- *revoke invite request -->
-							<v-list-tile @click="revokeAccess">
+							<v-list-tile @click="removeAccess">
 								<v-list-tile-title v-t="'btn-revoke-access'" />
 							</v-list-tile>
 
@@ -71,15 +71,15 @@ export default {
 			type: Object,
 			default: () => ({
 				email: '...',
-				role: '...',
+				role: 'Moderator',
 				name: '',
 				is_accepted: null,
 			}),
 		},
 	},
 	methods: {
-		revokeAccess() {
-			// ...
+		removeAccess() {
+			this.$emit('remove-moderator');
 		},
 		resendRequest() {
 			// ...
