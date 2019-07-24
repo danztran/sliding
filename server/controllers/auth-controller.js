@@ -112,42 +112,39 @@ const Ctlr = {
 	async update(req, res, next) {
 		if (!res.$v.rif(updateRules)) return;
 		const result = {};
+		const empty = isEmpty(req.body);
 		const { id } = req.user;
-		const { curPassword, name } = req.body;
-		try {
-			// get current user info
-			const User = new UserModel();
-			const user = await User.findById(id).exec();
+		const { curPassword } = req.body;
+		// check if form object is null
 
-			if ((name === null || name === '') && (curPassword === null || curPassword === '')) {
-				// throw { warning: "Fields are empty!"};
-				res.messages['warning'] = 'Fields are empty';
+		if (empty === false) {
+			try {
+				// get current user info
+				const User = new UserModel();
+				const user = await User.findById(id).exec();
+				// if user inputs current password
+				if (curPassword !== null && curPassword !== '' && curPassword !== undefined) {
+					// if current password from body is not equal password from user
+					if (curPassword !== crypto.dec(user.password)) {
+						res.status(409);
+						throw { password: res.$t('passwordIncorrect') };
+					}
+				}
+				// update user profile
+				const newInfo = await User.update(req.user, req.body).exec();
+				req.user = newInfo;
+				res.messages['newInfo'] = newInfo;
+				res.messages['auth.update'] = res.$t('successUpdate');
 				return res.sendwm(result);
 			}
-			// if user inputs current password
-			if (curPassword !== null && curPassword !== '') {
-				// if current password from body is not equal password from user
-				if (curPassword !== crypto.dec(user.password)) {
-					res.status(409);
-					throw { password: res.$t('passwordIncorrect') };
-				}
+			catch (error) {
+				res.messages = { ...res.messages, ...error };
+				return next(error);
 			}
-			// update user profile
-			const newInfo = await User.update(req.user, req.body).exec();
-			req.user = newInfo;
-			// res.session.user = newInfo;
-			res.messages['newInfo'] = newInfo;
-			res.messages['auth.update'] = res.$t('successUpdate');
-			return res.sendwm(result);
-
-
-			// userUpdate = await User.findById(id).exec();
-			// res.messages['userUpdate'] = userUpdate;
-			// res.messages['pw'] = crypto.dec(userUpdate.password);
 		}
-		catch (error) {
-			res.messages = { ...res.messages, ...error };
-			return next(error);
+		else {
+			res.messages['warning'] = 'Fields are empty';
+			return res.sendwm(result);
 		}
 	},
 
@@ -193,5 +190,19 @@ const Ctlr = {
 		return res.sendwm();
 	},
 };
+
+function isEmpty(obj) {
+	for (const prop in obj) {
+		if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+			// console.log(`key ${prop}`);
+			// console.log(`value ${obj[prop]}`);
+			if (obj[prop] === null || obj[prop] === '' || (typeof obj[prop]) === 'undefined') {
+				return true;
+			}
+		}
+	}
+
+	return JSON.stringify(obj) === JSON.stringify({});
+}
 
 module.exports = Ctlr;
