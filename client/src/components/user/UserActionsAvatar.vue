@@ -133,10 +133,11 @@
 							<v-list-tile-title v-t="'invite-request'" />
 						</v-list-tile-content>
 
-						<v-list-tile-action v-show="invites.length > 0">
-							<v-chip small color="red">
+						<v-list-tile-action>
+							<v-chip v-show="invites.length > 0 && loadingState === ''" small color="red">
 								<span class="white--text" v-text="invites.length" />
 							</v-chip>
+							<icon-loading-circle v-if="loadingState !== ''" :state.sync="loadingState" />
 						</v-list-tile-action>
 					</v-list-tile>
 
@@ -152,7 +153,7 @@
 						<v-list-tile-title v-t="'btn-search-event'" />
 					</v-list-tile>
 
-					<!-- *Switch language -->
+					<!-- *Switch language: Vietnamese -->
 					<v-list-tile @click="changeLocale('vi')">
 						<v-list-tile-action>
 							<v-icon
@@ -170,7 +171,7 @@
 						</v-list-tile-content>
 					</v-list-tile>
 
-					<!-- *English -->
+					<!-- *Switch language: English -->
 					<v-list-tile @click="changeLocale('en')">
 						<v-list-tile-action>
 							<v-icon
@@ -209,15 +210,22 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 
 export default {
 	name: 'UserActionsAvatar',
+	components: {
+		'icon-loading-circle': IconLoadingCircle,
+	},
 	props: {
 		inSearch: {
 			type: Boolean,
 			default: false,
 		},
 	},
+	data: () => ({
+		loadingState: '',
+	}),
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
@@ -251,6 +259,7 @@ export default {
 			this.$root.$emit('dialog-user-update-profile');
 		},
 		emitQueryInvites() {
+			this.loadingState = 'loading';
 			const emiter = 'query-invited';
 			const queryOpt = {
 				order: '-created_at',
@@ -264,6 +273,7 @@ export default {
 					}
 					return;
 				}
+				this.loadingState = 'success';
 				this.setInvites(events);
 			});
 		},

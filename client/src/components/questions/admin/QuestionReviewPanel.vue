@@ -21,7 +21,8 @@
 			<div class="d-flex">
 				<!-- moderation mode -->
 				<v-switch
-					class="ma-0 pt-2 first-letter-uppercase"
+					v-if="onlyHost"
+					class="ma-0 pt-2"
 					color="primary"
 					:label="$t('moderation-view-stt')"
 					hide-details
@@ -37,7 +38,7 @@
 							medium
 							v-on="on">
 							<v-icon
-								:size="icon.xs"
+								size="20"
 								color="grey lighten-1"
 								v-text="'$vuetify.icons.options_dot'" />
 						</v-btn>
@@ -100,18 +101,18 @@ export default {
 		'empty-review': EmptyReview,
 		'question-card--review': ReviewQuestionCard,
 	},
-	data: () => ({
-		icon: {
-			xs: 20,
-			sm: 30,
-			lg: 35,
-		},
-	}),
 	computed: {
 		...mapGetters({
 			reviewQuestions: 'admin/questions/getReviewQuestions',
+			eventRole: 'admin/event/getRole',
 			onModeration: 'admin/event/onModeration',
 		}),
+		onlyHost() {
+			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
+				return true;
+			}
+			return false;
+		},
 	},
 	methods: {
 		...mapMutations({

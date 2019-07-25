@@ -26,13 +26,17 @@
 			class="subheading grey--text text--darken-1 px-2 text-xs-center" />
 
 		<v-btn
-			v-t="onModeration ? 'btn-disable-moderation' : 'btn-enable-moderation'"
+			v-if="onlyHost"
 			class="mt-3"
 			color="primary"
 			outline
 			small
 			:ripple="false"
-			@click="toggleModerationMode" />
+			@click="toggleModerationMode">
+			<span
+				v-t="onModeration ? 'btn-disable-moderation' : 'btn-enable-moderation'"
+				class="first-letter-uppercase" />
+		</v-btn>
 	</v-layout>
 </template>
 
@@ -42,9 +46,16 @@ export default {
 	name: 'EmptyModerationQuestion',
 	computed: {
 		...mapGetters({
-			reviewQuestions: 'admin/questions/getReviewQuestions',
+			eventRole: 'admin/event/getRole',
 			onModeration: 'admin/event/onModeration',
+			reviewQuestions: 'admin/questions/getReviewQuestions',
 		}),
+		onlyHost() {
+			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
+				return true;
+			}
+			return false;
+		},
 	},
 	methods: {
 		...mapMutations({

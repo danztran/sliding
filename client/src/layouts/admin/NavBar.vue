@@ -44,7 +44,7 @@
 				<v-spacer class="hidden-xs-only" />
 				<v-list-tile>
 					<v-icon
-						v-if="isXS && isHost"
+						v-if="isXS && onlyHost"
 						size="17"
 						color="white"
 						@click="toggleEventSettingDialog"
@@ -63,17 +63,40 @@
 					color="white">
 					<v-tabs-slider color="primary" />
 
+					<!-- *Questions -->
 					<v-tab
-						v-for="(tab, i) of tabs"
-						:key="i"
-						:to="tab.url"
+						:to="{ name: 'admin-questions' }"
 						class="font-weight-regular"
 						active-class="primary--text font-weight-bold">
-						<span class="first-letter-uppercase" v-text="tab.name" />
+						<span v-t="'questions'" class="first-letter-uppercase" />
+					</v-tab>
+
+					<!-- *Polls -->
+					<v-tab
+						:to="{ name: 'admin-polls' }"
+						class="font-weight-regular"
+						active-class="primary--text font-weight-bold">
+						<span v-t="'polls'" class="first-letter-uppercase" />
+					</v-tab>
+
+					<!-- *Ideas -->
+					<v-tab
+						:to="{ name: 'admin-ideas' }"
+						class="font-weight-regular"
+						active-class="primary--text font-weight-bold">
+						<span v-t="'ideas'" class="first-letter-uppercase" />
+					</v-tab>
+
+					<!-- *analytics -->
+					<v-tab
+						:to="{ name: 'admin-analytics' }"
+						class="font-weight-regular"
+						active-class="primary--text font-weight-bold">
+						<span v-t="'analytics'" class="first-letter-uppercase" />
 					</v-tab>
 				</v-tabs>
 
-				<v-btn v-if="!isXS && isHost" icon @click="toggleEventSettingDialog">
+				<v-btn v-if="!isXS && onlyHost" icon @click="toggleEventSettingDialog">
 					<v-icon
 						size="17"
 						color="grey darken-1"
@@ -95,29 +118,18 @@ export default {
 	},
 	data: () => ({
 		date: '',
-		tabs: [
-			{ name: 'questions', url: 'questions' },
-			{ name: 'polls', url: 'polls' },
-			{ name: 'ideas', url: 'ideas' },
-			{ name: 'analytics', url: 'analytics' },
-		],
 	}),
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
 			eventRole: 'admin/event/getRole',
 		}),
-		isHost() {
+		onlyHost() {
 			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
 				return true;
 			}
 			return false;
 		},
-	},
-	created() {
-		this.tabs.forEach((e) => {
-			e.name = this.$t(e.name);
-		});
 	},
 	methods: {
 		toggleDrawer() {

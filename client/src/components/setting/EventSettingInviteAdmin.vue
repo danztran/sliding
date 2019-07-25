@@ -72,6 +72,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			user: 'auth/user',
 			eventInfo: 'admin/event/getEventInfo',
 			tempSettings: 'admin/event/getTempSettings',
 		}),
@@ -88,12 +89,17 @@ export default {
 			addModerator: 'admin/event/ADD_MODERATOR',
 		}),
 		handleInvite() {
+			const email = this.form.email.value;
 			const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			if (this.form.email.value === '') {
+			if (email === '') {
 				this.form.email.errmsg = this.$t('requireField');
 				return;
 			}
-			if (!emailPattern.test(this.form.email.value)) {
+			if (email === this.user.email) {
+				this.form.email.errmsg = this.$t('invite-yourself');
+				return;
+			}
+			if (!emailPattern.test(email)) {
 				this.form.email.errmsg = this.$t('invalid-email');
 				return;
 			}
@@ -122,7 +128,13 @@ export default {
 		removeModerator(info) {
 			const emiter = 'remove-moderator';
 			this.$socket.emit(emiter, { user_id: info.user_id }, (data) => {
-				console.warn(data);
+				if (data === true) {
+					this.moderators = this.moderators.filter(us => us.user_id !== info.user_id);
+					this.showNotify(this.$t('invite-removere-user', { user: info.email }), 'success');
+				}
+				else {
+					this.showNotify(this.$t('err'), 'danger');
+				}
 			});
 		},
 	},
