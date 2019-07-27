@@ -40,6 +40,9 @@ export default {
 		new_added_question(question) {
 			this.addQuestion(question);
 		},
+		new_edited_question(question) {
+			this.editQuestion(question);
+		},
 		new_deleted_question(question) {
 			this.delQuestion(question);
 			this.$root.$emit('delquestion-in-dialog', question.id);
@@ -62,6 +65,7 @@ export default {
 		...mapMutations({
 			setQuestions: 'guest/questions/SET_QUESTIONS',
 			addQuestion: 'guest/questions/ADD_QUESTION',
+			editQuestion: 'guest/questions/EDIT_QUESTION',
 			delQuestion: 'guest/questions/DELETE_QUESTION',
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',

@@ -1,6 +1,6 @@
 <template>
 	<v-card class="no-shadow card-hover guest-question-card">
-		<v-list subheader class="py-1" :class="{ bganimation }">
+		<v-list subheader class="py-1" :class="{ bganimation, isPinned }">
 			<v-list-tile>
 				<!-- *avatar -->
 				<v-list-tile-avatar
@@ -74,14 +74,14 @@
 		<!-- *content -->
 		<v-card-title
 			class="py-0 px-4"
-			:class="{'pb-2': reply, bganimation }">
+			:class="{'pb-2': reply, bganimation, isPinned }">
 			<p class="body-1 mb-0">
 				{{ question.content }}
 			</p>
 		</v-card-title>
 
 		<!-- *footer: count_replies & replies dialog -->
-		<v-card-actions v-if="!reply" class="py-0" :class="{ bganimation }">
+		<v-card-actions v-if="!reply" class="py-0" :class="{ bganimation, isPinned }">
 			<v-list-tile class="grow">
 				<span
 					class="grey--text text-lighten-2 text-lowercase btn-replies"
@@ -151,6 +151,9 @@ export default {
 				return this.question.reactions.filter(r => r.like === true);
 			}
 			return [];
+		},
+		isPinned() {
+			return this.question.is_pinned;
 		},
 	},
 	mounted() {
@@ -227,32 +230,42 @@ export default {
 		};
 	}
 
-	.bganimation {
-		-webkit-animation-name: color-transition;
-		animation-name: color-transition;
-		-webkit-animation-duration: 4s;
-		animation-duration: 4s;
-		-webkit-animation-direction: alternate;
-		animation-direction: alternate;
-		-webkit-animation-iteration-count: infinite;
-		animation-iteration-count: infinite;
-		-webkit-animation-timing-function: linear;
-		animation-timing-function: linear;
+	.isPinned {
+		background: rgba(162, 209, 218, 0.231372549) !important;
 	}
 
-	@-webkit-keyframes color-transition {
-		0% {
-			background-color: #7dd1ce;
-			border-color: #7dd1ce;
-		}
-		50% {
-			background-color: #e6f9fc;
-			border-color: #e6f9fc;
-		}
-		100% {
-			background-color: #f5feff;
-			border-color: #f5feff;
-		}
-	}
+	// .bganimation {
+	// 	-webkit-animation-name: color-transition;
+	// 	animation-name: color-transition;
+	// 	-webkit-animation-duration: 4s;
+	// 	animation-duration: 4s;
+	// 	-webkit-animation-direction: alternate;
+	// 	animation-direction: alternate;
+	// 	-webkit-animation-iteration-count: infinite;
+	// 	animation-iteration-count: infinite;
+	// 	-webkit-animation-timing-function: linear;
+	// 	animation-timing-function: linear;
+	// }
+
+	// @-webkit-keyframes color-transition {
+	// 	0% {
+	// 		background-color: rgba(125, 209, 206, 0);
+	// 		border-color: #7dd1ce;
+	// 	}
+	// 	100% {
+	// 		background-color: rgba(125, 209, 206, 1);
+	// 		border-color: #f5feff;
+	// 	}
+	// }
+	// @keyframes color-transition {
+	// 	0% {
+	// 		background-color: rgba(125, 209, 206, 0);
+	// 		border-color: #7dd1ce;
+	// 	}
+	// 	100% {
+	// 		background-color: rgba(125, 209, 206, 1);
+	// 		border-color: #f5feff;
+	// 	}
+	// }
 }
 </style>

@@ -25,6 +25,15 @@ const ADD_QUESTION = (state, question) => {
 	state.questions.push(Object.assign(question, { count_replies: 0 }));
 };
 
+/* ------------------------------------------------------------------------
+	@desc: receive new question, add to state
+	@socket: listen 'new_added_question'
+------------------------------------------------------------------------*/
+const EDIT_QUESTION = (state, editedQuestion) => {
+	const question = state.questions.find(q => q.id === editedQuestion.id);
+	Object.assign(question, editedQuestion);
+};
+
 
 /* ------------------------------------------------------------------------
 	@desc: receive 'id' question, then remove
@@ -160,6 +169,7 @@ export default {
 	SET_QUESTIONS,
 	SET_QUESTION_REPLIES,
 	ADD_QUESTION,
+	EDIT_QUESTION,
 	DELETE_QUESTION,
 	ADD_SUCCESS_QUESTION,
 	ADD_QUESTION_REPLY,

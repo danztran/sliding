@@ -37,7 +37,8 @@
 		"no-restricted-syntax": "off",
 		"no-tabs": "off",
 		"no-param-reassign": [2, { "props": false }],
-		"no-console": ["error", { "allow": ["warn", "error"] }]
+		"no-console": ["error", { "allow": ["warn", "error"] }],
+		"no-use-before-define": ["error", { "functions": false }]
 	},
 	"settings": {
 		"import/resolver": {

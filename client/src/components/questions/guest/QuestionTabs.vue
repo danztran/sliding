@@ -48,7 +48,11 @@
 					<v-layout row wrap>
 						<v-flex xs12>
 							<question-card
-								v-for="question in popularQuestions"
+								v-for="question in popularPinnedQuestions"
+								:key="question.id"
+								:question="question" />
+							<question-card
+								v-for="question in popularOtherQuestions"
 								:key="question.id"
 								:question="question" />
 						</v-flex>
@@ -94,6 +98,12 @@ export default {
 			popularQuestions: 'guest/questions/getPopularQuestions',
 			recentQuestions: 'guest/questions/getRecentQuestions',
 		}),
+		popularPinnedQuestions() {
+			return this.popularQuestions.filter(q => q.is_pinned);
+		},
+		popularOtherQuestions() {
+			return this.popularQuestions.filter(q => !q.is_pinned);
+		},
 	},
 };
 </script>
