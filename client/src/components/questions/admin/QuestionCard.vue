@@ -1,6 +1,7 @@
 <!-- @desc: question card in live/archive tabs -->
 <template>
 	<div class="question-card">
+		<span>{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-hover>
 			<v-card
 				slot-scope="{ hover }"
@@ -36,15 +37,26 @@
 									<v-icon
 										:size="icon.xs"
 										v-text="'$vuetify.icons.like'" />
-									&nbsp;•
+									&nbsp;
+									<template v-if="onDislike">
+										<span>{{ dislikes.length }}&nbsp;</span>
+										<v-icon
+											:size="icon.xs"
+											v-text="'$vuetify.icons.dislike'" />
+									</template>
+									&nbsp;
+									•
 								</template>
-								<span v-text="dateQCreated" />
-								<v-chip
-									v-if="isAnswered"
-									class="my-0"
-									small
-									outline
-									color="success">Answered</v-chip>
+								<span>
+									{{ dateQCreated }}
+									<v-chip
+										v-if="isAnswered"
+										v-t="'btn-answered'"
+										class="my-0 btn-answered"
+										small
+										outline
+										color="success" />
+								</span>
 							</span>
 						</v-list-tile-content>
 
@@ -263,6 +275,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			event: 'admin/event/getEventInfo',
 			getQReactions: 'admin/questions/getQuestionsReactions',
 		}),
 		checkValidEdit() {
@@ -290,11 +303,17 @@ export default {
 			return this.question.is_answered;
 		},
 		likes() {
-			if (this.reactions) return this.reactions.filter(r => r.like === true);
-			return [];
+			return this.reactions ? this.reactions.filter(r => r.like === true) : [];
+		},
+		onDislike() {
+			return this.event ? this.event.allow_question_dislike : false;
+		},
+		dislikes() {
+			return this.reactions ? this.reactions.filter(r => r.like === false) : [];
 		},
 	},
 	mounted() {
+		this.reactions = this.getQReactions(this.question.id);
 		this.$root.$on('update-reactions', () => {
 			this.reactions = this.getQReactions(this.question.id);
 		});
@@ -391,6 +410,17 @@ export default {
 	}
 	.v-chip--small {
 		height: 21px !important;
+	}
+	.btn-answered {
+		// font-size: 13px;
+		padding: 4px;
+		&::before {
+			content: '(';
+		}
+		&::after {
+			content: ')';
+		}
+		border: none !important;
 	}
 }
 </style>

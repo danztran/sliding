@@ -145,6 +145,7 @@
 		"btn-filter": "Filter",
 		"btn-mark-answer": "Mark as answered",
 		"btn-unmark-answer": "Unmark as answered",
+		"btn-answered": "Answered",
 		"btn-pin-question": "Pin to top",
 		"btn-reply": "Reply",
 		"btn-replies": "Replies",

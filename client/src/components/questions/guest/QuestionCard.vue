@@ -1,5 +1,6 @@
 <template>
 	<v-card class="no-shadow card-hover guest-question-card">
+		<span>{{ $t('FOR_A_PURPOSE') }}</span>
 		<v-list subheader class="py-1" :class="{ bganimation, isPinned }">
 			<v-list-tile>
 				<!-- *avatar -->
@@ -20,6 +21,13 @@
 					</span>
 					<span class="body-1 grey--text font-weight-light">
 						{{ dateQCreated }}
+						<v-chip
+							v-if="isAnswered"
+							v-t="'btn-answered'"
+							class="my-0 is-answered"
+							small
+							outline
+							color="success" />
 					</span>
 				</v-list-tile-content>
 
@@ -81,23 +89,27 @@
 		</v-card-title>
 
 		<!-- *footer: count_replies & replies dialog -->
-		<v-card-actions v-if="!reply" class="py-0" :class="{ bganimation, isPinned }">
-			<v-list-tile class="grow">
-				<span
-					class="grey--text text-lighten-2 text-lowercase btn-replies"
-					@click="showDialogReplies(question)">
-					<v-icon size="14" v-text="'$vuetify.icons.guest_reply'" />
-					<span class="caption text-lowercase">
-						{{ question.count_replies || 0 }}&nbsp;
-					</span>
+		<v-layout
+			align-center
+			justify-end :class="{ bganimation, isPinned }">
+			<v-card-actions v-if="!reply" class="py-0">
+				<v-list-tile class="grow">
 					<span
-						v-t="question.count_replies > 2
-							? 'btn-reply'
-							: 'btn-replies'"
-						class="caption" />
-				</span>
-			</v-list-tile>
-		</v-card-actions>
+						class="grey--text text-lighten-2 text-lowercase btn-replies"
+						@click="showDialogReplies(question)">
+						<v-icon size="16" v-text="'$vuetify.icons.guest_reply'" />
+						<span class="caption text-lowercase">
+							{{ question.count_replies || 0 }}&nbsp;
+						</span>
+						<span
+							v-t="question.count_replies > 2
+								? 'btn-reply'
+								: 'btn-replies'"
+							class="caption" />
+					</span>
+				</v-list-tile>
+			</v-card-actions>
+		</v-layout>
 	</v-card>
 </template>
 
@@ -154,6 +166,9 @@ export default {
 		},
 		isPinned() {
 			return this.question.is_pinned;
+		},
+		isAnswered() {
+			return this.question.is_answered;
 		},
 	},
 	mounted() {
@@ -223,11 +238,24 @@ export default {
 		}
 	}
 
+	.is-answered {
+		// font-size: 12px;
+		&::before {
+			content: '(';
+		}
+		&::after {
+			content: ')';
+		}
+		border: none !important;
+	}
+
 	.btn-replies {
 		&:hover {
 			cursor: pointer;
 			background-color: #f3f3f3;
 		};
+		transform: scale(1.1);
+		padding-right: 10px;
 	}
 
 	.isPinned {
