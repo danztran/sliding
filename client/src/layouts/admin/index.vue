@@ -61,6 +61,7 @@ export default {
 	},
 	created() {
 		if (!this.user) {
+			this.$cookies.set('redirected', true);
 			this.$router.push({ name: 'search-event', query: this.$route.params });
 		}
 		else {

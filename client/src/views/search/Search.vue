@@ -66,7 +66,10 @@ export default {
 	watch: {
 		user(val, old) {
 			if (!old && val) {
-				this.$router.go(-1);
+				if (this.$cookies.get('redirected')) {
+					this.$cookies.remove('redirected');
+					this.$router.go(-1);
+				}
 			}
 		},
 	},

@@ -100,8 +100,15 @@ export default {
 	},
 	watch: {
 		user(val) {
+			this.loading = true;
 			if (val && this.beforeAuth) {
-				this.$router.go(-1);
+				if (this.$cookies.get('redirected')) {
+					this.$cookies.remove('redirected');
+					this.$router.go(-1);
+				}
+				else {
+					this.$router.push({ name: 'dashboard' });
+				}
 			}
 		},
 	},
