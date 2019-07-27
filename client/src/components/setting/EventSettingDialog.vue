@@ -95,7 +95,7 @@
 						</v-btn>
 					</v-card-title>
 
-					<!-- @desc: body main content -->
+					<!-- @desc: settings content -->
 					<event-settings-content />
 
 					<!-- @desc: footer save setting btn -->
@@ -136,6 +136,7 @@ export default {
 		},
 		settingDialog: false,
 		loadingState: '',
+		window: 0,
 	}),
 	computed: {
 		...mapGetters({

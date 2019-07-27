@@ -136,15 +136,24 @@ export default {
 				.post(this.$api.auth.login, loginFormData)
 				.then((res) => {
 					this.$store.dispatch('auth/setAuth', res.data.user);
-					if (this.redirectWEC !== null) {
-						this.$router.push({
-							name: 'guest-event',
-							params: { code: this.redirectWEC },
-						});
-						return;
-					}
-					this.$socket.emit('update-authen');
-					this.$router.push({ name: 'my-events' });
+					this.$socket.emit('update-authen', ({ reload }) => {
+						if (this.redirectWEC !== null) {
+							if (reload) {
+								window.location.pathname = `guest/event/${this.redirectWEC}`;
+								return;
+							}
+							this.$router.push({
+								name: 'guest-event',
+								params: { code: this.redirectWEC },
+							});
+							return;
+						}
+						if (reload) {
+							window.location.pathname = '/dashboard/my-events';
+							return;
+						}
+						this.$router.push({ name: 'my-events' });
+					});
 				})
 				.catch(err => this.handleErrorMessages(err.messages))
 				.then(() => {
