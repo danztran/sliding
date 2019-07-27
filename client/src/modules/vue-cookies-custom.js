@@ -13,7 +13,7 @@
 /* eslint-disable */
 import CryptoJS from './aes';
 const defaultConfig = {
-	expires: '1d',
+	expires: '10d',
 	path: '; path=/'
 };
 const aeskey = process.env.VUE_APP_AES_KEY || 'nokeyatall';

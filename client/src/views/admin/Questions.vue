@@ -48,6 +48,12 @@ export default {
 		new_added_question(question) {
 			this.addQuestion(question);
 		},
+		new_edited_question(question) {
+			this.mergeQuestion(question);
+		},
+		new_deleted_question(question) {
+			this.deleteQuestion(question);
+		},
 		new_added_question_reply(reply) {
 			this.addQuestionReply(reply);
 		},
@@ -67,6 +73,8 @@ export default {
 		...mapMutations({
 			setQuestions: 'admin/questions/SET_QUESTIONS',
 			addQuestion: 'admin/questions/ADD_QUESTION',
+			mergeQuestion: 'admin/questions/MERGE_QUESTION',
+			deleteQuestion: 'admin/questions/DELETE_QUESTION',
 			addQuestionReply: 'admin/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'admin/questions/MERGE_EDIT_REPLY',
 			mergeQuestionReaction: 'admin/questions/MERGE_QUESTION_REACTION',
