@@ -53,6 +53,8 @@
 		"invite-removere-user": "Revoked {user} moderator access successfully",
 		"invite-yourself": "You are already a Host of this event",
 		"invite-send": "Add new Moderator successfully",
+		"invite-new": "You receive a new invitation co-op event",
+		"invite-revoke": "Sorry, your Moderator access has been revoked. Website will auto-redirect",
 		"lang-choose-en": "English (US)",
 		"lang-choose-vi": "Vietnamese (VI)",
 		"recent-count-question-title": "câu hỏi",

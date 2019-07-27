@@ -28,14 +28,16 @@ export default {
 	sockets: {
 		new_invited_to_event(newInvite) {
 			this.addInvite(newInvite);
+			this.showNotify(this.$t('invite-new'), 'success');
 		},
 		new_removed_from_event(delInvite) {
 			this.deleteInvite(delInvite);
-			const inAdmin = /admin/i;
+			const inEvent = /admin/i;
 			const route = this.$route;
-			if (inAdmin.test(route.name)) {
+			if (inEvent.test(route.name)) {
 				if (delInvite.code === route.params.code) {
 					this.$router.push({ name: 'guest-event', params: { code: route.params.code } });
+					this.showNotify(this.$t('invite-revoke'), 'danger');
 				}
 			}
 		},

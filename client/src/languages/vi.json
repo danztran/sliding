@@ -53,6 +53,8 @@
 		"invite-removere-user": "Thu hồi quyền Moderator của {user} thành công",
 		"invite-yourself": "Bạn đã là chủ sự kiện",
 		"invite-send": "Thêm Moderator thành công",
+		"invite-new": "Bạn nhận lời mời hợp tác sự kiện",
+		"invite-revoke": "Xin lỗi, quyền truy cập Moderator đã bị thu hồi. Hệ thống sẽ tự động chuyển trang",
 		"lang-choose-en": "Tiếng Anh",
 		"lang-choose-vi": "Tiếng Việt",
 		"recent-count-question-title": "câu hỏi",

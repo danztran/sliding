@@ -21,7 +21,7 @@
 			</div>
 
 			<!-- *Auth via passcode -->
-			<div class="d-flex w-100">
+			<div class="d-flex w-100 mt-3">
 				<v-flex xs9>
 					<div
 						v-t="'event-setting-require-passcode'"

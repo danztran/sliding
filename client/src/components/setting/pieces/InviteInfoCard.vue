@@ -59,7 +59,6 @@
 				</v-list-tile-action>
 			</v-list-tile>
 		</v-list>
-		<v-divider inset />
 	</v-card>
 </template>
 

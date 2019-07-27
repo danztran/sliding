@@ -16,7 +16,7 @@ const MERGE_CURRENT_EVENT = (state, newInfo) => {
 /* ------------------------------------------------------------------------
 	@desc: admin add new moderator
 	@socket: emiter 'add-moderator'
-	@source: cpm/settings/EventSettingInviteAdmin.vue
+	@source: cpn/settings/EventSettingInviteAdmin.vue
 ------------------------------------------------------------------------*/
 const ADD_MODERATOR = (state, moderator) => {
 	state.eventInfo.admins.unshift(moderator);
@@ -26,7 +26,7 @@ const ADD_MODERATOR = (state, moderator) => {
 /* ------------------------------------------------------------------------
 	@desc: admin revoke(remove) moderator
 	@socket: emiter 'add-moderator'
-	@source: cpm/settings/EventSettingInviteAdmin.vue
+	@source: cpn/settings/EventSettingInviteAdmin.vue
 ------------------------------------------------------------------------*/
 const DELETE_MODERATOR = (state, userId) => {
 	const idx = state.eventInfo.admins.findIndex(us => Number(us.user_id) === Number(userId));
