@@ -58,6 +58,8 @@ module.exports = {
 				...role,
 				role: 'moderator',
 				is_accepted,
+			}, {
+				select: '*',
 			}).exec();
 
 			io.$fn.emitIfEventLive({ id: event_id }, 'main', 'new_edited_role', newRole);
@@ -90,11 +92,16 @@ module.exports = {
 
 			result.user = { ...user, email: info.email };
 
-			// check role exists
-			const role = await EventRole.findOne({
+			const roleQuery = {
 				event_id: event.id,
 				user_id: result.user.id,
 				is_deleted: false,
+			};
+
+			// check role exists
+			const role = await EventRole.findOne({
+				...roleQuery,
+				role: 'moderator',
 			}).exec();
 			if (role) {
 				switch (role.is_accepted) {
@@ -110,9 +117,10 @@ module.exports = {
 			}, {
 				role: 'moderator',
 				is_deleted: false,
+				is_accepted: null,
 				updated_at: new Date().toISOString(),
 			}, {
-				select: '"user_id", "role"',
+				select: '"user_id", "role", "is_accepted"',
 			}).exec();
 			result.admin = admin;
 

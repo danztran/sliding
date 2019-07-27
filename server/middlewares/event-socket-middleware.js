@@ -40,14 +40,19 @@ module.exports = {
 				return io.$state.events[code];
 			},
 			getEventById(id) {
-				const event = io.$state.events.find(e => e.id === id);
+				let event;
+				for (const e of Object.values(io.$state.events)) {
+					if (Number(e.id) === Number(id)) {
+						event = e;
+					}
+				}
 				return event ? { ...event } : undefined;
 			},
 			getRoomByUserId(id) {
 				return `user#${id}`;
 			},
 			isUserOnline(id) {
-				const room = this.getRoomByUid(id);
+				const room = this.getRoomByUserId(id);
 				return io.sockets.adapter.rooms[room] ? room : undefined;
 			},
 			emitIfUserOnline(id, emiter, data) {
@@ -60,7 +65,7 @@ module.exports = {
 			saveAdmin({ id, code }, admin) {
 				const event = this.getEvent({ id, code });
 				if (event) {
-					const index = event.admins.findIndex(e => e.id === admin.id);
+					const index = event.admins.findIndex(e => e.id === admin.user_id);
 					if (index !== -1) {
 						event.admins.splice(index, 1, {
 							...event.admins[index],
