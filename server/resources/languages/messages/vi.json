@@ -16,6 +16,7 @@
 	"eventNotFound": "Không tìm thấy sự kiện",
 	"replyNotFound": "Câu trả lời này không còn tồn tại",
 	"pollNotFound": "Bầu chọn này không còn tồn tại",
+	"pollOptionNotFound": "Lựa chọn này không còn tồn tại",
 	"noPermissionTo": "Xin lỗi. Bạn không có quyền để {permission}",
 	"forbidTo": "Sự kiện này hiện không cho phép {action}",
 	"allow_question": "Đặt câu hỏi",
@@ -34,5 +35,11 @@
 	"addQuestion": "Đặt câu hỏi",
 	"editQuestion": "Sửa nội dung câu hỏi",
 	"deleteQuestion": "Xóa câu hỏi",
-	"notFoundEventByCode": "Không tìm thấy sự kiện nào"
+	"notFoundEventByCode": "Không tìm thấy sự kiện nào",
+	"addPoll": "Thêm bầu chọn mới",
+	"editPoll": "Chỉnh sửa bầu chọn",
+	"deletePoll": "Xóa bầu chọn",
+	"addPollOption": "Thêm lựa chọn mới",
+	"editPollOption": "Chỉnh sửa nội dung lựa chọn",
+	"deletePollOption": "Xóa lựa chọn này"
 }

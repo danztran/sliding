@@ -13,6 +13,9 @@
 		"deleteQuestion": false,
 		"addPoll": false,
 		"editPoll": false,
-		"deletePoll": false
+		"deletePoll": false,
+		"addPollOption": false,
+		"editPollOption": false,
+		"deletePollOption": false
 	}
 }
