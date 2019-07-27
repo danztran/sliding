@@ -28,7 +28,8 @@ import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
 import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
 
 
-export	default {
+export default {
+	name: 'MyDashboard',
 	components: {
 		navbar: NavBar,
 		drawer: Drawer,
@@ -36,6 +37,9 @@ export	default {
 		'dialog--create-event': DashboardEventDialog,
 		'dialog--invite-request': DialogInviteRequest,
 		'dialog--user-update-profile': DialogUserUpdateProfile,
+	},
+	mounted() {
+		this.$root.$emit('hide-loading-overlay');
 	},
 };
 </script>

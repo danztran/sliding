@@ -13,8 +13,14 @@ module.exports = (io) => {
 	io.on('connection', (socket) => {
 		EventSocketMdw.setSocket({ io, socket });
 
-		socket.on('update-authen', () => {
-			socket.$fn.reloadSession();
+		socket.on('update-authen', async (callback) => {
+			try {
+				await socket.$fn.reloadSession();
+				callback({});
+			}
+			catch (error) {
+				callback({ reload: true });
+			}
 		});
 
 		EventRoleLive({ io, socket });

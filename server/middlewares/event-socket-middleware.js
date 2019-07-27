@@ -149,11 +149,14 @@ module.exports = {
 				return key ? socket.request.session[key] : socket.request.session;
 			},
 			reloadSession() {
-				socket.request.session.reload((err) => {
-					if (err) {
-						console.error(err);
-					}
-					this.setUser(socket.request.session.user || null);
+				return new Promise((resolve, reject) => {
+					socket.request.session.reload((err) => {
+						if (err) {
+							reject(err);
+						}
+						this.setUser(socket.request.session.user || null);
+						resolve(true);
+					});
 				});
 			},
 			setLocale(locale) {
@@ -259,7 +262,7 @@ module.exports = {
 					}
 					errmsg = 'Callback must be a function!';
 				}
-				return socket.emit('event_errmsg', { errmsg });
+				return socket.emit('new_error_message', { errmsg });
 			},
 		};
 	},

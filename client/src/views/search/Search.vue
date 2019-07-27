@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
 import EventCardInfo from '@/components/search/EventCardInfo.vue';
 
@@ -57,6 +58,18 @@ export default {
 		showNotFoundMsg: false,
 		eventInfo: {},
 	}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user',
+		}),
+	},
+	watch: {
+		user(val, old) {
+			if (!old && val) {
+				this.$router.go(-1);
+			}
+		},
+	},
 	mounted() {
 		if (this.$route.query.code !== undefined) {
 			this.keySearch.value = this.$route.query.code;

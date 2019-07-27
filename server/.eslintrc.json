@@ -10,7 +10,11 @@
 		"brace-style": ["error", "stroustrup"],
 		"eol-last": ["error", "always"],
 		"semi": [1, "always"],
-		"space-before-function-paren": ["error", "never"],
+		"space-before-function-paren": ["error", {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
 		"comma-dangle": ["error", "always-multiline"],
 		"no-var": "error",
 		"one-var": "off",

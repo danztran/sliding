@@ -50,7 +50,7 @@ module.exports = {
 			}
 			else {
 				throw {
-					expected: 'Unauthenticated',
+					expected: 440, // unauthenticated
 				};
 			}
 			socket.$fn.setRole(result.role.name);

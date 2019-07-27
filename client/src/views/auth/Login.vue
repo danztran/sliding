@@ -90,11 +90,20 @@ export default {
 			},
 		},
 		redirectWEC: null,
+		beforeAuth: true,
 	}),
 	computed: {
 		...mapGetters({
+			user: 'auth/user',
 			fillInfo: 'auth/fillInfo',
 		}),
+	},
+	watch: {
+		user(val) {
+			if (val && this.beforeAuth) {
+				this.$router.go(-1);
+			}
+		},
 	},
 	created() {
 		if (this.fillInfo.username !== '') {
@@ -110,9 +119,11 @@ export default {
 		if (this.$route.params.ecfs !== undefined) {
 			this.redirectWEC = this.$route.params.ecfs;
 		}
+		this.$root.$emit('hide-loading-overlay');
 	},
 	methods: {
 		handleLogin() {
+			this.beforeAuth = false;
 			this.loading = true;
 			this.errorMessage = '';
 			this.flashMessage = '';

@@ -25,5 +25,6 @@ module.exports = session({
 		secret: fileStoreSecret,
 		ttl: fileStoreMaxAge,
 		fileExtension: fileStoreExtension,
+		logFn() {},
 	}),
 });

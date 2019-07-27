@@ -55,7 +55,6 @@ const Ctlr = {
 			const name = `${res.$t('anonymousUser')} ${Math.floor(Math.random() * 10000)}`;
 			const user = await User.quickCreate({ name }).exec();
 			result.user = user;
-
 			req.logIn(user, (error) => {
 				if (error) return next(error);
 				req.session.user = req.user;
@@ -151,8 +150,10 @@ const Ctlr = {
 	login(req, res, next) {
 		const User = new UserModel();
 		if (req.user) {
-			res.messages['auth.login'] = res.$t('alreadyLoggedIn');
-			return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
+			delete req.session.user;
+			req.logout();
+			// res.messages['auth.login'] = res.$t('alreadyLoggedIn');
+			// return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
 		}
 		if (!res.$v.rif(logInRules)) return;
 		passport.authenticate('local', (err, user, field, info) => {
