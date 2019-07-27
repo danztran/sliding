@@ -16,10 +16,14 @@ module.exports = (io) => {
 		socket.on('update-authen', async (callback) => {
 			try {
 				await socket.$fn.reloadSession();
-				callback({});
+				if (callback) {
+					callback({});
+				}
 			}
 			catch (error) {
-				callback({ reload: true });
+				if (callback) {
+					callback({ reload: true });
+				}
 			}
 		});
 
