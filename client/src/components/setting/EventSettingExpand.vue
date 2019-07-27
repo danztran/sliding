@@ -37,9 +37,11 @@
 
 			<!-- settings content -->
 			<v-card flat>
-				<v-card-text flat>
-					<v-layout wrap justify-center align-center>
-						<slot name="content" />
+				<v-card-text flat class="pt-0">
+					<v-layout row wrap justify-center align-center>
+						<v-flex xs10 offset-xs1 offset-sm0 offset-md1>
+							<slot name="content" />
+						</v-flex>
 					</v-layout>
 				</v-card-text>
 			</v-card>

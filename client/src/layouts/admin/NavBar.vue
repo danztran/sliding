@@ -96,7 +96,11 @@
 					</v-tab>
 				</v-tabs>
 
-				<v-btn v-if="!isXS && onlyHost" icon @click="toggleEventSettingDialog">
+				<v-btn
+					v-if="!isXS && onlyHost"
+					class="mr-1"
+					icon
+					@click="toggleEventSettingDialog">
 					<v-icon
 						size="17"
 						color="grey darken-1"

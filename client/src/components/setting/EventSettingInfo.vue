@@ -1,5 +1,4 @@
 <template>
-	<!-- @desc: Basic infomation -->
 	<event-setting--expand :info="basicExpand">
 		<template #subtitle-text>
 			<!-- *event code -->
@@ -10,30 +9,31 @@
 
 		<!-- *field: eventname, description, date begin/end, code, link -->
 		<template #content>
-			<v-flex xs12>
-				<text-field
-					:field="basicSettings.form.name" />
-				<text-area
-					class="pt-2"
-					:field="basicSettings.form.description" />
-				<text-field
-					class="input-code"
-					:field="basicSettings.form.code" />
-				<text-field
-					:field="basicSettings.form.link" />
-			</v-flex>
-			<v-flex xs12 sm6 class="pr-1">
-				<date-picker--menu :date-info="basicSettings.form.start_at" />
-			</v-flex>
-			<v-flex xs12 sm6>
-				<date-picker--menu :date-info="basicSettings.form.end_at" />
-			</v-flex>
-			<v-flex xs12 sm6 class="pr-1">
-				<time-picker--menu :time-info="basicSettings.form.start_at" />
-			</v-flex>
-			<v-flex xs12 sm6>
-				<time-picker--menu :time-info="basicSettings.form.end_at" />
-			</v-flex>
+			<text-field
+				:field="basicSettings.form.name" />
+			<text-area
+				class="pt-2 w-100"
+				:field="basicSettings.form.description" />
+			<text-field
+				class="input-code"
+				:field="basicSettings.form.code" />
+			<text-field
+				:field="basicSettings.form.link" />
+
+			<v-layout row wrap>
+				<v-flex xs12 sm6 class="pr-1">
+					<date-picker--menu :date-info="basicSettings.form.start_at" />
+				</v-flex>
+				<v-flex xs12 sm6>
+					<date-picker--menu :date-info="basicSettings.form.end_at" />
+				</v-flex>
+				<v-flex xs12 sm6 class="pr-1">
+					<time-picker--menu :time-info="basicSettings.form.start_at" />
+				</v-flex>
+				<v-flex xs12 sm6>
+					<time-picker--menu :time-info="basicSettings.form.end_at" />
+				</v-flex>
+			</v-layout>
 		</template>
 	</event-setting--expand>
 </template>

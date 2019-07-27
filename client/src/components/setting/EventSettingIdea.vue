@@ -12,7 +12,7 @@
 		<template #content>
 			<!-- *dislike idea-->
 			<div class="d-flex w-100">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-dislikes'"
 						class="body-1" />
@@ -20,7 +20,7 @@
 						v-t="'event-setting-idea-dislike-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="ideaData.allow_idea_dislikes"
 						class="right"
@@ -30,7 +30,7 @@
 
 			<!-- *allow replies idea -->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-replies'"
 						class="body-1" />
@@ -38,7 +38,7 @@
 						v-t="'event-setting-idea-replies-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="ideaData.allow_idea_reply"
 						class="right"
@@ -48,7 +48,7 @@
 
 			<!-- *anonymous send ideas -->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-idea-guest'"
 						class="body-1" />
@@ -56,7 +56,7 @@
 						v-t="'event-setting-idea-guest-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="ideaData.allow_anonymous_idea"
 						class="right"

@@ -1,10 +1,9 @@
 <template>
-	<!-- @desc: Privacy -->
 	<event-setting--expand :info="privacyExpand">
 		<template #content>
 			<!-- *allow search -->
 			<div class="d-flex w-100">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-hidden-search'"
 						class="body-1" />
@@ -12,7 +11,8 @@
 						v-t="'event-setting-search-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+
+				<v-flex xs3>
 					<v-switch
 						v-model="privacySettings.search_hidden"
 						class="right"
@@ -20,9 +20,9 @@
 				</v-flex>
 			</div>
 
-			<!-- *auth via passcode -->
-			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+			<!-- *Auth via passcode -->
+			<div class="d-flex w-100">
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-require-passcode'"
 						class="body-1" />
@@ -30,7 +30,8 @@
 						v-t="'event-setting-passcode-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+
+				<v-flex xs3>
 					<v-switch
 						:input-value="privacySettings.require_passcode"
 						class="right"
@@ -39,12 +40,12 @@
 				</v-flex>
 			</div>
 
-			<!-- *field input passcode -->
-			<div class="d-flex w-100 mr-5">
+			<!-- *field passcode -->
+			<v-flex xs12>
 				<text-field
 					v-show="privacySettings.require_passcode"
 					:field="form.passcode" />
-			</div>
+			</v-flex>
 		</template>
 	</event-setting--expand>
 </template>

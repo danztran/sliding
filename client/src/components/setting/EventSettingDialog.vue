@@ -14,6 +14,7 @@
 						v-t="'event-setting-title'"
 						class="subheading font-weight-light grey--text py-4" />
 					<v-item-group
+						v-model="window"
 						mandatory
 						tag="v-flex">
 						<v-item
@@ -96,7 +97,7 @@
 					</v-card-title>
 
 					<!-- @desc: settings content -->
-					<event-settings-content />
+					<event-settings-content :window="window" />
 
 					<!-- @desc: footer save setting btn -->
 					<v-card-actions v-if="!isSMnXS" class="pr-3">
@@ -211,11 +212,6 @@ $grey: #f3f3f3;
 			height: 8vh;
 		}
 
-		.v-card__text {
-			padding-top: 0;
-			padding-left: 15%;
-		}
-
 		.input-code input[type="text"] {
 			text-transform: uppercase;
 		}
@@ -244,10 +240,6 @@ $grey: #f3f3f3;
 		.v-expansion-panel {
 			.v-list--dense .v-list__tile {
 				height: 10vh;
-			}
-
-			.v-card__text {
-				padding-left: 20%;
 			}
 		}
 

@@ -1,16 +1,17 @@
 <template>
-	<!-- @desc: Questions -->
 	<event-setting--expand :info="questionExpand">
+		<!-- *Allow ask question -->
 		<template #switch-on-title>
 			<v-switch
-				v-model="questionSettings.on_question"
+				v-model="questionSettings.allow_question"
 				class="right"
 				color="primary" />
 		</template>
 
 		<template #content>
+			<!-- *Allow ask question -->
 			<div class="d-flex w-100">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-ask-question'"
 						class="body-1" />
@@ -18,7 +19,7 @@
 						v-t="'event-setting-questions-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="questionSettings.allow_question"
 						class="right"
@@ -28,7 +29,7 @@
 
 			<!-- *moderation review quesiton-->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'moderation-view-stt'"
 						class="body-1" />
@@ -36,7 +37,7 @@
 						v-t="'event-moderation-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="questionSettings.on_moderation"
 						class="right"
@@ -46,7 +47,7 @@
 
 			<!-- *dislikes question -->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-dislikes'"
 						class="body-1" />
@@ -54,7 +55,7 @@
 						v-t="'event-dislikes-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="questionSettings.allow_question_dislike"
 						class="right"
@@ -64,7 +65,7 @@
 
 			<!-- *replies question -->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-replies'"
 						class="body-1" />
@@ -72,7 +73,7 @@
 						v-t="'event-replies-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="questionSettings.allow_question_reply"
 						class="right"

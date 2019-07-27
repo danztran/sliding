@@ -2,7 +2,7 @@
 	<!-- @desc: Polls -->
 	<event-setting--expand :info="pollExpand">
 		<template #switch-on-title>
-			<!-- *enable poll features -->
+			<!-- *Poll alow -->
 			<v-switch
 				v-model="pollSettings.allow_poll"
 				class="right"
@@ -10,9 +10,27 @@
 		</template>
 
 		<template #content>
+			<!-- *Poll allow-->
+			<div class="d-flex w-100">
+				<v-flex xs9>
+					<div
+						v-t="'polls'"
+						class="body-1" />
+					<div
+						v-t="'event-setting-polls-des'"
+						class="body-1 grey--text" />
+				</v-flex>
+				<v-flex xs3>
+					<v-switch
+						v-model="pollSettings.allow_poll"
+						class="right"
+						color="primary" />
+				</v-flex>
+			</div>
+
 			<!-- *poll counter-->
 			<div class="d-flex w-100">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-poll-counter'"
 						class="body-1" />
@@ -20,7 +38,7 @@
 						v-t="'event-setting-poll-counter-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="pollSettings.allow_poll_counter"
 						class="right"
@@ -30,7 +48,7 @@
 
 			<!-- *show poll result -->
 			<div class="d-flex w-100 mt-3">
-				<v-flex xs8>
+				<v-flex xs9>
 					<div
 						v-t="'event-setting-poll-result'"
 						class="body-1" />
@@ -38,7 +56,7 @@
 						v-t="'event-setting-poll-result-des'"
 						class="body-1 grey--text" />
 				</v-flex>
-				<v-flex xs4>
+				<v-flex xs3>
 					<v-switch
 						v-model="pollSettings.allow_poll_result"
 						class="right"
