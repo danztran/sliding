@@ -46,6 +46,7 @@
 						small
 						round
 						color="success"
+						:disabled="loading"
 						@click="emitReponseInvite(true)">
 						<span v-t="'btn-accept'" class="first-letter-uppercase" />
 					</v-btn>
@@ -54,6 +55,7 @@
 						small
 						round
 						color="red"
+						:disabled="loading"
 						@click="emitReponseInvite(false)">
 						<span v-t="'btn-reject'" class="first-letter-uppercase" />
 					</v-btn>
@@ -93,15 +95,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
 	name: 'InviteInfoCard',
 	props: {
 		infoInvite: {
 			type: Object,
 			default: () => ({
-				created_at: '2019-07-20T16:35:42.147Z',
 				is_accepted: null,
-				role: 'Guest',
+				role: 'Moderator',
 				event_id: null,
 				event: {
 					name: '...',
@@ -113,7 +115,13 @@ export default {
 			}),
 		},
 	},
+	data: () => ({
+		loading: false,
+	}),
 	methods: {
+		...mapMutations({
+			mergeInvite: 'dashboard/MERGE_RESPONSE_INVITE',
+		}),
 		formatTimeEvent(datetime) {
 			const parseDate = new Date(datetime);
 			const time = parseDate.toLocaleString([], { hour: '2-digit', minute: '2-digit' });
@@ -122,7 +130,6 @@ export default {
 		},
 		toJointEvent() {
 			// ...
-			// this.$router.push({ name: 'admin-event', params: { code: this.infoInvite.event.code } });
 		},
 		emitReponseInvite(asw) {
 			const emiter = 'response-invited';
@@ -130,8 +137,16 @@ export default {
 				event_id: this.infoInvite.event_id,
 				is_accepted: asw,
 			};
-			this.$socket.emit(emiter, response, (data) => {
-				console.warn(data);
+			this.loading = true;
+			this.$socket.emit(emiter, response, ({ errmsg, role }) => {
+				this.loading = false;
+				if (!role) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.mergeInvite(role);
 			});
 		},
 	},

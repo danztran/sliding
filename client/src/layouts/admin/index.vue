@@ -96,11 +96,8 @@ export default {
 		new_edited_event(newSettings) {
 			this.mergeAdminCurrentEvent(newSettings);
 		},
-		new_accepted_invite(response) {
-			console.warn('accept: ', response);
-		},
-		new_denied_invite(response) {
-			console.warn('denie: ', response);
+		new_edited_role(inviteRes) {
+			this.mergeResponseInvite(inviteRes);
 		},
 		new_removed_admin(response) {
 			console.warn('remove moderator: ', response);
@@ -111,6 +108,7 @@ export default {
 			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
 			mergeAdminCurrentEvent: 'admin/event/MERGE_CURRENT_EVENT',
+			mergeResponseInvite: 'admin/event/MERGE_RESPONSE_INVITE',
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET',
 		}),

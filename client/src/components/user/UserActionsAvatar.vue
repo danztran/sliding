@@ -124,7 +124,7 @@
 							<v-icon
 								class="pl-2"
 								size="20"
-								v-text="invites.length > 0
+								v-text="inviteNotResponsed > 0
 									? '$vuetify.icons.notice'
 									: '$vuetify.icons.no_notice'" />
 						</v-list-tile-action>
@@ -134,8 +134,8 @@
 						</v-list-tile-content>
 
 						<v-list-tile-action>
-							<v-chip v-show="invites.length > 0 && loadingState === ''" small color="red">
-								<span class="white--text" v-text="invites.length" />
+							<v-chip v-show="inviteNotResponsed > 0 && loadingState === ''" small color="red">
+								<span class="white--text" v-text="inviteNotResponsed" />
 							</v-chip>
 							<icon-loading-circle v-if="loadingState !== ''" :state.sync="loadingState" />
 						</v-list-tile-action>
@@ -233,6 +233,9 @@ export default {
 		}),
 		locale() {
 			return this.$i18n.locale;
+		},
+		inviteNotResponsed() {
+			return this.invites.filter(el => el.is_accepted === null).length;
 		},
 	},
 	mounted() {

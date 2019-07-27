@@ -27,8 +27,9 @@
 				<v-slide-y-transition group>
 					<invite-card--info
 						v-for="moderator in moderators"
-						:key="moderator.user_id"
+						:key="moderator.updated_at"
 						:info="moderator"
+						:class="{ deleting }"
 						@remove-moderator="removeModerator(moderator)" />
 				</v-slide-y-transition>
 			</div>
@@ -68,6 +69,7 @@ export default {
 		},
 		form: initForm(),
 		loadingState: '',
+		deleting: false,
 		moderators: '',
 	}),
 	computed: {
@@ -79,7 +81,7 @@ export default {
 	},
 	watch: {
 		'eventInfo.admins': function getModerators(val) {
-			if (val && val.length > 1) {
+			if (val) {
 				this.moderators = val.filter(el => el.role === 'moderator');
 			}
 		},
@@ -87,6 +89,7 @@ export default {
 	methods: {
 		...mapMutations({
 			addModerator: 'admin/event/ADD_MODERATOR',
+			deleteModerator: 'admin/event/DELETE_MODERATOR',
 		}),
 		handleInvite() {
 			const email = this.form.email.value;
@@ -111,25 +114,31 @@ export default {
 			this.$socket.emit(emiter, { email: this.form.email.value }, ({ user, errmsg }) => {
 				if (!user) {
 					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
+						this.form.email.errmsg = errmsg;
 					}
 					this.loadingState = 'fail';
 					return;
 				}
 				this.loadingState = 'success';
-				this.addModerator({
+				const newModerator = {
 					...user,
 					user_id: user.id,
 					role: 'moderator',
-				});
+					updated_at: new Date().toISOString(),
+					is_accepted: null,
+				};
+				this.addModerator(newModerator);
 				this.form.email.value = '';
+				this.showNotify(this.$t('invite-send'), 'success');
 			});
 		},
 		removeModerator(info) {
 			const emiter = 'remove-moderator';
+			this.deleting = true;
 			this.$socket.emit(emiter, { user_id: info.user_id }, (data) => {
+				this.deleting = false;
 				if (data === true) {
-					this.moderators = this.moderators.filter(us => us.user_id !== info.user_id);
+					this.deleteModerator(info.user_id);
 					this.showNotify(this.$t('invite-removere-user', { user: info.email }), 'success');
 				}
 				else {
@@ -145,5 +154,9 @@ export default {
 #invite-btn {
 	min-width: 50px;
 	max-width: 85px;
+}
+.deleting {
+	opacity: .4;
+	cursor: not-allowed;
 }
 </style>

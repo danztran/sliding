@@ -29,10 +29,12 @@
 				<v-card-text class="scrollbar-primary wrapper-invites">
 					<v-layout wrap>
 						<v-flex xs12>
-							<card--invite-info
-								v-for="invite of invites"
-								:key="invite.event.id"
-								:info-invite="invite" />
+							<v-slide-y-transition group>
+								<card--invite-info
+									v-for="invite of invites"
+									:key="invite.event_id"
+									:info-invite="invite" />
+							</v-slide-y-transition>
 						</v-flex>
 					</v-layout>
 				</v-card-text>
