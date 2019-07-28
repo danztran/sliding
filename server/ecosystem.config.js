@@ -10,6 +10,7 @@ const envConfig = {
 		log_date_format: config.pm2DevLogDateFormat,
 		out_file: config.pm2OutLogDir,
 		error_file: config.pm2ErrorLogDir,
+		restart_delay: config.pm2RestartDelay,
 	},
 };
 

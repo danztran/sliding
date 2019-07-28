@@ -35,6 +35,10 @@ module.exports = {
 	fileStoreExtension: '',
 	fileStoreMaxAge: 864000000,
 
+	// REDIS STORE:
+	redisOn: process.env.REDIS_ON,
+	redisUrl: process.env.REDIS_URL || 'redis://redis',
+
 	// ========= Client
 	// Must change from client/vue.config.js too
 	vueDist: 'vue-dist',
@@ -54,8 +58,9 @@ module.exports = {
 	pm2IgnoreWatch: ['public', '.git', 'temp', './vue-dist'],
 	pm2AutoRestart: true,
 	pm2Watch: true,
-	pm2DevLogDateFormat: 'YYYY-MM-DD HH:mm Z',
+	pm2DevLogDateFormat: process.env.PM2_LOG_FORMAT || 'YYYY-MM-DD HH:mm Z',
 	pm2ProdLogDateFormat: '',
+	pm2RestartDelay: process.env.PM2_RESTART_DELAY || 5000,
 
 	// ========== AES_KEY
 	// secret key for encrypt/decrypt account password
