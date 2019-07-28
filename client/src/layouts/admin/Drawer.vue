@@ -194,7 +194,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
 
 export default {
@@ -206,6 +206,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			user: 'auth/user',
 			eventInfo: 'admin/event/getEventInfo',
 			invites: 'dashboard/getInvites',
 		}),
@@ -222,8 +223,16 @@ export default {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = true;
 		});
+		if (this.user
+			&& this.user.username !== null
+			&& this.invites.length === 0) {
+			this.emitQueryInvites();
+		}
 	},
 	methods: {
+		...mapMutations({
+			setInvites: 'dashboard/SET_INVITES',
+		}),
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
 			this.dropList = false;
@@ -238,6 +247,25 @@ export default {
 		toggleDialogAccessInviteRequest() {
 			this.drawer = false;
 			this.$root.$emit('dialog-invite-request');
+		},
+		emitQueryInvites() {
+			this.loadingState = 'loading';
+			const emiter = 'query-invited';
+			const queryOpt = {
+				order: '-created_at',
+				limit: 0,
+				offset: 0,
+			};
+			this.$socket.emit(emiter, queryOpt, ({ errmsg, events }) => {
+				if (!events) {
+					if (errmsg) {
+						// ...
+					}
+					return;
+				}
+				this.loadingState = 'success';
+				this.setInvites(events);
+			});
 		},
 	},
 };

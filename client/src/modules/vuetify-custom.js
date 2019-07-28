@@ -25,7 +25,7 @@ const icons = {
 	group_people: 'group',
 	setting: 'settings',
 	search: 'search',
-	event: 'event_available',
+	event: 'calendar_today',
 	more_vert: 'more_vert',
 	web_slide_event: 'slideshow',
 	mobile_slide_event: 'mobile_screen_share',

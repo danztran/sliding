@@ -1,0 +1,159 @@
+<template>
+	<v-card class="card-hover">
+		<v-list two-line>
+			<v-list-tile avatar>
+				<!-- *Icon -->
+				<v-list-tile-avatar>
+					<v-icon
+						class="avatar-bg"
+						small
+						color="primary"
+						v-text="'$vuetify.icons.event'" />
+				</v-list-tile-avatar>
+
+				<!-- *Info -->
+				<v-list-tile-content @click="toEventLive">
+					<v-list-tile-title>
+						<span class="subheading">
+							{{ info.name }}
+						</span>
+						<span class="grey--text text-uppercase body-1">
+							&nbsp;(#{{ info.code }})
+						</span>
+					</v-list-tile-title>
+					<v-list-tile-sub-title class="text--primary">
+						{{ formatTime(info.start_at) }}
+						-
+						{{ formatTime(info.end_at) }}
+					</v-list-tile-sub-title>
+					<v-list-tile-sub-title>
+						{{ eventDate }}
+					</v-list-tile-sub-title>
+				</v-list-tile-content>
+
+				<!-- *Actions -->
+				<v-list-tile-action>
+					<!-- *Slide mode -->
+					<v-list-tile-action-text>
+						<span class="otp hidden-sm-and-down">
+							<v-icon
+								class="iconHover"
+								size="23"
+								v-text="'$vuetify.icons.web_slide_event'" />
+							<v-icon
+								class="iconHover"
+								size="23"
+								v-text="'$vuetify.icons.mobile_slide_event'" />
+						</span>
+					</v-list-tile-action-text>
+
+					<!-- *QRCode/Delete -->
+					<v-menu offset-y left>
+						<template #activator="{ on: menu }">
+							<v-tooltip top>
+								<template #activator="{ on: tooltip }">
+									<v-icon
+										class="iconHover"
+										size="23"
+										v-on="{ ...tooltip, ...menu }"
+										v-text="'$vuetify.icons.more_vert'" />
+								</template>
+								<span v-t="'action-tooltip'" />
+							</v-tooltip>
+						</template>
+
+						<!-- *Event QRCode -->
+						<v-list class="py-0 custom-list" dense>
+							<v-list-tile @click="toggleDialogQRCode">
+								<v-list-tile-action>
+									<v-icon small v-text="'$vuetify.icons.dashboard'" />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title
+										v-text="'QRCode'" />
+								</v-list-tile-content>
+							</v-list-tile>
+						</v-list>
+
+						<!-- *delete event -->
+						<v-list class="py-0 custom-list" dense>
+							<v-list-tile @click="deleteEvent">
+								<v-list-tile-action>
+									<v-icon small v-text="'$vuetify.icons.delete'" />
+								</v-list-tile-action>
+								<v-list-tile-content>
+									<v-list-tile-title
+										v-t="'btn-delete'"
+										class="first-letter-uppercase" />
+								</v-list-tile-content>
+							</v-list-tile>
+						</v-list>
+					</v-menu>
+				</v-list-tile-action>
+			</v-list-tile>
+		</v-list>
+	</v-card>
+</template>
+
+<script>
+export default {
+	name: 'EventCard',
+	props: {
+		info: {
+			type: Object,
+			default: () => ({
+				name: 'Name Event',
+				code: 'Event code',
+				start_at: '',
+				end_at: '',
+			}),
+		},
+	},
+	computed: {
+		eventDate() {
+			const start = new Date(this.info.start_at);
+			const end = new Date(this.info.end_at);
+			const dateEnd = end.toUTCString().toString().substr(4, 12);
+			return `${start.getDate()} ${start.getMonth() !== end.getMonth() ? start.toLocaleString('default', { month: 'long' }) : ''} - ${dateEnd}`;
+		},
+	},
+	methods: {
+		formatTime(date) {
+			return new Date(date).toLocaleString([], { hour: '2-digit', minute: '2-digit' });
+		},
+		toggleDialogQRCode() {
+			this.$root.$emit('dialog-qrcode', this.info.code);
+		},
+		toEventLive() {
+			const { code } = this.info;
+			this.$router.push({ name: 'admin-event', params: { code } });
+		},
+		deleteEvent() {
+			// ...
+		},
+	},
+};
+</script>
+
+<style lang="scss" scoped>
+.v-card {
+	margin: 0 !important;
+	border: 1px solid rgba(0,0,0,.1);
+	box-shadow: none;
+}
+.otp {
+	opacity: 0;
+	visibility: hidden;
+}
+.card-hover:hover {
+	cursor: pointer;
+	background-color: #f5f5f5;
+	.otp {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+.iconHover.material-icons.theme--light:hover {
+	color: #3595BE;
+}
+</style>

@@ -95,8 +95,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import EmptyEvent from '@/components/dashboard/EmptyEvent.vue';
-import EventCard from '@/components/dashboard/EventCard.vue';
+import EmptyEvent from '@/components/dashboard/my-events/EmptyEvent.vue';
+import EventCard from '@/components/dashboard/my-events/EventCard.vue';
 
 export default {
 	name: 'Events',

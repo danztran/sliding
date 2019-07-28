@@ -22,12 +22,16 @@ html, body {
 	text-decoration: none;
 }
 
-// Card hover 
-.no-shadow.card-hover:hover {
-	background-color: #efefef;
+.card-hover:hover {
+	background-color: #f5f5f5;
 	.v-list {
-		background-color: #efefef;
+		background-color: #f5f5f5;
 	}
+}
+
+.avatar-bg {
+	background-color: #3da4b514;
+	border-color: #3da4b514;
 }
 
 .custom-list .v-list__tile .v-list__tile__action {

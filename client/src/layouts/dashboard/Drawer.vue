@@ -66,7 +66,7 @@
 				avatar
 				class="v-list-item">
 				<v-list-tile-action>
-					<v-icon color="success" v-text="'$vuetify.icons.person'" />
+					<v-icon color="success" v-text="'$vuetify.icons.group_people'" />
 				</v-list-tile-action>
 
 				<v-list-tile-title v-t="'coop-events'" />
@@ -87,26 +87,7 @@
 
 			<v-divider />
 			<!-- *Invite-access-request -->
-			<v-list-tile @click="toggleDialogAccessInviteRequest">
-				<v-list-tile-action>
-					<v-icon
-						class="pl-1"
-						size="20"
-						v-text="invites.length > 0
-							? '$vuetify.icons.notice'
-							: '$vuetify.icons.no_notice'" />
-				</v-list-tile-action>
-
-				<v-list-tile-content>
-					<v-list-tile-title v-t="'invite-request'" />
-				</v-list-tile-content>
-
-				<v-list-tile-action v-show="invites.length > 0">
-					<v-chip small color="red">
-						<span class="white--text" v-text="invites.length" />
-					</v-chip>
-				</v-list-tile-action>
-			</v-list-tile>
+			<list-item--invites :user="user" />
 
 			<!-- *Search -->
 			<v-list-tile :to="{ name: 'search' }">
@@ -174,9 +155,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+import InviteListItem from '@/components/pieces/InviteListItem.vue';
 
 export default {
 	name: 'Drawer',
+	components: {
+		'list-item--invites': InviteListItem,
+	},
 	data: () => ({
 		drawer: false,
 		dropListLang: false,

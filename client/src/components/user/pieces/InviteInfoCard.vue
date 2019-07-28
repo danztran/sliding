@@ -1,24 +1,24 @@
 <template>
 	<v-card class="no-shadow pb-2">
-		<v-layout row wrap>
+		<v-layout row>
 			<!-- *Event infomation -->
 			<v-layout justify-start>
 				<div>
 					<div>
-						<span class="title font-weight-regular" v-text="infoInvite.event.name" />
+						<span class="title font-weight-regular" v-text="inviteInfo.event.name" />
 						<span class="grey--text text-capitalize">
-							&nbsp;({{ infoInvite.role }})
+							&nbsp;({{ inviteInfo.role }})
 						</span>
 					</div>
 					<div class="grey--text text--lighten-1 text-uppercase">
-						# {{ infoInvite.event.code }}
+						# {{ inviteInfo.event.code }}
 					</div>
 					<div class="grey--text">
 						<v-tooltip top>
 							<template v-slot:activator="{ on }">
 								<span v-on="on">
 									<v-icon small v-text="'$vuetify.icons.time_start'" />
-									{{ formatTimeEvent(infoInvite.event.start_at) }}
+									{{ formatTimeEvent(inviteInfo.event.start_at) }}
 								</span>
 							</template>
 							<span v-t="'event-start-date'" />
@@ -29,7 +29,7 @@
 							<template v-slot:activator="{ on }">
 								<span v-on="on">
 									<v-icon small v-text="'$vuetify.icons.time_end'" />
-									{{ formatTimeEvent(infoInvite.event.end_at) }}
+									{{ formatTimeEvent(inviteInfo.event.end_at) }}
 								</span>
 							</template>
 							<span v-t="'event-end-date'" />
@@ -40,7 +40,7 @@
 
 			<!-- *Accept / Reject invite -->
 			<v-layout column align-end>
-				<template v-if="infoInvite.is_accepted === null">
+				<template v-if="inviteInfo.is_accepted === null">
 					<v-btn
 						flat
 						small
@@ -60,7 +60,7 @@
 						<span v-t="'btn-reject'" class="first-letter-uppercase" />
 					</v-btn>
 				</template>
-				<template v-else-if="infoInvite.is_accepted === true">
+				<template v-else-if="inviteInfo.is_accepted === true">
 					<v-btn
 						flat
 						round
@@ -70,13 +70,13 @@
 						<router-link
 							v-t="'btn-join'"
 							class="no-underline first-letter-uppercase success--text"
-							:to="{ name: 'admin-event', params: { code: infoInvite.event.code } }" />
+							:to="{ name: 'admin-event', params: { code: inviteInfo.event.code } }" />
 					</v-btn>
 				</template>
 				<template v-else>
 					<span
 						v-t="'invite-rejected'"
-						class="caption font-weight-medium grey--text text--lighten-2 pr-4" />
+						class="caption font-weight-medium grey--text text--lighten-2 pr-2" />
 					<v-btn
 						flat
 						round
@@ -86,7 +86,7 @@
 						<router-link
 							v-t="'btn-join-as-guest'"
 							class="no-underline first-letter-uppercase grey--text"
-							:to="{ name: 'guest-event', params: { code: infoInvite.event.code } }" />
+							:to="{ name: 'guest-event', params: { code: inviteInfo.event.code } }" />
 					</v-btn>
 				</template>
 			</v-layout>
@@ -99,7 +99,7 @@ import { mapMutations } from 'vuex';
 export default {
 	name: 'InviteInfoCard',
 	props: {
-		infoInvite: {
+		inviteInfo: {
 			type: Object,
 			default: () => ({
 				is_accepted: null,
@@ -134,7 +134,7 @@ export default {
 		emitReponseInvite(asw) {
 			const emiter = 'response-invited';
 			const response = {
-				event_id: this.infoInvite.event_id,
+				event_id: this.inviteInfo.event_id,
 				is_accepted: asw,
 			};
 			this.loading = true;

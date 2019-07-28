@@ -33,7 +33,7 @@
 								<card--invite-info
 									v-for="invite of invites"
 									:key="invite.event_id"
-									:info-invite="invite" />
+									:invite-info="invite" />
 							</v-slide-y-transition>
 						</v-flex>
 					</v-layout>

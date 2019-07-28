@@ -98,7 +98,7 @@
 								class="pl-2"
 								color="success"
 								size="20"
-								v-text="'$vuetify.icons.person'" />
+								v-text="'$vuetify.icons.group_people'" />
 						</v-list-tile-action>
 
 						<v-list-tile-title v-t="'coop-events'" />
@@ -119,27 +119,7 @@
 
 					<v-divider />
 					<!-- *Invite-access-request -->
-					<v-list-tile v-if="!inSearch" @click="toggleDialogAccessInviteRequest">
-						<v-list-tile-action>
-							<v-icon
-								class="pl-2"
-								size="20"
-								v-text="inviteNotResponsed > 0
-									? '$vuetify.icons.notice'
-									: '$vuetify.icons.no_notice'" />
-						</v-list-tile-action>
-
-						<v-list-tile-content>
-							<v-list-tile-title v-t="'invite-request'" />
-						</v-list-tile-content>
-
-						<v-list-tile-action>
-							<v-chip v-show="inviteNotResponsed > 0 && loadingState === ''" small color="red">
-								<span class="white--text" v-text="inviteNotResponsed" />
-							</v-chip>
-							<icon-loading-circle v-if="loadingState !== ''" :state.sync="loadingState" />
-						</v-list-tile-action>
-					</v-list-tile>
+					<list-item--invites v-if="!inSearch" :user="user" />
 
 					<!-- *Search -->
 					<v-list-tile :to="{ name: 'search' }">
@@ -208,14 +188,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import InviteListItem from '@/components/pieces/InviteListItem.vue';
 
 export default {
 	name: 'UserActionsAvatar',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'list-item--invites': InviteListItem,
 	},
 	props: {
 		inSearch: {
@@ -223,62 +203,23 @@ export default {
 			default: false,
 		},
 	},
-	data: () => ({
-		loadingState: '',
-	}),
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
-			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
 		},
-		inviteNotResponsed() {
-			return this.invites.filter(el => el.is_accepted === null).length;
-		},
-	},
-	mounted() {
-		if (this.user
-			&& this.user.username !== null
-			&& this.invites.length === 0) {
-			this.emitQueryInvites();
-		}
 	},
 	methods: {
-		...mapMutations({
-			setInvites: 'dashboard/SET_INVITES',
-		}),
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
 		},
 		toggleDialogCreateEvent() {
 			this.$root.$emit('dialog-create-new-event');
 		},
-		toggleDialogAccessInviteRequest() {
-			this.$root.$emit('dialog-invite-request');
-		},
 		toggleDialogUserUpdateProfile() {
 			this.$root.$emit('dialog-user-update-profile');
-		},
-		emitQueryInvites() {
-			this.loadingState = 'loading';
-			const emiter = 'query-invited';
-			const queryOpt = {
-				order: '-created_at',
-				limit: 0,
-				offset: 0,
-			};
-			this.$socket.emit(emiter, queryOpt, ({ errmsg, events }) => {
-				if (!events) {
-					if (errmsg) {
-						// ...
-					}
-					return;
-				}
-				this.loadingState = 'success';
-				this.setInvites(events);
-			});
 		},
 	},
 };

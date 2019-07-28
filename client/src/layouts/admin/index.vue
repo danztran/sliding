@@ -23,7 +23,7 @@ import { mapMutations, mapGetters } from 'vuex';
 import handleSockets from '@/mixins/handleSockets';
 import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
-import DashboardEventDialog from '@/components/dashboard/DashboardEventDialog.vue';
+import DashboardEventDialog from '@/components/dashboard/my-events/DashboardEventDialog.vue';
 import EventSettingDialog from '@/components/setting/EventSettingDialog.vue';
 import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
 import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
