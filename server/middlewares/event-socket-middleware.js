@@ -103,10 +103,10 @@ module.exports = {
 				const event = io.$state.events[code];
 				if ((
 					event
-					&& io.adapter.rooms
-					&& !io.adapter.rooms[event.rooms.main]
+					&& io.sockets.adapter.rooms
+					&& !io.sockets.adapter.rooms[event.rooms.main]
 				)
-					||	!io.adapter.rooms
+					||	!io.sockets.adapter.rooms
 				) {
 					delete io.$state.events[code];
 				}
