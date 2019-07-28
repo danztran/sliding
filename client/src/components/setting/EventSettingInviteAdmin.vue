@@ -17,7 +17,7 @@
 					@click="handleInvite">
 					<span v-t="'btn-invite'" class="first-letter-uppercase" />
 					<template v-slot:loader>
-						<icon-loading-circle :state.sync="loadingState" />
+						<loading--icon-circle :state.sync="loadingState" />
 					</template>
 				</v-btn>
 			</div>
@@ -41,7 +41,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import EventSettingExpand from './EventSettingExpand.vue';
 import InviteInfoCard from './pieces/InviteInfoCard.vue';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 const initForm = () => ({
 	email: {
@@ -59,7 +59,7 @@ export default {
 	components: {
 		'event-setting--expand': EventSettingExpand,
 		'invite-card--info': InviteInfoCard,
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 	},
 	data: () => ({
 		adminExpand: {
@@ -106,6 +106,7 @@ export default {
 				this.form.email.errmsg = this.$t('invalid-email');
 				return;
 			}
+			this.form.email.errmsg = '';
 			this.sendInvite();
 		},
 		sendInvite() {

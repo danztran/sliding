@@ -29,7 +29,7 @@
 
 <script>
 export default {
-	name: 'IconLoadingCircle',
+	name: 'LoadingIconCircle',
 	props: {
 		state: {
 			type: String,

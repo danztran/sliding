@@ -17,7 +17,7 @@
 					color="white"
 					v-text="'$vuetify.icons.arrow_forward'" />
 				<template v-slot:loader>
-					<icon-loading-circle :state.sync="loadingState" />
+					<loading--icon-circle :state.sync="loadingState" />
 				</template>
 			</v-btn>
 			<v-slide-y-transition>
@@ -35,13 +35,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 import EventCardInfo from '@/components/search/EventCardInfo.vue';
 
 export default {
 	name: 'Search',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 		'event-card--info': EventCardInfo,
 	},
 	data: () => ({

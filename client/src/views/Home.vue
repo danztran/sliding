@@ -69,7 +69,7 @@
 						</v-flex>
 
 						<!-- *Input code -->
-						<v-layout row justify-center>
+						<v-layout row wrap justify-center>
 							<div class="my-input-code w-3">
 								<v-text-field
 									v-model="inputEventCode"
@@ -83,7 +83,7 @@
 								</v-btn>
 							</div>
 							<template v-if="!user">
-								<div v-t="'or'" class="mx-4 pt-3 headline" />
+								<div v-t="'or'" class="mx-4 pt-3 headline hidden-xs-only" />
 								<div>
 									<v-btn
 										outline

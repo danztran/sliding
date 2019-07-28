@@ -51,7 +51,7 @@
 							</v-list-tile>
 
 							<!-- *resend invite request -->
-							<v-list-tile @click="resendRequest">
+							<v-list-tile v-if="info.is_accepted!==true" @click="resendRequest">
 								<v-list-tile-title v-t="'btn-resend-invite'" />
 							</v-list-tile>
 						</v-list>

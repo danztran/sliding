@@ -75,14 +75,14 @@
 									icon
 									:disabled="loadingState !== ''"
 									v-on="on">
-									<icon-loading-circle :state.sync="loadingState">
+									<loading--icon-circle :state.sync="loadingState">
 										<template #otp-icon>
 											<v-icon
 												color="grey lighten-1"
 												:size="icon.xs"
 												v-text="'$vuetify.icons.options_dot'" />
 										</template>
-									</icon-loading-circle>
+									</loading--icon-circle>
 								</v-btn>
 							</template>
 
@@ -117,7 +117,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 const initForm = () => ({
 	editReply: {
@@ -137,7 +137,7 @@ const initForm = () => ({
 export default {
 	name: 'ReplyCard',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 	},
 	props: {
 		replyData: {

@@ -3,7 +3,7 @@
 	<v-list-tile @click="toggleDialogAccessInviteRequest">
 		<v-list-tile-action>
 			<v-icon
-				class="pl-1"
+				:class="{ 'pl-2': inAvatar }"
 				size="20"
 				v-text="inviteNotResponsed > 0
 					? '$vuetify.icons.notice'
@@ -18,21 +18,25 @@
 			<v-chip v-show="inviteNotResponsed > 0 && loadingState === ''" small color="red">
 				<span class="white--text" v-text="inviteNotResponsed" />
 			</v-chip>
-			<icon-loading-circle v-if="loadingState !== ''" :state.sync="loadingState" />
+			<loading--icon-circle v-if="loadingState !== ''" :state.sync="loadingState" />
 		</v-list-tile-action>
 	</v-list-tile>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 export default {
 	name: 'InviteListItem',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 	},
 	props: {
+		inAvatar: {
+			type: Boolean,
+			default: false,
+		},
 		user: {
 			type: Object,
 			default: () => ({}),

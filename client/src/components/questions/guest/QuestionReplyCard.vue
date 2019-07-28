@@ -44,6 +44,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
 	name: 'QuestionReplyCard',
 	props: {

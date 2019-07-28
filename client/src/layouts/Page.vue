@@ -7,8 +7,8 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import LoadingOverlay from '@/components/LoadingOverlay.vue';
-import Notify from '@/components/Notify.vue';
+import LoadingOverlay from '@/components/pieces/LoadingOverlay.vue';
+import Notify from '@/components/pieces/Notify.vue';
 
 export default {
 	components: {

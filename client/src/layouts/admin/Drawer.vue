@@ -100,32 +100,12 @@
 			</v-list-tile>
 
 			<!-- *Invite-access-request -->
-			<v-list-tile @click="toggleDialogAccessInviteRequest">
-				<v-list-tile-action>
-					<v-icon
-						class="pl-1"
-						size="20"
-						v-text="invites.length > 0
-							? '$vuetify.icons.notice'
-							: '$vuetify.icons.no_notice'" />
-				</v-list-tile-action>
-
-				<v-list-tile-content>
-					<v-list-tile-title v-t="'invite-request'" />
-				</v-list-tile-content>
-
-				<v-list-tile-action v-show="invites.length > 0">
-					<v-chip small color="red">
-						<span class="white--text" v-text="invites.length" />
-					</v-chip>
-				</v-list-tile-action>
-			</v-list-tile>
+			<list-item--invites />
 
 			<!-- *Search -->
 			<v-list-tile :to="{ name: 'search' }">
 				<v-list-tile-action>
 					<v-icon
-						class="pl-1"
 						size="20"
 						v-text="'$vuetify.icons.search'" />
 				</v-list-tile-action>
@@ -196,9 +176,13 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import { loadLanguageAsync } from '@/modules/vue-i18n-setup';
+import InviteListItem from '@/components/pieces/InviteListItem.vue';
 
 export default {
 	name: 'Drawer',
+	components: {
+		'list-item--invites': InviteListItem,
+	},
 	data: () => ({
 		drawer: false,
 		loading: false,
@@ -208,7 +192,6 @@ export default {
 		...mapGetters({
 			user: 'auth/user',
 			eventInfo: 'admin/event/getEventInfo',
-			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
@@ -223,11 +206,6 @@ export default {
 		this.$root.$on('toggle-drawer', () => {
 			this.drawer = true;
 		});
-		if (this.user
-			&& this.user.username !== null
-			&& this.invites.length === 0) {
-			this.emitQueryInvites();
-		}
 	},
 	methods: {
 		...mapMutations({
@@ -243,29 +221,6 @@ export default {
 		toggleDialogUserUpdateProfile() {
 			this.drawer = false;
 			this.$root.$emit('dialog-user-update-profile');
-		},
-		toggleDialogAccessInviteRequest() {
-			this.drawer = false;
-			this.$root.$emit('dialog-invite-request');
-		},
-		emitQueryInvites() {
-			this.loadingState = 'loading';
-			const emiter = 'query-invited';
-			const queryOpt = {
-				order: '-created_at',
-				limit: 0,
-				offset: 0,
-			};
-			this.$socket.emit(emiter, queryOpt, ({ errmsg, events }) => {
-				if (!events) {
-					if (errmsg) {
-						// ...
-					}
-					return;
-				}
-				this.loadingState = 'success';
-				this.setInvites(events);
-			});
 		},
 	},
 };

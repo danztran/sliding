@@ -93,7 +93,6 @@
 			<v-list-tile :to="{ name: 'search' }">
 				<v-list-tile-action>
 					<v-icon
-						class="pl-1"
 						size="20"
 						v-text="'$vuetify.icons.search'" />
 				</v-list-tile-action>

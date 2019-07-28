@@ -97,7 +97,7 @@
 					</v-card-title>
 
 					<!-- @desc: settings content -->
-					<event-settings-content :window="window" />
+					<setting--content :window="window" />
 
 					<!-- @desc: footer save setting btn -->
 					<v-card-actions v-if="!isSMnXS" class="pr-3">
@@ -110,7 +110,7 @@
 							@click="saveSettings">
 							<span v-t="'btn-save'" class="first-letter-uppercase" />
 							<template v-slot:loader>
-								<icon-loading-circle :state.sync="loadingState" />
+								<loading--icon-circle :state.sync="loadingState" />
 							</template>
 						</v-btn>
 					</v-card-actions>
@@ -123,13 +123,13 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import EventSettingsContent from './EventSettingsContent.vue';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 export default {
 	name: 'EventSettingDialog',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
-		'event-settings-content': EventSettingsContent,
+		'loading--icon-circle': LoadingIconCircle,
+		'setting--content': EventSettingsContent,
 	},
 	data: () => ({
 		icon: {
@@ -144,6 +144,13 @@ export default {
 			eventInfo: 'admin/event/getEventInfo',
 			tempSettings: 'admin/event/getTempSettings',
 		}),
+	},
+	watch: {
+		isSMnXS(val) {
+			if (val) {
+				this.window = 0;
+			}
+		},
 	},
 	mounted() {
 		this.$root.$on('save-settings', () => {

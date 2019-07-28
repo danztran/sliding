@@ -6,6 +6,7 @@
 		</div>
 	</div>
 </template>
+
 <style lang="scss" scoped>
 $color: #3da4b5;
 $size: 50px;

@@ -119,7 +119,7 @@
 
 					<v-divider />
 					<!-- *Invite-access-request -->
-					<list-item--invites v-if="!inSearch" :user="user" />
+					<list-item--invites v-if="!inSearch" :user="user" in-avatar />
 
 					<!-- *Search -->
 					<v-list-tile :to="{ name: 'search' }">

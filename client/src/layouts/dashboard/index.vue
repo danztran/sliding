@@ -27,7 +27,6 @@ import DashboardEventDialog from '@/components/dashboard/my-events/DashboardEven
 import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
 import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
 
-
 export default {
 	name: 'MyDashboard',
 	components: {

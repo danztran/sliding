@@ -33,7 +33,7 @@
 					v-t="'btn-join-now'"
 					class="first-letter-uppercase" />
 				<template v-slot:loader>
-					<icon-loading-circle :state.sync="loadingState" />
+					<loading--icon-circle :state.sync="loadingState" />
 				</template>
 			</v-btn>
 
@@ -63,12 +63,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 export default {
 	name: 'EventVerify',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 	},
 	data: () => ({
 		eventInfo: {

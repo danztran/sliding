@@ -48,7 +48,7 @@
 							@click="sendQuestion">
 							<span v-t="'btn-send'" />
 							<template v-slot:loader>
-								<icon-loading-circle :state.sync="loadingState" />
+								<loading--icon-circle :state.sync="loadingState" />
 							</template>
 						</v-btn>
 					</v-layout>
@@ -66,7 +66,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import IconLoadingCircle from '@/components/pieces/IconLoadingCircle.vue';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 const askForm = () => ({
 	ask: {
 		value: '',
@@ -80,7 +80,7 @@ const askForm = () => ({
 export default {
 	name: 'FieldAsk',
 	components: {
-		'icon-loading-circle': IconLoadingCircle,
+		'loading--icon-circle': LoadingIconCircle,
 	},
 	data: () => ({
 		expand: false,
