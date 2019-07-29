@@ -12,10 +12,10 @@ const {
 	fileStoreExtension,
 	fileStoreMaxAge,
 	redisOn,
-	redisUrl
+	redisUrl,
 } = requireWrp('./config');
 
-let store
+let store;
 if (redisOn) {
 	store = new RedisStore({
 		url: redisUrl,

@@ -10,97 +10,22 @@
 			<!-- *title: List poll -->
 			<div v-t="'poll-list-view-title'" class="pt-1 body-1 grey--text" />
 			<!-- *create poll -->
-			<div class="d-flex">
-				<v-menu
-					bottom
-					nudge-bottom="5"
-					offset-y
-					left>
-					<template v-slot:activator="{ on }">
-						<v-btn
-							small
-							round
-							color="success"
-							v-on="on">
-							<span
-								v-t="'btn-create-poll'"
-								class="first-letter-uppercase px-2" />
-						</v-btn>
-					</template>
-
-					<v-list class="py-0 custom-list" dense>
-						<!-- *opts: multiple choice -->
-						<v-list-tile @click="pollWith('multiple')">
-							<v-list-tile-action>
-								<v-icon
-									color="primary"
-									small
-									v-text="'$vuetify.icons.multiple_choice'" />
-							</v-list-tile-action>
-							<v-list-tile-content>
-								<v-list-tile-title
-									v-t="'btn-poll-multiple-choice'"
-									class="first-letter-uppercase" />
-							</v-list-tile-content>
-						</v-list-tile>
-
-						<!-- *otps: open text -->
-						<v-list-tile @click="pollWith('text')">
-							<v-list-tile-action>
-								<v-icon
-									color="success"
-									small
-									v-text="'$vuetify.icons.ask_question'" />
-							</v-list-tile-action>
-							<v-list-tile-content>
-								<v-list-tile-title
-									v-t="'btn-poll-open-text'"
-									class="first-letter-uppercase" />
-							</v-list-tile-content>
-						</v-list-tile>
-
-						<!-- *otps: word cloud -->
-						<v-list-tile @click="pollWith('cloud')">
-							<v-list-tile-action>
-								<v-icon
-									color="secondary"
-									small
-									v-text="'$vuetify.icons.word_cloud'" />
-							</v-list-tile-action>
-							<v-list-tile-content>
-								<v-list-tile-title
-									v-t="'btn-poll-word-cloud'"
-									class="first-letter-uppercase" />
-							</v-list-tile-content>
-						</v-list-tile>
-
-						<!-- *otps: rating -->
-						<v-list-tile @click="pollWith('rating')">
-							<v-list-tile-action>
-								<v-icon
-									color="yellow"
-									small
-									v-text="'$vuetify.icons.star_border'" />
-							</v-list-tile-action>
-							<v-list-tile-content>
-								<v-list-tile-title
-									v-t="'btn-poll-rating'"
-									class="first-letter-uppercase" />
-							</v-list-tile-content>
-						</v-list-tile>
-					</v-list>
-				</v-menu>
-			</div>
+			<v-btn
+				small
+				round
+				color="success"
+				@click="toggleDialogCreate">
+				<span
+					v-t="'btn-create-poll'"
+					class="first-letter-uppercase px-2" />
+			</v-btn>
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
 			<v-layout row wrap>
 				<v-flex xs12>
 					<poll-card--create />
-					<poll-list--card multiple-choice />
-					<poll-list--card open-text />
-					<poll-list--card word-cloud />
-					<poll-list--card rating />
+					<poll-list--card />
 				</v-flex>
 			</v-layout>
 		</v-card>
@@ -118,8 +43,8 @@ export default {
 		'poll-list--card': PollListCard,
 	},
 	methods: {
-		pollWith(otp) {
-			this.$emit('poll-with', otp);
+		toggleDialogCreate() {
+			this.$root.$emit('dialog-create-poll');
 		},
 	},
 };

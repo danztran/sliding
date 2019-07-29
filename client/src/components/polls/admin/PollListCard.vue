@@ -10,42 +10,15 @@
 						class="pl-1"
 						small>
 						<v-icon
-							v-if="multipleChoice"
 							medium
 							color="primary"
 							v-text="'$vuetify.icons.multiple_choice'" />
-						<v-icon
-							v-else-if="openText"
-							medium
-							color="success"
-							v-text="'$vuetify.icons.ask_question'" />
-						<v-icon
-							v-else-if="wordCloud"
-							medium
-							color="secondary"
-							v-text="'$vuetify.icons.word_cloud'" />
-						<v-icon
-							v-else
-							medium
-							color="yellow"
-							v-text="'$vuetify.icons.star_border'" />
 					</v-list-tile-avatar>
 
 					<v-list-tile-content>
 						<!-- *poll type title -->
 						<span class="body-2 text-capitalize grey--text text--lighten-2">
-							<span
-								v-if="multipleChoice"
-								v-t="'btn-poll-multiple-choice'" />
-							<span
-								v-else-if="openText"
-								v-t="'btn-poll-open-text'" />
-							<span
-								v-else-if="wordCloud"
-								v-t="'btn-poll-word-cloud'" />
-							<span
-								v-else
-								v-t="'btn-poll-rating'" />
+							<span v-text="'Poll'" />
 						</span>
 
 						<!-- *poll count -->
@@ -134,24 +107,6 @@ import { mapGetters } from 'vuex';
 
 export default {
 	name: 'PollListCard',
-	props: {
-		multipleChoice: {
-			type: Boolean,
-			default: false,
-		},
-		openText: {
-			type: Boolean,
-			default: false,
-		},
-		wordCloud: {
-			type: Boolean,
-			default: false,
-		},
-		rating: {
-			type: Boolean,
-			default: false,
-		},
-	},
 	data: () => ({
 		allow_voting: false,
 		allow_show_voting_result: false,

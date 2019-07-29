@@ -15,6 +15,7 @@
 		:disabled="disabled"
 		:prefix="field.prefix"
 		:solo="field.solo"
+		:outline="field.outline"
 		autocapitalize="off"
 		@input="onInput" />
 </template>
@@ -43,6 +44,7 @@ export default {
 					inprepend: '',
 					append: '',
 					prefix: '',
+					outline: false,
 					solo: false,
 					autofocus: false,
 					required: false,
