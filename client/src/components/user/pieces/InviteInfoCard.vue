@@ -131,13 +131,11 @@ export default {
 		},
 		toJointEvent() {
 			const currentRouteParams = this.$route.params;
+			this.$router.push({ name: 'admin-event', params: { code: this.inviteInfo.event.code } });
 			if (currentRouteParams.code !== undefined
 				&& currentRouteParams.code !== this.inviteInfo.event.code) {
-				this.$router.push({ name: 'admin-event', params: { code: this.inviteInfo.event.code } });
 				this.$router.go();
-				return;
 			}
-			this.$router.push({ name: 'admin-event', params: { code: this.inviteInfo.event.code } });
 		},
 		emitReponseInvite(asw) {
 			const emiter = 'response-invited';

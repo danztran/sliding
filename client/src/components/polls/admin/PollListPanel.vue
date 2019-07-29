@@ -30,7 +30,7 @@
 
 					<v-list class="py-0 custom-list" dense>
 						<!-- *opts: multiple choice -->
-						<v-list-tile @click="pollVia('multiple')">
+						<v-list-tile @click="pollWith('multiple')">
 							<v-list-tile-action>
 								<v-icon
 									color="primary"
@@ -45,7 +45,7 @@
 						</v-list-tile>
 
 						<!-- *otps: open text -->
-						<v-list-tile @click="pollVia('text')">
+						<v-list-tile @click="pollWith('text')">
 							<v-list-tile-action>
 								<v-icon
 									color="success"
@@ -60,7 +60,7 @@
 						</v-list-tile>
 
 						<!-- *otps: word cloud -->
-						<v-list-tile @click="pollVia('cloud')">
+						<v-list-tile @click="pollWith('cloud')">
 							<v-list-tile-action>
 								<v-icon
 									color="secondary"
@@ -75,7 +75,7 @@
 						</v-list-tile>
 
 						<!-- *otps: rating -->
-						<v-list-tile @click="pollVia('rating')">
+						<v-list-tile @click="pollWith('rating')">
 							<v-list-tile-action>
 								<v-icon
 									color="yellow"
@@ -118,8 +118,8 @@ export default {
 		'poll-list--card': PollListCard,
 	},
 	methods: {
-		pollVia(otp) {
-			// ... open modal via user choice otp
+		pollWith(otp) {
+			this.$emit('poll-with', otp);
 		},
 	},
 };

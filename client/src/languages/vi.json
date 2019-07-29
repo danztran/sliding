@@ -175,6 +175,8 @@
 		"dialog-user-edit-info": "Thông tin của bạn",
 		"dialog-user-access-invite": "Lời mời hợp tác sự kiện",
 		"dialog-guest-update-info": "Cập thông tin của bản",
+		"dialog-create-poll": "Tạo cuộc bầu chọn",
+		"dialog-create-poll-title": "Chọn loại bầu chọn",
 		"moderation-view-title": "Duyệt câu hỏi",
 		"moderation-view-stt": "Chế độ Moderation",
 		"moderation-view-off": "Chế độ Moderation đã tắt",

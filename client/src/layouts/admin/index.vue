@@ -80,6 +80,7 @@ export default {
 		}
 		this.resetEvent();
 		this.resetQuestions();
+		this.resetPolls();
 		next();
 	},
 	sockets: {
@@ -112,6 +113,7 @@ export default {
 			mergeResponseInvite: 'admin/event/MERGE_RESPONSE_INVITE',
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET',
+			resetPolls: 'admin/polls/RESET',
 		}),
 	},
 };

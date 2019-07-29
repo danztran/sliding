@@ -3,7 +3,7 @@
 		<v-card
 			slot-scope="{ hover }"
 			class="no-shadow bg-grey hover-pointer"
-			@click="toggleCreatePollDialog">
+			@click="toggleDialogCreatePoll">
 			<v-list-tile class="grow py-3 px-2">
 				<v-icon
 					v-if="!hover"
@@ -29,8 +29,8 @@
 export default {
 	name: 'PollCreateCard',
 	methods: {
-		toggleCreatePollDialog() {
-			this.$root.$on('dialog-create-poll');
+		toggleDialogCreatePoll() {
+			this.$root.$emit('dialog-create-poll');
 		},
 	},
 };

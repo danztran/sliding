@@ -1,6 +1,9 @@
 <template>
 	<!-- *Invite-access-request -->
 	<v-list-tile @click="toggleDialogAccessInviteRequest">
+		<span v-show="false">
+			{{ $t('FOR_A_PURPOSE') }}
+		</span>
 		<v-list-tile-action>
 			<v-icon
 				:class="{ 'pl-2': inAvatar }"
