@@ -67,10 +67,10 @@
 						outline
 						small
 						color="success">
-						<router-link
+						<span
 							v-t="'btn-join'"
 							class="no-underline first-letter-uppercase success--text"
-							:to="{ name: 'admin-event', params: { code: inviteInfo.event.code } }" />
+							@click="toJointEvent" />
 					</v-btn>
 				</template>
 				<template v-else>
@@ -130,7 +130,14 @@ export default {
 			return `${time} | ${date}`;
 		},
 		toJointEvent() {
-			// ...
+			const currentRouteParams = this.$route.params;
+			if (currentRouteParams.code !== undefined
+				&& currentRouteParams.code !== this.inviteInfo.event.code) {
+				this.$router.push({ name: 'admin-event', params: { code: this.inviteInfo.event.code } });
+				this.$router.go();
+				return;
+			}
+			this.$router.push({ name: 'admin-event', params: { code: this.inviteInfo.event.code } });
 		},
 		emitReponseInvite(asw) {
 			const emiter = 'response-invited';

@@ -1,6 +1,7 @@
 /* ------------------------------------------------------------------------
 	@desc: get all questions in event set to state
 	@socket: emiter 'get-questions'
+	@source: views/admin/Questions.vue
 ------------------------------------------------------------------------*/
 const SET_QUESTIONS = (state, questions) => {
 	state.questions = questions;
@@ -10,6 +11,7 @@ const SET_QUESTIONS = (state, questions) => {
 /* ------------------------------------------------------------------------
 	@desc: get all replies in question, set to state
 	@socket: emiter 'get-question-replies'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const SET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id === dataReplies.id);
@@ -19,14 +21,19 @@ const SET_QUESTION_REPLIES = (state, dataReplies) => {
 
 /* ------------------------------------------------------------------------
 	@desc: receive new question, add to state
-	@socket: listen guest 'new_added_question'
+	@socket: listener guest 'new_added_question'
+	@source: views/admin/Questions.vue
 ------------------------------------------------------------------------*/
 const ADD_QUESTION = (state, question) => {
 	state.questions.push(Object.assign(question, { count_replies: 0 }));
 };
 
 
-// @desc: socket return data question had editted, then merge
+/* ------------------------------------------------------------------------
+	@desc: socket return data question had editted, then merge
+	@socket: listener 'new_edited_question'
+	@source: views/admin/Questions.vue
+------------------------------------------------------------------------*/
 const MERGE_QUESTION = (state, resQ) => {
 	const question = state.questions.find(q => q.id === resQ.id);
 	Object.assign(question, resQ);
@@ -34,8 +41,12 @@ const MERGE_QUESTION = (state, resQ) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: receive 'id' question, then remove
-	@socket: emiter 'delete-question'
+	@desc:- receive 'id' question, then remove
+				- receive 'id' question, then remove
+	@socket:- emiter 'delete-question'
+					- listener 'new_deleted_question'
+	@source:- cpn/question/admin/QuestionCard.vue
+					- views/admin/Questions.vue
 ------------------------------------------------------------------------*/
 const DELETE_QUESTION = (state, delQuestion) => {
 	state.questions = state.questions.filter(q => q.id !== delQuestion.id);
@@ -46,6 +57,7 @@ const DELETE_QUESTION = (state, delQuestion) => {
 	@desc: listen other user add new reply,
 				then find question by 'id' and add
 	@socket: listen 'new_added_question_reply'
+	@source: views/admin/Questions.vue
 ------------------------------------------------------------------------*/
 const ADD_QUESTION_REPLY = (state, reply) => {
 	const question = state.questions.find(q => q.id === reply.question_id);
@@ -61,6 +73,7 @@ const ADD_QUESTION_REPLY = (state, reply) => {
 /* ------------------------------------------------------------------------
 	@desc: add temp reply for showing in UI
 	@socket: before emiter 'add-question-reply'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
 	const question = state.questions.find(q => q.id === tempReply.question_id);
@@ -74,6 +87,7 @@ const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
 	@desc: receive success reply data,
 				merge(override) to temp reply
 	@socket: after emiter 'add-question-reply'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
@@ -86,6 +100,7 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 /* ------------------------------------------------------------------------
 	@desc: if receive error, remove temp reply
 	@socket: after emiter 'add-question-reply'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 	const question = state.questions.find(q => q.id === infoErrReply.question_id);
@@ -96,6 +111,7 @@ const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 /* ------------------------------------------------------------------------
 	@desc: receive success reply editted, mergo into temp
 	@socket: after emiter 'edit-question-reply'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const MERGE_EDIT_REPLY = (state, resReply) => {
 	const question = state.questions.find(q => q.id === resReply.question_id);
@@ -109,6 +125,7 @@ const MERGE_EDIT_REPLY = (state, resReply) => {
 	@desc: receive 'id' reply, then remove
 				and reduce count_replies
 	@socket: listen 'new_deleted_question_reply'
+	@source: cpn/questions/admin/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const DELETE_QUESTION_REPLY = (state, res) => {
 	const question = state.questions.find(q => q.id === res.question_id);
@@ -125,6 +142,7 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 	@desc: receive 'question_id' and 'like', then merge
 				into question reactions
 	@socket: listen 'new_question_reaction'
+	@source: view/admin/Questions.vue
 ------------------------------------------------------------------------*/
 const MERGE_QUESTION_REACTION = (state, react) => {
 	const question = state.questions.find(q => Number(q.id) === Number(react.question_id));

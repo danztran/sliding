@@ -14,14 +14,14 @@
 				<!-- *Info -->
 				<v-list-tile-content @click="toEventLive">
 					<v-list-tile-title>
-						<span class="subheading">
+						<span class="body-2">
 							{{ info.name }}
 						</span>
-						<span class="grey--text text-uppercase body-1">
+						<span class="body-1 grey--text text-uppercase">
 							&nbsp;(#{{ info.code }})
 						</span>
 					</v-list-tile-title>
-					<v-list-tile-sub-title class="text--primary">
+					<v-list-tile-sub-title class="body-1 text--primary">
 						{{ formatTime(info.start_at) }}
 						-
 						{{ formatTime(info.end_at) }}

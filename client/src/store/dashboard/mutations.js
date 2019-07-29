@@ -1,5 +1,6 @@
 /* ------------------------------------------------------------------------
 	@desc: set list events after query
+	@source: using with actions
 ------------------------------------------------------------------------*/
 const SET_EVENTS = (state, events) => {
 	state.events = events;
@@ -9,7 +10,7 @@ const SET_EVENTS = (state, events) => {
 /* ------------------------------------------------------------------------
 	@desc: emiter socket query list iniites
 	@socket: emiter 'query-invites'
-	@source: cpn/user/userActionsAvatar.vue
+	@source: cpn/pieces/InviteListItem.vue
 ------------------------------------------------------------------------*/
 const SET_INVITES = (state, invites) => {
 	state.invites = invites;
@@ -40,7 +41,6 @@ const ADD_INVITE = (state, newInviteInfo) => {
 ------------------------------------------------------------------------*/
 const DELETE_INVITE = (state, inviteEvent) => {
 	const idx = state.invites.findIndex(i => Number(i.event_id) === Number(inviteEvent.id));
-	if (!idx) return;
 	state.invites.splice(idx, 1);
 };
 
@@ -57,6 +57,9 @@ const MERGE_RESPONSE_INVITE = (state, resInvite) => {
 };
 
 
+/* ------------------------------------------------------------------------
+	@source: using with actions
+------------------------------------------------------------------------*/
 const ADD_NEW_EVENT = (state, newEvent) => {
 	state.events.unshift(newEvent);
 };

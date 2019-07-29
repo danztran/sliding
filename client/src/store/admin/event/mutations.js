@@ -1,13 +1,28 @@
+/* ------------------------------------------------------------------------
+	@desc:- setting current info event when admin join event's
+	@socket: listener 'get_event'
+	@source:- layouts/admin/index.vue
+					- layout/guest/index.vue
+------------------------------------------------------------------------*/
 const SET_CURRENT_EVENT = (state, resData) => {
 	state.eventInfo = resData.event;
 	state.role = resData.role;
 	state.tempSettings = resData.event;
 };
 
+
 const MERGE_TEMP_SETTINGS = (state, temp) => {
 	state.tempSettings = { ...state.tempSettings, ...temp };
 };
 
+
+/* ------------------------------------------------------------------------
+	@desc:- listen after edit event success then merge
+				- edit event succcess then merger
+	@socket: listener 'new_edited_event'
+	@source:- layouts/admin/index.vue
+					- cpn/setting/EventSettingDialog.vue
+------------------------------------------------------------------------*/
 const MERGE_CURRENT_EVENT = (state, newInfo) => {
 	state.eventInfo = { ...state.eventInfo, ...newInfo };
 };

@@ -14,14 +14,14 @@
 				<!-- *Event info -->
 				<v-list-tile-content @click="toEventCoop">
 					<v-list-tile-title>
-						<span class="subheading">
+						<span class="body-2">
 							{{ coopInfo.event.name }}
 						</span>
-						<span class="grey--text text-uppercase body-1">
+						<span class="body-1 grey--text text-uppercase">
 							&nbsp;(#{{ coopInfo.event.code }})
 						</span>
 					</v-list-tile-title>
-					<v-list-tile-sub-title class="text--primary">
+					<v-list-tile-sub-title class="body-1 text--primary">
 						{{ formatTime(coopInfo.event.start_at) }}
 						-
 						{{ formatTime(coopInfo.event.end_at) }}
