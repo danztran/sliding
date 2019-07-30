@@ -10,6 +10,7 @@
 		:label="field.label !== '' ? $t(field.label) : ''"
 		:placeholder="$t(field.placeholder)"
 		:rows="field.rows"
+		:flat="field.flat"
 		:outline="field.outline"
 		:auto-grow="field.autogrow"
 		:counter="field.counter"
@@ -40,6 +41,7 @@ export default {
 					outerIcon: '',
 					counter: '',
 					rows: 2,
+					flat: false,
 					autofocus: false,
 					required: false,
 					autogrow: false,

@@ -19,6 +19,16 @@ const ADD_POLL = (state, poll) => {
 
 
 /* ------------------------------------------------------------------------
+	@desc: delete poll after socket return data
+	@socket: emiter 'delete-poll'
+	@source: cpn/polls/admin/PollListPanel.vue
+------------------------------------------------------------------------*/
+const DELETE_POLL = (state, result) => {
+	state.polls = state.polls.filter(el => Number(el.id) !== Number(result.id));
+};
+
+
+/* ------------------------------------------------------------------------
 	@desc: when leave event clear state
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
@@ -28,5 +38,6 @@ const RESET = (state) => {
 export default {
 	SET_POLLS,
 	ADD_POLL,
+	DELETE_POLL,
 	RESET,
 };

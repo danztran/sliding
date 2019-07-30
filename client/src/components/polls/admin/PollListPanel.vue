@@ -25,7 +25,11 @@
 			<v-layout row wrap>
 				<v-flex xs12>
 					<poll-card--create />
-					<poll-list--card />
+					<poll--card
+						v-for="poll in polls"
+						:key="poll.id"
+						:poll="poll"
+						@delete-poll="deletePoll(poll.id)" />
 				</v-flex>
 			</v-layout>
 		</v-card>
@@ -33,18 +37,41 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 import PollCreateCard from './PollCreateCard.vue';
-import PollListCard from './PollListCard.vue';
+import PollCard from './PollCard.vue';
 
 export default {
 	name: 'PollListPanel',
 	components: {
 		'poll-card--create': PollCreateCard,
-		'poll-list--card': PollListCard,
+		'poll--card': PollCard,
+	},
+	computed: {
+		...mapGetters({
+			polls: 'admin/polls/getPolls',
+		}),
 	},
 	methods: {
+		...mapMutations({
+			delPoll: 'admin/polls/DELETE_POLL',
+		}),
 		toggleDialogCreate() {
 			this.$root.$emit('dialog-create-poll');
+		},
+		deletePoll(id) {
+			const emiter = 'delete-poll';
+			this.deleting = true;
+			this.$socket.emit(emiter, { id }, ({ errmsg, poll }) => {
+				this.deleting = false;
+				if (!poll) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.delPoll(poll);
+			});
 		},
 	},
 };

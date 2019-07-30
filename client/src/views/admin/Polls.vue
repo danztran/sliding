@@ -14,16 +14,16 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import DialogCreatePoll from '@/components/polls/admin/DialogCreatePoll.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
 import PollLivePanel from '@/components/polls/admin/PollLivePanel.vue';
-import DialogCreatePoll from '@/components/polls/admin/DialogCreatePoll.vue';
 
 export default {
 	name: 'AdminPolls',
 	components: {
+		'dialog--create-poll': DialogCreatePoll,
 		'poll-panel--list': PollListPanel,
 		'poll-panel--live': PollLivePanel,
-		'dialog--create-poll': DialogCreatePoll,
 	},
 	created() {
 		this.$socket.emit('get-polls', ({ errmsg, polls }) => {
@@ -36,9 +36,19 @@ export default {
 			this.setPolls(polls);
 		});
 	},
+	sockets: {
+		new_added_poll(poll) {
+			this.addPoll(poll);
+		},
+		new_deleted_poll(poll) {
+			this.deletePoll(poll);
+		},
+	},
 	methods: {
 		...mapMutations({
 			setPolls: 'admin/polls/SET_POLLS',
+			addPoll: 'admin/polls/ADD_POLL',
+			deletePoll: 'admin/polls/DELETE_POLL',
 		}),
 	},
 };

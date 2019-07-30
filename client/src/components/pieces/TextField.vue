@@ -15,6 +15,7 @@
 		:disabled="disabled"
 		:prefix="field.prefix"
 		:solo="field.solo"
+		:flat="field.flat"
 		:outline="field.outline"
 		autocapitalize="off"
 		@input="onInput" />
