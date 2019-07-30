@@ -81,6 +81,7 @@ export default {
 		this.resetEvent();
 		this.resetQuestions();
 		this.resetPolls();
+		this.resetPollOptions();
 		next();
 	},
 	sockets: {
@@ -114,6 +115,7 @@ export default {
 			resetEvent: 'admin/event/RESET',
 			resetQuestions: 'admin/questions/RESET',
 			resetPolls: 'admin/polls/RESET',
+			resetPollOptions: 'admin/pollOptions/RESET',
 		}),
 	},
 };

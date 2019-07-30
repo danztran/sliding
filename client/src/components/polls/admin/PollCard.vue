@@ -2,7 +2,8 @@
 	<v-hover>
 		<v-card
 			slot-scope="{ hover }"
-			class="no-shadow card-hover">
+			class="no-shadow card-hover"
+			:class="{ deleting }">
 			<v-list subheader class="py-1">
 				<v-list-tile>
 					<!-- *avatar -->
@@ -17,7 +18,9 @@
 
 					<v-list-tile-content>
 						<!-- *poll type title -->
-						<span v-t="'poll-multiple'" class="body-2 text-capitalize" />
+						<span
+							v-t="'poll-multiple'"
+							class="body-2 first-letter-uppercase font-weight-medium grey--text" />
 
 						<!-- *poll count -->
 						<span class="body-1 font-weight-light d-flex">
@@ -140,6 +143,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
 	name: 'PollCard',
 	props: {
@@ -152,16 +157,31 @@ export default {
 		},
 	},
 	data: () => ({
+		deleting: false,
 		allow_voting: false,
 		allow_show_voting_result: false,
 		activate_poll: false,
 	}),
 	methods: {
+		...mapMutations({
+			delPoll: 'admin/polls/DELETE_POLL',
+		}),
 		editPoll() {
 			// ...
 		},
 		deletePoll() {
-			this.$emit('delete-poll');
+			const emiter = 'delete-poll';
+			this.deleting = true;
+			this.$socket.emit(emiter, { id: this.poll.id }, ({ errmsg, poll }) => {
+				this.deleting = false;
+				if (!poll) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.delPoll(poll);
+			});
 		},
 	},
 };

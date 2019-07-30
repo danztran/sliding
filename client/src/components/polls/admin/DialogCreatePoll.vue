@@ -83,7 +83,7 @@
 						flat
 						medium
 						color="success"
-						@click="handleCreate">
+						@click="handleCreatePoll">
 						<span v-t="'btn-create'" class="first-letter-uppercase" />
 					</v-btn>
 				</v-card-actions>
@@ -144,7 +144,20 @@ export default {
 		...mapMutations({
 			addPoll: 'admin/polls/ADD_POLL',
 		}),
-		handleCreate() {
+		addOptionRow() {
+			this.optionRows.push({
+				value: '',
+				placeholder: 'lb-add-option',
+				type: 'text',
+				rows: 2,
+				solo: true,
+				flat: true,
+				outline: true,
+				autogrow: true,
+				autofocus: true,
+			});
+		},
+		handleCreatePoll() {
 			this.loading = true;
 			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
@@ -156,16 +169,15 @@ export default {
 				this.loading = false;
 				return;
 			}
-			this.createPoll();
+			this.emitCreatePoll();
 		},
-		createPoll() {
+		emitCreatePoll() {
 			const emiter = 'add-poll';
-			const { form } = this;
-			const opt = {
+			const pollContent = {
 				max_choices: this.form.limit.value,
-				content: form.ask.value,
+				content: this.form.ask.value,
 			};
-			this.$socket.emit(emiter, opt, ({ errmsg, poll }) => {
+			this.$socket.emit(emiter, pollContent, ({ errmsg, poll }) => {
 				this.loading = false;
 				if (!poll) {
 					if (errmsg) {
@@ -173,10 +185,26 @@ export default {
 					}
 					return;
 				}
+				this.emitCreateOtpPoll({ pollID: poll.id });
 				this.addPoll(poll);
 				this.$refs.form.reset();
 				this.dialog = false;
 			});
+		},
+		emitCreateOtpPoll({ pollID }) {
+			const emiter = 'add-poll-option';
+			let otp = {};
+			for (const row of this.optionRows) {
+				if (Object.prototype.hasOwnProperty.call(row, 'value')) {
+					otp = {
+						content: row.value,
+						poll_id: pollID,
+					};
+					this.$socket.emit(emiter, otp, (data) => {
+						console.warn(data);
+					});
+				}
+			}
 		},
 	},
 };

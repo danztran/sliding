@@ -24,12 +24,11 @@
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
 			<v-layout row wrap>
 				<v-flex xs12>
-					<poll-card--create />
 					<poll--card
 						v-for="poll in polls"
 						:key="poll.id"
-						:poll="poll"
-						@delete-poll="deletePoll(poll.id)" />
+						:poll="poll" />
+					<poll-card--create />
 				</v-flex>
 			</v-layout>
 		</v-card>
@@ -37,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import PollCreateCard from './PollCreateCard.vue';
 import PollCard from './PollCard.vue';
 
@@ -53,25 +52,8 @@ export default {
 		}),
 	},
 	methods: {
-		...mapMutations({
-			delPoll: 'admin/polls/DELETE_POLL',
-		}),
 		toggleDialogCreate() {
 			this.$root.$emit('dialog-create-poll');
-		},
-		deletePoll(id) {
-			const emiter = 'delete-poll';
-			this.deleting = true;
-			this.$socket.emit(emiter, { id }, ({ errmsg, poll }) => {
-				this.deleting = false;
-				if (!poll) {
-					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
-					}
-					return;
-				}
-				this.delPoll(poll);
-			});
 		},
 	},
 };

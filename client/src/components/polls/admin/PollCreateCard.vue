@@ -6,14 +6,8 @@
 			@click="toggleDialogCreatePoll">
 			<v-list-tile class="grow py-3 px-2">
 				<v-icon
-					v-if="!hover"
 					medium
-					color="grey lighten-3"
-					v-text="'$vuetify.icons.add_new'" />
-				<v-icon
-					v-else
-					medium
-					color="success"
+					:color="hover ? 'success' : 'grey lighten-3'"
 					v-text="'$vuetify.icons.add_new'" />
 
 				<span

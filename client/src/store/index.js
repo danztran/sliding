@@ -8,6 +8,7 @@ import dashboardModule from './dashboard';
 import adminEvent from './admin/event';
 import adminQuestions from './admin/questions';
 import adminPolls from './admin/polls';
+import adminPollOptions from './admin/pollOptions';
 
 // Guest manage current event
 import guestEvent from './guest/event';
@@ -25,6 +26,7 @@ export default new Vuex.Store({
 				event: adminEvent,
 				questions: adminQuestions,
 				polls: adminPolls,
+				pollOptions: adminPollOptions,
 			},
 		},
 		guest: {
@@ -42,6 +44,7 @@ export default new Vuex.Store({
 			commit('admin/event/RESET');
 			commit('admin/questions/RESET');
 			commit('admin/polls/RESET');
+			commit('admin/pollOptions/RESET');
 		},
 	},
 });

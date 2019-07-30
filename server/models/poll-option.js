@@ -7,9 +7,9 @@ class PollOptionModel extends Model {
 
 	create(info, opt) {
 		return this.createOne({
-			event_id: info.event_id,
 			user_id: info.user_id,
 			content: info.content || '',
+			poll_id: info.poll_id,
 			updated_at: new Date().toISOString(),
 			created_at: new Date().toISOString(),
 		}, {

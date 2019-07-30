@@ -76,7 +76,7 @@
 				<template v-else>
 					<span
 						v-t="'invite-rejected'"
-						class="caption font-weight-medium grey--text text--lighten-2 pr-2" />
+						class="caption font-weight-medium grey--text text--lighten-2 pr-2 text-xs-right" />
 					<v-btn
 						flat
 						round
