@@ -21,7 +21,7 @@
 						color="white">
 						<router-link
 							id="btn-back"
-							to="/dashboard/my-events"
+							:to="{ name: 'my-events' }"
 							class="no-underline pt-1">
 							<v-icon
 								size="25"
@@ -31,7 +31,7 @@
 					</v-list-tile-avatar>
 
 					<v-list-tile-content>
-						<div class="subheading text-capitalize font-weight-medium">
+						<div class="subheading font-weight-medium">
 							{{ eventInfo ? eventInfo.name : '...' }}
 						</div>
 						<div

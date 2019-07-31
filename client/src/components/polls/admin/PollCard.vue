@@ -79,7 +79,7 @@
 									<template v-slot:activator="{ on }">
 										<v-btn flat icon small v-on="on">
 											<v-icon
-												size="20"
+												size="25"
 												v-text="activate_poll
 													? '$vuetify.icons.pause_fill'
 													: '$vuetify.icons.start_outline'" />
@@ -108,7 +108,7 @@
 								</template>
 
 								<v-list class="py-0 custom-list" dense>
-									<!-- *options: edit -->
+									<!-- *edit -->
 									<v-list-tile @click="editPoll">
 										<v-list-tile-action>
 											<v-icon v-text="'$vuetify.icons.edit'" />
@@ -118,8 +118,18 @@
 										</v-list-tile-content>
 									</v-list-tile>
 
-									<!-- *options: delete -->
-									<v-list-tile @click="deletePoll">
+									<!-- *poll result -->
+									<v-list-tile @click="viewResult">
+										<v-list-tile-action>
+											<v-icon v-text="'$vuetify.icons.polls'" />
+										</v-list-tile-action>
+										<v-list-tile-content>
+											<v-list-tile-title v-t="'poll-view-results'" />
+										</v-list-tile-content>
+									</v-list-tile>
+
+									<!-- *delete -->
+									<v-list-tile @click="emitDeletePoll">
 										<v-list-tile-action>
 											<v-icon v-text="'$vuetify.icons.delete'" />
 										</v-list-tile-action>
@@ -167,9 +177,12 @@ export default {
 			delPoll: 'admin/polls/DELETE_POLL',
 		}),
 		editPoll() {
-			// ...
+			this.$root.$emit('dialog-edit-poll');
 		},
-		deletePoll() {
+		viewResult() {
+			this.$root.$emit('dialog-result-poll');
+		},
+		emitDeletePoll() {
 			const emiter = 'delete-poll';
 			this.deleting = true;
 			this.$socket.emit(emiter, { id: this.poll.id }, ({ errmsg, poll }) => {

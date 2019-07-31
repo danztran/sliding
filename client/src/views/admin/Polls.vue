@@ -14,14 +14,14 @@
 
 <script>
 import { mapMutations } from 'vuex';
-import DialogCreatePoll from '@/components/polls/admin/DialogCreatePoll.vue';
+import DialogHandlePoll from '@/components/polls/admin/DialogHandlePoll.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
 import PollLivePanel from '@/components/polls/admin/PollLivePanel.vue';
 
 export default {
 	name: 'AdminPolls',
 	components: {
-		'dialog--create-poll': DialogCreatePoll,
+		'dialog--create-poll': DialogHandlePoll,
 		'poll-panel--list': PollListPanel,
 		'poll-panel--live': PollLivePanel,
 	},

@@ -1,7 +1,7 @@
 const PollOptionModel = requireWrp('models/poll-option');
 
 module.exports = {
-	async getPollOptions({ io, socket }, poll_id, callback) {
+	async getPollOptions({ io, socket }, { poll_id }, callback) {
 		const result = {};
 		const query = {
 			poll_id,
