@@ -161,6 +161,7 @@ export default {
 		poll: {
 			type: Object,
 			default: () => ({
+				newAdd: false,
 				content: '...',
 				id: null,
 			}),
@@ -168,19 +169,35 @@ export default {
 	},
 	data: () => ({
 		deleting: false,
+		hadGetPOpts: false,
 		allow_voting: false,
 		allow_show_voting_result: false,
 		activate_poll: false,
+		pollOptions: [],
 	}),
+	mounted() {
+		if (this.poll.newAdd) {
+			this.hadGetPOpts = true;
+		}
+	},
 	methods: {
 		...mapMutations({
 			delPoll: 'admin/polls/DELETE_POLL',
+			delPollInOptions: 'admin/pollOptions/DELETE_POLL',
 		}),
+		shouldEmitGetPollOpts() {
+			if (!this.hadGetPOpts) {
+				this.hadGetPOpts = true;
+				this.$emit('get-poll-opts');
+			}
+		},
 		editPoll() {
-			this.$root.$emit('dialog-edit-poll');
+			this.shouldEmitGetPollOpts();
+			this.$root.$emit('dialog-edit-poll', this.poll.id);
 		},
 		viewResult() {
-			this.$root.$emit('dialog-result-poll');
+			this.shouldEmitGetPollOpts();
+			this.$root.$emit('dialog-result-poll', this.poll.id);
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';
@@ -194,6 +211,9 @@ export default {
 					return;
 				}
 				this.delPoll(poll);
+				if (!this.hadGetPOpts) {
+					this.delPollInOptions(this.poll.id);
+				}
 			});
 		},
 	},

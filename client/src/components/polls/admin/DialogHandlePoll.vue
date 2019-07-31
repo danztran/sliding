@@ -56,9 +56,11 @@
 					<template v-if="editPoll || resultPoll">
 						<v-tabs-items v-model="tabActive">
 							<tab--edit-poll
+								:id="handlePollID"
 								@close-dialog="closeDialog" />
 
 							<tab--result-poll
+								:id="handlePollID"
 								@close-dialog="closeDialog" />
 						</v-tabs-items>
 					</template>
@@ -87,17 +89,20 @@ export default {
 		editPoll: false,
 		resultPoll: false,
 		tabActive: null,
+		handlePollID: null,
 	}),
 	mounted() {
 		this.$root.$on('dialog-create-poll', () => {
 			this.dialog = true;
 			this.createPoll = true;
 		});
-		this.$root.$on('dialog-edit-poll', () => {
+		this.$root.$on('dialog-edit-poll', (id) => {
+			this.handlePollID = id;
 			this.dialog = true;
 			this.editPoll = true;
 		});
-		this.$root.$on('dialog-result-poll', () => {
+		this.$root.$on('dialog-result-poll', (id) => {
+			this.handlePollID = id;
 			this.dialog = true;
 			this.resultPoll = true;
 			this.tabActive = 1;

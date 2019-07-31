@@ -27,7 +27,8 @@
 					<poll--card
 						v-for="poll in polls"
 						:key="poll.id"
-						:poll="poll" />
+						:poll="poll"
+						@get-poll-opts="emitGetPollOpts(poll.id)" />
 					<poll-card--create />
 				</v-flex>
 			</v-layout>
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import PollCreateCard from './PollCreateCard.vue';
 import PollCard from './PollCard.vue';
 
@@ -52,8 +53,25 @@ export default {
 		}),
 	},
 	methods: {
+		...mapMutations({
+			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
+		}),
 		toggleDialogCreate() {
 			this.$root.$emit('dialog-create-poll');
+		},
+		emitGetPollOpts(pollID) {
+			const emiter = 'get-poll-options';
+			// eslint-disable-next-line
+			this.$socket.emit(emiter, { poll_id: pollID }, ({ errmsg, poll_options }) => {
+				// eslint-disable-next-line
+				if (!poll_options) {
+					if (errmsg) {
+						// ....
+					}
+					return;
+				}
+				this.setPollOptions({ poll_id: pollID, options: poll_options });
+			});
 		},
 	},
 };

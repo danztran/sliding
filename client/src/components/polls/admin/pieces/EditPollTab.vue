@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 const initForm = () => ({
 	ask: {
 		value: '',
@@ -88,6 +89,12 @@ const initForm = () => ({
 
 export default {
 	name: 'EditPollTab',
+	props: {
+		id: {
+			type: String,
+			default: null,
+		},
+	},
 	data: () => ({
 		form: initForm(),
 		optionRows: [
@@ -105,7 +112,24 @@ export default {
 		markCorrect: false,
 		selectMultiple: false,
 		limitMultiple: false,
+		poll: null,
+		pollOptions: [],
 	}),
+	computed: {
+		...mapGetters({
+			getPoll: 'admin/polls/getPoll',
+		}),
+	},
+	watch: {
+		poll(val) {
+			if (val) {
+				this.form.ask.value = val.content;
+			}
+		},
+	},
+	mounted() {
+		this.poll = this.getPoll(this.id);
+	},
 	methods: {
 		addOptionRow() {
 			this.optionRows.push({

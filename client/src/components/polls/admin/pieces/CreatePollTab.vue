@@ -110,6 +110,7 @@ export default {
 	methods: {
 		...mapMutations({
 			addPoll: 'admin/polls/ADD_POLL',
+			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
 		}),
 		closeDialog() {
 			this.$emit('close-dialog');
@@ -152,7 +153,7 @@ export default {
 					return;
 				}
 				this.emitCreateOtpPoll({ pollID: poll.id });
-				this.addPoll(poll);
+				this.addPoll(Object.assign(poll, { newAdd: true }));
 				this.$refs.form.reset();
 			});
 		},
@@ -165,11 +166,20 @@ export default {
 						content: row.value,
 						poll_id: pollID,
 					};
-					this.$socket.emit(emiter, otp, (data) => {
-						console.warn(data);
+					// eslint-disable-next-line
+					this.$socket.emit(emiter, otp, ({ errmsg, poll_option }) => {
+						// eslint-disable-next-line
+						if (!poll_option) {
+							if (errmsg) {
+								this.showNotify(errmsg, 'danger');
+							}
+							return;
+						}
+						this.addPollOption({ poll_id: pollID, option: poll_option });
 					});
 				}
 			}
+			this.closeDialog();
 		},
 	},
 };

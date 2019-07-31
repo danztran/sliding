@@ -1,5 +1,11 @@
 /* ------------------------------------
-@desc: get all poll-option in poll
+ @desc: get all poll-option in poll
+ @pollOptions: [
+	 {
+		 poll_id: Number,
+		 options: Array,
+	 }
+ ]
 ------------------------------------*/
 
 import actions from './actions';
