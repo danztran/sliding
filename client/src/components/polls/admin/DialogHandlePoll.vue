@@ -51,16 +51,22 @@
 				<v-tabs-items>
 					<tab--create-poll
 						v-if="createPoll"
+						@start-loading="startLoading"
+						@stop-loading="stopLoading"
 						@close-dialog="closeDialog" />
 
 					<template v-if="editPoll || resultPoll">
 						<v-tabs-items v-model="tabActive">
 							<tab--edit-poll
 								:id="handlePollID"
+								@start-loading="startLoading"
+								@stop-loading="stopLoading"
 								@close-dialog="closeDialog" />
 
 							<tab--result-poll
 								:id="handlePollID"
+								@start-loading="startLoading"
+								@stop-loading="stopLoading"
 								@close-dialog="closeDialog" />
 						</v-tabs-items>
 					</template>
@@ -109,6 +115,12 @@ export default {
 		});
 	},
 	methods: {
+		startLoading() {
+			this.loading = true;
+		},
+		stopLoading() {
+			this.loading = false;
+		},
 		closeDialog() {
 			this.dialog = false;
 			this.loading = false;

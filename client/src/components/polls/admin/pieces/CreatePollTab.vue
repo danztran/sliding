@@ -145,6 +145,7 @@ export default {
 				max_choices: this.form.limit.value,
 				content: this.form.ask.value.trim(),
 			};
+			this.$emit('start-loading');
 			this.$socket.emit(emiter, pollContent, ({ errmsg, poll }) => {
 				if (!poll) {
 					if (errmsg) {

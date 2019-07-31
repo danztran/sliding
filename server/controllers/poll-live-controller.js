@@ -12,7 +12,7 @@ module.exports = {
 		try {
 			const Poll = new PollModel();
 			result.polls = await Poll.find(query, {
-				select: 'id, content, created_at',
+				select: 'id, content, created_at, max_choices, allow_guest_view_result',
 			}).exec();
 
 			return callback(result);

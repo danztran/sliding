@@ -59,6 +59,7 @@
 				flat
 				medium
 				color="success"
+				:disabled="sending"
 				@click="handleEditPoll">
 				<span v-t="'btn-save'" class="first-letter-uppercase" />
 			</v-btn>
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 const initForm = () => ({
 	ask: {
 		value: '',
@@ -112,6 +113,7 @@ export default {
 		markCorrect: false,
 		selectMultiple: false,
 		limitMultiple: false,
+		sending: false,
 		poll: null,
 		pollOptions: [],
 	}),
@@ -124,6 +126,7 @@ export default {
 		poll(val) {
 			if (val) {
 				this.form.ask.value = val.content;
+				this.form.limit.value = val.max_choices;
 			}
 		},
 	},
@@ -131,6 +134,9 @@ export default {
 		this.poll = this.getPoll(this.id);
 	},
 	methods: {
+		...mapMutations({
+			mergePoll: 'admin/polls/MERGE_POLL',
+		}),
 		addOptionRow() {
 			this.optionRows.push({
 				value: '',
@@ -148,12 +154,50 @@ export default {
 			this.$emit('close-dialog');
 		},
 		handleEditPoll() {
-			// ...
+			this.sending = true;
+			if (this.form.ask.value.trim() === '') {
+				this.form.ask.errmsg = this.$t('requireField');
+				this.sending = false;
+				return;
+			}
+			if (this.limitMultiple && this.form.limit.value < 2) {
+				this.form.limit.errmsg = this.$t('poll-limit-count');
+				this.sending = false;
+				return;
+			}
+			if (this.form.ask.value.trim() === this.poll.content) {
+				if (this.form.limit.value === this.poll.max_choices) {
+					this.sending = false;
+					this.closeDialog();
+					return;
+				}
+			}
+			this.emitEPContent({
+				id: this.poll.id,
+				content: this.form.ask.value.trim(),
+				max_choices: this.form.limit.value,
+			});
 		},
-		emitEditContent() {
-			// ...
+		emitEPContent(info) {
+			const emiter = 'edit-poll';
+			const pollEdit = {
+				id: this.poll.id,
+				...info,
+			};
+			this.$emit('start-loading');
+			this.$socket.emit(emiter, pollEdit, ({ errmsg, poll }) => {
+				this.sending = false;
+				if (!poll) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.mergePoll(poll);
+				this.closeDialog();
+			});
 		},
-		emitEditOptions() {
+		emitEPOption() {
 			// ...
 		},
 	},

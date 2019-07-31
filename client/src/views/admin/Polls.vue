@@ -43,12 +43,16 @@ export default {
 		new_deleted_poll(poll) {
 			this.deletePoll(poll);
 		},
+		new_edited_poll(newInfo) {
+			this.mergePoll(newInfo);
+		},
 	},
 	methods: {
 		...mapMutations({
 			setPolls: 'admin/polls/SET_POLLS',
 			addPoll: 'admin/polls/ADD_POLL',
 			deletePoll: 'admin/polls/DELETE_POLL',
+			mergePoll: 'admin/polls/MERGE_POLL',
 		}),
 	},
 };

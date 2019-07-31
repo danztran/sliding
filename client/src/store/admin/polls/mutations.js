@@ -18,6 +18,12 @@ const ADD_POLL = (state, poll) => {
 };
 
 
+const MERGE_POLL = (state, newInfo) => {
+	const poll = state.polls.find(el => Number(el.id) === Number(newInfo.id));
+	Object.assign(poll, newInfo);
+};
+
+
 /* ------------------------------------------------------------------------
 	@desc: delete poll after socket return data
 	@socket: emiter 'delete-poll'
@@ -38,6 +44,7 @@ const RESET = (state) => {
 export default {
 	SET_POLLS,
 	ADD_POLL,
+	MERGE_POLL,
 	DELETE_POLL,
 	RESET,
 };

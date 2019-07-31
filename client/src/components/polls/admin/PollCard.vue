@@ -32,7 +32,7 @@
 								size="15"
 								v-text="'$vuetify.icons.lock'" />
 							<v-icon
-								v-if="!allow_show_voting_result"
+								v-if="!poll.allow_guest_view_result"
 								color="primary"
 								size="15"
 								v-text="'$vuetify.icons.polls'" />
@@ -61,15 +61,15 @@
 								<!-- *opts: allow show poll result -->
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
-										<v-btn flat icon small class="mr-1" v-on="on">
+										<v-btn flat icon small class="mr-1" v-on="on" @click="allowViewResult">
 											<v-icon
 												size="20"
-												v-text="allow_show_voting_result
+												v-text="poll.allow_guest_view_result
 													? '$vuetify.icons.result_off'
 													: '$vuetify.icons.polls'" />
 										</v-btn>
 									</template>
-									<span v-t="allow_show_voting_result
+									<span v-t="poll.allow_guest_view_result
 										? 'poll-disable-show-result'
 										: 'poll-allow-show-result'" />
 								</v-tooltip>
@@ -109,7 +109,7 @@
 
 								<v-list class="py-0 custom-list" dense>
 									<!-- *edit -->
-									<v-list-tile @click="editPoll">
+									<v-list-tile @click="dialogEditPoll">
 										<v-list-tile-action>
 											<v-icon v-text="'$vuetify.icons.edit'" />
 										</v-list-tile-action>
@@ -119,7 +119,7 @@
 									</v-list-tile>
 
 									<!-- *poll result -->
-									<v-list-tile @click="viewResult">
+									<v-list-tile @click="dialogViewResult">
 										<v-list-tile-action>
 											<v-icon v-text="'$vuetify.icons.polls'" />
 										</v-list-tile-action>
@@ -164,6 +164,8 @@ export default {
 				newAdd: false,
 				content: '...',
 				id: null,
+				allow_guest_view_result: false,
+				created_at: null,
 			}),
 		},
 	},
@@ -171,7 +173,6 @@ export default {
 		deleting: false,
 		hadGetPOpts: false,
 		allow_voting: false,
-		allow_show_voting_result: false,
 		activate_poll: false,
 		pollOptions: [],
 	}),
@@ -191,13 +192,16 @@ export default {
 				this.$emit('get-poll-opts');
 			}
 		},
-		editPoll() {
+		dialogEditPoll() {
 			this.shouldEmitGetPollOpts();
 			this.$root.$emit('dialog-edit-poll', this.poll.id);
 		},
-		viewResult() {
+		dialogViewResult() {
 			this.shouldEmitGetPollOpts();
 			this.$root.$emit('dialog-result-poll', this.poll.id);
+		},
+		allowViewResult() {
+			// ...
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';
