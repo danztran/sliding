@@ -3,22 +3,73 @@
 		<!-- @desc: title - actions create -->
 		<v-layout
 			class="pl-3 py-2"
-			align-center
-			justify-space-between
 			row
-			fill-height>
+			justify-space-between
+			align-center>
 			<!-- *title: List poll -->
 			<div v-t="'poll-list-view-title'" class="pt-1 body-1 grey--text" />
-			<!-- *create poll -->
-			<v-btn
-				small
-				round
-				color="success"
-				@click="toggleDialogCreate">
-				<span
-					v-t="'btn-create-poll'"
-					class="first-letter-uppercase px-2" />
-			</v-btn>
+
+			<div class="d-flex">
+				<!-- *create poll -->
+				<v-btn
+					small
+					round
+					color="success"
+					@click="toggleDialogCreate">
+					<span
+						v-t="'btn-create-poll'"
+						class="first-letter-uppercase px-2" />
+				</v-btn>
+				<v-menu
+					v-if="polls.length > 1"
+					bottom
+					nudge-bottom="5"
+					offset-y
+					left>
+					<template v-slot:activator="{ on }">
+						<v-btn
+							icon
+							small
+							v-on="on">
+							<v-icon
+								size="17"
+								v-text="'$vuetify.icons.filter'" />
+						</v-btn>
+					</template>
+					<v-list class="py-0 custom-list" dense subheader>
+						<v-subheader v-t="'opt-sort-by-title'" />
+						<!-- *oldest -->
+						<v-list-tile @click="sortPolls('asc')">
+							<v-list-tile-action>
+								<v-icon
+									v-show="orderBy === 'asc'"
+									color="primary"
+									v-text="'$vuetify.icons.check'" />
+							</v-list-tile-action>
+							<v-list-tile-content>
+								<v-list-tile-title
+									v-t="'btn-oldest'"
+									class="first-letter-uppercase" />
+							</v-list-tile-content>
+						</v-list-tile>
+
+						<!-- *recent (newest) -->
+						<v-list-tile @click="sortPolls('desc')">
+							<v-list-tile-action>
+								<v-icon
+									v-show="orderBy === 'desc'"
+									color="primary"
+									v-text="'$vuetify.icons.check'" />
+							</v-list-tile-action>
+							<v-list-tile-content>
+								<v-list-tile-title
+									v-t="'btn-recent'"
+									class="first-letter-uppercase" />
+							</v-list-tile-content>
+						</v-list-tile>
+					</v-list>
+				</v-menu>
+			</div>
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
@@ -47,6 +98,9 @@ export default {
 		'poll-card--create': PollCreateCard,
 		'poll--card': PollCard,
 	},
+	data: () => ({
+		orderBy: 'desc',
+	}),
 	computed: {
 		...mapGetters({
 			polls: 'admin/polls/getPolls',
@@ -58,6 +112,10 @@ export default {
 		}),
 		toggleDialogCreate() {
 			this.$root.$emit('dialog-create-poll');
+		},
+		sortPolls(order) {
+			this.orderBy = order;
+			this._cm.customSort(this.polls, order, 'created_at');
 		},
 		emitGetPollOpts(pollID) {
 			const emiter = 'get-poll-options';

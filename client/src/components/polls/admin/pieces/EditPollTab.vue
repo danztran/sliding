@@ -60,7 +60,7 @@
 				medium
 				color="success"
 				:disabled="sending"
-				@click="handleEditPoll">
+				@click="handleEPContent">
 				<span v-t="'btn-save'" class="first-letter-uppercase" />
 			</v-btn>
 		</v-card-actions>
@@ -153,7 +153,7 @@ export default {
 		closeDialog() {
 			this.$emit('close-dialog');
 		},
-		handleEditPoll() {
+		handleEPContent() {
 			this.sending = true;
 			if (this.form.ask.value.trim() === '') {
 				this.form.ask.errmsg = this.$t('requireField');
@@ -172,13 +172,13 @@ export default {
 					return;
 				}
 			}
-			this.emitEPContent({
+			this.emitEditPoll({
 				id: this.poll.id,
 				content: this.form.ask.value.trim(),
 				max_choices: this.form.limit.value,
 			});
 		},
-		emitEPContent(info) {
+		emitEditPoll(info) {
 			const emiter = 'edit-poll';
 			const pollEdit = {
 				id: this.poll.id,

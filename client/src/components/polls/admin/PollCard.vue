@@ -201,7 +201,7 @@ export default {
 			this.$root.$emit('dialog-result-poll', this.poll.id);
 		},
 		allowViewResult() {
-			// ...
+			this.$root.$emit('edit-poll', { allow_guest_view_result: !this.poll.allow_guest_view_result });
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';

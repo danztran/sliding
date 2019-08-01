@@ -40,7 +40,7 @@
 					<v-spacer />
 					<v-btn
 						icon
-						@click="closeDialog">
+						@click="dialog=false">
 						<v-icon
 							size="20"
 							v-text="'$vuetify.icons.close'" />
@@ -53,7 +53,7 @@
 						v-if="createPoll"
 						@start-loading="startLoading"
 						@stop-loading="stopLoading"
-						@close-dialog="closeDialog" />
+						@close-dialog="dialog=false" />
 
 					<template v-if="editPoll || resultPoll">
 						<v-tabs-items v-model="tabActive">
@@ -61,13 +61,13 @@
 								:id="handlePollID"
 								@start-loading="startLoading"
 								@stop-loading="stopLoading"
-								@close-dialog="closeDialog" />
+								@close-dialog="dialog=false" />
 
 							<tab--result-poll
 								:id="handlePollID"
 								@start-loading="startLoading"
 								@stop-loading="stopLoading"
-								@close-dialog="closeDialog" />
+								@close-dialog="dialog=false" />
 						</v-tabs-items>
 					</template>
 				</v-tabs-items>
@@ -97,6 +97,13 @@ export default {
 		tabActive: null,
 		handlePollID: null,
 	}),
+	watch: {
+		dialog(val) {
+			if (!val) {
+				this.resetDialog();
+			}
+		},
+	},
 	mounted() {
 		this.$root.$on('dialog-create-poll', () => {
 			this.dialog = true;
@@ -121,8 +128,7 @@ export default {
 		stopLoading() {
 			this.loading = false;
 		},
-		closeDialog() {
-			this.dialog = false;
+		resetDialog() {
 			this.loading = false;
 			this.createPoll = false;
 			this.editPoll = false;
