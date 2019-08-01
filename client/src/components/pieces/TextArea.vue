@@ -1,6 +1,6 @@
 <template>
 	<v-textarea
-		v-model="field.value"
+		v-model.trim="field.value"
 		:autofocus="field.autofocus"
 		:type="field.type"
 		:prepend-icon="field.prepend"

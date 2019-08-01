@@ -155,7 +155,7 @@ export default {
 		},
 		handleEPContent() {
 			this.sending = true;
-			if (this.form.ask.value.trim() === '') {
+			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
 				this.sending = false;
 				return;
@@ -165,7 +165,7 @@ export default {
 				this.sending = false;
 				return;
 			}
-			if (this.form.ask.value.trim() === this.poll.content) {
+			if (this.form.ask.value === this.poll.content) {
 				if (this.form.limit.value === this.poll.max_choices) {
 					this.sending = false;
 					this.closeDialog();
@@ -174,7 +174,7 @@ export default {
 			}
 			this.emitEditPoll({
 				id: this.poll.id,
-				content: this.form.ask.value.trim(),
+				content: this.form.ask.value,
 				max_choices: this.form.limit.value,
 			});
 		},

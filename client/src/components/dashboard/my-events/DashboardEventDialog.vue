@@ -308,7 +308,7 @@ export default {
 			return true;
 		},
 		checkValidField() {
-			if (this.form.name.value.trim() === '') {
+			if (this.form.name.value === '') {
 				this.form.name.errmsg = this.$t('requireField');
 				return false;
 			}

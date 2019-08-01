@@ -129,7 +129,7 @@ export default {
 			});
 		},
 		handleCreatePoll() {
-			if (this.form.ask.value.trim() === '') {
+			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
 				return;
 			}
@@ -143,7 +143,7 @@ export default {
 			const emiter = 'add-poll';
 			const pollContent = {
 				max_choices: this.form.limit.value,
-				content: this.form.ask.value.trim(),
+				content: this.form.ask.value,
 			};
 			this.$emit('start-loading');
 			this.$socket.emit(emiter, pollContent, ({ errmsg, poll }) => {

@@ -302,7 +302,7 @@ export default {
 			this.loading = true;
 			const newInfo = {
 				id: this.user.id,
-				name: this.form.name.value.trim(),
+				name: this.form.name.value,
 			};
 			this.$axios
 				.patch(this.$api.auth.update, newInfo)

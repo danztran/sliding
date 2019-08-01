@@ -180,7 +180,7 @@ export default {
 		onReplyEnter(e) {
 			if (e && !e.shiftKey) {
 				e.preventDefault();
-				if (this.form.reply.value.trim() === '') {
+				if (this.form.reply.value === '') {
 					return;
 				}
 				this.sendReply();
@@ -201,7 +201,7 @@ export default {
 				question_id: this.question.id,
 				data: {
 					id: replyId,
-					content: this.form.reply.value.trim(),
+					content: this.form.reply.value,
 					question_id: this.question.id,
 					created_at: new Date().toISOString(),
 					user: {

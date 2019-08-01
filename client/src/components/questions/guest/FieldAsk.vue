@@ -117,7 +117,7 @@ export default {
 			this.$socket.emit(emiter, {
 				event_id: this.eventInfo.id,
 				user_id: this.user.id,
-				content: this.form.ask.value.trim(),
+				content: this.form.ask.value,
 				stage: this.eventInfo.on_moderation ? 'private' : 'public',
 			}, ({ errmsg, question }) => {
 				if (!question) {

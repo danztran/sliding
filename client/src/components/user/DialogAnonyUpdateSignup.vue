@@ -181,11 +181,11 @@ export default {
 
 			const { form } = this;
 			const infoFormData = {
-				name: form.name.value.trim(),
-				email: form.email.value.trim(),
-				username: form.username.value.trim(),
-				password: form.password.value.trim(),
-				rePassword: form.rePassword.value.trim(),
+				name: form.name.value,
+				email: form.email.value,
+				username: form.username.value,
+				password: form.password.value,
+				rePassword: form.rePassword.value,
 			};
 			this.$axios
 				.patch(this.$api.auth.updateQSignup, infoFormData)
