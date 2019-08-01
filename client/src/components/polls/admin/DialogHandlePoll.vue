@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 import CreatePollTab from './pieces/CreatePollTab.vue';
 import EditPollTab from './pieces/EditPollTab.vue';
 import ResultPollTab from './pieces/ResultPollTab.vue';
@@ -97,31 +98,46 @@ export default {
 		tabActive: null,
 		handlePollID: null,
 	}),
+	computed: {
+		...mapGetters({
+			getPollEditInfo: 'admin/polls/getPollEditInfo',
+		}),
+	},
 	watch: {
 		dialog(val) {
 			if (!val) {
 				this.resetDialog();
 			}
 		},
+		getPollEditInfo(info) {
+			if (info) {
+				this.emitEditPoll(info);
+			}
+		},
 	},
 	mounted() {
-		this.$root.$on('dialog-create-poll', () => {
-			this.dialog = true;
-			this.createPoll = true;
-		});
-		this.$root.$on('dialog-edit-poll', (id) => {
-			this.handlePollID = id;
-			this.dialog = true;
-			this.editPoll = true;
-		});
-		this.$root.$on('dialog-result-poll', (id) => {
-			this.handlePollID = id;
-			this.dialog = true;
-			this.resultPoll = true;
-			this.tabActive = 1;
+		this.$root.$on('dialog-handle-poll', (dialog) => {
+			if (dialog.type === 'create') {
+				this.dialog = true;
+				this.createPoll = true;
+			}
+			else if (dialog.type === 'edit') {
+				this.handlePollID = dialog.id;
+				this.dialog = true;
+				this.editPoll = true;
+			}
+			else {
+				this.handlePollID = dialog.id;
+				this.dialog = true;
+				this.resultPoll = true;
+				this.tabActive = 1;
+			}
 		});
 	},
 	methods: {
+		...mapMutations({
+			mergePoll: 'admin/polls/MERGE_POLL',
+		}),
 		startLoading() {
 			this.loading = true;
 		},
@@ -134,6 +150,21 @@ export default {
 			this.editPoll = false;
 			this.resultPoll = false;
 			this.tabActive = null;
+		},
+		emitEditPoll(info) {
+			const emiter = 'edit-poll';
+			this.loading = true;
+			this.$socket.emit(emiter, info, ({ errmsg, poll }) => {
+				this.loading = false;
+				if (!poll) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.mergePoll(poll);
+				this.dialog = false;
+			});
 		},
 	},
 };

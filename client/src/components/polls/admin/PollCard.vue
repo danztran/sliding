@@ -49,8 +49,8 @@
 											<v-icon
 												size="20"
 												v-text="allow_voting
-													? '$vuetify.icons.lock'
-													: '$vuetify.icons.unlock'" />
+													? '$vuetify.icons.unlock'
+													: '$vuetify.icons.lock'" />
 										</v-btn>
 									</template>
 									<span v-t="allow_voting
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
 	name: 'PollCard',
@@ -176,6 +176,11 @@ export default {
 		activate_poll: false,
 		pollOptions: [],
 	}),
+	computed: {
+		...mapGetters({
+			getPollOptions: 'admin/pollOptions/getPollOptions',
+		}),
+	},
 	mounted() {
 		if (this.poll.newAdd) {
 			this.hadGetPOpts = true;
@@ -183,8 +188,9 @@ export default {
 	},
 	methods: {
 		...mapMutations({
+			setPollEditInfo: 'admin/polls/SET_INFO_EDIT',
 			delPoll: 'admin/polls/DELETE_POLL',
-			delPollInOptions: 'admin/pollOptions/DELETE_POLL',
+			delPollOptions: 'admin/pollOptions/DELETE_POLL',
 		}),
 		shouldEmitGetPollOpts() {
 			if (!this.hadGetPOpts) {
@@ -194,14 +200,23 @@ export default {
 		},
 		dialogEditPoll() {
 			this.shouldEmitGetPollOpts();
-			this.$root.$emit('dialog-edit-poll', this.poll.id);
+			this.$root.$emit('dialog-handle-poll', {
+				type: 'edit',
+				id: this.poll.id,
+			});
 		},
 		dialogViewResult() {
 			this.shouldEmitGetPollOpts();
-			this.$root.$emit('dialog-result-poll', this.poll.id);
+			this.$root.$emit('dialog-handle-poll', {
+				type: 'result',
+				id: this.poll.id,
+			});
 		},
 		allowViewResult() {
-			this.$root.$emit('edit-poll', { allow_guest_view_result: !this.poll.allow_guest_view_result });
+			this.setPollEditInfo({
+				id: this.poll.id,
+				allow_guest_view_result: !this.poll.allow_guest_view_result,
+			});
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';
@@ -216,7 +231,7 @@ export default {
 				}
 				this.delPoll(poll);
 				if (!this.hadGetPOpts) {
-					this.delPollInOptions(this.poll.id);
+					this.delPollOptions(this.poll.id);
 				}
 			});
 		},

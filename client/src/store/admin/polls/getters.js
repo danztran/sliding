@@ -4,7 +4,10 @@ const getPoll = state => (id) => {
 	return poll || null;
 };
 
+const getPollEditInfo = state => state.editInfo;
+
 export default {
 	getPolls,
 	getPoll,
+	getPollEditInfo,
 };

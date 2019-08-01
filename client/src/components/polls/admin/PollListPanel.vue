@@ -111,7 +111,7 @@ export default {
 			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
 		}),
 		toggleDialogCreate() {
-			this.$root.$emit('dialog-create-poll');
+			this.$root.$emit('dialog-handle-poll', { type: 'create' });
 		},
 		sortPolls(order) {
 			this.orderBy = order;

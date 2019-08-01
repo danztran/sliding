@@ -120,6 +120,7 @@ export default {
 	computed: {
 		...mapGetters({
 			getPoll: 'admin/polls/getPoll',
+			getPollOptions: 'admin/pollOptions/getPollOptions',
 		}),
 	},
 	watch: {
@@ -135,7 +136,7 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			mergePoll: 'admin/polls/MERGE_POLL',
+			setPollEditInfo: 'admin/polls/SET_INFO_EDIT',
 		}),
 		addOptionRow() {
 			this.optionRows.push({
@@ -172,29 +173,10 @@ export default {
 					return;
 				}
 			}
-			this.emitEditPoll({
+			this.setPollEditInfo({
 				id: this.poll.id,
 				content: this.form.ask.value,
 				max_choices: this.form.limit.value,
-			});
-		},
-		emitEditPoll(info) {
-			const emiter = 'edit-poll';
-			const pollEdit = {
-				id: this.poll.id,
-				...info,
-			};
-			this.$emit('start-loading');
-			this.$socket.emit(emiter, pollEdit, ({ errmsg, poll }) => {
-				this.sending = false;
-				if (!poll) {
-					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
-					}
-					return;
-				}
-				this.mergePoll(poll);
-				this.closeDialog();
 			});
 		},
 		emitEPOption() {

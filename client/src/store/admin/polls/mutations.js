@@ -18,9 +18,24 @@ const ADD_POLL = (state, poll) => {
 };
 
 
+/* ------------------------------------------------------------------------
+	@desc: lister and merge new info
+	@socket:- listener 'new_edited_poll'
+					- emiter 'edit-poll'
+	@source:- views/admin/Polls.vue
+					- cpn/polls/admin/DialogHandlePoll.vue
+------------------------------------------------------------------------*/
 const MERGE_POLL = (state, newInfo) => {
 	const poll = state.polls.find(el => Number(el.id) === Number(newInfo.id));
 	Object.assign(poll, newInfo);
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc: set info poll need edited
+------------------------------------------------------------------------*/
+const SET_INFO_EDIT = (state, infoEdit) => {
+	state.editInfo = infoEdit;
 };
 
 
@@ -39,12 +54,14 @@ const DELETE_POLL = (state, result) => {
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.polls = [];
+	state.editInfo = null;
 };
 
 export default {
 	SET_POLLS,
 	ADD_POLL,
 	MERGE_POLL,
+	SET_INFO_EDIT,
 	DELETE_POLL,
 	RESET,
 };
