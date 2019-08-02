@@ -1,8 +1,6 @@
 <template>
-	<v-tab-item
-		:transition="false"
-		:reverse-transition="false">
-		<v-card-text class="scrollbar-primary text-xs-center poll-content">
+	<div>
+		<v-card-text class="scrollbar-primary text-xs-center content">
 			<v-form ref="form">
 				<v-layout row wrap :px-3="!isXS">
 					<!-- *Poll ask -->
@@ -10,18 +8,36 @@
 						<text-field :field="form.ask" />
 					</v-flex>
 
-					<!-- <text-area :field="form.option" /> -->
-					<v-flex xs8>
-						<template v-for="(row, idx) in optionRows">
-							<text-area :key="idx" :field="row" />
-						</template>
-					</v-flex>
+					<template v-for="(row, idx) in optionRows">
+						<div :key="idx" class="d-flex w-100 area-field">
+							<v-flex class="w-100" xs9>
+								<text-area :field="row" />
+							</v-flex>
+							<div>
+								<!-- *delete row -->
+								<v-btn class="mt-1" icon @click="delOptRow(idx)">
+									<v-icon medium color="grey" v-text="'$vuetify.icons.delete'" />
+								</v-btn>
+							</div>
+						</div>
+					</template>
+
+					<!-- *Add row -->
 					<v-flex xs12>
-						<v-checkbox
-							v-model="markCorrect"
+						<v-btn
+							class="left ml-0"
+							medium
+							flat
+							outline
 							color="primary"
-							class="mt-0"
-							:label="$t('poll-mark-correct')" />
+							@click="addOptionRow">
+							<v-icon left medium v-text="'$vuetify.icons.add'" />
+							<span v-t="'lb-add-option'" class="first-letter-uppercase" />
+						</v-btn>
+					</v-flex>
+
+					<!-- *allow multi choice -->
+					<v-flex xs12>
 						<v-checkbox
 							v-model="selectMultiple"
 							color="primary"
@@ -64,11 +80,11 @@
 				<span v-t="'btn-save'" class="first-letter-uppercase" />
 			</v-btn>
 		</v-card-actions>
-	</v-tab-item>
+	</div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 const initForm = () => ({
 	ask: {
 		value: '',
@@ -91,38 +107,28 @@ const initForm = () => ({
 export default {
 	name: 'EditPollTab',
 	props: {
-		id: {
-			type: String,
-			default: null,
+		poll: {
+			type: Object,
+			default: () => ({
+				content: '...',
+				id: null,
+			}),
+		},
+		pollOptions: {
+			type: Array,
+			default: () => ({
+				content: '',
+				id: null,
+			}),
 		},
 	},
 	data: () => ({
 		form: initForm(),
-		optionRows: [
-			{
-				value: '',
-				placeholder: 'lb-add-option',
-				type: 'text',
-				rows: 2,
-				solo: true,
-				flat: true,
-				outline: true,
-				autogrow: true,
-			},
-		],
-		markCorrect: false,
+		optionRows: [],
 		selectMultiple: false,
 		limitMultiple: false,
 		sending: false,
-		poll: null,
-		pollOptions: [],
 	}),
-	computed: {
-		...mapGetters({
-			getPoll: 'admin/polls/getPoll',
-			getPollOptions: 'admin/pollOptions/getPollOptions',
-		}),
-	},
 	watch: {
 		poll(val) {
 			if (val) {
@@ -130,29 +136,54 @@ export default {
 				this.form.limit.value = val.max_choices;
 			}
 		},
-	},
-	mounted() {
-		this.poll = this.getPoll(this.id);
+		pollOptions(opts) {
+			if (opts) {
+				this.fillOptions(opts);
+			}
+		},
 	},
 	methods: {
 		...mapMutations({
 			setPollEditInfo: 'admin/polls/SET_INFO_EDIT',
 		}),
+		closeDialog() {
+			this.$emit('close-dialog');
+		},
 		addOptionRow() {
 			this.optionRows.push({
 				value: '',
+				errmsg: '',
 				placeholder: 'lb-add-option',
 				type: 'text',
-				rows: 2,
+				rows: 1,
 				solo: true,
 				flat: true,
 				outline: true,
 				autogrow: true,
-				autofocus: true,
 			});
 		},
-		closeDialog() {
-			this.$emit('close-dialog');
+		delOptRow(index) {
+			if (this.optionRows.length > 1) {
+				this.optionRows.splice(index, 1);
+			}
+		},
+		fillOptions(opts) {
+			this.optionRows = Array.from({ length: opts.length }, () => ({
+				value: '',
+				id: null,
+				placeholder: 'lb-add-option',
+				type: 'text',
+				rows: 1,
+				solo: true,
+				flat: true,
+				outline: true,
+			}));
+			for (const key of Object.keys(opts)) {
+				if (Object.prototype.hasOwnProperty.call(this.optionRows, key)) {
+					this.optionRows[key].value = opts[key].content;
+				}
+			}
+			this.addOptionRow();
 		},
 		handleEPContent() {
 			this.sending = true;
@@ -186,5 +217,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.area-field {
+	.v-input__slot {
+		min-height: 50px;
+	}
+	textarea {
+		margin-top: 0;
+	}
+}
 </style>

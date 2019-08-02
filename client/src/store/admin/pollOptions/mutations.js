@@ -31,7 +31,7 @@ const ADD_POLL_OPTION = (state, info) => {
 	else {
 		state.pollOptions.push({
 			poll_id: info.poll_id,
-			options: info.option,
+			options: [info.option],
 		});
 	}
 };

@@ -9,11 +9,13 @@
 			</v-flex>
 		</v-layout>
 		<dialog--create-poll />
+		<dialog--handle-poll />
 	</div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
+import DialogCreatePoll from '@/components/polls/admin/DialogCreatePoll.vue';
 import DialogHandlePoll from '@/components/polls/admin/DialogHandlePoll.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
 import PollLivePanel from '@/components/polls/admin/PollLivePanel.vue';
@@ -21,7 +23,8 @@ import PollLivePanel from '@/components/polls/admin/PollLivePanel.vue';
 export default {
 	name: 'AdminPolls',
 	components: {
-		'dialog--create-poll': DialogHandlePoll,
+		'dialog--create-poll': DialogCreatePoll,
+		'dialog--handle-poll': DialogHandlePoll,
 		'poll-panel--list': PollListPanel,
 		'poll-panel--live': PollLivePanel,
 	},

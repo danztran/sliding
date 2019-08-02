@@ -31,11 +31,6 @@
 								color="grey"
 								size="15"
 								v-text="'$vuetify.icons.lock'" />
-							<v-icon
-								v-if="!poll.allow_guest_view_result"
-								color="primary"
-								size="15"
-								v-text="'$vuetify.icons.polls'" />
 						</span>
 					</v-list-tile-content>
 
@@ -45,7 +40,7 @@
 								<!-- *ops: allow voting -->
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
-										<v-btn flat icon small class="mr-1" v-on="on">
+										<v-btn flat icon small class="mr-1" v-on="on" @click="handleLockVote">
 											<v-icon
 												size="20"
 												v-text="allow_voting
@@ -56,38 +51,6 @@
 									<span v-t="allow_voting
 										? 'poll-disable-voting'
 										: 'poll-allow-voting'" />
-								</v-tooltip>
-
-								<!-- *opts: allow show poll result -->
-								<v-tooltip bottom>
-									<template v-slot:activator="{ on }">
-										<v-btn flat icon small class="mr-1" v-on="on" @click="allowViewResult">
-											<v-icon
-												size="20"
-												v-text="poll.allow_guest_view_result
-													? '$vuetify.icons.result_off'
-													: '$vuetify.icons.polls'" />
-										</v-btn>
-									</template>
-									<span v-t="poll.allow_guest_view_result
-										? 'poll-disable-show-result'
-										: 'poll-allow-show-result'" />
-								</v-tooltip>
-
-								<!-- *opts: start/stop polling -->
-								<v-tooltip bottom>
-									<template v-slot:activator="{ on }">
-										<v-btn flat icon small v-on="on">
-											<v-icon
-												size="25"
-												v-text="activate_poll
-													? '$vuetify.icons.pause_fill'
-													: '$vuetify.icons.start_outline'" />
-										</v-btn>
-									</template>
-									<span v-t="activate_poll
-										? 'poll-disactivate'
-										: 'poll-activate'" />
 								</v-tooltip>
 							</template>
 							<v-menu
@@ -153,7 +116,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
 	name: 'PollCard',
@@ -164,7 +127,7 @@ export default {
 				newAdd: false,
 				content: '...',
 				id: null,
-				allow_guest_view_result: false,
+				is_locked: false,
 				created_at: null,
 			}),
 		},
@@ -174,13 +137,7 @@ export default {
 		hadGetPOpts: false,
 		allow_voting: false,
 		activate_poll: false,
-		pollOptions: [],
 	}),
-	computed: {
-		...mapGetters({
-			getPollOptions: 'admin/pollOptions/getPollOptions',
-		}),
-	},
 	mounted() {
 		if (this.poll.newAdd) {
 			this.hadGetPOpts = true;
@@ -192,30 +149,31 @@ export default {
 			delPoll: 'admin/polls/DELETE_POLL',
 			delPollOptions: 'admin/pollOptions/DELETE_POLL',
 		}),
+		handleLockVote() {
+			this.setPollEditInfo({
+				id: this.poll.id,
+				is_locked: !this.poll.is_locked,
+			});
+		},
 		shouldEmitGetPollOpts() {
 			if (!this.hadGetPOpts) {
 				this.hadGetPOpts = true;
-				this.$emit('get-poll-opts');
+				return true;
 			}
+			return false;
 		},
 		dialogEditPoll() {
-			this.shouldEmitGetPollOpts();
 			this.$root.$emit('dialog-handle-poll', {
 				type: 'edit',
 				id: this.poll.id,
+				emitGetPOpts: this.shouldEmitGetPollOpts(),
 			});
 		},
 		dialogViewResult() {
-			this.shouldEmitGetPollOpts();
 			this.$root.$emit('dialog-handle-poll', {
 				type: 'result',
 				id: this.poll.id,
-			});
-		},
-		allowViewResult() {
-			this.setPollEditInfo({
-				id: this.poll.id,
-				allow_guest_view_result: !this.poll.allow_guest_view_result,
+				emitGetPOpts: this.shouldEmitGetPollOpts(),
 			});
 		},
 		emitDeletePoll() {

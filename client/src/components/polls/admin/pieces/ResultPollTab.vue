@@ -1,8 +1,6 @@
 <template>
-	<v-tab-item
-		:transition="false"
-		:reverse-transition="false">
-		<v-card-text class="scrollbar-primary text-xs-center poll-content">
+	<div>
+		<v-card-text class="scrollbar-primary text-xs-center content">
 			hello results
 		</v-card-text>
 
@@ -16,7 +14,7 @@
 				<span v-t="'btn-cancel'" class="first-letter-uppercase" />
 			</v-btn>
 		</v-card-actions>
-	</v-tab-item>
+	</div>
 </template>
 
 <script>

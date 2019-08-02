@@ -50,7 +50,7 @@
 			<!-- @desc: Main picture introduce, input event code -->
 			<v-parallax
 				class="pa-0"
-				height="500"
+				height="650"
 				dark
 				:src="backgroundNav">
 				<v-layout

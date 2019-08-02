@@ -18,10 +18,9 @@
 							<router-view />
 						</transition>
 						<div class="my-2 text-xs-center">
-							<span />
 							<router-link class="body-1 font-weight-medium no-underline" to="/">
-								<span>&#60; </span>
-								<span>{{ $t('btn-back-home') }}</span>
+								<v-icon small color="primary" v-text="'$vuetify.icons.arrow_back'" />
+								<span>&nbsp;{{ $t('btn-back-home') }}</span>
 							</router-link>
 						</div>
 					</v-card>

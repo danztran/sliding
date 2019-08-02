@@ -31,6 +31,7 @@ const icons = {
 	mobile_slide_event: 'mobile_screen_share',
 	arrow_left: 'keyboard_arrow_left',
 	arrow_forward: 'arrow_forward',
+	arrow_back: 'arrow_back',
 	signout: 'exit_to_app',
 	signup: 'person_add',
 	dashboard: 'dashboard',

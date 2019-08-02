@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import PollCreateCard from './PollCreateCard.vue';
 import PollCard from './PollCard.vue';
 
@@ -107,29 +107,13 @@ export default {
 		}),
 	},
 	methods: {
-		...mapMutations({
-			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
-		}),
 		toggleDialogCreate() {
-			this.$root.$emit('dialog-handle-poll', { type: 'create' });
+			// this.$root.$emit('dialog-handle-poll', { type: 'create' });
+			this.$root.$emit('dialog-create-poll');
 		},
 		sortPolls(order) {
 			this.orderBy = order;
 			this._cm.customSort(this.polls, order, 'created_at');
-		},
-		emitGetPollOpts(pollID) {
-			const emiter = 'get-poll-options';
-			// eslint-disable-next-line
-			this.$socket.emit(emiter, { poll_id: pollID }, ({ errmsg, poll_options }) => {
-				// eslint-disable-next-line
-				if (!poll_options) {
-					if (errmsg) {
-						// ....
-					}
-					return;
-				}
-				this.setPollOptions({ poll_id: pollID, options: poll_options });
-			});
 		},
 	},
 };

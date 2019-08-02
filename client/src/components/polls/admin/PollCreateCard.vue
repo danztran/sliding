@@ -23,6 +23,9 @@
 export default {
 	name: 'PollCreateCard',
 	methods: {
+		// toggleDialogCreatePoll() {
+		// 	this.$root.$emit('dialog-handle-poll', { type: 'create' });
+		// },
 		toggleDialogCreatePoll() {
 			this.$root.$emit('dialog-create-poll');
 		},
