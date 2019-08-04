@@ -73,6 +73,7 @@ export default {
 		}
 		this.resetEvent();
 		this.resetQuestions();
+		this.resetPolls();
 		next();
 	},
 	sockets: {
@@ -83,6 +84,8 @@ export default {
 			}
 			else {
 				this.setGuestCurrentEvent(data);
+				this.emitGetQuestions();
+				this.emitGetPolls();
 				this.ready = true;
 			}
 		},
@@ -94,10 +97,33 @@ export default {
 		...mapMutations({
 			setAdminCurrentEvent: 'admin/event/SET_CURRENT_EVENT',
 			setGuestCurrentEvent: 'guest/event/SET_CURRENT_EVENT',
+			setQuestions: 'guest/questions/SET_QUESTIONS',
+			setPolls: 'guest/polls/SET_POLLS',
 			mergeGuestCurrentEvent: 'guest/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'guest/event/RESET',
 			resetQuestions: 'guest/questions/RESET',
+			resetPolls: 'guest/polls/RESET',
 		}),
+		emitGetQuestions() {
+			this.$socket.emit('get-questions', ({ errmsg, questions }) => {
+				if (errmsg) {
+					// notify
+					return;
+				}
+				this.setQuestions(questions);
+			});
+		},
+		emitGetPolls() {
+			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
+				if (!polls) {
+					if (errmsg) {
+						// ...
+					}
+					return;
+				}
+				this.setPolls(polls);
+			});
+		},
 	},
 };
 </script>

@@ -180,7 +180,7 @@
 		"live-view-empty-title-join": "Your audience can join at",
 		"live-view-empty-title-joincode": "with this code:",
 		"poll-list-view-title": "List",
-		"poll-empty-title": "There is no active poll at the moment.",
+		"poll-empty-title": "There is no poll at the moment.",
 		"poll-empty-subtitle": "Create your first poll and click \"Activate\"",
 		"poll-allow-voting": "Voting open",
 		"poll-disable-voting": "Voting locked",

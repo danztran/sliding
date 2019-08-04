@@ -13,6 +13,9 @@ import adminPollOptions from './admin/pollOptions';
 // Guest manage current event
 import guestEvent from './guest/event';
 import guestQuestions from './guest/questions';
+import guestPolls from './guest/polls';
+import guestPollOptions from './guest/pollOptions';
+
 
 Vue.use(Vuex);
 
@@ -34,6 +37,8 @@ export default new Vuex.Store({
 			modules: {
 				event: guestEvent,
 				questions: guestQuestions,
+				polls: guestPolls,
+				pollOptions: guestPollOptions,
 			},
 		},
 	},
@@ -45,6 +50,10 @@ export default new Vuex.Store({
 			commit('admin/questions/RESET');
 			commit('admin/polls/RESET');
 			commit('admin/pollOptions/RESET');
+			commit('guest/event/RESET');
+			commit('guest/questions/RESET');
+			commit('guest/polls/RESET');
+			commit('guest/pollOptions/RESET');
 		},
 	},
 });

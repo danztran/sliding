@@ -27,15 +27,15 @@ export default {
 			questions: 'guest/questions/getQuestions',
 		}),
 	},
-	created() {
-		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
-			if (errmsg) {
-				// notify
-				return;
-			}
-			this.setQuestions(questions);
-		});
-	},
+	// created() {
+	// 	this.$socket.emit('get-questions', ({ errmsg, questions }) => {
+	// 		if (errmsg) {
+	// 			// notify
+	// 			return;
+	// 		}
+	// 		this.setQuestions(questions);
+	// 	});
+	// },
 	sockets: {
 		new_added_question(question) {
 			this.addQuestion(question);
@@ -63,7 +63,7 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			setQuestions: 'guest/questions/SET_QUESTIONS',
+			// setQuestions: 'guest/questions/SET_QUESTIONS',
 			addQuestion: 'guest/questions/ADD_QUESTION',
 			editQuestion: 'guest/questions/EDIT_QUESTION',
 			delQuestion: 'guest/questions/DELETE_QUESTION',

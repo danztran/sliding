@@ -7,7 +7,7 @@
 		</span>
 		<v-card>
 			<loading-linear :loading="loading" />
-			<v-card-title class="py-0 pr-0">
+			<v-card-title class="py-2 pr-0">
 				<span
 					v-t="'guest-profile-update-title-dialog'"
 					class="grey--text text--darken-1" />

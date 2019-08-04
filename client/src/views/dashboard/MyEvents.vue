@@ -23,7 +23,6 @@
 					</v-btn>
 
 					<v-menu
-						v-if="events.length > 1"
 						bottom
 						nudge-bottom="5"
 						offset-y

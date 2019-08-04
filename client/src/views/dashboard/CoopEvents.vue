@@ -13,7 +13,6 @@
 				<!-- *Sort -->
 				<div class="d-flex">
 					<v-menu
-						v-if="coopAccepted.length > 1"
 						bottom
 						nudge-bottom="5"
 						offset-y

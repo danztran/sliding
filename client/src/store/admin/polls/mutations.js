@@ -46,7 +46,6 @@ const DELETE_POLL = (state, result) => {
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.polls = [];
-	state.editInfo = null;
 };
 
 export default {
