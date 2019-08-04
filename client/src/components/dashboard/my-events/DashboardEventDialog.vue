@@ -99,7 +99,7 @@
 										<v-btn
 											flat
 											color="primary"
-											@click="$refs.dialogDateEnd.save(form.end.defaultDate)">
+											@click="$refs.dialogDateEnd.save(form.end.defaultDate, dialogTimeEnd=true)">
 											<span v-t="'btn-save'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-date-picker>
@@ -134,7 +134,7 @@
 											flat
 											color="primary"
 											@click="$refs.dialogTimeStart.save(form.start.defaultTime,
-												dialogTimeEnd=true)">
+												dialogDateEnd=true)">
 											<span v-t="'btn-save'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-time-picker>
@@ -283,7 +283,7 @@ export default {
 				*if: start are bigger than end set defaultDate for dateEnd
 		*/
 		cbCheckBiggerDateEnd(dateStart) {
-			this.dialogDateEnd = true;
+			this.dialogTimeStart = true;
 			const start = new Date(dateStart).getTime();
 			const end = new Date(this.form.end.defaultDate).getTime();
 			if (start > end) {

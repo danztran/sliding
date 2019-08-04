@@ -17,8 +17,13 @@
 			<text-field
 				class="input-code"
 				:field="basicSettings.form.code" />
-			<text-field
-				:field="basicSettings.form.link" />
+			<v-text-field
+				ref="link"
+				readonly
+				:label="copied ? $t('lb-event-link-copied') : $t('lb-event-link-copy')"
+				:value="basicSettings.form.link.value"
+				:append-icon="basicSettings.form.link.append"
+				@click="copyLink" />
 
 			<v-layout row wrap>
 				<v-flex xs12 sm6 class="pr-1">
@@ -71,11 +76,8 @@ const initForm = () => ({
 	},
 	link: {
 		value: '',
-		label: 'lb-event-link',
-		type: 'text',
 		append: 'file_copy',
 		readonly: true,
-		required: true,
 		errmsg: '',
 	},
 	start_at: {
@@ -107,6 +109,7 @@ export default {
 		basicSettings: {
 			form: initForm(),
 		},
+		copied: false,
 	}),
 	computed: {
 		...mapGetters({
@@ -135,6 +138,12 @@ export default {
 	methods: {
 		formatDate(date) {
 			return new Date(date).toISOString().substr(0, 10);
+		},
+		copyLink() {
+			const markup = this.$refs.link;
+			markup.focus();
+			document.execCommand('selectAll', false, null);
+			this.copied = document.execCommand('copy');
 		},
 	},
 };
