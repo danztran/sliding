@@ -85,7 +85,7 @@ export default {
 </script>
 
 <style lang="scss">
-	$primary: #3da4b5;
+	$primary: var(--v-primary-base);
 	#admin-question {
 		.v-input--switch label {
 			font-size: 14px !important;

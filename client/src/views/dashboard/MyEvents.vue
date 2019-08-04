@@ -7,11 +7,11 @@
 			justify-space-between
 			align-center>
 			<template v-if="!loading && !isEmpty">
-				<!-- @desc: event being activated -->
+				<!-- *event being activated -->
 				<div v-t="'event-status'" />
 
 				<div class="d-flex">
-					<!-- @desc: button create event -->
+					<!-- *button create event -->
 					<v-btn
 						class="px-3"
 						color="success lighten--2"
@@ -75,14 +75,14 @@
 			</template>
 		</v-layout>
 
-		<!-- @desc: list events -->
+		<!-- *list events -->
 		<v-card class="list-event scrollbar-primary">
 			<template v-for="event of events">
 				<event-card :key="event.code" :info="event" />
 			</template>
 		</v-card>
 
-		<!-- @desc: message empty event -->
+		<!-- *empty state event -->
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
 			<div v-show="isEmpty" class="empty-state mt-3">

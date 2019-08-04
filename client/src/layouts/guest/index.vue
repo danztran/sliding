@@ -132,7 +132,7 @@ export default {
 #my-guest-content {
 	margin-top: 60px !important;
 	.v-content__wrap {
-		padding: 0 25% !important;
+		padding: 0 30% !important;
 	}
 	@media only screen and (max-width: 960px) {
 		margin-top: 10px !important;

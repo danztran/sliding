@@ -190,7 +190,7 @@ export default {
 </script>
 
 <style lang="scss">
-$color-noti: #e54731;
+$color-noti: var(--v-red);
 .v-tabs__div.new {
     position: relative;
     a.v-tabs__item::before {

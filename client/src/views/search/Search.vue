@@ -89,7 +89,7 @@ export default {
 			this.loadingState = 'loading';
 
 			const params = {
-				code: this.keySearch.value,
+				code: this.keySearch.value.toLowerCase(),
 			};
 			this.$axios
 				.get(this.$api.event.search, { params })

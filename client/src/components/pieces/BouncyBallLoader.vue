@@ -8,7 +8,7 @@
 </template>
 
 <style lang="scss" scoped>
-$color: #3da4b5;
+$color: var(--v-primary-base);
 $size: 50px;
 .bouncy-ball-loader {
 	position: absolute;

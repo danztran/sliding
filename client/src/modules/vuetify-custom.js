@@ -115,6 +115,9 @@ export default {
 			directives: {
 				Scroll,
 			},
+			options: {
+				customProperties: true,
+			},
 		});
 	},
 };

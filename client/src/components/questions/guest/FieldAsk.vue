@@ -2,7 +2,7 @@
 	<div>
 		<div
 			v-t="'guest-ask-title'"
-			class="px-3 py-1 body-1 grey--text" />
+			class="ml-3 my-2 body-1 grey--text" />
 		<div id="guest-ask">
 			<v-layout
 				class="pt-3 px-3"

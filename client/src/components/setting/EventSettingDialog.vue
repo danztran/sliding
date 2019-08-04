@@ -2,6 +2,7 @@
 	<v-dialog
 		v-model="settingDialog"
 		width="800"
+		no-click-animation
 		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card id="my-event-setting">
@@ -192,7 +193,7 @@ export default {
 </script>
 
 <style lang="scss">
-$primary-color: #3da4b5;
+$primary-color: var(--v-primary-base);
 $grey: #f3f3f3;
 #my-event-setting {
 	.content-setting {

@@ -154,6 +154,6 @@ export default {
 	}
 }
 .iconHover.material-icons.theme--light:hover {
-	color: #3595BE;
+	color: var(--v-primary-base);
 }
 </style>

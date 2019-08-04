@@ -3,7 +3,8 @@
 		id="my-invites-request"
 		v-model="dialog"
 		width="650px"
-		:transition="false"
+		no-click-animation
+		lazy
 		:fullscreen="isSMnXS">
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}

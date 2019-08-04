@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-$success: #3ba0b1;
+$success: var(--v-primary-base);
 
 #my-snackbar {
 	.v-snack__content {
@@ -51,7 +51,7 @@ $success: #3ba0b1;
 	}
 	.snackbar-danger {
 		.v-snack__content::before {
-			background-color: #832800;
+			background-color: var(--v-error-base);
 		}
 	}
 	.v-snack__content::before {

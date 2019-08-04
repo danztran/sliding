@@ -133,7 +133,6 @@ export default {
 				is_answered: false,
 				is_star: false,
 				reactions: [],
-				// stage: "public"
 				user: {
 					id: null,
 					name: '',

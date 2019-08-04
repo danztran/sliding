@@ -12,6 +12,18 @@
 
 				<!-- *Sort -->
 				<div class="d-flex">
+					<!-- @desc: button create event -->
+					<v-btn
+						class="px-3"
+						color="primary"
+						dark
+						round
+						small
+						@click.stop="toggleDialogInvite">
+						<span v-t="'btn-dialog-invite'" class="first-letter-uppercase" />
+					</v-btn>
+
+					<!-- *sort -->
 					<v-menu
 						bottom
 						nudge-bottom="5"
@@ -64,14 +76,14 @@
 				</div>
 			</template>
 		</v-layout>
-		<!-- @desc: list coop events -->
+		<!-- *list coop events -->
 		<v-card class="list-event scrollbar-primary">
 			<event-card
 				v-for="event in coopAccepted"
 				:key="event.code"
 				:coop-info="event" />
 		</v-card>
-		<!-- @desc: message empty event -->
+		<!-- *empty state event -->
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
 			<div v-show="isEmpty" class="empty-state mt-3">
@@ -118,6 +130,9 @@ export default {
 		sortEvent(order) {
 			this.orderBy = order;
 			this._cm.customSort(this.coopAccepted, order, 'created_at');
+		},
+		toggleDialogInvite() {
+			this.$root.$emit('dialog-invite-request');
 		},
 	},
 };

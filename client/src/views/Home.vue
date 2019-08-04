@@ -405,7 +405,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	$primary: #3da4b5;
+	$primary: var(--v-primary-base);
 	$navColor: #ffffffe6;
 	$black: #000000de;
 	#home-page {

@@ -9,7 +9,8 @@
 		<v-dialog
 			v-model="dialogCreate"
 			max-width="450px"
-			no-click-animation>
+			no-click-animation
+			:fullscreen="isSMnXS">
 			<v-card>
 				<loading-linear :loading="loading" />
 				<v-container class="pb-2">

@@ -1,7 +1,8 @@
 <template>
 	<v-dialog
 		v-model="guestDialogProfile"
-		max-width="500px">
+		max-width="500px"
+		no-click-animation>
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
