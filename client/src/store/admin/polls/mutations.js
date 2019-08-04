@@ -32,14 +32,6 @@ const MERGE_POLL = (state, newInfo) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: set info poll need edited
-------------------------------------------------------------------------*/
-const SET_INFO_EDIT = (state, infoEdit) => {
-	state.editInfo = infoEdit;
-};
-
-
-/* ------------------------------------------------------------------------
 	@desc: delete poll after socket return data
 	@socket: emiter 'delete-poll'
 	@source: cpn/polls/admin/PollListPanel.vue
@@ -61,7 +53,6 @@ export default {
 	SET_POLLS,
 	ADD_POLL,
 	MERGE_POLL,
-	SET_INFO_EDIT,
 	DELETE_POLL,
 	RESET,
 };

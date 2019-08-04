@@ -195,6 +195,7 @@
 		"poll-results": "Kết quả",
 		"poll-view-results": "Xem kết quả",
 		"poll-limit-option": "Tối thiểu 1 lựa chọn",
+		"poll-option-empty": "Lựa chọn không được trống",
 		"err-question-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép cho câu hỏi",
 		"err-reply-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép trả lời",
 		"err-reply": "Tin nhắn của bạn chưa được gửi. Xin lỗi, bạn hãy thử lại!",

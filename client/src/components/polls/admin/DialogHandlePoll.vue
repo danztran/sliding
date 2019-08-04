@@ -2,7 +2,6 @@
 	<v-dialog
 		v-model="dialog"
 		width="600px"
-		mandatory
 		:transition="false"
 		:fullscreen="isXS">
 		<span v-show="false">
@@ -11,8 +10,17 @@
 		<v-card id="dialog-handle-poll">
 			<v-container px-0 pb-0 pt-2>
 				<v-card-title class="py-0">
-					<!-- *tab edit poll -->
-					<v-tabs v-model="tabActive" slider-color="primary">
+					<!-- *create -->
+					<v-tabs v-if="tabs.create" ref="tabs" lazy slider-color="primary">
+						<v-tab
+							class="font-weight-regular"
+							active-class="primary--text font-weight-bold">
+							<span v-t="'dialog-create-poll'" class="first-letter-uppercase" />
+						</v-tab>
+					</v-tabs>
+
+					<!-- *edit/result -->
+					<v-tabs v-else v-model="tabActive" lazy slider-color="primary">
 						<v-tab
 							class="font-weight-regular"
 							active-class="primary--text font-weight-bold">
@@ -38,32 +46,48 @@
 				</v-card-title>
 				<v-divider />
 
-				<v-tabs-items
-					v-model="tabActive"
-					mandatory>
-					<bouncy-loader v-if="loadingLinear" />
+				<!-- *create poll tab -->
+				<v-tabs-items v-if="tabs.create">
+					<v-tab-item
+						:transition="false"
+						:reverse-transition="false">
+						<tab--create-poll
+							@emit-create-poll-opt="emitCreatePollOpt"
+							@close-dialog="dialog=false" />
+					</v-tab-item>
+				</v-tabs-items>
 
-					<template v-show="poll && pollOptions.length > 0">
-						<v-tab-item
-							:transition="false"
-							:reverse-transition="false">
-							<tab--edit-poll
-								:poll="poll"
-								:poll-options="pollOptions"
-								@start-loading="startLoading"
-								@stop-loading="stopLoading"
-								@close-dialog="dialog=false" />
-						</v-tab-item>
+				<!-- *edit/result tab -->
+				<v-tabs-items v-else v-model="tabActive">
+					<!-- edit/result -->
+					<v-tab-item
+						:transition="false"
+						:reverse-transition="false">
+						<tab--edit-poll
+							v-show="Boolean(showManageTab)"
+							:poll="poll"
+							:poll-options="pollOptions"
+							@emit-edit-poll="emitEditPoll"
+							@emit-create-poll-opt="emitCreatePollOpt"
+							@emit-edit-poll-opt="emitEditPollOpt"
+							@emit-del-poll-opt="emitDelPollOpt"
+							@start-loading="startLoading"
+							@stop-loading="stopLoading"
+							@close-dialog="dialog=false" />
+					</v-tab-item>
 
-						<v-tab-item
-							:transition="false"
-							:reverse-transition="false">
-							<tab--result-poll
-								@start-loading="startLoading"
-								@stop-loading="stopLoading"
-								@close-dialog="dialog=false" />
-						</v-tab-item>
-					</template>
+					<v-tab-item
+						:transition="false"
+						:reverse-transition="false">
+						<tab--result-poll
+							v-show="Boolean(showManageTab)"
+							@start-loading="startLoading"
+							@stop-loading="stopLoading"
+							@close-dialog="dialog=false" />
+					</v-tab-item>
+					<div v-if="loadingLinear" class="content">
+						<bouncy-loader />
+					</div>
 				</v-tabs-items>
 			</v-container>
 		</v-card>
@@ -72,12 +96,14 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import CreatePollTab from './pieces/CreatePollTab.vue';
 import EditPollTab from './pieces/EditPollTab.vue';
 import ResultPollTab from './pieces/ResultPollTab.vue';
 
 export default {
 	name: 'DialogHandlePoll',
 	components: {
+		'tab--create-poll': CreatePollTab,
 		'tab--edit-poll': EditPollTab,
 		'tab--result-poll': ResultPollTab,
 	},
@@ -85,8 +111,11 @@ export default {
 		dialog: false,
 		loadingLinear: false,
 		tabActive: 0,
-		editPoll: false,
-		resultPoll: false,
+		tabs: {
+			create: false,
+			edit: false,
+			result: false,
+		},
 		handlePollID: null,
 		poll: null,
 		pollOptions: null,
@@ -94,19 +123,16 @@ export default {
 	computed: {
 		...mapGetters({
 			getPoll: 'admin/polls/getPoll',
-			getPollEditInfo: 'admin/polls/getPollEditInfo',
 			getPollOptions: 'admin/pollOptions/getPollOptions',
 		}),
+		showManageTab() {
+			return !this.tabs.create && this.poll && this.pollOptions.length > 0;
+		},
 	},
 	watch: {
 		dialog(val) {
 			if (!val) {
 				this.resetDialog();
-			}
-		},
-		getPollEditInfo(info) {
-			if (info) {
-				this.emitEditPoll(info);
 			}
 		},
 		handlePollID(id) {
@@ -118,30 +144,37 @@ export default {
 	},
 	mounted() {
 		this.$root.$on('dialog-handle-poll', (dialog) => {
-			if (dialog.type === 'edit') {
+			if (dialog.type === 'create') {
+				this.dialog = true;
+				this.tabs.create = true;
+			}
+			else if (dialog.type === 'edit') {
 				this.handlePollID = dialog.id;
 				if (dialog.emitGetPOpts) {
-					this.emitGetPollOptions(dialog.id);
+					this.emitGetPollOptions(this.handlePollID);
 				}
 				this.dialog = true;
-				this.editPoll = true;
+				this.tabs.edit = true;
 				this.tabActive = 0;
 			}
 			else {
 				this.handlePollID = dialog.id;
 				if (dialog.emitGetPOpts) {
-					this.emitGetPollOptions(dialog.id);
+					this.emitGetPollOptions(this.handlePollID);
 				}
 				this.dialog = true;
-				this.resultPoll = true;
+				this.tabs.result = true;
 				this.tabActive = 1;
 			}
 		});
 	},
 	methods: {
 		...mapMutations({
-			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
 			mergePoll: 'admin/polls/MERGE_POLL',
+			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
+			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
+			mergePollOption: 'admin/pollOptions/MERGE_POLL_OPTION',
+			delPollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
 		}),
 		startLoading() {
 			this.loading = true;
@@ -151,26 +184,28 @@ export default {
 		},
 		resetDialog() {
 			this.loading = false;
-			this.editPoll = false;
-			this.resultPoll = false;
 			this.tabActive = 0;
+			this.tabs.edit = false;
+			this.tabs.create = false;
+			this.tabs.result = false;
 		},
-		emitGetPollOptions(pId) {
-			const emiter = 'get-poll-options';
-			this.loadingLinear = true;
-			this.$socket.emit(emiter, { poll_id: pId }, (result) => {
-				this.loadingLinear = false;
-				if (!result.poll_options) {
+		emitCreatePollOpt(opt) {
+			/* @params: opt
+			*  .poll_id: id of poll
+			*  .content: contetn poll option want created
+			*/
+			const emiter = 'add-poll-option';
+			this.$socket.emit(emiter, opt, (result) => {
+				if (!result.poll_option) {
 					if (result.errmsg) {
-						// ...
+						this.showNotify(result.errmsg, 'danger');
 					}
 					return;
 				}
-				this.setPollOptions({
-					poll_id: pId,
-					options: result.poll_options,
+				this.addPollOption({
+					poll_id: opt.poll_id,
+					option: result.poll_option,
 				});
-				this.pollOptions = result.poll_options;
 			});
 		},
 		emitEditPoll(info) {
@@ -188,6 +223,48 @@ export default {
 				this.dialog = false;
 			});
 		},
+		emitGetPollOptions(pId) {
+			const emiter = 'get-poll-options';
+			this.loadingLinear = true;
+			this.$socket.emit(emiter, { poll_id: pId }, (result) => {
+				this.loadingLinear = false;
+				if (!result.poll_options) {
+					if (result.errmsg) {
+						this.showNotify(result.errmsg, 'danger');
+					}
+					return;
+				}
+				this.setPollOptions({
+					poll_id: pId,
+					options: result.poll_options,
+				});
+				this.pollOptions = result.poll_options;
+			});
+		},
+		emitEditPollOpt(opt) {
+			const emiter = 'edit-poll-option';
+			this.$socket.emit(emiter, opt, (result) => {
+				if (!result.poll_option) {
+					if (result.errmsg) {
+						this.showNotify(result.errmsg, 'danger');
+					}
+					return;
+				}
+				this.mergePollOption(result.poll_option);
+			});
+		},
+		emitDelPollOpt(opt) {
+			const emiter = 'delete-poll-option';
+			this.$socket.emit(emiter, { id: opt.id }, (result) => {
+				if (!result.poll_option) {
+					if (result.errmsg) {
+						this.showNotify(result.errmsg, 'danger');
+					}
+					return;
+				}
+				this.delPollOption(Object.assign(result.poll_option, { poll_id: opt.poll_id }));
+			});
+		},
 	},
 };
 </script>
@@ -196,7 +273,7 @@ export default {
 #dialog-handle-poll {
 	.content {
 		overflow-x: scroll;
-		height: 40vh;
+		height: 50vh;
 	}
 	@media only screen and (max-width: 600px) {
 		.content {

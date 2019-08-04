@@ -192,6 +192,7 @@
 		"poll-results": "Results",
 		"poll-view-results": "View results",
 		"poll-limit-option": "At least 1 option",
+		"poll-option-empty": "Option not empty",
 		"err-question-limit": "You have exceed the maximum number of characters allowed for question",
 		"err-reply-limit": "You have exceed the maximum number of characters allowed for reply",
 		"err-reply": "Could not send message. Sorry, try again!",

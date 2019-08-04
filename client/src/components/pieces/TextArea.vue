@@ -17,7 +17,9 @@
 		:clearable="field.clearable"
 		:solo="field.solo"
 		:required="field.required"
-		:disabled="disabled"
+		:disabled="disabled || field.disabled"
+		:readonly="field.readonly"
+		:single-line="field.singleLine"
 		@input="onInput" />
 </template>
 
@@ -41,10 +43,13 @@ export default {
 					outerIcon: '',
 					counter: '',
 					rows: 2,
+					singleLine: false,
 					flat: false,
 					autofocus: false,
 					required: false,
 					autogrow: false,
+					readonly: false,
+					disabled: false,
 				};
 			},
 		},

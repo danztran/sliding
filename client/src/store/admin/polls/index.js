@@ -8,7 +8,6 @@ import mutations from './mutations';
 
 const state = {
 	polls: [],
-	editInfo: null,
 };
 
 export default {

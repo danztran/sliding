@@ -15,7 +15,7 @@
 					small
 					round
 					color="success"
-					@click="toggleDialogCreate">
+					@click="toggleDialogHandlePoll">
 					<span
 						v-t="'btn-create-poll'"
 						class="first-letter-uppercase px-2" />
@@ -107,9 +107,8 @@ export default {
 		}),
 	},
 	methods: {
-		toggleDialogCreate() {
-			// this.$root.$emit('dialog-handle-poll', { type: 'create' });
-			this.$root.$emit('dialog-create-poll');
+		toggleDialogHandlePoll() {
+			this.$root.$emit('dialog-handle-poll', { type: 'create' });
 		},
 		sortPolls(order) {
 			this.orderBy = order;

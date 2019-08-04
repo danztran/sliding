@@ -27,7 +27,7 @@
 							<span v-t="'poll-count'" />
 							&nbsp;X&nbsp;
 							<v-icon
-								v-if="!allow_voting"
+								v-if="!poll.is_locked"
 								color="grey"
 								size="15"
 								v-text="'$vuetify.icons.lock'" />
@@ -43,12 +43,12 @@
 										<v-btn flat icon small class="mr-1" v-on="on" @click="handleLockVote">
 											<v-icon
 												size="20"
-												v-text="allow_voting
+												v-text="poll.is_locked
 													? '$vuetify.icons.unlock'
 													: '$vuetify.icons.lock'" />
 										</v-btn>
 									</template>
-									<span v-t="allow_voting
+									<span v-t="poll.is_locked
 										? 'poll-disable-voting'
 										: 'poll-allow-voting'" />
 								</v-tooltip>
@@ -136,7 +136,6 @@ export default {
 		deleting: false,
 		hadGetPOpts: false,
 		allow_voting: false,
-		activate_poll: false,
 	}),
 	mounted() {
 		if (this.poll.newAdd) {
@@ -145,15 +144,11 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			setPollEditInfo: 'admin/polls/SET_INFO_EDIT',
 			delPoll: 'admin/polls/DELETE_POLL',
 			delPollOptions: 'admin/pollOptions/DELETE_POLL',
 		}),
 		handleLockVote() {
-			this.setPollEditInfo({
-				id: this.poll.id,
-				is_locked: !this.poll.is_locked,
-			});
+			// ...
 		},
 		shouldEmitGetPollOpts() {
 			if (!this.hadGetPOpts) {

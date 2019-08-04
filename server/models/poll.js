@@ -25,6 +25,7 @@ class PollModel extends Model {
 		}, {
 			content: info.content,
 			max_choices: info.max_choices,
+			is_locked: info.is_locked,
 			updated_at: new Date().toISOString(),
 		}, {
 			select: '*',

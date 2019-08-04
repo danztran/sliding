@@ -9,20 +9,42 @@
 					</v-flex>
 
 					<template v-for="(row, idx) in optionRows">
-						<div :key="idx" class="d-flex w-100 area-field">
+						<div :key="idx" class="d-flex w-100 v-textarea-override">
 							<v-flex class="w-100" xs9>
 								<text-area :field="row" />
 							</v-flex>
 							<div>
-								<!-- *delete row -->
-								<v-btn class="mt-1" icon @click="delOptRow(idx)">
-									<v-icon medium color="grey" v-text="'$vuetify.icons.delete'" />
+								<template v-if="row.editOpt">
+									<template v-if="row.editOn">
+										<!-- *edit opt content -->
+										<v-btn small class="mt-1" icon @click="emitSaveEditOpt(idx, row.id)">
+											<v-icon small color="success" v-text="'$vuetify.icons.save'" />
+										</v-btn>
+
+										<!-- *cancel edit -->
+										<v-btn small class="mt-1" icon @click="cancelEditOpt(idx)">
+											<v-icon small color="grey" v-text="'$vuetify.icons.cancel'" />
+										</v-btn>
+									</template>
+
+									<!-- *active edit opt -->
+									<v-btn v-else small class="mt-1" icon @click="enableEditOpt(idx, row.id)">
+										<v-icon small color="primary" v-text="'$vuetify.icons.edit'" />
+									</v-btn>
+								</template>
+								<!-- *emit delete opt -->
+								<v-btn v-if="row.newRow" small class="mt-1" icon @click="emitAddOpt(idx)">
+									<v-icon small color="success" v-text="'$vuetify.icons.add'" />
+								</v-btn>
+								<!-- *delete recent row -->
+								<v-btn v-if="!row.editOn" small class="mt-1" icon @click="emitDelOpt(idx, row.id)">
+									<v-icon small color="error" v-text="'$vuetify.icons.delete'" />
 								</v-btn>
 							</div>
 						</div>
 					</template>
 
-					<!-- *Add row -->
+					<!-- *add new row -->
 					<v-flex xs12>
 						<v-btn
 							class="left ml-0"
@@ -54,7 +76,7 @@
 					<!-- *limit of multi choice -->
 					<v-flex xs5>
 						<text-field
-							v-if="limitMultiple"
+							v-if="selectMultiple && limitMultiple"
 							color="primary"
 							:field="form.limit" />
 					</v-flex>
@@ -76,7 +98,7 @@
 				medium
 				color="success"
 				:disabled="sending"
-				@click="handleEPContent">
+				@click="handleEdit">
 				<span v-t="'btn-save'" class="first-letter-uppercase" />
 			</v-btn>
 		</v-card-actions>
@@ -84,13 +106,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 const initForm = () => ({
 	ask: {
 		value: '',
 		label: 'lb-poll-ask',
 		type: 'text',
-		autofocus: true,
+		autofocus: false,
 		required: true,
 		errmsg: '',
 	},
@@ -138,16 +159,36 @@ export default {
 		},
 		pollOptions(opts) {
 			if (opts) {
-				this.fillOptions(opts);
+				this.fillOpts(opts);
 			}
 		},
 	},
 	methods: {
-		...mapMutations({
-			setPollEditInfo: 'admin/polls/SET_INFO_EDIT',
-		}),
 		closeDialog() {
 			this.$emit('close-dialog');
+		},
+		fillOpts(opts) {
+			this.optionRows = Array.from({ length: opts.length }, () => ({
+				value: '',
+				errmsg: '',
+				id: null,
+				placeholder: 'lb-add-option',
+				type: 'text',
+				rows: 1,
+				solo: true,
+				flat: true,
+				outline: true,
+				disabled: true,
+				readonly: true,
+				editOpt: true,
+				editOn: false,
+			}));
+			this.optionRows.forEach((el, idx) => {
+				if (opts[idx] !== undefined) {
+					el.id = opts[idx].id;
+					el.value = opts[idx].content;
+				}
+			});
 		},
 		addOptionRow() {
 			this.optionRows.push({
@@ -160,70 +201,88 @@ export default {
 				flat: true,
 				outline: true,
 				autogrow: true,
+				newRow: true,
 			});
 		},
-		delOptRow(index) {
-			if (this.optionRows.length > 1) {
-				this.optionRows.splice(index, 1);
+		enableEditOpt(idx, optId) {
+			if (optId) {
+				this.optionRows[idx].editOn = true;
+				this.optionRows[idx].disabled = false;
+				this.optionRows[idx].readonly = false;
 			}
 		},
-		fillOptions(opts) {
-			this.optionRows = Array.from({ length: opts.length }, () => ({
-				value: '',
-				id: null,
-				placeholder: 'lb-add-option',
-				type: 'text',
-				rows: 1,
-				solo: true,
-				flat: true,
-				outline: true,
-			}));
-			for (const key of Object.keys(opts)) {
-				if (Object.prototype.hasOwnProperty.call(this.optionRows, key)) {
-					this.optionRows[key].value = opts[key].content;
+		cancelEditOpt(idx) {
+			this.optionRows[idx].value = this.pollOptions[idx].content;
+			this.optionRows[idx].editOn = false;
+			this.optionRows[idx].disabled = true;
+			this.optionRows[idx].true = true;
+		},
+		emitAddOpt(idx) {
+			if (this.optionRows[idx].value === '') {
+				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
+				return;
+			}
+			this.$emit('emit-create-poll-opt', {
+				poll_id: this.poll.id,
+				content: this.optionRows[idx].value,
+			});
+		},
+		emitSaveEditOpt(idx, optId) {
+			if (this.optionRows[idx].value === '') {
+				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
+				return;
+			}
+			if (this.optionRows[idx].value === this.pollOptions[idx].content) {
+				this.cancelEditOpt(idx);
+				return;
+			}
+			this.$emit('emit-edit-poll-opt', {
+				id: optId,
+				content: this.optionRows[idx].value,
+			});
+			this.pollOptions[idx].content = this.optionRows[idx].value;
+			this.optionRows[idx].editOn = false;
+			this.optionRows[idx].disabled = true;
+			this.optionRows[idx].true = true;
+		},
+		emitDelOpt(idx, optId) {
+			if (optId) {
+				if (this.optionRows.length > 1) {
+					this.$emit('emit-del-poll-opt', {
+						id: optId,
+						poll_id: this.poll.id,
+					});
 				}
 			}
-			this.addOptionRow();
+			this.optionRows.splice(idx, 1);
 		},
-		handleEPContent() {
-			this.sending = true;
+		handleEditPoll() {
 			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
-				this.sending = false;
 				return;
 			}
 			if (this.limitMultiple && this.form.limit.value < 2) {
 				this.form.limit.errmsg = this.$t('poll-limit-count');
-				this.sending = false;
 				return;
 			}
 			if (this.form.ask.value === this.poll.content) {
 				if (this.form.limit.value === this.poll.max_choices) {
-					this.sending = false;
-					this.closeDialog();
 					return;
 				}
 			}
-			this.setPollEditInfo({
+			this.$emit('emit-edit-poll', {
 				id: this.poll.id,
 				content: this.form.ask.value,
 				max_choices: this.form.limit.value,
 			});
 		},
-		emitEPOption() {
-			// ...
+		handleEdit() {
+			// this.sending = true;
+			// this.handleEditPoll();
 		},
 	},
 };
 </script>
 
-<style lang="scss">
-.area-field {
-	.v-input__slot {
-		min-height: 50px;
-	}
-	textarea {
-		margin-top: 0;
-	}
-}
+<style lang="css" scoped>
 </style>

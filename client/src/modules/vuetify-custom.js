@@ -53,6 +53,7 @@ const icons = {
 	export: 'present_to_all',
 	delete: 'delete_outline',
 	edit: 'edit',
+	save: 'save',
 	cancel: 'cancel',
 	filter: 'filter_list',
 	like: 'thumb_up_alt',
