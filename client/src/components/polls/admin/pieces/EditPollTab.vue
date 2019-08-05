@@ -180,6 +180,7 @@ export default {
 				outline: true,
 				disabled: true,
 				readonly: true,
+				autogrow: true,
 				editOpt: true,
 				editOn: false,
 			}));

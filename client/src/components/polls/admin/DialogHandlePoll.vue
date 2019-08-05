@@ -271,6 +271,13 @@ export default {
 
 <style lang="scss">
 #dialog-handle-poll {
+	.v-input__slot {
+		min-height: 36px;
+		textarea {
+			min-height: unset;
+			line-height: unset;
+		}
+	}
 	.content {
 		overflow-x: scroll;
 		height: 50vh;
