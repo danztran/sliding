@@ -201,6 +201,7 @@
 		"poll-live-title": "Bầu chọn trực tuyến",
 		"poll-max-choices": "Số câu trả lời được phép: ",
 		"poll-closed": "Bầu chọn đã đóng",
+		"poll-err-limit-choice": "Bạn đã chọn nhiều hơn mức cho phép",
 		"err-question-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép cho câu hỏi",
 		"err-reply-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép trả lời",
 		"err-reply": "Tin nhắn của bạn chưa được gửi. Xin lỗi, bạn hãy thử lại!",

@@ -15,36 +15,43 @@
 
 		<v-card-text>
 			<template v-if="poll.max_choices > 1">
+				<!-- *description max choice -->
 				<div class="caption first-letter-uppercase grey--text">
 					<span v-t="'poll-max-choices'" />
 					<span v-text="poll.max_choices" />
 				</div>
+
+				<!-- *multi choice: show checkbox -->
+				<div class="mt-2 custom-select checkbox">
+					<v-checkbox
+						v-for="option of pollOptions"
+						:key="option.id"
+						v-model="checkboxSelect"
+						:label="option.content"
+						:value="option.id"
+						:disabled="poll.is_locked"
+						color="primary"
+						class="mt-0" />
+				</div>
+				<div class="text-xs-center red--text" v-text="checkboxErrmsg" />
 			</template>
 
-			<!-- *one choice -->
-			<div v-if="poll.max_choices > 1" class="mt-2 custom-select checkbox">
-				<v-checkbox
-					v-for="n in 3"
-					:key="n"
-					:label="`Checkbox ${n}`"
-					:value="n"
-					color="primary"
-					class="mt-0" />
-			</div>
-
-			<!-- *multi choice -->
+			<!-- *one choice: show radio -->
 			<v-radio-group
 				v-else
-				v-model="radioGroup"
-				class="mt-2 custom-select">
+				v-model="radioSelect"
+				:disabled="poll.is_locked"
+				class="mt-2 custom-select radio">
 				<v-radio
-					v-for="n in 3"
-					:key="n"
-					:label="`Radio ${n}`"
-					:value="n"
+					v-for="option of pollOptions"
+					:key="option.id"
+					:label="option.content"
+					:value="option.id"
 					color="primary"
 					class="mr-0 mb-3 px-2 py-1" />
 			</v-radio-group>
+
+			<!-- *emit send choice -->
 			<v-layout
 				align-center
 				justify-center>
@@ -54,13 +61,16 @@
 					small
 					round
 					color="success"
-					@click="emitChoice" />
+					:disabled="isValid"
+					@click="emitSubmitChoice" />
 			</v-layout>
 		</v-card-text>
 	</v-card>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
 	name: 'PollCard',
 	props: {
@@ -75,12 +85,82 @@ export default {
 		},
 	},
 	data: () => ({
-		radioGroup: null,
+		radioSelect: null,
+		checkboxSelect: [],
 		pollOptions: [],
+		checkboxErrmsg: '',
 	}),
+	computed: {
+		...mapGetters({
+			user: 'auth/user',
+		}),
+		isValid() {
+			if (this.poll.max_choices > 1) {
+				if (this.checkboxSelect.length > 0
+					&& this.checkboxSelect.length <= this.poll.max_choices) {
+					return false;
+				}
+				if (this.checkboxSelect.length > this.poll.max_choices) {
+					return true;
+				}
+			}
+			else if (this.radioSelect) {
+				return false;
+			}
+			return true;
+		},
+	},
+	watch: {
+		checkboxSelect(val) {
+			if (val.length > this.poll.max_choices) {
+				this.checkboxErrmsg = this.$t('poll-err-limit-choice');
+			}
+			else {
+				this.checkboxErrmsg = '';
+			}
+		},
+	},
+	created() {
+		if (this.pollOptions.length === 0) {
+			if (this.poll.id) {
+				this.emitGetPollOpts(this.poll.id);
+			}
+		}
+	},
 	methods: {
-		emitChoice() {
-			// ...
+		...mapMutations({
+			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
+		}),
+		emitGetPollOpts(pID) {
+			const emiter = 'get-poll-options';
+			this.loadingLinear = true;
+			this.$socket.emit(emiter, { poll_id: pID }, (result) => {
+				this.loadingLinear = false;
+				if (!result.poll_options) {
+					if (result.errmsg) {
+						this.showNotify(result.errmsg, 'danger');
+					}
+					return;
+				}
+				this.setPollOptions({
+					poll_id: pID,
+					options: result.poll_options,
+				});
+				this.pollOptions = result.poll_options;
+			});
+		},
+		emitSubmitChoice() {
+			// const choices = {
+			// 	user_id: this.user.id,
+			// 	poll_option_id: this.poll.id,
+			// 	choice: null,
+			// };
+			if (this.poll.max_choices > 1) {
+				// console.log(this.checkboxSelect);
+			}
+			else {
+				// console.log(this.radioSelect);
+			}
 		},
 	},
 };
@@ -104,14 +184,19 @@ export default {
 		color: #555;
 		font-size: .9em;
 	}
+	.v-messages {
+		display: none;
+	}
+	&.radio {
+		.v-input__slot {
+			margin-bottom: 0px;
+		}
+	}
 	&.checkbox {
 		.v-input__slot {
 			background-color: rgba(0, 0, 0, .04);
 			border-radius: 10px;
 			padding: 4px 8px 4px 8px;
-		}
-		.v-messages {
-			display: none;
 		}
 	}
 }

@@ -34,7 +34,7 @@ module.exports = {
 			result.poll_option = pollOption;
 			socket.to(event.rooms.main).emit(
 				'new_added_poll_option',
-				result.pollOption
+				pollOption
 			);
 
 			return callback(result);
@@ -65,7 +65,7 @@ module.exports = {
 			result.poll_option = editedPollOption;
 			socket.to(event.rooms.main).emit(
 				'new_edited_poll_option',
-				result.editedPollOption
+				editedPollOption
 			);
 
 			return callback(result);
@@ -94,7 +94,6 @@ module.exports = {
 
 			const deletedOption = await PollOption.setDeleted(info).exec();
 			result.poll_option = deletedOption;
-
 			socket.to(event.rooms.main).emit(
 				'new_deleted_poll_option',
 				deletedOption
