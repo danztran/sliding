@@ -6,6 +6,7 @@ const QuestionReplyLive = require('./question-reply-live');
 const QuestionReactionLive = require('./question-reaction-live');
 const PollLive = require('./poll-live');
 const PollOptionLive = require('./poll-option-live');
+const PollOptionChoiceLive = require('./poll-option-choice-live');
 
 module.exports = (io) => {
 	EventSocketMdw.setIO(io);
@@ -33,6 +34,7 @@ module.exports = (io) => {
 		QuestionReactionLive({ io, socket });
 		PollLive({ io, socket });
 		PollOptionLive({ io, socket });
+		PollOptionChoiceLive({ io, socket });
 
 		// join event
 		socket.on('join-event', (code) => {

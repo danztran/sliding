@@ -16,7 +16,7 @@
 	"eventNotFound": "The event is not exists",
 	"replyNotFound": "The reply is not exists anymore",
 	"pollNotFound": "The poll is not exists anymore",
-	"pollOptionNotFound": "This poll option is not exists anymore",
+	"pollOptionNotFound": "This option is not exists anymore",
 	"noPermissionTo": "You do not have permission to {permission}",
 	"forbidTo": "{action} have been turn off in this event",
 	"allow_question": "Ask question",
@@ -41,5 +41,7 @@
 	"deletePoll": "Delete poll",
 	"addPollOption": "Add poll option",
 	"editPollOption": "Edit poll option",
-	"deletePollOption": "Delete poll option"
+	"deletePollOption": "Delete poll option",
+	"pollLocked": "This option have been locked",
+	"reachMaxChoices": "You have reach max choices of this poll"
 }

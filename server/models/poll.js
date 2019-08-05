@@ -1,8 +1,27 @@
+const qh = requireWrp('modules/query-helper');
 const Model = requireWrp('models/model');
+const PollOptionModel = require('./poll-option');
+
+const PollOption = new PollOptionModel();
 
 class PollModel extends Model {
 	constructor() {
 		super('poll');
+	}
+
+	findByPollOptionId(poid) {
+		this.setQuery(`
+			SELECT p.*
+			FROM ${this.getName()} as p,
+				${PollOption.getName()} as po
+			WHERE
+				p.id = po.poll_id
+				AND po.id = ${qh.toDollarQuoted(poid)}
+				AND p.is_deleted = false
+				AND po.is_delete = false
+		`);
+		this.setRowReturn(1);
+		return this;
 	}
 
 	create(info, opt) {

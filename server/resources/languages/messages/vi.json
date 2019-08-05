@@ -41,5 +41,7 @@
 	"deletePoll": "Xóa bầu chọn",
 	"addPollOption": "Thêm lựa chọn mới",
 	"editPollOption": "Chỉnh sửa nội dung lựa chọn",
-	"deletePollOption": "Xóa lựa chọn này"
+	"deletePollOption": "Xóa lựa chọn này",
+	"pollLocked": "Bầu chọn này đã bị khóa",
+	"reachMaxChoices": "Số lượt bầu chọn đã đạt giới hạn"
 }
