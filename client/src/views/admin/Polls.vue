@@ -47,13 +47,15 @@ export default {
 			this.mergePoll(newInfo);
 		},
 		new_added_poll_option(newPollOpt) {
-			console.warn(newPollOpt);
+			// this.$root.$emit('update-poll-options');
 		},
-		new_edited_poll_option(editPollOpt) {
-			console.warn(editPollOpt);
+		new_edited_poll_option(opt) {
+			this.mergePollOpt(opt);
+			this.$root.$emit('update-poll-options');
 		},
-		new_deleted_poll_option(delPollOpt) {
-			console.warn(delPollOpt);
+		new_deleted_poll_option(opt) {
+			console.warn(opt);
+			// this.$root.$emit('update-poll-options');
 		},
 	},
 	methods: {
@@ -61,7 +63,9 @@ export default {
 			setPolls: 'admin/polls/SET_POLLS',
 			addPoll: 'admin/polls/ADD_POLL',
 			deletePoll: 'admin/polls/DELETE_POLL',
+			deletePollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
 			mergePoll: 'admin/polls/MERGE_POLL',
+			mergePollOpt: 'admin/pollOptions/MERGE_POLL_OPTION',
 		}),
 	},
 };

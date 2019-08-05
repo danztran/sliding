@@ -59,7 +59,7 @@
 					</v-flex>
 
 					<!-- *allow multi choice -->
-					<v-flex xs12>
+					<v-flex xs12 class="custom-checkbox">
 						<v-checkbox
 							v-model="selectMultiple"
 							color="primary"
@@ -146,21 +146,28 @@ export default {
 	data: () => ({
 		form: initForm(),
 		optionRows: [],
-		selectMultiple: false,
-		limitMultiple: false,
+		selectMultiple: true,
+		limitMultiple: true,
 		sending: false,
 	}),
 	watch: {
 		poll(val) {
 			if (val) {
 				this.form.ask.value = val.content;
-				this.form.limit.value = val.max_choices;
+				if (val.max_choices > 1) {
+					this.selectMultiple = false;
+					this.limitMultiple = false;
+				}
+				else {
+					this.form.limit.value = val.max_choices;
+				}
 			}
 		},
-		pollOptions(opts) {
-			if (opts) {
+		pollOptions: {
+			deep: true,
+			handler(opts) {
 				this.fillOpts(opts);
-			}
+			},
 		},
 	},
 	methods: {
@@ -202,6 +209,7 @@ export default {
 				flat: true,
 				outline: true,
 				autogrow: true,
+				autofocus: true,
 				newRow: true,
 			});
 		},

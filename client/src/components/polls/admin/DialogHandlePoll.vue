@@ -2,7 +2,7 @@
 	<v-dialog
 		v-model="dialog"
 		width="600px"
-		:transition="false"
+		no-click-animation
 		:fullscreen="isXS">
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
@@ -167,6 +167,9 @@ export default {
 				this.tabActive = 1;
 			}
 		});
+		this.$root.$on('update-poll-options', () => {
+			this.pollOptions = this.getPollOptions(this.handlePollID);
+		});
 	},
 	methods: {
 		...mapMutations({
@@ -273,9 +276,18 @@ export default {
 #dialog-handle-poll {
 	.v-input__slot {
 		min-height: 36px;
-		textarea {
+		textarea, input {
 			min-height: unset;
 			line-height: unset;
+			margin-top: 0;
+		}
+	}
+	.custom-checkbox .v-input--checkbox {
+		.v-input__slot {
+			margin-bottom: .2em !important;
+		}
+		.v-messages {
+			display: none;
 		}
 	}
 	.content {

@@ -3,7 +3,7 @@
 		id="my-dialog-profile"
 		v-model="dialog"
 		max-width="450px"
-		:transition="false"
+		no-click-animation
 		:fullscreen="isSMnXS">
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}

@@ -37,7 +37,7 @@
 					</v-flex>
 
 					<!-- *allow multi choice -->
-					<v-flex xs12>
+					<v-flex xs12 class="custom-checkbox">
 						<v-checkbox
 							v-model="selectMultiple"
 							color="primary"
@@ -131,8 +131,8 @@ export default {
 				autogrow: true,
 			},
 		],
-		selectMultiple: false,
-		limitMultiple: false,
+		selectMultiple: true,
+		limitMultiple: true,
 	}),
 	methods: {
 		...mapMutations({
