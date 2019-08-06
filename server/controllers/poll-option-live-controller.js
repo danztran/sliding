@@ -17,6 +17,19 @@ module.exports = {
 		}
 	},
 
+	async getAllOptions({ io, socket }, callback) {
+		const event = socket.$fn.getCurrentEvent();
+		const result = {};
+		try {
+			const PollOption = new PollOptionModel();
+			result.poll_options = await PollOption.findByEventId(event.id).exec();
+			return callback(result);
+		}
+		catch (error) {
+			return socket.$fn.handleError(e, callback);
+		}
+	},
+
 	async addPollOption({ socket }, info, callback) {
 		if (socket.$fn.cannot('addPollOption', callback)) return;
 		// VALIDATE INFO HERE

@@ -1,7 +1,20 @@
 const PollModel = requireWrp('models/poll');
-const POCModel = requireWrp('models/poll-option-choice');
+const ChoiceModel = requireWrp('models/poll-option-choice');
 
 module.exports = {
+   async getAllChoices({ io, socket }, callback) {
+      const event = socket.$fn.getCurrentEvent();
+      const result = {};
+		try {
+			const Choice = new ChoiceModel();
+			result.choices = await Choice.findByEventId(event.id).exec();
+			return callback(result);
+		}
+		catch (error) {
+			return socket.$fn.handleError(e, callback);
+		}
+   },
+
 	async addChoice({ io, socket }, info, callback) {
 		// VALIDATE HERE
 		// ...
@@ -10,7 +23,7 @@ module.exports = {
 		const result = {};
 		try {
 			const Poll = new PollModel();
-			const POC = new POCModel();
+			const Choice = new ChoiceModel();
 
 			const optionId = info.poll_option_id;
 
@@ -23,7 +36,7 @@ module.exports = {
 			}
 
 			if (info.choice === true) {
-				const choices = await POC.findOfPoll({
+				const choices = await Choice.findOfPoll({
 					poll_id: poll.id,
 					user_id: user.id,
 				}).exec();
@@ -32,7 +45,7 @@ module.exports = {
 				}
 			}
 
-			const choice = await POC.createOrUpdate({
+			const choice = await Choice.createOrUpdate({
 				...info,
 				poll_option_id: optionId,
 				user_id: user.id,
