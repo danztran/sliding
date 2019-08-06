@@ -166,6 +166,24 @@ export default {
 			mergeEventInfo: 'admin/event/MERGE_CURRENT_EVENT',
 			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
 		}),
+		compareTime() {
+			let start = new Date(this.eventInfo.start_at);
+			let end = new Date(this.eventInfo.end_at);
+			const limitTime = 14 * 60000; // 14 mins
+			if (this.tempSettings.start_at) {
+				start = new Date(this.tempSettings.start_at);
+			}
+			if (this.tempSettings.end_at) {
+				end = new Date(this.tempSettings.end_at);
+			}
+			start = start.getTime();
+			end = end.getTime();
+			if ((end - start) < limitTime || start >= end) {
+				this.showNotify(this.$t('err-event-time'), 'danger');
+				return false;
+			}
+			return true;
+		},
 		saveSettings() {
 			this.loadingState = 'loading';
 			// check temp settings
@@ -174,6 +192,21 @@ export default {
 					delete this.tempSettings[setting];
 				}
 			}
+
+			if (this.tempSettings.name === '') {
+				this.loadingState = '';
+				this.showNotify(this.$t('err-event-name-empty'), 'danger');
+				return;
+			}
+
+			if (this.tempSettings.start_at
+				|| this.tempSettings.end_at) {
+				if (!this.compareTime()) {
+					this.loadingState = '';
+					return;
+				}
+			}
+
 			// emit edit event to server
 			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
 				if (errmsg) {
@@ -185,6 +218,7 @@ export default {
 					return;
 				}
 				this.loadingState = 'success';
+				this.showNotify(this.$t('event-setting-success'), 'success');
 				this.mergeEventInfo(event);
 			});
 		},
