@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import PollPanel from '@/components/polls/guest/PollPanel.vue';
 import EmptyPoll from '@/components/polls/guest/EmptyPoll.vue';
 
@@ -22,10 +22,22 @@ export default {
 		}),
 	},
 	sockets: {
-		// ...
+		new_added_poll(poll) {
+			this.addPoll(poll);
+		},
+		new_deleted_poll(poll) {
+			this.deletePoll(poll);
+		},
+		new_edited_poll(newInfo) {
+			this.mergePoll(newInfo);
+		},
 	},
 	methods: {
-		// ....
+		...mapMutations({
+			addPoll: 'guest/polls/ADD_POLL',
+			deletePoll: 'guest/polls/DELETE_POLL',
+			mergePoll: 'guest/polls/MERGE_POLL',
+		}),
 	},
 };
 </script>

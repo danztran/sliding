@@ -187,7 +187,6 @@
 		"poll-disable-voting": "Voting locked",
 		"poll-count": "Votes:",
 		"poll-select-multiple": "Allow attendees to select multiple options",
-		"poll-limit-select": "Limit max number of answers",
 		"poll-limit-count": "At least 2 select options",
 		"poll-multiple": "Multiple choice",
 		"poll-edit": "Edit poll",

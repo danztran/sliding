@@ -71,8 +71,6 @@
 							@emit-create-poll-opt="emitCreatePollOpt"
 							@emit-edit-poll-opt="emitEditPollOpt"
 							@emit-del-poll-opt="emitDelPollOpt"
-							@start-loading="startLoading"
-							@stop-loading="stopLoading"
 							@close-dialog="dialog=false" />
 					</v-tab-item>
 
@@ -81,8 +79,6 @@
 						:reverse-transition="false">
 						<tab--result-poll
 							v-show="Boolean(showManageTab)"
-							@start-loading="startLoading"
-							@stop-loading="stopLoading"
 							@close-dialog="dialog=false" />
 					</v-tab-item>
 					<div v-if="loadingLinear" class="content">
@@ -123,6 +119,7 @@ export default {
 	computed: {
 		...mapGetters({
 			getPoll: 'admin/polls/getPoll',
+			getEditPollInfo: 'admin/polls/getEditPollInfo',
 			getPollOptions: 'admin/pollOptions/getPollOptions',
 		}),
 		showManageTab() {
@@ -139,6 +136,11 @@ export default {
 			if (id) {
 				this.poll = this.getPoll(id);
 				this.pollOptions = this.getPollOptions(id);
+			}
+		},
+		getEditPollInfo(val) {
+			if (val) {
+				this.emitEditPoll(val);
 			}
 		},
 	},
@@ -179,18 +181,12 @@ export default {
 			mergePollOption: 'admin/pollOptions/MERGE_POLL_OPTION',
 			delPollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
 		}),
-		startLoading() {
-			this.loading = true;
-		},
-		stopLoading() {
-			this.loading = false;
-		},
 		resetDialog() {
 			this.loading = false;
-			this.tabActive = 0;
-			this.tabs.edit = false;
 			this.tabs.create = false;
+			this.tabs.edit = false;
 			this.tabs.result = false;
+			this.tabActive = 0;
 		},
 		emitCreatePollOpt(opt) {
 			/* @params: opt

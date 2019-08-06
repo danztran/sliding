@@ -43,18 +43,12 @@
 							color="primary"
 							class="mt-0"
 							:label="$t('poll-select-multiple')" />
-						<v-checkbox
-							v-if="selectMultiple"
-							v-model="limitMultiple"
-							color="primary"
-							class="mt-0"
-							:label="$t('poll-limit-select')" />
 					</v-flex>
 
 					<!-- *limit of multi choice -->
 					<v-flex xs5>
 						<text-field
-							v-if="selectMultiple && limitMultiple"
+							v-if="selectMultiple"
 							color="primary"
 							:field="form.limit" />
 					</v-flex>
@@ -132,7 +126,6 @@ export default {
 			},
 		],
 		selectMultiple: true,
-		limitMultiple: true,
 	}),
 	methods: {
 		...mapMutations({
@@ -169,7 +162,7 @@ export default {
 				this.optionRows[0].errmsg = this.$t('poll-limit-option');
 				return;
 			}
-			if (this.limitMultiple && this.form.limit.value < 2) {
+			if (this.selectMultiple && this.form.limit.value < 2) {
 				this.form.limit.errmsg = this.$t('poll-limit-count');
 				return;
 			}

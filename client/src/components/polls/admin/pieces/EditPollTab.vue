@@ -65,18 +65,12 @@
 							color="primary"
 							class="mt-0"
 							:label="$t('poll-select-multiple')" />
-						<v-checkbox
-							v-if="selectMultiple"
-							v-model="limitMultiple"
-							color="primary"
-							class="mt-0"
-							:label="$t('poll-limit-select')" />
 					</v-flex>
 
 					<!-- *limit of multi choice -->
 					<v-flex xs5>
 						<text-field
-							v-if="selectMultiple && limitMultiple"
+							v-if="selectMultiple"
 							color="primary"
 							:field="form.limit" />
 					</v-flex>
@@ -86,6 +80,7 @@
 
 		<v-divider />
 		<v-card-actions class="px-3">
+			<span class="red--text" v-text="dialogErrMsg" />
 			<v-spacer />
 			<v-btn
 				flat
@@ -106,6 +101,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 const initForm = () => ({
 	ask: {
 		value: '',
@@ -147,19 +143,19 @@ export default {
 		form: initForm(),
 		optionRows: [],
 		selectMultiple: true,
-		limitMultiple: true,
 		sending: false,
+		dialogErrMsg: '',
 	}),
 	watch: {
 		poll(val) {
 			if (val) {
 				this.form.ask.value = val.content;
 				if (val.max_choices > 1) {
-					this.selectMultiple = false;
-					this.limitMultiple = false;
+					this.selectMultiple = true;
+					this.form.limit.value = val.max_choices;
 				}
 				else {
-					this.form.limit.value = val.max_choices;
+					this.form.limit.value = 2;
 				}
 			}
 		},
@@ -171,7 +167,11 @@ export default {
 		},
 	},
 	methods: {
+		...mapMutations({
+			setEditPollInfo: 'admin/polls/SET_EDIT_POLL_INFO',
+		}),
 		closeDialog() {
+			this.this.dialogErrMsg = '';
 			this.$emit('close-dialog');
 		},
 		fillOpts(opts) {
@@ -226,16 +226,6 @@ export default {
 			this.optionRows[idx].disabled = true;
 			this.optionRows[idx].true = true;
 		},
-		emitAddOpt(idx) {
-			if (this.optionRows[idx].value === '') {
-				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
-				return;
-			}
-			this.$emit('emit-create-poll-opt', {
-				poll_id: this.poll.id,
-				content: this.optionRows[idx].value,
-			});
-		},
 		emitSaveEditOpt(idx, optId) {
 			if (this.optionRows[idx].value === '') {
 				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
@@ -262,15 +252,29 @@ export default {
 						poll_id: this.poll.id,
 					});
 				}
+				else {
+					this.dialogErrMsg = this.$t('poll-limit-option');
+					return;
+				}
 			}
 			this.optionRows.splice(idx, 1);
+		},
+		emitAddOpt(idx) {
+			if (this.optionRows[idx].value === '') {
+				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
+				return;
+			}
+			this.$emit('emit-create-poll-opt', {
+				poll_id: this.poll.id,
+				content: this.optionRows[idx].value,
+			});
 		},
 		handleEditPoll() {
 			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
 				return;
 			}
-			if (this.limitMultiple && this.form.limit.value < 2) {
+			if (this.selectMultiple && this.form.limit.value < 2) {
 				this.form.limit.errmsg = this.$t('poll-limit-count');
 				return;
 			}
@@ -279,7 +283,7 @@ export default {
 					return;
 				}
 			}
-			this.$emit('emit-edit-poll', {
+			this.setEditPollInfo({
 				id: this.poll.id,
 				content: this.form.ask.value,
 				max_choices: this.form.limit.value,
@@ -287,7 +291,7 @@ export default {
 		},
 		handleEdit() {
 			// this.sending = true;
-			// this.handleEditPoll();
+			this.handleEditPoll();
 		},
 	},
 };

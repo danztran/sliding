@@ -10,7 +10,6 @@ module.exports = {
 		try {
 			const PollOption = new PollOptionModel();
 			result.poll_options = await PollOption.find(query).exec();
-
 			return callback(result);
 		}
 		catch (e) {

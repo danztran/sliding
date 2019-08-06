@@ -14,7 +14,7 @@
 		<v-divider />
 
 		<v-card-text>
-			<template v-if="poll.max_choices > 1">
+			<template v-if="poll.max_choices > 1 && pollOptions.length > 0">
 				<!-- *description max choice -->
 				<div class="caption first-letter-uppercase grey--text">
 					<span v-t="'poll-max-choices'" />
@@ -62,14 +62,14 @@
 					round
 					color="success"
 					:disabled="isValid"
-					@click="emitSubmitChoice" />
+					@click="submitChoice" />
 			</v-layout>
 		</v-card-text>
 	</v-card>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
 	name: 'PollCard',
@@ -91,9 +91,6 @@ export default {
 		checkboxErrmsg: '',
 	}),
 	computed: {
-		...mapGetters({
-			user: 'auth/user',
-		}),
 		isValid() {
 			if (this.poll.max_choices > 1) {
 				if (this.checkboxSelect.length > 0
@@ -149,18 +146,26 @@ export default {
 				this.pollOptions = result.poll_options;
 			});
 		},
-		emitSubmitChoice() {
-			// const choices = {
-			// 	user_id: this.user.id,
-			// 	poll_option_id: this.poll.id,
-			// 	choice: null,
-			// };
+		submitChoice() {
+			const choicesId = [];
 			if (this.poll.max_choices > 1) {
-				// console.log(this.checkboxSelect);
+				choicesId.push(...this.checkboxSelect);
 			}
 			else {
-				// console.log(this.radioSelect);
+				choicesId.push(this.radioSelect);
 			}
+			for (const id of choicesId) {
+				this.emitChoice(id);
+			}
+		},
+		emitChoice(choiceId) {
+			const emiter = 'add-poll-option-choice';
+			this.$socket.emit(emiter, {
+				poll_option_id: choiceId,
+				choice: true,
+			}, (data) => {
+				console.warn(data);
+			});
 		},
 	},
 };

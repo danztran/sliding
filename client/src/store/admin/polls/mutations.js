@@ -9,9 +9,22 @@ const SET_POLLS = (state, polls) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: get all polls set to state
-	@socket: emiter 'add-poll'
-	@source: cpn/polls/admin/DialogCreatePoll.vue
+	@desc: set info for trigger socket emiter
+	@socket:
+	@source:
+------------------------------------------------------------------------*/
+const SET_EDIT_POLL_INFO = (state, info) => {
+	state.editInfo = info;
+};
+
+
+/* ------------------------------------------------------------------------
+	@desc:- add new poll to state if success
+				- listener other user added poll
+	@socket:- emiter 'add-poll'
+					- listener 'new_added_poll'
+	@source:- cpn/polls/admin/DialogCreatePoll.vue
+					- views/admin/Polls.vue
 ------------------------------------------------------------------------*/
 const ADD_POLL = (state, poll) => {
 	state.polls.unshift(poll);
@@ -19,7 +32,8 @@ const ADD_POLL = (state, poll) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: lister and merge new info
+	@desc:- lister and merge new info
+				- edit success then merge
 	@socket:- listener 'new_edited_poll'
 					- emiter 'edit-poll'
 	@source:- views/admin/Polls.vue
@@ -32,9 +46,12 @@ const MERGE_POLL = (state, newInfo) => {
 
 
 /* ------------------------------------------------------------------------
-	@desc: delete poll after socket return data
-	@socket: emiter 'delete-poll'
-	@source: cpn/polls/admin/PollListPanel.vue
+	@desc:- delete poll after socket return data
+				- listen delete poll
+	@socket:- emiter 'delete-poll'
+					- listener 'new_deleted_poll'
+	@source:- cpn/polls/admin/PollListPanel.vue
+					- views/admin/Polls.vue
 ------------------------------------------------------------------------*/
 const DELETE_POLL = (state, result) => {
 	state.polls = state.polls.filter(el => Number(el.id) !== Number(result.id));
@@ -46,10 +63,12 @@ const DELETE_POLL = (state, result) => {
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.polls = [];
+	state.editInfo = null;
 };
 
 export default {
 	SET_POLLS,
+	SET_EDIT_POLL_INFO,
 	ADD_POLL,
 	MERGE_POLL,
 	DELETE_POLL,

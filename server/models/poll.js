@@ -18,7 +18,7 @@ class PollModel extends Model {
 				p.id = po.poll_id
 				AND po.id = ${qh.toDollarQuoted(poid)}
 				AND p.is_deleted = false
-				AND po.is_delete = false
+				AND po.is_deleted = false
 		`);
 		this.setRowReturn(1);
 		return this;

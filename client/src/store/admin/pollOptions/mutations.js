@@ -59,7 +59,7 @@ const MERGE_POLL_OPTION = (state, newOptInfo) => {
 const DELETE_POLL_OPTION = (state, info) => {
 	const rs = state.pollOptions.find(el => Number(el.poll_id) === Number(info.poll_id));
 	if (rs) {
-		rs.options.filter(el => Number(el.id) !== Number(info.id));
+		rs.options = rs.options.filter(el => Number(el.id) !== Number(info.id));
 	}
 };
 

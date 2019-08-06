@@ -76,7 +76,7 @@
 										</template>
 									</v-list-tile-content>
 									<v-list-tile-action>
-										<v-btn icon ripple @click="handleOpenUName">
+										<v-btn icon ripple @click="handleEditName">
 											<v-tooltip bottom>
 												<template v-slot:activator="{ on }">
 													<span v-on="on">
@@ -172,7 +172,7 @@
 						medium
 						color="primary"
 						:disabled="loading"
-						@click="sendUpdate">
+						@click="submitUpdate">
 						<span v-t="'btn-save'" class="first-letter-uppercase" />
 					</v-btn>
 				</v-card-actions>
@@ -189,6 +189,7 @@ const initForm = () => ({
 		label: 'lb-name',
 		type: 'text',
 		autofocus: true,
+		required: true,
 		errmsg: '',
 	},
 	email: {
@@ -254,17 +255,6 @@ export default {
 				this.form.reNewPassword.errmsg = this.$t('password-not-match');
 			}
 		},
-		'form.curPassword.value': function cp(val) {
-			const { form } = this;
-			if (val) {
-				form.newPassword.required = true;
-				form.reNewPassword.required = true;
-			}
-			else {
-				form.newPassword.required = false;
-				form.reNewPassword.required = false;
-			}
-		},
 	},
 	mounted() {
 		this.$root.$on('dialog-user-update-profile', () => {
@@ -291,7 +281,7 @@ export default {
 				this.openUPwd = false;
 			}
 		},
-		handleOpenUName() {
+		handleEditName() {
 			if (this.openUName) {
 				this.form.name.value = this.user.name;
 				this.openUName = false;
@@ -300,25 +290,34 @@ export default {
 				this.openUName = true;
 			}
 		},
-		sendUpdate() {
-			// this.$refs.form.validate();
-			this.loading = true;
-			const newInfo = {
-				id: this.user.id,
-				name: this.form.name.value,
-			};
-			this.$axios
-				.patch(this.$api.auth.update, newInfo)
-				.then((res) => {
-					this.loading = false;
-					this.$store.dispatch('auth/setAuth', res.data.messages.newInfo);
-					this.showNotify(res.data.messages['auth.update'], 'success');
-					this.cancelEdit();
-				})
-				.catch((err) => {
-					this.loading = false;
-					console.warn(err);
-				});
+		checkValid() {
+			// @check form not have errmsg
+			for (const key of Object.keys(this.form)) {
+				if (this.form[key].errmsg !== '') {
+					return false;
+				}
+			}
+			return true;
+		},
+		submitUpdate() {
+			// const newInfo = {
+			// 	id: this.user.id,
+			// 	name: this.form.name.value,
+			// };
+
+			// this.loading = true;
+			// this.$axios
+			// 	.patch(this.$api.auth.update, newInfo)
+			// 	.then((res) => {
+			// 		this.loading = false;
+			// 		this.$store.dispatch('auth/setAuth', res.data.messages.newInfo);
+			// 		this.showNotify(res.data.messages['auth.update'], 'success');
+			// 		this.cancelEdit();
+			// 	})
+			// 	.catch((err) => {
+			// 		this.loading = false;
+			// 		console.warn(err);
+			// 	});
 		},
 	},
 };
