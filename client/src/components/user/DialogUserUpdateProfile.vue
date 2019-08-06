@@ -136,7 +136,7 @@
 													v-text="'$vuetify.icons.lock'" />
 											</v-list-tile-avatar>
 											<v-list-tile-content>
-												<text-field class="pt-4 w-100" :field="form.newPassword" />
+												<text-field class="pt-4 w-100" :field="form.password" />
 											</v-list-tile-content>
 										</v-list-tile>
 
@@ -148,7 +148,7 @@
 													v-text="'$vuetify.icons.lock'" />
 											</v-list-tile-avatar>
 											<v-list-tile-content>
-												<text-field class="pt-4 w-100" :field="form.reNewPassword" />
+												<text-field class="pt-4 w-100" :field="form.reEnterPassword" />
 											</v-list-tile-content>
 										</v-list-tile>
 									</v-form>
@@ -158,6 +158,7 @@
 					</v-flex>
 				</v-layout>
 
+				<div class="text-xs-center red--text" v-text="dialogErrMsg" />
 				<!-- *Cancel/Save -->
 				<v-card-actions>
 					<v-spacer />
@@ -208,14 +209,14 @@ const initForm = () => ({
 		required: false,
 		errmsg: '',
 	},
-	newPassword: {
+	password: {
 		value: '',
 		label: 'lb-new-password',
 		type: 'password',
 		required: false,
 		errmsg: '',
 	},
-	reNewPassword: {
+	reEnterPassword: {
 		value: '',
 		label: 'lb-re-new-password',
 		type: 'password',
@@ -228,6 +229,7 @@ export default {
 	name: 'DialogUserUpdateProfile',
 	data: () => ({
 		dialog: false,
+		dialogErrMsg: '',
 		form: initForm(),
 		loading: false,
 		openUName: false,
@@ -238,31 +240,15 @@ export default {
 			user: 'auth/user',
 		}),
 	},
-	watch: {
-		'form.newPassword.value': function cpPwd(val) {
-			const { reNewPassword } = this.form;
-			if (val !== '' && reNewPassword.value !== '') {
-				if (reNewPassword.value !== val && val !== reNewPassword.value) {
-					this.form.reNewPassword.errmsg = this.$t('password-not-match');
-				}
-				else {
-					this.form.reNewPassword.errmsg = '';
-				}
-			}
-		},
-		'form.reNewPassword.value': function cpPwd(val) {
-			if (val !== this.form.newPassword.value) {
-				this.form.reNewPassword.errmsg = this.$t('password-not-match');
-			}
-		},
+	created() {
+		if (this.user) {
+			this.fillForm();
+		}
 	},
 	mounted() {
 		this.$root.$on('dialog-user-update-profile', () => {
 			this.dialog = true;
 		});
-		if (this.user) {
-			this.fillForm();
-		}
 	},
 	methods: {
 		fillForm() {
@@ -290,34 +276,57 @@ export default {
 				this.openUName = true;
 			}
 		},
-		checkValid() {
-			// @check form not have errmsg
-			for (const key of Object.keys(this.form)) {
-				if (this.form[key].errmsg !== '') {
-					return false;
+		hadFillPwd() {
+			let count = 3;
+			for (const key of ['curPassword', 'password', 'reEnterPassword']) {
+				if (this.form[key].value === '') {
+					count -= 1;
 				}
 			}
-			return true;
+			return count;
 		},
 		submitUpdate() {
-			// const newInfo = {
-			// 	id: this.user.id,
-			// 	name: this.form.name.value,
-			// };
+			const countPwdField = this.hadFillPwd();
+			const newInfo = {};
+			if (countPwdField === 0) {
+				if (this.openUName && this.user.name !== this.form.name.value) {
+					newInfo.name = this.form.name.value;
+				}
+			}
+			else if (countPwdField === 1 || countPwdField === 2) {
+				this.dialogErrMsg = 'nhap day du de doi pwd';
+				return;
+			}
+			else {
+				if (this.form.password.value !== this.form.reEnterPassword.value) {
+					this.dialogErrMsg = 'pwd not matched';
+					return;
+				}
+				if (this.openUName && this.user.name !== this.form.name.value) {
+					newInfo.name = this.form.name.value;
+				}
+				newInfo.curPassword = this.form.curPassword.value;
+				newInfo.password = this.form.password.value;
+			}
 
-			// this.loading = true;
-			// this.$axios
-			// 	.patch(this.$api.auth.update, newInfo)
-			// 	.then((res) => {
-			// 		this.loading = false;
-			// 		this.$store.dispatch('auth/setAuth', res.data.messages.newInfo);
-			// 		this.showNotify(res.data.messages['auth.update'], 'success');
-			// 		this.cancelEdit();
-			// 	})
-			// 	.catch((err) => {
-			// 		this.loading = false;
-			// 		console.warn(err);
-			// 	});
+			if (Object.keys(newInfo).length < 1) {
+				return;
+			}
+			this.dialogErrMsg = '';
+			this.loading = true;
+			this.$axios
+				.patch(this.$api.auth.update, newInfo)
+				.then((res) => {
+					this.loading = false;
+					this.$store.dispatch('auth/setAuth', res.data.messages.newInfo);
+					this.showNotify(res.data.messages['auth.update'], 'success');
+					this.cancelEdit();
+				})
+				.catch((err) => {
+					this.loading = false;
+					this.handleErrorMessages(err.messages);
+					console.warn(err);
+				});
 		},
 	},
 };
@@ -326,6 +335,9 @@ export default {
 <style lang="css">
 #input-name input {
 	text-transform: capitalize !important;
+}
+#list-input .v-list__tile {
+	height: 65px;
 }
 #list-input .v-list__tile__content {
 	height: 80px;
