@@ -2,18 +2,18 @@ const PollModel = requireWrp('models/poll');
 const ChoiceModel = requireWrp('models/poll-option-choice');
 
 module.exports = {
-   async getAllChoices({ io, socket }, callback) {
-      const event = socket.$fn.getCurrentEvent();
-      const result = {};
+	async getAllChoices({ io, socket }, callback) {
+		const event = socket.$fn.getCurrentEvent();
+		const result = {};
 		try {
 			const Choice = new ChoiceModel();
 			result.choices = await Choice.findByEventId(event.id).exec();
 			return callback(result);
 		}
-		catch (error) {
+		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
-   },
+	},
 
 	async addChoice({ io, socket }, info, callback) {
 		// VALIDATE HERE

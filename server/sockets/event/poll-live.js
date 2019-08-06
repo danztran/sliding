@@ -3,7 +3,7 @@ const PollLiveCtlr = requireWrp('controllers/poll-live-controller');
 module.exports = (args) => {
 	const { socket } = args;
 	// queries
-	socket.on('get-polls', callback => PollLiveCtlr.getPolls(callback));
+	socket.on('get-polls', callback => PollLiveCtlr.getPolls(args, callback));
 	// add
 	socket.on('add-poll', (info, callback) => PollLiveCtlr.addPoll(args, info, callback));
 	// edit

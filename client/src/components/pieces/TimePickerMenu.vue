@@ -2,7 +2,6 @@
 	<v-menu
 		ref="menuPickTime"
 		v-model="menuPickTime"
-		:close-on-content-click="true"
 		:nudge-right="40"
 		:return-value.sync="time"
 		lazy

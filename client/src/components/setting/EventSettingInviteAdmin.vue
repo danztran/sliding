@@ -70,7 +70,6 @@ export default {
 		form: initForm(),
 		loadingState: '',
 		deleting: false,
-		moderators: '',
 	}),
 	computed: {
 		...mapGetters({
@@ -78,12 +77,8 @@ export default {
 			eventInfo: 'admin/event/getEventInfo',
 			tempSettings: 'admin/event/getTempSettings',
 		}),
-	},
-	watch: {
-		'eventInfo.admins': function getModerators(val) {
-			if (val) {
-				this.moderators = val.filter(el => el.role === 'moderator');
-			}
+		moderators() {
+			return this.eventInfo ? this.eventInfo.admins.filter(e => e.role === 'moderator') : [];
 		},
 	},
 	methods: {

@@ -56,13 +56,17 @@
 				align-center
 				justify-center>
 				<v-btn
-					v-t="'btn-send'"
-					center
 					small
 					round
 					color="success"
-					:disabled="isValid"
-					@click="submitChoice" />
+					:disabled="isValid || loadingState !== ''"
+					:loading="loadingState !== ''"
+					@click="submitChoice">
+					<span v-t="'btn-send'" />
+					<template v-slot:loader>
+						<loading--icon-circle :state.sync="loadingState" />
+					</template>
+				</v-btn>
 			</v-layout>
 		</v-card-text>
 	</v-card>
@@ -70,9 +74,13 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 export default {
 	name: 'PollCard',
+	components: {
+		'loading--icon-circle': LoadingIconCircle,
+	},
 	props: {
 		poll: {
 			type: Object,
@@ -85,6 +93,8 @@ export default {
 		},
 	},
 	data: () => ({
+		loadingState: '',
+		hadPoll: false,
 		radioSelect: null,
 		checkboxSelect: [],
 		pollOptions: [],
@@ -147,6 +157,7 @@ export default {
 			});
 		},
 		submitChoice() {
+			this.loadingState = 'loading';
 			const choicesId = [];
 			if (this.poll.max_choices > 1) {
 				choicesId.push(...this.checkboxSelect);
@@ -163,9 +174,18 @@ export default {
 			this.$socket.emit(emiter, {
 				poll_option_id: choiceId,
 				choice: true,
-			}, (data) => {
-				console.warn(data);
+			}, ({ errmsg, choice }) => {
+				if (!choice) {
+					if (errmsg) {
+						// ...
+						this.loadingState = 'fail';
+					}
+					return;
+				}
+				console.warn(choice);
+				this.loadingState = 'success';
 			});
+			this.hadPoll = true;
 		},
 	},
 };

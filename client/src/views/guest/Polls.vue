@@ -21,6 +21,9 @@ export default {
 			polls: 'guest/polls/getPolls',
 		}),
 	},
+	created() {
+		this.emitGetPolls();
+	},
 	sockets: {
 		new_added_poll(poll) {
 			this.addPoll(poll);
@@ -34,10 +37,22 @@ export default {
 	},
 	methods: {
 		...mapMutations({
+			setPolls: 'guest/polls/SET_POLLS',
 			addPoll: 'guest/polls/ADD_POLL',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
 		}),
+		emitGetPolls() {
+			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
+				if (!polls) {
+					if (errmsg) {
+						// ...
+					}
+					return;
+				}
+				this.setPolls(polls);
+			});
+		},
 	},
 };
 </script>

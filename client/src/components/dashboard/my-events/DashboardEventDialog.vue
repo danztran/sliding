@@ -21,7 +21,6 @@
 					</v-card-title>
 
 					<v-card-actions>
-						<!-- <v-container grid-list-md class="pt-0"> -->
 						<v-layout wrap>
 							<v-flex xs12>
 								<text-field :field="form.name" />
@@ -68,6 +67,41 @@
 								</v-dialog>
 							</v-flex>
 
+							<!-- *Time start -->
+							<v-flex xs6>
+								<v-dialog
+									ref="dialogTimeStart"
+									v-model="dialogTimeStart"
+									:return-value.sync="form.start.defaultTime"
+									lazy
+									full-width
+									width="290px"
+									no-click-animation>
+									<template v-slot:activator="{ on }">
+										<v-text-field
+											v-model="form.start.defaultTime"
+											:label="$t('event-start-time')"
+											readonly
+											v-on="on" />
+									</template>
+									<v-time-picker
+										v-model="form.start.defaultTime"
+										full-width>
+										<v-spacer />
+										<v-btn flat color="primary" @click="dialogTimeStart = false">
+											<span v-t="'btn-cancel'" class="first-letter-uppercase" />
+										</v-btn>
+										<v-btn
+											flat
+											color="primary"
+											@click="$refs.dialogTimeStart.save(form.start.defaultTime,
+												dialogDateEnd=true)">
+											<span v-t="'btn-save'" class="first-letter-uppercase" />
+										</v-btn>
+									</v-time-picker>
+								</v-dialog>
+							</v-flex>
+
 							<!-- *Date end picker -->
 							<v-flex xs6>
 								<v-dialog
@@ -104,41 +138,6 @@
 											<span v-t="'btn-save'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-date-picker>
-								</v-dialog>
-							</v-flex>
-
-							<!-- *Time start -->
-							<v-flex xs6>
-								<v-dialog
-									ref="dialogTimeStart"
-									v-model="dialogTimeStart"
-									:return-value.sync="form.start.defaultTime"
-									lazy
-									full-width
-									width="290px"
-									no-click-animation>
-									<template v-slot:activator="{ on }">
-										<v-text-field
-											v-model="form.start.defaultTime"
-											:label="$t('event-start-time')"
-											readonly
-											v-on="on" />
-									</template>
-									<v-time-picker
-										v-model="form.start.defaultTime"
-										full-width>
-										<v-spacer />
-										<v-btn flat color="primary" @click="dialogTimeStart = false">
-											<span v-t="'btn-cancel'" class="first-letter-uppercase" />
-										</v-btn>
-										<v-btn
-											flat
-											color="primary"
-											@click="$refs.dialogTimeStart.save(form.start.defaultTime,
-												dialogDateEnd=true)">
-											<span v-t="'btn-save'" class="first-letter-uppercase" />
-										</v-btn>
-									</v-time-picker>
 								</v-dialog>
 							</v-flex>
 
@@ -186,7 +185,6 @@
 								</div>
 							</v-flex>
 						</v-layout>
-						<!-- </v-container> -->
 					</v-card-actions>
 
 					<!-- *Error msg -->

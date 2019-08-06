@@ -25,7 +25,7 @@ module.exports = {
 			result.poll_options = await PollOption.findByEventId(event.id).exec();
 			return callback(result);
 		}
-		catch (error) {
+		catch (e) {
 			return socket.$fn.handleError(e, callback);
 		}
 	},

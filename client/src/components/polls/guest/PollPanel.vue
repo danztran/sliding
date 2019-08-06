@@ -13,10 +13,12 @@
 				<v-icon small v-text="'$vuetify.icons.group_people'" />
 			</span>
 		</v-layout>
-		<poll-card
-			v-for="poll in polls"
-			:key="poll.id"
-			:poll="poll" />
+		<v-slide-y-transition group>
+			<poll-card
+				v-for="poll in polls"
+				:key="poll.id"
+				:poll="poll" />
+		</v-slide-y-transition>
 	</div>
 </template>
 
