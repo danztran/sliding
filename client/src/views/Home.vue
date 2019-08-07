@@ -7,9 +7,9 @@
 			@desc: Header navigator bar
 			@contains: username, change language, login, logout, signup
 		-->
-		<v-toolbar id="my-navbar" fixed class="nav-transparent">
+		<v-toolbar id="my-navbar" fixed flat class="nav-transparent">
 			<v-layout row align-center>
-				<v-toolbar-title v-t="'app-name'" class="mx-0" />
+				<v-toolbar-title v-t="'app-name'" class="mx-0 font-weight-bold" />
 				<v-spacer />
 				<section class="nav-btn body-2">
 					<actions-avatar--user v-if="user" in-search />
@@ -63,8 +63,8 @@
 							xs12
 							text-xs-center
 							class="mb-5"
-							style="text-shadow: 0.2em 0.4em 9em #000000de">
-							<div v-t="'sologan'" class="display-3 font-weight-regular text-capitalize mb-3" />
+							style="text-shadow: 0.2em 0.7em 9em #000000de">
+							<div v-t="'sologan'" class="display-3 font-weight-medium text-capitalize mb-3" />
 							<span v-t="'sub-sologan'" class="font-weight-light headline" />
 						</v-flex>
 
@@ -125,12 +125,12 @@
 							<v-layout row wrap>
 								<template v-for="card in cards">
 									<v-flex :key="card.id" xs12 md4>
-										<v-card>
-											<v-img :src="card.urlImg" height="200px" />
-											<v-card-text class="text-xs-center">
+										<v-card height="350">
+											<v-img :src="card.urlImg" height="230px" />
+											<v-card-text class="text-xs-center px-4">
 												<div v-t="card.title" class="headline" />
+												<div v-t="card.description" class="pt-2" />
 											</v-card-text>
-											<v-card-text v-t="card.description" class="pt-1" />
 										</v-card>
 									</v-flex>
 								</template>
@@ -140,7 +140,7 @@
 				</v-layout>
 			</section>
 
-			<!-- *intro reponsive device -->
+			<!-- *intro mobile device -->
 			<section>
 				<v-layout
 					row
@@ -150,32 +150,27 @@
 					<v-flex xs12>
 						<v-container grid-list-xl>
 							<v-layout row wrap>
-								<v-flex xs12 sm6>
-									<v-img :src="phone.urlImg" aspect-ratio="1.2" contain />
+								<v-flex xs12 sm8>
+									<v-img :src="phone.urlImg" aspect-ratio="2" contain />
 								</v-flex>
-								<v-flex xs12 sm6>
-									<h1 v-t="phone.title" class="headline font-weight-regular mb-3" />
+								<v-flex xs12 sm4>
+									<h1 v-t="phone.title" class="display-1 font-weight-medium mb-3" />
 									<p v-t="phone.description" class="font-weight-light subheading" />
-									<v-layout row wrap>
-										<v-flex xs6>
-											<v-btn
-												depressed
-												large
-												color="primary"
-												class="mx-0">
-												<span v-t="'phone-intro-start-btn'" />
-											</v-btn>
-										</v-flex>
-										<v-flex xs6>
-											<v-btn
-												depressed
-												large
-												flat
-												color="primary">
-												<span v-t="'phone-intro-findout-btn'" class="underline" />
-											</v-btn>
-										</v-flex>
-									</v-layout>
+									<div>
+										<v-btn
+											v-t="'phone-intro-start-btn'"
+											depressed
+											large
+											color="primary"
+											class="mx-0" />
+										<v-btn
+											v-t="'phone-intro-findout-btn'"
+											class="underline"
+											depressed
+											large
+											flat
+											color="primary" />
+									</div>
 								</v-flex>
 							</v-layout>
 						</v-container>
@@ -188,7 +183,7 @@
 				<v-layout
 					row
 					wrap
-					class="py-4"
+					class="py-5"
 					justify-center
 					align-center>
 					<v-flex xs12 class="my-4">
@@ -224,14 +219,14 @@
 				<v-layout
 					row
 					wrap
-					class="pt-5"
+					class="py-5"
 					justify-center
 					align-center>
 					<v-flex xs12 sm6 class="my-4">
 						<div class="text-xs-center">
 							<h2
 								v-t="'experience-title'"
-								class="headline font-weight-regular text-uppercase white--text" />
+								class="headline font-weight-medium text-uppercase white--text" />
 							<div>
 								<v-btn
 									depressed
@@ -262,7 +257,7 @@
 								<!-- *advertise products -->
 								<v-flex xs6 sm3>
 									<ul>
-										<span v-t="'footer-product'" class="subheading pb-2 font-weight-medium" />
+										<div v-t="'footer-product'" class="subheading mb-2 font-weight-medium" />
 										<template v-for="item in footerProducts">
 											<li :key="item.title">
 												<router-link v-t="item.title" :to="item.url" />
@@ -273,7 +268,7 @@
 								<!-- *customer -->
 								<v-flex xs6 sm3>
 									<ul>
-										<span v-t="'footer-customer'" class="subheading pb-2 font-weight-medium" />
+										<div v-t="'footer-customer'" class="subheading mb-2 font-weight-medium" />
 										<template v-for="item in footerCustomer">
 											<li :key="item.title">
 												<router-link v-t="item.title" :to="item.url" />
@@ -284,7 +279,7 @@
 								<!-- *about us -->
 								<v-flex xs6 sm3>
 									<ul>
-										<span v-t="'footer-about'" class="subheading pb-2 font-weight-medium" />
+										<div v-t="'footer-about'" class="subheading mb-2 font-weight-medium" />
 										<template v-for="item in footerAbout">
 											<li :key="item.title">
 												<router-link v-t="item.title" :to="item.url" />
@@ -295,9 +290,9 @@
 								<!-- *contact -->
 								<v-flex xs6 sm3>
 									<ul>
-										<span
+										<div
 											v-t="'app-name'"
-											class="display-1 pb-2 font-weight-medium" />
+											class="title" />
 										<li v-t="'footer-contact'" class="subheading font-weight-medium" />
 										<li>(+84) 123 456 789</li>
 										<li>sliding@sli.com</li>
@@ -405,67 +400,67 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	$primary: var(--v-primary-base);
-	$navColor: #ffffffe6;
-	$black: #000000de;
-	#home-page {
-		#my-navbar {
-			color: $black;
-		}
-		.nav-transparent {
-			background-color: $navColor !important;
-		}
-		.v-parallax .v-parallax__content {
-			background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
-		}
-		.w-3 {
-			width: 300px;
-		}
-		.h-6 {
-			height: 60px;
-		}
-		.my-input-code {
-			position: relative;
-			z-index: 10;
-			right: 0;
-			.v-btn {
-				position: absolute;
-				top: .1em;
-				right: -.2em;
-				height: 45px;
-			}
-		}
-		.white-bg {
-			background-color: #fff;
-		}
-		.underline {
-			text-decoration: underline;
-		}
-		#primary-bg {
-			background-color: $primary;
-		}
-		ul {
-			list-style: none;
-		}
-		#footer {
-			a {
-				text-decoration: none;
-				color: $black !important;
-			}
-		}
-		.changeLang {
-			&:hover {
-				color: $primary;
-				cursor: pointer;
-			}
-		}
-		.langActive {
-			color: $primary;
-		}
-		@media only screen and (max-width: 600px) {
-			.nav-btn .v-btn{
-				margin: 0;
-			}
+$primary: var(--v-primary-base);
+$navColor: #ffffff94;
+$black: #000000de;
+#home-page {
+	#my-navbar {
+		color: $black;
+	}
+	.nav-transparent {
+		background-color: $navColor !important;
+	}
+	.v-parallax .v-parallax__content {
+		background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
+	}
+	.w-3 {
+		width: 300px;
+	}
+	.h-6 {
+		height: 60px;
+	}
+	.my-input-code {
+		position: relative;
+		z-index: 10;
+		right: 0;
+		.v-btn {
+			position: absolute;
+			top: .1em;
+			right: -.2em;
+			height: 45px;
 		}
 	}
+	.white-bg {
+		background-color: #fff;
+	}
+	.underline {
+		text-decoration: underline;
+	}
+	#primary-bg {
+		background-color: $primary;
+	}
+	ul {
+		list-style: none;
+	}
+	#footer {
+		a {
+			text-decoration: none;
+			color: $black !important;
+		}
+	}
+	.changeLang {
+		&:hover {
+			color: $primary;
+			cursor: pointer;
+		}
+	}
+	.langActive {
+		color: $primary;
+	}
+	@media only screen and (max-width: 600px) {
+		.nav-btn .v-btn{
+			margin: 0;
+		}
+	}
+}
 </style>
