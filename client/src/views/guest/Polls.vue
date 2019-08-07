@@ -1,19 +1,26 @@
 <template>
 	<div>
 		<empty--state-poll v-if="!polls.length" />
-		<panel--poll v-else />
+		<template v-else>
+			<div v-t="'poll-live-title'" class="mx-3 my-2 body-1 grey--text" />
+
+			<card--poll
+				v-for="poll in polls"
+				:key="poll.id"
+				:poll="poll" />
+		</template>
 	</div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import PollPanel from '@/components/polls/guest/PollPanel.vue';
+import PollCard from '@/components/polls/guest/PollCard.vue';
 import EmptyPoll from '@/components/polls/guest/EmptyPoll.vue';
 
 export default {
 	name: 'Polls',
 	components: {
-		'panel--poll': PollPanel,
+		'card--poll': PollCard,
 		'empty--state-poll': EmptyPoll,
 	},
 	computed: {
@@ -23,6 +30,7 @@ export default {
 	},
 	created() {
 		this.emitGetPolls();
+		this.emitGetAllOptChoices();
 	},
 	sockets: {
 		new_added_poll(poll) {
@@ -38,6 +46,7 @@ export default {
 	methods: {
 		...mapMutations({
 			setPolls: 'guest/polls/SET_POLLS',
+			setPollOptChoice: 'guest/pollOptionChoices/SET_POLL_OPTION_CHOICES',
 			addPoll: 'guest/polls/ADD_POLL',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
@@ -52,6 +61,23 @@ export default {
 				}
 				this.setPolls(polls);
 			});
+		},
+		emitGetAllOptChoices() {
+			const emiter = 'get-all-poll-option-choices';
+			this.$socket.emit(emiter, ({ errmsg, choices }) => {
+				if (!choices) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.setOptChoice(choices);
+			});
+		},
+		setOptChoice(choices) {
+			for (const choice of choices) {
+				this.setPollOptChoice(choice);
+			}
 		},
 	},
 };

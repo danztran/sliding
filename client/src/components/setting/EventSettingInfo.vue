@@ -282,7 +282,6 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
-			tempSettings: 'admin/event/getTempSettings',
 			eventInfo: 'admin/event/getEventInfo',
 		}),
 	},
@@ -293,15 +292,19 @@ export default {
 			}
 		},
 		'basicSettings.form.name.value': debounce(function d(val) {
-			this.mergeTempSettings({
-				name: val,
-			});
-		}, 1000),
+			if (this.eventInfo.name !== val) {
+				this.mergeTempSettings({
+					name: val,
+				});
+			}
+		}, 500),
 		'basicSettings.form.description.value': debounce(function d(val) {
-			this.mergeTempSettings({
-				description: val,
-			});
-		}, 1000),
+			if (this.eventInfo.description !== val) {
+				this.mergeTempSettings({
+					description: val,
+				});
+			}
+		}, 500),
 	},
 	methods: {
 		...mapMutations({

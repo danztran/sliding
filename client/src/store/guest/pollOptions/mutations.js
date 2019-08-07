@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------
-	@desc:
+	@desc: query options success set to state
 	@socket:
-	@source:
+	@source: cpn/polls/guest/PollCard.vue
 ------------------------------------------------------------------------*/
 const SET_POLL_OPTIONS = (state, pollOptions) => {
 	state.pollOptions.push(pollOptions);

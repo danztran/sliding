@@ -193,12 +193,14 @@ export default {
 				}
 			}
 
+			// check event name not empty
 			if (this.tempSettings.name === '') {
 				this.loadingState = '';
 				this.showNotify(this.$t('err-event-name-empty'), 'danger');
 				return;
 			}
 
+			// check time event valid
 			if (this.tempSettings.start_at
 				|| this.tempSettings.end_at) {
 				if (!this.compareTime()) {
@@ -211,8 +213,7 @@ export default {
 			this.$socket.emit('edit-event', this.tempSettings, ({ errmsg, event }) => {
 				if (errmsg) {
 					this.loadingState = 'fail';
-					// notify
-					// ...
+					this.showNotify(errmsg, 'danger');
 					// turn back to origin settings
 					this.mergeTempSettings(this.eventInfo);
 					return;

@@ -1,7 +1,7 @@
 <template>
 	<v-card class="mt-1 mb-3">
 		<v-card-title
-			class="py-3 body-2"
+			class="py-3"
 			primary-title>
 			<span v-if="poll.is_locked">
 				<v-icon
@@ -9,77 +9,94 @@
 					v-text="'$vuetify.icons.lock'" />
 				&nbsp;
 			</span>
-			<span v-text="poll.content" />
+			<span class="body-2" v-text="poll.content" />
+			<v-spacer />
+			<span>
+				0
+				<v-icon small v-text="'$vuetify.icons.group_people'" />
+			</span>
 		</v-card-title>
 		<v-divider />
 
 		<v-card-text>
-			<template v-if="poll.max_choices > 1 && pollOptions.length > 0">
-				<!-- *description max choice -->
-				<div class="caption first-letter-uppercase grey--text">
-					<span v-t="'poll-max-choices'" />
-					<span v-text="poll.max_choices" />
-				</div>
+			<v-slide-x-transition hide-on-leave>
+				<!-- *result -->
+				<poll--result
+					v-if="hadChoice"
+					:poll-options="pollOptions"
+					:poll-opt-choices="pollOptChoices"
+					@re-poll="handleRepoll" />
 
-				<!-- *multi choice: show checkbox -->
-				<div class="mt-2 custom-select checkbox">
-					<v-checkbox
-						v-for="option of pollOptions"
-						:key="option.id"
-						v-model="checkboxSelect"
-						:label="option.content"
-						:value="option.id"
-						:disabled="poll.is_locked"
-						color="primary"
-						class="mt-0" />
-				</div>
-				<div class="text-xs-center red--text" v-text="checkboxErrmsg" />
-			</template>
+				<div v-else>
+					<!-- *multi choice: show maxChoices and checkbox -->
+					<template v-if="poll.max_choices > 1 && pollOptions.length > 0">
+						<div class="caption first-letter-uppercase grey--text">
+							<span v-t="'poll-max-choices'" />
+							<span v-text="poll.max_choices" />
+						</div>
 
-			<!-- *one choice: show radio -->
-			<v-radio-group
-				v-else
-				v-model="radioSelect"
-				:disabled="poll.is_locked"
-				class="mt-2 custom-select radio">
-				<v-radio
-					v-for="option of pollOptions"
-					:key="option.id"
-					:label="option.content"
-					:value="option.id"
-					color="primary"
-					class="mr-0 mb-3 px-2 py-1" />
-			</v-radio-group>
-
-			<!-- *emit send choice -->
-			<v-layout
-				align-center
-				justify-center>
-				<v-btn
-					small
-					round
-					color="success"
-					:disabled="isValid || loadingState !== ''"
-					:loading="loadingState !== ''"
-					@click="submitChoice">
-					<span v-t="'btn-send'" />
-					<template v-slot:loader>
-						<loading--icon-circle :state.sync="loadingState" />
+						<div class="mt-2 custom-select checkbox">
+							<v-checkbox
+								v-for="option of pollOptions"
+								:key="option.id"
+								v-model="checkboxSelect"
+								:label="option.content"
+								:value="option.id"
+								:disabled="poll.is_locked"
+								color="primary"
+								class="mt-0" />
+						</div>
+						<div class="text-xs-center red--text" v-text="checkboxErrmsg" />
 					</template>
-				</v-btn>
-			</v-layout>
+
+					<!-- *one choice: show radio -->
+					<v-radio-group
+						v-else
+						v-model="radioSelect"
+						:disabled="poll.is_locked"
+						class="mt-2 custom-select radio">
+						<v-radio
+							v-for="option of pollOptions"
+							:key="option.id"
+							:label="option.content"
+							:value="option.id"
+							color="primary"
+							class="mr-0 mb-3 px-2 py-1" />
+					</v-radio-group>
+
+					<!-- *emit send choice -->
+					<v-layout
+						align-center
+						justify-center>
+						<v-btn
+							small
+							round
+							color="success"
+							:disabled="isValid || loadingState !== ''"
+							:loading="loadingState !== ''"
+							@click="submitChoice">
+							<span v-t="'btn-send'" />
+							<template v-slot:loader>
+								<loading--icon-circle :state.sync="loadingState" />
+							</template>
+						</v-btn>
+					</v-layout>
+				</div>
+			</v-slide-x-transition>
 		</v-card-text>
 	</v-card>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
+import PollResult from './PollResult.vue';
 
 export default {
 	name: 'PollCard',
 	components: {
 		'loading--icon-circle': LoadingIconCircle,
+		'poll--result': PollResult,
 	},
 	props: {
 		poll: {
@@ -94,13 +111,18 @@ export default {
 	},
 	data: () => ({
 		loadingState: '',
-		hadPoll: false,
+		checkboxErrmsg: '',
 		radioSelect: null,
 		checkboxSelect: [],
 		pollOptions: [],
-		checkboxErrmsg: '',
+		pollOptChoices: [],
+		hadChoice: false,
 	}),
 	computed: {
+		...mapGetters({
+			getOptChoices: 'guest/pollOptionChoices/getOptChoices',
+			allOptChoices: 'guest/pollOptionChoices/getAllOptChoices',
+		}),
 		isValid() {
 			if (this.poll.max_choices > 1) {
 				if (this.checkboxSelect.length > 0
@@ -126,6 +148,22 @@ export default {
 				this.checkboxErrmsg = '';
 			}
 		},
+		allOptChoices(val) {
+			if (val.length !== 0) {
+				this.pollOptChoices = this.getOptChoices(this.poll.id);
+			}
+		},
+		pollOptChoices(val) {
+			if (val.length !== 0) {
+				this.hadChoice = true;
+				if (this.poll.max_choices > 1) {
+					this.checkboxSelect = val.map(el => el.id);
+				}
+				else {
+					this.radioSelect = val[0].id;
+				}
+			}
+		},
 	},
 	created() {
 		if (this.pollOptions.length === 0) {
@@ -138,6 +176,23 @@ export default {
 		...mapMutations({
 			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
 		}),
+		handleRepoll() {
+			this.hadChoice = false;
+		},
+		submitChoice() {
+			this.loadingState = 'loading';
+			const choicesId = [];
+			if (this.poll.max_choices > 1) {
+				choicesId.push(...this.checkboxSelect);
+			}
+			else {
+				choicesId.push(this.radioSelect);
+			}
+			for (const id of choicesId) {
+				this.emitChoice(id);
+			}
+			this.showNotify(this.$t('poll-sent'), 'success');
+		},
 		emitGetPollOpts(pID) {
 			const emiter = 'get-poll-options';
 			this.loadingLinear = true;
@@ -156,19 +211,6 @@ export default {
 				this.pollOptions = result.poll_options;
 			});
 		},
-		submitChoice() {
-			this.loadingState = 'loading';
-			const choicesId = [];
-			if (this.poll.max_choices > 1) {
-				choicesId.push(...this.checkboxSelect);
-			}
-			else {
-				choicesId.push(this.radioSelect);
-			}
-			for (const id of choicesId) {
-				this.emitChoice(id);
-			}
-		},
 		emitChoice(choiceId) {
 			const emiter = 'add-poll-option-choice';
 			this.$socket.emit(emiter, {
@@ -185,7 +227,6 @@ export default {
 				console.warn(choice);
 				this.loadingState = 'success';
 			});
-			this.hadPoll = true;
 		},
 	},
 };
