@@ -8,6 +8,10 @@ router.post('/quick-signup', AuthCtlr.quickSignup);
 router.post('/login', AuthCtlr.login);
 router.get('/logout', AuthCtlr.logout);
 
+// outlook auth
+router.get('/outlook', AuthCtlr.loginOutlook);
+router.get('/outlook/callback', AuthMdw.outlookCallback, AuthCtlr.loginOutlookSuccess);
+
 router.use(AuthMdw.authen);
 router.patch('/update', AuthCtlr.update);
 router.patch('/complete-signup', AuthCtlr.completeSignup);

@@ -190,13 +190,42 @@ const Ctlr = {
 		res.messages['auth.logout'] = res.$t('successLoggedOut');
 		return res.sendwm();
 	},
+
+	loginOutlook(req, res, next) {
+		return passport.authenticate('windowslive', {
+			scope: [
+				'https://graph.microsoft.com/User.Read',
+				'openid',
+				'email',
+				'profile',
+				'offline_access',
+				// 'https://outlook.office.com/Mail.Read'
+			],
+		})(req, res, next);
+	},
+
+	async loginOutlookSuccess(req, res, next) {
+		try {
+			const User = new UserModel();
+			const user = await User.findOne({
+				outlook_id: req.user.outlook_id,
+			}, { select: '*' }).exec();
+			req.logIn(user, (error) => {
+				if (error) return next(error);
+				req.session.user = req.user;
+				User.setLastAccessed(user).exec();
+				return res.redirect('/dashboard');
+			});
+		}
+		catch (error) {
+			return res.redirect('/login');
+		}
+	},
 };
 
 function isEmpty(obj) {
 	for (const prop in obj) {
 		if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-			// console.log(`key ${prop}`);
-			// console.log(`value ${obj[prop]}`);
 			if (obj[prop] === null || obj[prop] === '' || (typeof obj[prop]) === 'undefined') {
 				return true;
 			}

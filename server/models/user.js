@@ -78,6 +78,29 @@ class UserModel extends Model {
 		});
 	}
 
+	createOutlook(info, opt) {
+		return this.createOne({
+			name: info.name,
+			email: info.email,
+			outlook_id: info.outlook_id,
+			outlook_access_token: info.outlook_access_token,
+			created_at: new Date().toISOString(),
+			updated_at: new Date().toISOString(),
+		}, opt);
+	}
+
+	updateOutlook(info, opt) {
+		return this.updateOne({
+			id: info.id,
+		}, {
+			name: info.name,
+			email: info.email,
+			outlook_access_token: info.outlook_access_token,
+			outlook_refresh_token: info.outlook_refresh_token,
+			updated_at: new Date().toISOString(),
+		}, opt);
+	}
+
 	setLastAccessed(user) {
 		const { id } = user;
 		const accessed_at = new Date().toISOString();

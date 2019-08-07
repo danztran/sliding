@@ -87,6 +87,13 @@ module.exports = {
 		rePassword: 'string|required_with:password|min:6|max:50|same:password',
 	},
 
+	// ========== OUTLOOK AUTHENTICATION
+	outlook: {
+		clientId: process.env.OUTLOOK_CLIENT_ID,
+		clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
+		callbackUrl: process.env.OUTLOOK_CALLBACK_URL,
+	},
+
 	// ========== EVENT MODEL
 	// auto generate the next event code with auto increment characters
 	eventCodeBone: 'abcdefghijklmnopqrstuvwxyz0123456789',

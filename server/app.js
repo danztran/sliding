@@ -29,6 +29,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// static
+app.use(compression());
+app.use(express.static(path.join(__dirname, vueDist)));
+
 // passport - session
 $io.use((socket, next) => {
 	session(socket.request, socket.request.res, next);
@@ -38,8 +42,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 // router
-app.use(compression());
-app.use(express.static(path.join(__dirname, vueDist)));
 app.use(router);
 
 module.exports = app;
