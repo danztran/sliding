@@ -29,6 +29,10 @@ module.exports = {
 	sessionResave: true,
 	sessionSaveUninitialized: false,
 	sessionMaxAge: 864000000,
+	// Cookie
+	cookie: {
+		flashMessage: process.env.VUE_APP_CK_FLASH_MESSAGE,
+	},
 	// File Store
 	fileStorePath: './temp/sessions',
 	fileStoreSecret: process.env.FILE_STORE_SECRET || 'googlesecondplease',
@@ -89,9 +93,10 @@ module.exports = {
 
 	// ========== OUTLOOK AUTHENTICATION
 	outlook: {
-		clientId: process.env.OUTLOOK_CLIENT_ID,
+		clientID: process.env.OUTLOOK_CLIENT_ID,
 		clientSecret: process.env.OUTLOOK_CLIENT_SECRET,
-		callbackUrl: process.env.OUTLOOK_CALLBACK_URL,
+		callbackURL: process.env.OUTLOOK_CALLBACK_URL,
+		userProfileURL: 'https://graph.microsoft.com/v1.0/me',
 	},
 
 	// ========== EVENT MODEL

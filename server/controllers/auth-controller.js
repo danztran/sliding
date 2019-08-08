@@ -199,7 +199,6 @@ const Ctlr = {
 				'email',
 				'profile',
 				'offline_access',
-				// 'https://outlook.office.com/Mail.Read'
 			],
 		})(req, res, next);
 	},
@@ -218,7 +217,10 @@ const Ctlr = {
 			});
 		}
 		catch (error) {
-			return res.redirect('/login');
+			res.cookie('cookieName', res.$t());
+			return next({
+				redirect: '/login',
+			});
 		}
 	},
 };

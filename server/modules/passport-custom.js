@@ -5,6 +5,7 @@ const passport = require('passport');
 
 // load up the user model
 const crypto = requireWrp('modules/crypto-custom');
+const { isEmail } = requireWrp('modules/common');
 const UserModel = requireWrp('models/user');
 
 // used to serialize the user for the session
@@ -37,23 +38,27 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(new OutlookStrategy({
-	clientID: outlook.clientId,
+	clientID: outlook.clientID,
 	clientSecret: outlook.clientSecret,
-	callbackURL: outlook.callbackUrl,
-	userProfileURL: 'https://graph.microsoft.com/v1.0/me',
+	callbackURL: outlook.callbackURL,
+	userProfileURL: outlook.userProfileURL,
 },
 (async (accessToken, refreshToken, _profile, done) => {
 	const profile = _profile._json;
 	const user = {
 		outlook_id: profile.id,
-		name: profile.displayName || (profile.givenName || `${profile.surname}` || '') || 'Stranger',
+		name: profile.displayName || (profile.givenName || `${profile.surname}` || ''),
 		email: profile.mail,
 		outlook_access_token: accessToken,
 	};
 
+	if (!user.email && isEmail(profile.userPrincipalName)) {
+		user.email = profile.userPrincipalName;
+	}
+
 	try {
-		if (!user.outlook_id) {
-			throw 'No outlook id';
+		if (!user.outlook_id || !user.email) {
+			throw 'Not enough info';
 		}
 
 		const User = new UserModel();
