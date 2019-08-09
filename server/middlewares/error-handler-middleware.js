@@ -10,9 +10,9 @@ module.exports = (err, req, res, next) => {
 	}
 	if (req.xhr) {
 		return res.sendwm();
-	} else if (err.redirect && err.redirect.indexOf('login') !== -1) {
+	} if (err.redirect && err.redirect.indexOf('login') !== -1) {
 		return res.redirect('/login');
 	}
-	res.cookie(cookie.flashMessage, err.message ||  res.$t('somethingWrong'));
+	res.cookie(cookie.flashMessage, err.message || res.$t('somethingWrong'));
 	return res.redirect('/login');
 };

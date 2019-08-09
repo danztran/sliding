@@ -1,17 +1,15 @@
 version: '3'
 services:
   server:
-    image: 'sli-server'
+    # image: 'sli-server'
     container_name: 'sli_server'
     build: ./server
     command: npm start
     volumes:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
-    ports:
-      - 3000:3000
   client:
-    image: 'sli-client'
+    # image: 'sli-client'
     container_name: 'sli_client'
     build: ./client
     command: npm run serve
@@ -22,7 +20,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - NODE_ENV=justdev
+      - DOCKER_SERVER_HOST=http://server:3000
   redis:
     image: 'redis'
     container_name: 'sli_redis'

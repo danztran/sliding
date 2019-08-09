@@ -7,9 +7,6 @@ const {
 	VUE_APP_CK_FLASH_MESSAGE: flashMsg,
 } = process.env;
 
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL || '';
-axios.defaults.withCredentials = true;
-
 axios.interceptors.response.use(
 	response => response,
 	(error) => {
