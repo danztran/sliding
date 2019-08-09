@@ -46,7 +46,7 @@ export default {
 	methods: {
 		...mapMutations({
 			setPolls: 'guest/polls/SET_POLLS',
-			setPollOptChoice: 'guest/pollOptionChoices/SET_POLL_OPTION_CHOICES',
+			setPollOptChoice: 'guest/pollOptions/SET_POLL_OPTION_CHOICE',
 			addPoll: 'guest/polls/ADD_POLL',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
@@ -72,6 +72,7 @@ export default {
 					return;
 				}
 				this.setOptChoice(choices);
+				console.warn(choices);
 			});
 		},
 		setOptChoice(choices) {

@@ -12,7 +12,7 @@
 			<span class="body-2" v-text="poll.content" />
 			<v-spacer />
 			<span>
-				0
+				{{ countUsersChoice }}
 				<v-icon small v-text="'$vuetify.icons.group_people'" />
 			</span>
 		</v-card-title>
@@ -25,6 +25,7 @@
 					v-if="hadChoice"
 					:poll-options="pollOptions"
 					:poll-opt-choices="pollOptChoices"
+					:count-users-choice="countUsersChoice"
 					@re-poll="handleRepoll" />
 
 				<div v-else>
@@ -116,12 +117,13 @@ export default {
 		checkboxSelect: [],
 		pollOptions: [],
 		pollOptChoices: [],
+		countUsersChoice: 0,
 		hadChoice: false,
 	}),
 	computed: {
 		...mapGetters({
-			getOptChoices: 'guest/pollOptionChoices/getOptChoices',
-			allOptChoices: 'guest/pollOptionChoices/getAllOptChoices',
+			getPollOptChoices: 'guest/pollOptions/getPollOptChoices',
+			user: 'auth/user',
 		}),
 		isValid() {
 			if (this.poll.max_choices > 1) {
@@ -148,33 +150,31 @@ export default {
 				this.checkboxErrmsg = '';
 			}
 		},
-		allOptChoices(val) {
+		pollOptions(val) {
 			if (val.length !== 0) {
-				this.pollOptChoices = this.getOptChoices(this.poll.id);
+				this.pollOptChoices = this.getPollOptChoices(this.poll.id);
 			}
 		},
 		pollOptChoices(val) {
 			if (val.length !== 0) {
-				this.hadChoice = true;
-				if (this.poll.max_choices > 1) {
-					this.checkboxSelect = val.map(el => el.id);
+				const usersChoice = [];
+				for (const e of val) {
+					usersChoice.push(...e.users);
 				}
-				else {
-					this.radioSelect = val[0].id;
-				}
+				this.hadChoice = usersChoice.some(id => Number(id) === Number(this.user.id));
+				this.countUsersChoice = [...new Set(usersChoice)].length;
 			}
 		},
 	},
 	created() {
 		if (this.pollOptions.length === 0) {
-			if (this.poll.id) {
-				this.emitGetPollOpts(this.poll.id);
-			}
+			this.emitGetPollOpts(this.poll.id);
 		}
 	},
 	methods: {
 		...mapMutations({
 			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
+			setPollOptChoice: 'guest/pollOptions/SET_POLL_OPTION_CHOICE',
 		}),
 		handleRepoll() {
 			this.hadChoice = false;
@@ -219,13 +219,15 @@ export default {
 			}, ({ errmsg, choice }) => {
 				if (!choice) {
 					if (errmsg) {
-						// ...
+						this.showNotify(errmsg, 'danger');
 						this.loadingState = 'fail';
 					}
 					return;
 				}
 				console.warn(choice);
+				this.setPollOptChoice(choice);
 				this.loadingState = 'success';
+				this.hadChoice = true;
 			});
 		},
 	},

@@ -50,7 +50,7 @@ module.exports = {
 				poll_option_id: optionId,
 				user_id: user.id,
 			}).exec();
-			result.choice = choice;
+			result.choice = { ...choice, poll_id: poll.id };
 			socket.to(event.rooms.main).emit('new_poll_option_choice', choice);
 			return callback(result);
 		}

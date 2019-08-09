@@ -1,5 +1,6 @@
 const { outlook } = requireWrp('config');
 const LocalStrategy = require('passport-local').Strategy;
+// eslint-disable-next-line
 const OutlookStrategy = require('passport-outlook').Strategy;
 const passport = require('passport');
 

@@ -15,7 +15,6 @@ import guestEvent from './guest/event';
 import guestQuestions from './guest/questions';
 import guestPolls from './guest/polls';
 import guestPollOptions from './guest/pollOptions';
-import guestPollOptionChoies from './guest/pollOptionChoices';
 
 
 Vue.use(Vuex);
@@ -40,7 +39,6 @@ export default new Vuex.Store({
 				questions: guestQuestions,
 				polls: guestPolls,
 				pollOptions: guestPollOptions,
-				pollOptionChoices: guestPollOptionChoies,
 			},
 		},
 	},
