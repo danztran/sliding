@@ -31,7 +31,9 @@ class PollOptionChoiceModel extends Model {
 	findByEventId(eid, opt) {
 		this.setQuery(`
 			SELECT *
-			FROM poll p, poll_option o, ${this.getName()} c
+			FROM ${this.getName()} c,
+				${Poll.getName()} p,
+				${PollOption.getName()} o
 			WHERE
 				p.id = o.poll_id
 				AND o.id = c.poll_option_id

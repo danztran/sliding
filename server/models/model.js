@@ -80,6 +80,19 @@ class Model {
 		return this;
 	}
 
+	update(queryInfo, newInfo, {
+		select,
+	} = {}) {
+		this.setQuery(`
+			UPDATE ${this.getName()}
+			${qh.toSetClause(newInfo)}
+			${qh.toWhereClause(queryInfo)}
+			${qh.toReturningClause(select)}
+		`);
+		this.setRowReturn(0);
+		return this;
+	}
+
 	updateOne(object, newInfo, {
 		alias,
 		select,
