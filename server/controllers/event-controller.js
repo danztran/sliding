@@ -114,6 +114,7 @@ module.exports = {
 				res.status(404);
 				throw { 'find-event': res.$t('notFoundEventByCode') };
 			}
+
 			result.event = event;
 
 			if (req.user) {
