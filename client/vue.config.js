@@ -1,13 +1,17 @@
+const devServerHost = process.env.SERVER_HOST_DOCKER || process.env.SERVER_HOST_LOCAL;
 module.exports = {
 	outputDir: '../server/vue-dist',
 	devServer: {
 		port: process.env.PORT || 8080,
 		proxy: {
-			'/': {
-				target: process.env.DOCKER_SERVER_HOST || 'http://localhost:3000',
-				changeOrigin: true,
+			'/api': {
+				target: devServerHost,
+			},
+			'/sio': {
+				target: devServerHost,
 				ws: true,
 			},
+
 		},
 	},
 	chainWebpack: (config) => {

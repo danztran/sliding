@@ -104,5 +104,7 @@ module.exports = {
 	eventCodeBone: 'abcdefghijklmnopqrstuvwxyz0123456789',
 	eventCodeStart: 'aaa',
 
-
+	socket: {
+		path: process.env.VUE_APP_SOCKET_IO_PATH || '/sio',
+	},
 };

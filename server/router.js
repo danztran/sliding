@@ -7,8 +7,7 @@ const routes = route => requireWrp(`routes/${route}`);
 /* GET home page. */
 router.use(MessageMdw);
 router.use('/', routes('home-router'));
-router.use('/auth', routes('auth-router'));
-router.use('/event', routes('event-router'));
+router.use('/api', routes('api'));
 router.use('/', routes('vue-router'));
 router.use(ErrorHandlerMdw);
 

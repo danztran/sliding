@@ -1,20 +1,20 @@
 export default {
 	auth: {
-		login: '/auth/login',
-		logout: '/auth/logout',
-		info: '/auth/info',
-		update: '/auth/update',
-		signup: '/auth/signup',
-		quickSignup: '/auth/quick-signup',
-		updateQSignup: '/auth/complete-signup',
+		login: '/api/auth/login',
+		logout: '/api/auth/logout',
+		info: '/api/auth/info',
+		update: '/api/auth/update',
+		signup: '/api/auth/signup',
+		quickSignup: '/api/auth/quick-signup',
+		updateQSignup: '/api/auth/complete-signup',
 	},
 	event: {
-		query: '/event/query',
-		create: '/event/create',
-		search: '/event/find',
+		query: '/api/event/query',
+		create: '/api/event/create',
+		search: '/api/event/find',
 	},
 	role: {
-		query: '/role/query',
-		resRequest: '/role/response',
+		query: '/api/role/query',
+		resRequest: '/api/role/response',
 	},
 };

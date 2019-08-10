@@ -20,7 +20,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - DOCKER_SERVER_HOST=http://server:3000
+      - SERVER_HOST_DOCKER=http://server:3000
   redis:
     image: 'redis'
     container_name: 'sli_redis'
