@@ -11,6 +11,7 @@
 				</v-slide-y-transition>
 			</v-content>
 			<dialog--create-event />
+			<dialog--qrcode />
 			<dialog--event-settings />
 			<dialog--invite-request />
 			<dialog--user-update-profile />
@@ -25,6 +26,7 @@ import NavBar from './NavBar.vue';
 import Drawer from './Drawer.vue';
 import DashboardEventDialog from '@/components/dashboard/my-events/DashboardEventDialog.vue';
 import EventSettingDialog from '@/components/setting/EventSettingDialog.vue';
+import DialogQRCode from '@/components/pieces/DialogQRCode.vue';
 import DialogInviteRequest from '@/components/user/DialogInviteRequest.vue';
 import DialogUserUpdateProfile from '@/components/user/DialogUserUpdateProfile.vue';
 
@@ -35,6 +37,7 @@ export default {
 		navbar: NavBar,
 		drawer: Drawer,
 		'dialog--create-event': DashboardEventDialog,
+		'dialog--qrcode': DialogQRCode,
 		'dialog--event-settings': EventSettingDialog,
 		'dialog--invite-request': DialogInviteRequest,
 		'dialog--user-update-profile': DialogUserUpdateProfile,

@@ -61,7 +61,7 @@
 											color="primary"
 											@click="$refs.dialogDateStart.save(form.start.defaultDate,
 												cbCheckBiggerDateEnd(form.start.defaultDate))">
-											<span v-t="'btn-save'" class="first-letter-uppercase" />
+											<span v-t="'btn-pick-date-start'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-date-picker>
 								</v-dialog>
@@ -96,7 +96,7 @@
 											color="primary"
 											@click="$refs.dialogTimeStart.save(form.start.defaultTime,
 												dialogDateEnd=true)">
-											<span v-t="'btn-save'" class="first-letter-uppercase" />
+											<span v-t="'btn-pick-time-start'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-time-picker>
 								</v-dialog>
@@ -135,7 +135,7 @@
 											flat
 											color="primary"
 											@click="$refs.dialogDateEnd.save(form.end.defaultDate, dialogTimeEnd=true)">
-											<span v-t="'btn-save'" class="first-letter-uppercase" />
+											<span v-t="'btn-pick-date-end'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-date-picker>
 								</v-dialog>
@@ -172,7 +172,7 @@
 											flat
 											color="primary"
 											@click="$refs.dialogTimeEnd.save(form.end.defaultTime)">
-											<span v-t="'btn-save'" class="first-letter-uppercase" />
+											<span v-t="'btn-pick-time-end'" class="first-letter-uppercase" />
 										</v-btn>
 									</v-time-picker>
 								</v-dialog>
@@ -273,6 +273,8 @@ export default {
 		formatForm() {
 			const date = new Date();
 			const dayTime = 1000 * 3600 * 24;
+			this.form.name.value = '';
+			this.form.description.value = '';
 			this.form.start.defaultDate = date.toISOString().substr(0, 10);
 			this.form.end.defaultDate = new Date((new Date()).valueOf() + dayTime * 3)
 				.toISOString().substr(0, 10);
@@ -338,10 +340,10 @@ export default {
 				.post(this.$api.event.create, eventFormData)
 				.then((res) => {
 					const { code } = res.data;
-					this.$store.dispatch('dashboard/createEvent', Object.assign(eventFormData, { code }));
 					this.loading = false;
 					this.dialogCreate = false;
-					this.form = this.formatForm();
+					this.formatForm();
+					this.$store.dispatch('dashboard/createEvent', Object.assign(eventFormData, { code }));
 				})
 				.catch((err) => {
 					this.handleErrorMessages(err.messages);

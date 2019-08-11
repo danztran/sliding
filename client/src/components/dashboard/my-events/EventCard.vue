@@ -33,20 +33,6 @@
 
 				<!-- *Actions -->
 				<v-list-tile-action>
-					<!-- *Slide mode -->
-					<v-list-tile-action-text>
-						<span class="otp hidden-sm-and-down">
-							<v-icon
-								class="iconHover"
-								size="23"
-								v-text="'$vuetify.icons.web_slide_event'" />
-							<v-icon
-								class="iconHover"
-								size="23"
-								v-text="'$vuetify.icons.mobile_slide_event'" />
-						</span>
-					</v-list-tile-action-text>
-
 					<!-- *QRCode/Delete -->
 					<v-menu offset-y left>
 						<template #activator="{ on: menu }">
@@ -61,19 +47,6 @@
 								<span v-t="'action-tooltip'" />
 							</v-tooltip>
 						</template>
-
-						<!-- *Event QRCode -->
-						<v-list class="py-0 custom-list" dense>
-							<v-list-tile @click="toggleDialogQRCode">
-								<v-list-tile-action>
-									<v-icon small v-text="'$vuetify.icons.dashboard'" />
-								</v-list-tile-action>
-								<v-list-tile-content>
-									<v-list-tile-title
-										v-text="'QRCode'" />
-								</v-list-tile-content>
-							</v-list-tile>
-						</v-list>
 
 						<!-- *delete event -->
 						<v-list class="py-0 custom-list" dense>
@@ -120,9 +93,6 @@ export default {
 	methods: {
 		formatTime(date) {
 			return new Date(date).toLocaleString([], { hour: '2-digit', minute: '2-digit' });
-		},
-		toggleDialogQRCode() {
-			this.$root.$emit('dialog-qrcode', this.info.code);
 		},
 		toEventLive() {
 			const { code } = this.info;

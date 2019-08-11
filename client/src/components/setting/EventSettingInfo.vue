@@ -312,8 +312,8 @@ export default {
 		}),
 		fillForm(val) {
 			const { form } = this.basicSettings;
-			const baseUrl = process.env.VUE_APP_BASE_URL;
-			form.link.value = `${baseUrl}/guest/event/${val.code}`;
+			const baseUrl = this.$env.VUE_APP_HOST_NAME;
+			form.link.value = `${baseUrl}/event/${val.code}`;
 			for (const key of Object.keys(val)) {
 				if (Object.prototype.hasOwnProperty.call(form, key)) {
 					form[key].value = val[key];

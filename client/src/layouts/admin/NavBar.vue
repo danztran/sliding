@@ -96,6 +96,15 @@
 					</v-tab>
 				</v-tabs>
 
+				<!-- *qrcode -->
+				<v-btn
+					class="mr-1"
+					icon
+					@click="toggleDialogQRCode">
+					<img :src="require('@/assets/qrcode.svg')">
+				</v-btn>
+
+				<!-- *event setting -->
 				<v-btn
 					v-if="!isXS && onlyHost"
 					class="mr-1"
@@ -141,6 +150,9 @@ export default {
 		},
 		toggleEventSettingDialog() {
 			this.$root.$emit('toggle-event-setting');
+		},
+		toggleDialogQRCode() {
+			this.$root.$emit('dialog-qrcode', this.eventInfo.code);
 		},
 	},
 };

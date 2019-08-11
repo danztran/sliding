@@ -27,8 +27,6 @@ const icons = {
 	search: 'search',
 	event: 'calendar_today',
 	more_vert: 'more_vert',
-	web_slide_event: 'slideshow',
-	mobile_slide_event: 'mobile_screen_share',
 	arrow_left: 'keyboard_arrow_left',
 	arrow_forward: 'arrow_forward',
 	arrow_back: 'arrow_back',

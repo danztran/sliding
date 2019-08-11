@@ -149,6 +149,10 @@ const router = new Router({
 					],
 				},
 				{
+					path: 'event/:code',
+					redirect: '/guest/event/:code',
+				},
+				{
 					path: 'admin/event/:code',
 					name: 'admin-event',
 					component: AdminLayout,

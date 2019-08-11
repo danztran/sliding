@@ -165,7 +165,7 @@
 					<v-btn
 						flat
 						medium
-						@click="cancelEdit">
+						@click="formatForm">
 						<span v-t="'btn-cancel'" class="first-letter-uppercase" />
 					</v-btn>
 					<v-btn
@@ -258,7 +258,7 @@ export default {
 				}
 			}
 		},
-		cancelEdit() {
+		formatForm() {
 			this.dialog = false;
 			this.openUName = false;
 			this.fillForm();
@@ -320,7 +320,7 @@ export default {
 					this.loading = false;
 					this.$store.dispatch('auth/setAuth', res.data.messages.newInfo);
 					this.showNotify(res.data.messages['auth.update'], 'success');
-					this.cancelEdit();
+					this.formatForm();
 				})
 				.catch((err) => {
 					this.loading = false;

@@ -20,7 +20,8 @@
 						<div class="my-2 text-xs-center">
 							<router-link class="body-1 font-weight-medium no-underline" to="/">
 								<v-icon small color="primary" v-text="'$vuetify.icons.arrow_back'" />
-								<span>&nbsp;{{ $t('btn-back-home') }}</span>
+								&nbsp;
+								<span v-t="'btn-back-home'" />
 							</router-link>
 						</div>
 					</v-card>
