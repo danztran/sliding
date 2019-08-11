@@ -140,15 +140,12 @@ export default {
 				this.tabs.edit = true;
 			}
 		});
-		this.$root.$on('update-poll-options', () => {
-			this.pollOptions = this.getPollOptions(this.handlePollID);
-		});
 	},
 	methods: {
 		...mapMutations({
 			mergePoll: 'admin/polls/MERGE_POLL',
 			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
-			addPollOption: 'admin/pollOptions/SET_POLL_OPTION',
+			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
 			mergePollOption: 'admin/pollOptions/MERGE_POLL_OPTION',
 			delPollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
 		}),
@@ -163,17 +160,15 @@ export default {
 			*  .content: contetn poll option want created
 			*/
 			const emiter = 'add-poll-option';
-			this.$socket.emit(emiter, opt, (result) => {
-				if (!result.poll_option) {
-					if (result.errmsg) {
-						this.showNotify(result.errmsg, 'danger');
+			this.$socket.emit(emiter, opt, ({ errmsg, poll_option }) => {
+				if (!poll_option) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
 					}
 					return;
 				}
-				this.addPollOption({
-					poll_id: opt.poll_id,
-					...result.poll_option,
-				});
+				this.addPollOption(poll_option);
+				this.pollOptions.push(poll_option);
 			});
 		},
 		emitEditPoll(info) {
