@@ -8,14 +8,32 @@ const SET_POLL_OPTIONS = (state, options) => {
 };
 
 
+const ADD_POLL_OPTION = (state, option) => {
+	state.pollOptions.push({ ...option, choices: [] });
+};
+
+
+const MERGE_POLL_OPTION = (state, option) => {
+	const opt = state.pollOptions.find(e => e.id == option.id);
+	if (opt) {
+		Object.assign(opt, option);
+	}
+};
+
+
+const DELETE_POLL_OPTION = (state, option) => {
+	const optIdx = state.pollOptions.findIndex(e => e.id == option.id);
+	if (optIdx !== -1) {
+		state.pollOptions.splice(optIdx, 1);
+	}
+};
+
+
 /* ------------------------------------------------------------------------
 	@desc:
 	@socket:
 	@source:
-	@choice: (socket return)
-		.user_id: ID of user choice
-		.poll_id: choice on Poll ID
-		.poll_option_id: choce Option ID
+	@choice:
 ------------------------------------------------------------------------*/
 const SET_POLL_OPTION_CHOICES = (state, choices) => {
 	const { pollOptions } = state;
@@ -63,6 +81,9 @@ const RESET = (state) => {
 
 export default {
 	SET_POLL_OPTIONS,
+	ADD_POLL_OPTION,
+	MERGE_POLL_OPTION,
+	DELETE_POLL_OPTION,
 	SET_POLL_OPTION_CHOICES,
 	EDIT_POLL_OPTION_CHOICES,
 	RESET,

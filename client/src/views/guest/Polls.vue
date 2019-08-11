@@ -43,16 +43,15 @@ export default {
 		},
 		new_poll_option_choices(choices) {
 			this.editPollOptionChoices(choices);
-			// console.warn(choices);
 		},
 		new_edited_poll_option(option) {
-			console.warn(option);
+			this.mergePollOption(option);
 		},
 		new_added_poll_option(option) {
-			console.warn(option);
+			this.addPollOption(option);
 		},
 		new_deleted_poll_option(option) {
-			console.warn(option);
+			this.deletePollOption(option);
 		},
 	},
 	methods: {
@@ -62,6 +61,9 @@ export default {
 			setPollOptionChoices: 'guest/pollOptions/SET_POLL_OPTION_CHOICES',
 			addPoll: 'guest/polls/ADD_POLL',
 			editPollOptionChoices: 'guest/pollOptions/EDIT_POLL_OPTION_CHOICES',
+			mergePollOption: 'guest/pollOptions/MERGE_POLL_OPTION',
+			addPollOption: 'guest/pollOptions/ADD_POLL_OPTION',
+			deletePollOption: 'guest/pollOptions/DELETE_POLL_OPTION',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
 		}),
