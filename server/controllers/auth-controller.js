@@ -10,102 +10,99 @@ const Ctlr = {
 		return info;
 	},
 
-	info(req, res, next) {
-		if (req.user) {
-			return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
+	async info(req, res) {
+		if (!req.user) {
+			throw {
+				code: 440,
+				message: res.$t('sessionExpired'),
+			};
 		}
-		res.messages['auth.info'] = res.$t('sessionExpired');
-		res.status(440);
-		return res.sendwm();
+		return { user: Ctlr.getSafeInfo(req.user) };
 	},
 
-	async signup(req, res, next) {
+	async signup(req, res) {
 		if (!res.$v.rif(signUpRules)) return;
 		const { username, email } = req.body;
 		const result = {};
-		try {
-			const User = new UserModel();
-			const checkExistUsername = await User.findOne({ username }).exec();
-			if (checkExistUsername) {
-				res.status(409);
-				throw { username: res.$t('usernameTaken') };
-			}
-
-			const checkExistEmail = await User.findOne({ email }).exec();
-			if (checkExistEmail) {
-				res.status(409);
-				throw { email: res.$t('emailTaken') };
-			}
-
-			await User.create(req.body).exec();
-			res.messages['auth.signup'] = res.$t('successSignUp');
-
-			return res.sendwm(result);
+		const User = new UserModel();
+		const checkExistUsername = await User.findOne({ username }).exec();
+		if (checkExistUsername) {
+			throw {
+				code: 409,
+				message: { username: res.$t('usernameTaken') },
+			};
 		}
-		catch (error) {
-			res.messages = { ...res.messages, ...error };
-			return next(error);
+
+		const checkExistEmail = await User.findOne({ email }).exec();
+		if (checkExistEmail) {
+			throw {
+				code: 409,
+				message: { email: res.$t('emailTaken') },
+			};
 		}
+
+		await User.create(req.body).exec();
+		res.messages['auth.signup'] = res.$t('successSignUp');
+
+		return result;
 	},
 
-	async quickSignup(req, res, next) {
+	async quickSignup(req, res) {
 		const result = {};
-		try {
-			const User = new UserModel();
-			const name = `${res.$t('anonymousUser')} ${Math.floor(Math.random() * 10000)}`;
-			const user = await User.quickCreate({ name }).exec();
-			result.user = user;
+		const User = new UserModel();
+		// generate name
+		const name = `${res.$t('anonymousUser')} ${Math.floor(Math.random() * 10000)}`;
+		const user = await User.quickCreate({ name }).exec();
+		result.user = user;
+		// login with anonymous account
+		await Ctlr.promiseLogin(req, user);
+		req.session.user = req.user;
+		result.user = Ctlr.getSafeInfo(user);
+		User.setLastAccessed(user).exec();
+		return result;
+	},
+
+	promiseLogin(req, user) {
+		return new Promise((resolve, reject) => {
 			req.logIn(user, (error) => {
-				if (error) return next(error);
-				req.session.user = req.user;
-				result.user = Ctlr.getSafeInfo(user);
-				User.setLastAccessed(user).exec();
-				return res.sendwm(result);
+				if (error) reject(error);
+				else resolve();
 			});
-		}
-		catch (error) {
-			res.messages = { ...res.messages, ...error };
-			return next(error);
-		}
+		});
 	},
 
-	async completeSignup(req, res, next) {
+	async completeSignup(req, res) {
 		if (!res.$v.rif(signUpRules)) return;
 		const { username, email } = req.body;
 		const result = {};
-		try {
-			if (req.user.username || req.user.email) {
-				res.status(400);
-				throw { auth: 'rejected' };
-			}
 
-			const User = new UserModel();
-			const checkExistUsername = await User.findOne({ username }).exec();
-			if (checkExistUsername) {
-				res.status(409);
-				throw { username: res.$t('usernameTaken') };
-			}
-
-			const checkExistEmail = await User.findOne({ email }).exec();
-			if (checkExistEmail) {
-				res.status(409);
-				throw { email: res.$t('emailTaken') };
-			}
-
-			const user = await User.completeCreate({
-				...req.body,
-				id: req.user.id,
-			}).exec();
-			req.user = user;
-			req.session.user = user;
-			res.messages['auth.complete-signup'] = res.$t('successSignUp');
-
-			return res.sendwm(result);
+		if (req.user.username || req.user.email) {
+			res.status(400);
+			throw { auth: 'rejected' };
 		}
-		catch (error) {
-			res.messages = { ...res.messages, ...error };
-			return next(error);
+
+		const User = new UserModel();
+		const checkExistUsername = await User.findOne({ username }).exec();
+		if (checkExistUsername) {
+			res.status(409);
+			throw { username: res.$t('usernameTaken') };
 		}
+
+		const checkExistEmail = await User.findOne({ email }).exec();
+		if (checkExistEmail) {
+			res.status(409);
+			throw { email: res.$t('emailTaken') };
+		}
+
+		const user = await User.completeCreate({
+			...req.body,
+			id: req.user.id,
+		}).exec();
+		req.user = user;
+		req.session.user = user;
+		res.messages['auth.complete-signup'] = res.$t('successSignUp');
+
+		return result;
 	},
 
 	async update(req, res, next) {
@@ -152,8 +149,6 @@ const Ctlr = {
 		if (req.user) {
 			delete req.session.user;
 			req.logout();
-			// res.messages['auth.login'] = res.$t('alreadyLoggedIn');
-			// return res.sendwm({ user: Ctlr.getSafeInfo(req.user) });
 		}
 		if (!res.$v.rif(logInRules)) return;
 		passport.authenticate('local', (err, user, field, info) => {

@@ -28,7 +28,7 @@ new EventModel().findLastOf('id', { select: 'code' })
 	});
 
 module.exports = {
-	async query(req, res, next) {
+	async query(req, res) {
 		const rules = {
 			limit: 'integer|between:0,50',
 			offset: 'integer|min:0',
@@ -39,25 +39,21 @@ module.exports = {
 
 		const opt = req.query;
 		const result = {};
-		try {
-			const EventRole = new EventRoleModel();
-			const events = await EventRole.findEvents({
-				user_id: req.user.id,
-				role: opt.role,
-			}, {
-				order: opt.order || 'created_at',
-				limit: Number(opt.limit || 10),
-				offset: Number(opt.offset || 0),
-			}).exec();
-			result.events = events;
-		}
-		catch (error) {
-			return next(error);
-		}
-		return res.sendwm(result);
+		const EventRole = new EventRoleModel();
+		const events = await EventRole.findEvents({
+			user_id: req.user.id,
+			role: opt.role,
+		}, {
+			order: opt.order || 'created_at',
+			limit: Number(opt.limit || 10),
+			offset: Number(opt.offset || 0),
+		}).exec();
+		result.events = events;
+
+		return result;
 	},
 
-	async create(req, res, next) {
+	async create(req, res) {
 		const rules = {
 			name: 'string|required|max:100',
 			description: 'string',
@@ -70,31 +66,26 @@ module.exports = {
 
 		const info = req.body;
 		const result = {};
-		try {
-			const Event = new EventModel();
-			const EventRole = new EventRoleModel();
-			// generate new code
-			info.code = getEventCode.next().value;
+		const Event = new EventModel();
+		const EventRole = new EventRoleModel();
+		// generate new code
+		info.code = getEventCode.next().value;
 
-			const event = await Event.create(info).exec();
-			await EventRole.create({
-				user_id: req.user.id,
-				event_id: event.id,
-				role: 'host',
-				is_accepted: true,
-			}).exec();
-			result.code = event.code;
-		}
-		catch (error) {
-			return next(error);
-		}
+		const event = await Event.create(info).exec();
+		await EventRole.create({
+			user_id: req.user.id,
+			event_id: event.id,
+			role: 'host',
+			is_accepted: true,
+		}).exec();
+		result.code = event.code;
 
-		return res.sendwm(result);
+		return result;
 	},
 
-	async find(req, res, next) {
+	async find(req, res) {
 		const rules = {
-			code: 'alpha_numeric|min:3',
+			code: 'alpha_num|min:3',
 		};
 		if (!res.$v.rif(rules)) return;
 
@@ -103,35 +94,31 @@ module.exports = {
 		} = req.query;
 		const result = {};
 
-		try {
-			const EventRole = new EventRoleModel();
-			const Event = new EventModel();
-			const event = await Event.findByCode(code.toLowerCase(), {
-				select: 'id, code, name, description, start_at, end_at, require_passcode',
+		const EventRole = new EventRoleModel();
+		const Event = new EventModel();
+		const event = await Event.findByCode(code.toLowerCase(), {
+			select: 'id, code, name, description, start_at, end_at, require_passcode',
+		}).exec();
+
+		if (!event) {
+			throw {
+				code: 404,
+				message: res.$t('notFoundEventByCode'),
+			};
+		}
+
+		result.event = event;
+
+		if (req.user) {
+			const role = await EventRole.findOne({
+				user_id: req.user.id,
+				event_id: event.id,
+			}, {
+				select: 'role',
 			}).exec();
-
-			if (!event) {
-				res.status(404);
-				throw { 'find-event': res.$t('notFoundEventByCode') };
-			}
-
-			result.event = event;
-
-			if (req.user) {
-				const role = await EventRole.findOne({
-					user_id: req.user.id,
-					event_id: event.id,
-				}, {
-					select: 'role',
-				}).exec();
-				result.role = role;
-			}
-
-			return res.sendwm(result);
+			result.role = role;
 		}
-		catch (error) {
-			res.messages = { ...res.messages, ...error };
-			return next(error);
-		}
+
+		return result;
 	},
 };

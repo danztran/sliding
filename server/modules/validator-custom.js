@@ -14,7 +14,16 @@ function Validator(locale = defLocale, req = {}, res = {}) {
 	this._locale = locale;
 	this._req = req;
 	this._res = res;
-	this._data = req.body || req.query || req.params || {};
+	this._data = {};
+	if (req.body) {
+		this._data = { ...this._data, ...req.body };
+	}
+	if (req.query) {
+		this._data = { ...this._data, ...req.query };
+	}
+	if (req.params) {
+		req.params = { ...this._data, ...req.params };
+	}
 	this.$v = {
 		// validate and response if fails
 		rif: (_rules, _data) => {
