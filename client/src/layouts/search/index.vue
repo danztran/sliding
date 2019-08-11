@@ -43,7 +43,7 @@ $backgroundImg: url(~@/assets/search_bg.svg);
 	max-height: 100vh;
 	overflow: hidden;
 	.search-wrapper {
-		margin-top: 30vh;
+		margin-top: 20vh;
 		width: 400px;
 	}
 	.page-enter-active, .page-leave-active {
@@ -52,6 +52,11 @@ $backgroundImg: url(~@/assets/search_bg.svg);
 	.page-enter, .page-leave-to {
 		transform: translateY(-15px);
 		opacity: 0;
+	}
+	@media only screen and (max-width: 600px) {
+		.search-wrapper {
+			padding: 0 20px;
+		}
 	}
 }
 </style>

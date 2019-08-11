@@ -19,18 +19,12 @@
 						</v-tab>
 					</v-tabs>
 
-					<!-- *edit/result -->
-					<v-tabs v-else v-model="tabActive" lazy slider-color="primary">
+					<!-- *edit -->
+					<v-tabs v-else lazy slider-color="primary">
 						<v-tab
 							class="font-weight-regular"
 							active-class="primary--text font-weight-bold">
 							<span v-t="'poll-edit'" class="first-letter-uppercase" />
-						</v-tab>
-
-						<v-tab
-							class="font-weight-regular"
-							active-class="primary--text font-weight-bold">
-							<span v-t="'poll-results'" class="first-letter-uppercase" />
 						</v-tab>
 					</v-tabs>
 
@@ -57,9 +51,9 @@
 					</v-tab-item>
 				</v-tabs-items>
 
-				<!-- *edit/result tab -->
-				<v-tabs-items v-else v-model="tabActive">
-					<!-- edit/result -->
+				<!-- *edit tab -->
+				<v-tabs-items v-else>
+					<!-- edit -->
 					<v-tab-item
 						:transition="false"
 						:reverse-transition="false">
@@ -74,13 +68,6 @@
 							@close-dialog="dialog=false" />
 					</v-tab-item>
 
-					<v-tab-item
-						:transition="false"
-						:reverse-transition="false">
-						<tab--result-poll
-							v-show="Boolean(showManageTab)"
-							@close-dialog="dialog=false" />
-					</v-tab-item>
 					<div v-if="loadingLinear" class="content">
 						<bouncy-loader />
 					</div>
@@ -94,23 +81,19 @@
 import { mapGetters, mapMutations } from 'vuex';
 import CreatePollTab from './pieces/CreatePollTab.vue';
 import EditPollTab from './pieces/EditPollTab.vue';
-import ResultPollTab from './pieces/ResultPollTab.vue';
 
 export default {
 	name: 'DialogHandlePoll',
 	components: {
 		'tab--create-poll': CreatePollTab,
 		'tab--edit-poll': EditPollTab,
-		'tab--result-poll': ResultPollTab,
 	},
 	data: () => ({
 		dialog: false,
 		loadingLinear: false,
-		tabActive: 0,
 		tabs: {
 			create: false,
 			edit: false,
-			result: false,
 		},
 		handlePollID: null,
 		poll: null,
@@ -150,23 +133,11 @@ export default {
 				this.dialog = true;
 				this.tabs.create = true;
 			}
-			else if (dialog.type === 'edit') {
-				this.handlePollID = dialog.id;
-				if (dialog.emitGetPOpts) {
-					this.emitGetPollOptions(this.handlePollID);
-				}
-				this.dialog = true;
-				this.tabs.edit = true;
-				this.tabActive = 0;
-			}
 			else {
 				this.handlePollID = dialog.id;
-				if (dialog.emitGetPOpts) {
-					this.emitGetPollOptions(this.handlePollID);
-				}
+				this.pollOptions = this.getPollOptions(this.handlePollID);
 				this.dialog = true;
-				this.tabs.result = true;
-				this.tabActive = 1;
+				this.tabs.edit = true;
 			}
 		});
 		this.$root.$on('update-poll-options', () => {
@@ -177,7 +148,7 @@ export default {
 		...mapMutations({
 			mergePoll: 'admin/polls/MERGE_POLL',
 			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
-			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
+			addPollOption: 'admin/pollOptions/SET_POLL_OPTION',
 			mergePollOption: 'admin/pollOptions/MERGE_POLL_OPTION',
 			delPollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
 		}),
@@ -185,8 +156,6 @@ export default {
 			this.loading = false;
 			this.tabs.create = false;
 			this.tabs.edit = false;
-			this.tabs.result = false;
-			this.tabActive = 0;
 		},
 		emitCreatePollOpt(opt) {
 			/* @params: opt
@@ -203,7 +172,7 @@ export default {
 				}
 				this.addPollOption({
 					poll_id: opt.poll_id,
-					option: result.poll_option,
+					...result.poll_option,
 				});
 			});
 		},
@@ -220,24 +189,6 @@ export default {
 				}
 				this.mergePoll(poll);
 				this.dialog = false;
-			});
-		},
-		emitGetPollOptions(pId) {
-			const emiter = 'get-poll-options';
-			this.loadingLinear = true;
-			this.$socket.emit(emiter, { poll_id: pId }, (result) => {
-				this.loadingLinear = false;
-				if (!result.poll_options) {
-					if (result.errmsg) {
-						this.showNotify(result.errmsg, 'danger');
-					}
-					return;
-				}
-				this.setPollOptions({
-					poll_id: pId,
-					options: result.poll_options,
-				});
-				this.pollOptions = result.poll_options;
 			});
 		},
 		emitEditPollOpt(opt) {

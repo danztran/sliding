@@ -1,14 +1,11 @@
-const getPollOptions = state => (pollID) => {
-	const poll = state.pollOptions.find(el => Number(el.poll_id) === Number(pollID));
-	return poll ? poll.options : [];
-};
+const getAllPollOptions = state => state.pollOptions;
 
-const getPollOptChoices = state => (pollID) => {
-	const poll = state.optionChoices.find(el => Number(el.poll_id) === Number(pollID));
-	return poll ? poll.choices : [];
+const getPollOptions = state => (pollID) => {
+	const options = state.pollOptions.filter(el => el.poll_id == pollID);
+	return options;
 };
 
 export default {
+	getAllPollOptions,
 	getPollOptions,
-	getPollOptChoices,
 };

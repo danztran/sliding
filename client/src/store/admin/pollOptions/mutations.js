@@ -1,10 +1,20 @@
 /* ------------------------------------------------------------------------
-	@desc: set pollOptions
-	@socket: after emiter 'get-poll-options'
-	@source: cpn/polls/admin/DialogHandlePoll.vue
+	@desc: using for add and setter
+	@socket:emiter 'get-all-poll-options' - views/admin/poll
+					listen 'new_added_poll_option' - cpn/polls/DialogHandlePoll
+					emiter 'add-poll-option' - cpn/polls/DialogHandlePoll
 ------------------------------------------------------------------------*/
-const SET_POLL_OPTIONS = (state, pollOptions) => {
-	state.pollOptions.push(pollOptions);
+const SET_POLL_OPTION = (state, option) => {
+	const rs = state.pollOptions.find(el => Number(el.poll_id) === Number(option.poll_id));
+	if (rs) {
+		rs.options.push(option);
+	}
+	else {
+		state.pollOptions.push({
+			poll_id: option.poll_id,
+			options: [option],
+		});
+	}
 };
 
 
@@ -15,25 +25,6 @@ const SET_POLL_OPTIONS = (state, pollOptions) => {
 ------------------------------------------------------------------------*/
 const DELETE_POLL = (state, pollID) => {
 	state.pollOptions = state.pollOptions.filter(poll => Number(poll.poll_id) !== Number(pollID));
-};
-
-
-/* ------------------------------------------------------------------------
-	@desc:
-	@socket: emiter ''
-	@source:
-------------------------------------------------------------------------*/
-const ADD_POLL_OPTION = (state, info) => {
-	const rs = state.pollOptions.find(el => Number(el.poll_id) === Number(info.poll_id));
-	if (rs) {
-		rs.options.push(info.option);
-	}
-	else {
-		state.pollOptions.push({
-			poll_id: info.poll_id,
-			options: [info.option],
-		});
-	}
 };
 
 
@@ -73,9 +64,8 @@ const RESET = (state) => {
 
 
 export default {
-	SET_POLL_OPTIONS,
 	DELETE_POLL,
-	ADD_POLL_OPTION,
+	SET_POLL_OPTION,
 	DELETE_POLL_OPTION,
 	MERGE_POLL_OPTION,
 	RESET,

@@ -124,13 +124,34 @@ export default {
 				outline: true,
 				autogrow: true,
 			},
+			{
+				value: '',
+				placeholder: 'lb-add-option',
+				type: 'text',
+				errmsg: '',
+				rows: 1,
+				solo: true,
+				flat: true,
+				outline: true,
+				autogrow: true,
+			},
+			{
+				value: '',
+				placeholder: 'lb-add-option',
+				type: 'text',
+				errmsg: '',
+				rows: 1,
+				solo: true,
+				flat: true,
+				outline: true,
+				autogrow: true,
+			},
 		],
 		selectMultiple: true,
 	}),
 	methods: {
 		...mapMutations({
 			addPoll: 'admin/polls/ADD_POLL',
-			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
 		}),
 		closeDialog() {
 			this.$emit('close-dialog');
@@ -183,7 +204,7 @@ export default {
 					return;
 				}
 				this.emitCreatePollOpt(poll.id);
-				this.addPoll(Object.assign(poll, { newAdd: true }));
+				this.addPoll(poll);
 				this.$refs.form.reset();
 			});
 		},
@@ -199,7 +220,7 @@ export default {
 				}
 			}
 			this.loadingState = 'success';
-			this.closeDialog();
+			this.showNotify(this.$t('poll-create-success'), 'success');
 		},
 	},
 };

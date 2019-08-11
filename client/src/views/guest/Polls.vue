@@ -30,7 +30,6 @@ export default {
 	},
 	created() {
 		this.emitGetPolls();
-		this.emitGetAllOptChoices();
 	},
 	sockets: {
 		new_added_poll(poll) {
@@ -46,7 +45,8 @@ export default {
 	methods: {
 		...mapMutations({
 			setPolls: 'guest/polls/SET_POLLS',
-			setPollOptChoice: 'guest/pollOptions/SET_POLL_OPTION_CHOICE',
+			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
+			setPollOptionChoices: 'guest/pollOptions/SET_POLL_OPTION_CHOICES',
 			addPoll: 'guest/polls/ADD_POLL',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
@@ -60,6 +60,20 @@ export default {
 					return;
 				}
 				this.setPolls(polls);
+				this.emitGetAllPollOptions();
+			});
+		},
+		emitGetAllPollOptions() {
+			const emiter = 'get-all-poll-options';
+			this.$socket.emit(emiter, ({ errmsg, poll_options }) => {
+				if (!poll_options) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				this.setPollOptions(poll_options);
+				this.emitGetAllOptChoices();
 			});
 		},
 		emitGetAllOptChoices() {
@@ -71,8 +85,9 @@ export default {
 					}
 					return;
 				}
-				this.setOptChoice(choices);
-				console.warn(choices);
+				// console.warn(choices);
+				// this.setOptChoice(choices);
+				this.setPollOptionChoices(choices);
 			});
 		},
 		setOptChoice(choices) {

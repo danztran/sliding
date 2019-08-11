@@ -53,7 +53,7 @@ class PollOptionModel extends Model {
 			is_deleted: true,
 			updated_at: new Date().toISOString(),
 		}, {
-			select: '"id"',
+			select: '"id", "poll_id"',
 		});
 	}
 }

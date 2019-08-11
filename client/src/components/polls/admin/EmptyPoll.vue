@@ -7,7 +7,6 @@
 		<v-icon large color="success" v-text="'$vuetify.icons.polls'" />
 		<div class="subheading text-xs-center grey--text text--darken-2">
 			<div v-t="'poll-empty-title'" class="first-letter-uppercase" />
-			<div v-t="'poll-empty-subtitle'" class="first-letter-uppercase" />
 		</div>
 	</v-layout>
 </template>

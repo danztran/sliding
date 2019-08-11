@@ -38,7 +38,9 @@
 		"no-tabs": "off",
 		"no-param-reassign": [2, { "props": false }],
 		"no-console": ["error", { "allow": ["warn", "error"] }],
-		"no-use-before-define": ["error", { "functions": false }]
+		"no-use-before-define": ["error", { "functions": false }],
+		"camelcase": "off",
+		"eqeqeq": "off"
 	},
 	"settings": {
 		"import/resolver": {

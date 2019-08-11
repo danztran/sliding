@@ -36,7 +36,7 @@ module.exports = {
 				throw socket.$fn.t('pollLocked');
 			}
 
-			if (choices.length >= Number(poll.max_choices)) {
+			if (choices.length > Number(poll.max_choices)) {
 				throw socket.$fn.t('reachMaxChoices');
 			}
 

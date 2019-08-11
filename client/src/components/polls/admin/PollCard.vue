@@ -81,16 +81,6 @@
 										</v-list-tile-content>
 									</v-list-tile>
 
-									<!-- *poll result -->
-									<v-list-tile @click="dialogViewResult">
-										<v-list-tile-action>
-											<v-icon v-text="'$vuetify.icons.polls'" />
-										</v-list-tile-action>
-										<v-list-tile-content>
-											<v-list-tile-title v-t="'poll-view-results'" />
-										</v-list-tile-content>
-									</v-list-tile>
-
 									<!-- *delete -->
 									<v-list-tile @click="emitDeletePoll">
 										<v-list-tile-action>
@@ -124,7 +114,6 @@ export default {
 		poll: {
 			type: Object,
 			default: () => ({
-				newAdd: false,
 				content: '...',
 				id: null,
 				is_locked: false,
@@ -134,14 +123,8 @@ export default {
 	},
 	data: () => ({
 		deleting: false,
-		hadGetPOpts: false,
 		allow_voting: false,
 	}),
-	mounted() {
-		if (this.poll.newAdd) {
-			this.hadGetPOpts = true;
-		}
-	},
 	methods: {
 		...mapMutations({
 			setEditPollInfo: 'admin/polls/SET_EDIT_POLL_INFO',
@@ -154,25 +137,10 @@ export default {
 				is_locked: !this.poll.is_locked,
 			});
 		},
-		shouldEmitGetPollOpts() {
-			if (!this.hadGetPOpts) {
-				this.hadGetPOpts = true;
-				return true;
-			}
-			return false;
-		},
 		dialogEditPoll() {
 			this.$root.$emit('dialog-handle-poll', {
 				type: 'edit',
 				id: this.poll.id,
-				emitGetPOpts: this.shouldEmitGetPollOpts(),
-			});
-		},
-		dialogViewResult() {
-			this.$root.$emit('dialog-handle-poll', {
-				type: 'result',
-				id: this.poll.id,
-				emitGetPOpts: this.shouldEmitGetPollOpts(),
 			});
 		},
 		emitDeletePoll() {

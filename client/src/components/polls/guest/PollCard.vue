@@ -22,10 +22,8 @@
 			<v-slide-x-transition hide-on-leave>
 				<!-- *result -->
 				<poll--result
-					v-if="hadChoice"
+					v-if="isChoiced"
 					:poll-options="pollOptions"
-					:poll-opt-choices="pollOptChoices"
-					:count-users-choice="countUsersChoice"
 					@re-poll="handleRepoll" />
 
 				<div v-else>
@@ -115,14 +113,12 @@ export default {
 		checkboxErrmsg: '',
 		radioSelect: null,
 		checkboxSelect: [],
-		pollOptions: [],
 		pollOptChoices: [],
-		countUsersChoice: 0,
-		hadChoice: false,
+		isChoiced: false,
 	}),
 	computed: {
 		...mapGetters({
-			getPollOptChoices: 'guest/pollOptions/getPollOptChoices',
+			getPollOpts: 'guest/pollOptions/getPollOptions',
 			user: 'auth/user',
 		}),
 		isValid() {
@@ -140,6 +136,27 @@ export default {
 			}
 			return true;
 		},
+		pollOptions() {
+			return this.getPollOpts(this.poll.id);
+		},
+		checkedOptIds() {
+			return this.pollOptions.filter((e) => {
+				const { choices } = e;
+				return choices && choices.some(c => c.user_id == this.user.id);
+			}).map(e => e.id);
+		},
+		countUsersChoice() {
+			if (!this.checkedOptIds) return 0;
+			const users = new Set();
+			for (const opt of this.pollOptions) {
+				if (opt.choices) {
+					for (const choice of opt.choices) {
+						users.add(choice.user_id);
+					}
+				}
+			}
+			return users.size;
+		},
 	},
 	watch: {
 		checkboxSelect(val) {
@@ -150,84 +167,64 @@ export default {
 				this.checkboxErrmsg = '';
 			}
 		},
-		pollOptions(val) {
-			if (val.length !== 0) {
-				this.pollOptChoices = this.getPollOptChoices(this.poll.id);
-			}
-		},
-		pollOptChoices(val) {
-			if (val.length !== 0) {
-				const usersChoice = [];
-				for (const e of val) {
-					usersChoice.push(...e.users);
+		checkedOptIds(val) {
+			if (val) {
+				if (this.poll.max_choices > 1) {
+					this.checkboxSelect = val;
+					this.isChoiced = this.checkboxSelect.length !== 0;
 				}
-				this.hadChoice = usersChoice.some(id => Number(id) === Number(this.user.id));
-				this.countUsersChoice = [...new Set(usersChoice)].length;
+				else {
+					this.radioSelect = val.shift();
+					this.isChoiced = this.radioSelect != 0;
+				}
 			}
 		},
-	},
-	created() {
-		if (this.pollOptions.length === 0) {
-			this.emitGetPollOpts(this.poll.id);
-		}
 	},
 	methods: {
 		...mapMutations({
-			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
 			setPollOptChoice: 'guest/pollOptions/SET_POLL_OPTION_CHOICE',
 		}),
-		handleRepoll() {
-			this.hadChoice = false;
+		handleRepoll(rs) {
+			this.loadingState = '';
+			this.isChoiced = false;
 		},
 		submitChoice() {
 			this.loadingState = 'loading';
-			const choicesId = [];
+			let choicesId = [];
 			if (this.poll.max_choices > 1) {
 				choicesId.push(...this.checkboxSelect);
 			}
 			else {
 				choicesId.push(this.radioSelect);
 			}
-			for (const id of choicesId) {
-				this.emitChoice(id);
-			}
+			choicesId = choicesId.map(el => ({
+				poll_option_id: el,
+			}));
+			this.emitChoice({ choices: choicesId });
 			this.showNotify(this.$t('poll-sent'), 'success');
 		},
-		emitGetPollOpts(pID) {
-			const emiter = 'get-poll-options';
-			this.loadingLinear = true;
-			this.$socket.emit(emiter, { poll_id: pID }, (result) => {
-				this.loadingLinear = false;
-				if (!result.poll_options) {
-					if (result.errmsg) {
-						this.showNotify(result.errmsg, 'danger');
-					}
-					return;
-				}
-				this.setPollOptions({
-					poll_id: pID,
-					options: result.poll_options,
-				});
-				this.pollOptions = result.poll_options;
-			});
+		isOptChecked(opt) {
+			return opt.choices.some(el => el.user_id == this.user.id);
 		},
-		emitChoice(choiceId) {
-			const emiter = 'add-poll-option-choice';
-			this.$socket.emit(emiter, {
-				poll_option_id: choiceId,
-				choice: true,
-			}, ({ errmsg, choice }) => {
-				if (!choice) {
+		emitChoice(_choices) {
+			const emiter = 'add-poll-option-choices';
+			this.$socket.emit(emiter, _choices, ({ errmsg, choices }) => {
+				if (!choices) {
 					if (errmsg) {
 						this.showNotify(errmsg, 'danger');
 						this.loadingState = 'fail';
 					}
 					return;
 				}
-				console.warn(choice);
-				this.setPollOptChoice(choice);
+				console.warn(choices);
+				for (const choice of choices) {
+					this.setPollOptChoice({
+						poll_id: this.poll.id,
+						...choice,
+					});
+				}
 				this.loadingState = 'success';
-				this.hadChoice = true;
+				this.isChoiced = true;
 			});
 		},
 	},
@@ -237,7 +234,7 @@ export default {
 <style lang="scss">
 .custom-select {
 	.v-input__control {
-		width: 100%;
+		width: 100% !important;
 		.v-radio {
 			background-color: rgba(0, 0, 0, .04);
 			border-radius: 10px;

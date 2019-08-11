@@ -171,7 +171,7 @@ export default {
 			setEditPollInfo: 'admin/polls/SET_EDIT_POLL_INFO',
 		}),
 		closeDialog() {
-			this.this.dialogErrMsg = '';
+			this.dialogErrMsg = '';
 			this.$emit('close-dialog');
 		},
 		fillOpts(opts) {
