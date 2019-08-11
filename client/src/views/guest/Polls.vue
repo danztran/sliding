@@ -41,6 +41,19 @@ export default {
 		new_edited_poll(newInfo) {
 			this.mergePoll(newInfo);
 		},
+		new_poll_option_choices(choices) {
+			this.editPollOptionChoices(choices);
+			// console.warn(choices);
+		},
+		new_edited_poll_option(option) {
+			console.warn(option);
+		},
+		new_added_poll_option(option) {
+			console.warn(option);
+		},
+		new_deleted_poll_option(option) {
+			console.warn(option);
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -48,6 +61,7 @@ export default {
 			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
 			setPollOptionChoices: 'guest/pollOptions/SET_POLL_OPTION_CHOICES',
 			addPoll: 'guest/polls/ADD_POLL',
+			editPollOptionChoices: 'guest/pollOptions/EDIT_POLL_OPTION_CHOICES',
 			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
 		}),

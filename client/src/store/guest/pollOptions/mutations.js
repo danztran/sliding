@@ -38,13 +38,17 @@ const EDIT_POLL_OPTION_CHOICES = (state, choices) => {
 		const currentPollOptions = pollOptions.filter(e => e.poll_id == pollID);
 		for (const option of currentPollOptions) {
 			// remove old choices
-			option.choices = option.choices.filter(e => e.user_id != userID);
+			const oldChoiceIdx = option.choices.findIndex(c => c.user_id == userID);
+			if (oldChoiceIdx !== -1) {
+				option.choices.splice(oldChoiceIdx, 1);
+			}
 			// check and add new choice
 			const choiceIdx = choices.findIndex(c => c.poll_option_id == option.id);
 			if (choiceIdx !== -1) {
 				option.choices.push(choices[choiceIdx]);
 			}
 		}
+		state.pollOptions = [...pollOptions];
 	}
 };
 
