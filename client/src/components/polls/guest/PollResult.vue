@@ -57,11 +57,7 @@ export default {
 	},
 	methods: {
 		repoll() {
-			this.$emit('re-poll', this.idChoices);
-		},
-		calPecent(optID) {
-			const rs = this.pollOptChoices.find(el => el.option_id === optID);
-			return (rs ? rs.users.length : 0) * 100 / this.sumPoll;
+			this.$emit('re-poll');
 		},
 		isChoiced(opt) {
 			return opt.choices.some(c => c.user_id == this.user.id);

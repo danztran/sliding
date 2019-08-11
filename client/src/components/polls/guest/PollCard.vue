@@ -73,7 +73,7 @@
 							color="success"
 							:disabled="isValid || loadingState !== ''"
 							:loading="loadingState !== ''"
-							@click="submitChoice">
+							@click="submitChoices">
 							<span v-t="'btn-send'" />
 							<template v-slot:loader>
 								<loading--icon-circle :state.sync="loadingState" />
@@ -182,13 +182,13 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			setPollOptChoice: 'guest/pollOptions/SET_POLL_OPTION_CHOICE',
+			editPollOptChoices: 'guest/pollOptions/EDIT_POLL_OPTION_CHOICES',
 		}),
 		handleRepoll(rs) {
 			this.loadingState = '';
 			this.isChoiced = false;
 		},
-		submitChoice() {
+		submitChoices() {
 			this.loadingState = 'loading';
 			let choicesId = [];
 			if (this.poll.max_choices > 1) {
@@ -197,6 +197,7 @@ export default {
 			else {
 				choicesId.push(this.radioSelect);
 			}
+			choicesId.filter(el => this.pollOptions.find(po => po.id == el.poll_option_id));
 			choicesId = choicesId.map(el => ({
 				poll_option_id: el,
 			}));
@@ -217,12 +218,7 @@ export default {
 					return;
 				}
 				console.warn(choices);
-				for (const choice of choices) {
-					this.setPollOptChoice({
-						poll_id: this.poll.id,
-						...choice,
-					});
-				}
+				this.editPollOptChoices(choices);
 				this.loadingState = 'success';
 				this.isChoiced = true;
 			});
