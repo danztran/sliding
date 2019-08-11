@@ -7,9 +7,9 @@
 			<div class="d-flex">
 				<v-progress-linear
 					class="mt-1"
-					background-opacity="0"
-					:color="isChoiced(option) ? 'primary' : 'grey lighten-4'"
-					:buffer-value="calPercent(option)"
+					background-opacity=".1"
+					:color="isChoiced(option) ? 'primary' : 'grey lighten-2'"
+					buffer-value="100"
 					:value="calPercent(option)"
 					height="11" />
 				<span class="ml-1">{{ calPercent(option) }}%</span>
@@ -71,8 +71,10 @@ export default {
 
 <style lang="scss">
 .custom-progress {
-	.v-progress-linear__bar__determinate {
+	.v-progress-linear__background, .v-progress-linear__bar__determinate {
 		border-radius: 10px;
+	}
+	.v-progress-linear__bar__determinate {
 		background-size: 40px 40px;
 		background-repeat: repeat-x;
 		background-image: linear-gradient(135deg,

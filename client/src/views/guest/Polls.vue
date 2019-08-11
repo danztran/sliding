@@ -57,15 +57,15 @@ export default {
 	methods: {
 		...mapMutations({
 			setPolls: 'guest/polls/SET_POLLS',
-			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
-			setPollOptionChoices: 'guest/pollOptions/SET_POLL_OPTION_CHOICES',
 			addPoll: 'guest/polls/ADD_POLL',
-			editPollOptionChoices: 'guest/pollOptions/EDIT_POLL_OPTION_CHOICES',
-			mergePollOption: 'guest/pollOptions/MERGE_POLL_OPTION',
-			addPollOption: 'guest/pollOptions/ADD_POLL_OPTION',
-			deletePollOption: 'guest/pollOptions/DELETE_POLL_OPTION',
-			deletePoll: 'guest/polls/DELETE_POLL',
 			mergePoll: 'guest/polls/MERGE_POLL',
+			deletePoll: 'guest/polls/DELETE_POLL',
+			setPollOptions: 'guest/pollOptions/SET_POLL_OPTIONS',
+			addPollOption: 'guest/pollOptions/ADD_POLL_OPTION',
+			mergePollOption: 'guest/pollOptions/MERGE_POLL_OPTION',
+			deletePollOption: 'guest/pollOptions/DELETE_POLL_OPTION',
+			setPollOptionChoices: 'guest/pollOptions/SET_POLL_OPTION_CHOICES',
+			editPollOptionChoices: 'guest/pollOptions/EDIT_POLL_OPTION_CHOICES',
 		}),
 		emitGetPolls() {
 			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
