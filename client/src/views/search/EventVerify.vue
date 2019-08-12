@@ -58,17 +58,27 @@
 			class="grey--text text--lighten-1 caption bt-1 hover-pointer to-search">
 			<span v-t="'btn-back-search'" />
 		</router-link>
+
+		<qr-code
+			class="text-xs-center mt-5"
+			:value="qrcode"
+			:size="250"
+			level="H"
+			background="transparent" />
+		<span v-t="'qrcode'" class="grey--text caption" />
 	</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import QrcodeVue from 'qrcode.vue';
 import LoadingIconCircle from '@/components/pieces/LoadingIconCircle.vue';
 
 export default {
 	name: 'EventVerify',
 	components: {
 		'loading--icon-circle': LoadingIconCircle,
+		'qr-code': QrcodeVue,
 	},
 	data: () => ({
 		eventInfo: {
@@ -94,6 +104,10 @@ export default {
 		}),
 		startDate() {
 			return new Date(this.eventInfo.end_at).toUTCString().toString().substr(4, 12);
+		},
+		qrcode() {
+			const baseURL = this.$env.VUE_APP_HOST_NAME;
+			return `${baseURL}/event/${this.eventInfo.code}`;
 		},
 	},
 	created() {

@@ -52,12 +52,12 @@
 					align-center
 					justify-center
 					fill-height>
-					<v-btn round small color="primary" class="px-3" type="submit">
-						<span v-t="'loginFormTitle'" />
+					<v-btn round small color="primary" type="submit">
+						<span v-t="'loginFormTitle'" class="px-3" />
 					</v-btn>
 					<span v-t="'or'" class="grey--text" />
 					<v-btn flat outline round small color="primary" class="px-3" href="/auth/outlook">
-						<span v-t="'login-microsoft'" class="primary--text" />
+						<span v-t="'login-microsoft'" class="primary--text px-3" />
 						&nbsp;
 						<img :src="require('@/assets/microsoft_logo.svg')">
 					</v-btn>

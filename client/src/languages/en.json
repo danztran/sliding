@@ -36,6 +36,7 @@
 		"lb-re-new-password": "Re-enter new password",
 		"lb-poll-ask": "What would you like to ask?",
 		"lb-add-option": "Add option",
+		"qrcode": "Scan QRCode",
 		"requireField": "Field is required",
 		"password-not-match": "Password doen's match",
 		"invalid-email": "Invalid email",

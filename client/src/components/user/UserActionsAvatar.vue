@@ -12,7 +12,7 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<template v-slot:activator="{ on }">
-			<v-avatar small class="hover-pointer ml-2" v-on="on">
+			<v-avatar small class="hover-pointer" :class="{ 'ml-2': !inSearch }" v-on="on">
 				<v-icon
 					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"

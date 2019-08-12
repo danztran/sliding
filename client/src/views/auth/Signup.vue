@@ -52,7 +52,7 @@
 					justify-center
 					fill-height>
 					<v-btn round small color="primary" type="submit" class="px-3">
-						<span v-t="'signUp'" class="first-letter-uppercase" />
+						<span v-t="'signUp'" class="first-letter-uppercase px-3" />
 					</v-btn>
 				</v-layout>
 			</v-card-actions>

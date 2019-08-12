@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<v-card-text class="scrollbar-primary text-xs-center content">
+		<v-card-text class="scrollbar-primary text-xs-center content px-0">
 			<v-form ref="form">
-				<v-layout row wrap :px-3="!isXS">
+				<v-layout row wrap :px-2="!isXS">
 					<!-- *Poll ask -->
-					<v-flex xs12>
+					<v-flex xs12 mb-2>
 						<text-field :field="form.ask" />
 					</v-flex>
 
@@ -78,8 +78,7 @@
 			</v-form>
 		</v-card-text>
 
-		<v-divider />
-		<v-card-actions class="px-3">
+		<v-card-actions>
 			<span class="red--text" v-text="dialogErrMsg" />
 			<v-spacer />
 			<v-btn

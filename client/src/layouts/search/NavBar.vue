@@ -56,7 +56,7 @@ export default {
 		box-shadow: none;
 	}
 	.v-list__tile {
-		padding-right: 0;
+		padding: 0;
 	}
 }
 </style>

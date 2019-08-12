@@ -8,25 +8,19 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<v-card id="dialog-handle-poll">
-			<v-container px-0 pb-0 pt-2>
-				<v-card-title class="py-0">
+			<v-container class="pb-2">
+				<v-card-title class="py-0 px-1 headline font-weight-light" primary-title>
 					<!-- *create -->
-					<v-tabs v-if="tabs.create" ref="tabs" lazy slider-color="primary">
-						<v-tab
-							class="font-weight-regular"
-							active-class="primary--text font-weight-bold">
-							<span v-t="'dialog-create-poll'" class="first-letter-uppercase" />
-						</v-tab>
-					</v-tabs>
+					<div
+						v-if="create"
+						v-t="'dialog-create-poll'"
+						class="first-letter-uppercase" />
 
 					<!-- *edit -->
-					<v-tabs v-else lazy slider-color="primary">
-						<v-tab
-							class="font-weight-regular"
-							active-class="primary--text font-weight-bold">
-							<span v-t="'poll-edit'" class="first-letter-uppercase" />
-						</v-tab>
-					</v-tabs>
+					<div
+						v-else
+						v-t="'poll-edit'"
+						class="first-letter-uppercase" />
 
 					<!-- *close dialog -->
 					<v-spacer />
@@ -38,40 +32,26 @@
 							v-text="'$vuetify.icons.close'" />
 					</v-btn>
 				</v-card-title>
-				<v-divider />
 
-				<!-- *create poll tab -->
-				<v-tabs-items v-if="tabs.create">
-					<v-tab-item
-						:transition="false"
-						:reverse-transition="false">
-						<tab--create-poll
-							@emit-create-poll-opt="emitCreatePollOpt"
-							@close-dialog="dialog=false" />
-					</v-tab-item>
-				</v-tabs-items>
+				<poll--create
+					v-if="create"
+					@emit-create-poll-opt="emitCreatePollOpt"
+					@close-dialog="dialog=false" />
 
-				<!-- *edit tab -->
-				<v-tabs-items v-else>
-					<!-- edit -->
-					<v-tab-item
-						:transition="false"
-						:reverse-transition="false">
-						<tab--edit-poll
-							v-show="Boolean(showManageTab)"
-							:poll="poll"
-							:poll-options="pollOptions"
-							@emit-edit-poll="emitEditPoll"
-							@emit-create-poll-opt="emitCreatePollOpt"
-							@emit-edit-poll-opt="emitEditPollOpt"
-							@emit-del-poll-opt="emitDelPollOpt"
-							@close-dialog="dialog=false" />
-					</v-tab-item>
+				<poll--edit
+					v-else
+					v-show="Boolean(showManageTab)"
+					:poll="poll"
+					:poll-options="pollOptions"
+					@emit-edit-poll="emitEditPoll"
+					@emit-create-poll-opt="emitCreatePollOpt"
+					@emit-edit-poll-opt="emitEditPollOpt"
+					@emit-del-poll-opt="emitDelPollOpt"
+					@close-dialog="dialog=false" />
 
-					<div v-if="loadingLinear" class="content">
-						<bouncy-loader />
-					</div>
-				</v-tabs-items>
+				<div v-if="loadingLinear" class="content">
+					<bouncy-loader />
+				</div>
 			</v-container>
 		</v-card>
 	</v-dialog>
@@ -85,16 +65,14 @@ import EditPollTab from './pieces/EditPollTab.vue';
 export default {
 	name: 'DialogHandlePoll',
 	components: {
-		'tab--create-poll': CreatePollTab,
-		'tab--edit-poll': EditPollTab,
+		'poll--create': CreatePollTab,
+		'poll--edit': EditPollTab,
 	},
 	data: () => ({
 		dialog: false,
 		loadingLinear: false,
-		tabs: {
-			create: false,
-			edit: false,
-		},
+		create: false,
+		edit: false,
 		handlePollID: null,
 		poll: null,
 		pollOptions: [],
@@ -106,7 +84,7 @@ export default {
 			getPollOptions: 'admin/pollOptions/getPollOptions',
 		}),
 		showManageTab() {
-			return !this.tabs.create && this.poll && this.pollOptions.length > 0;
+			return !this.create && this.poll && this.pollOptions.length > 0;
 		},
 	},
 	watch: {
@@ -131,13 +109,13 @@ export default {
 		this.$root.$on('dialog-handle-poll', (dialog) => {
 			if (dialog.type === 'create') {
 				this.dialog = true;
-				this.tabs.create = true;
+				this.create = true;
 			}
 			else {
 				this.handlePollID = dialog.id;
 				this.pollOptions = this.getPollOptions(this.handlePollID);
 				this.dialog = true;
-				this.tabs.edit = true;
+				this.edit = true;
 			}
 		});
 	},
@@ -151,8 +129,8 @@ export default {
 		}),
 		resetDialog() {
 			this.loading = false;
-			this.tabs.create = false;
-			this.tabs.edit = false;
+			this.create = false;
+			this.edit = false;
 		},
 		emitCreatePollOpt(opt) {
 			/* @params: opt
