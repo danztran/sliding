@@ -4,7 +4,7 @@
 		justify-center
 		column
 		fill-height>
-		<v-icon large color="success" v-text="'$vuetify.icons.polls'" />
+		<!-- <img :src="require('@/assets/empty_result.svg')"> -->
 		<div class="subheading text-xs-center grey--text text--darken-2">
 			<div v-t="'poll-empty-result'" class="first-letter-uppercase" />
 		</div>

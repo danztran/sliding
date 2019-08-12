@@ -78,6 +78,9 @@ export default {
 	},
 	methods: {
 		calPercent(opt) {
+			if (opt.choices.length === 0) {
+				return 0;
+			}
 			return ((opt.choices.length / this.allChoices.length) * 100).toFixed(2);
 		},
 	},

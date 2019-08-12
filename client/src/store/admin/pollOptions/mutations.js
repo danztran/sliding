@@ -19,8 +19,8 @@ const ADD_POLL_OPTION = (state, option) => {
 ------------------------------------------------------------------------*/
 const DELETE_POLL = (state, pollID) => {
 	state.pollOptions = state.pollOptions.filter(poll => poll.poll_id != pollID);
-	if (state.infoResult.poll && state.infoResult.poll.id == pollID) {
-		state.infoResult = {};
+	if (state.pollResult.poll && state.pollResult.poll.id == pollID) {
+		state.pollResult = {};
 	}
 };
 
@@ -82,11 +82,20 @@ const EDIT_POLL_OPTION_CHOICES = (state, choices) => {
 				option.choices.push(choices[choiceIdx]);
 			}
 		}
+
+		// check poll result available, check result pollID same as current poll option editted
+		if (state.pollResult.poll
+			&& state.pollResult.poll.id == currentPollOptions[0].poll_id) {
+			state.pollResult = {
+				...state.pollResult,
+				pollOptions: currentPollOptions,
+			};
+		}
 	}
 };
 
-const SET_INFO_RESULT = (state, info) => {
-	state.infoResult = info;
+const SET_POLL_RESULT = (state, info) => {
+	state.pollResult = info;
 };
 
 
@@ -95,7 +104,7 @@ const SET_INFO_RESULT = (state, info) => {
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.pollOptions = [];
-	state.infoResult = null;
+	state.pollResult = null;
 };
 
 
@@ -107,6 +116,6 @@ export default {
 	DELETE_POLL,
 	SET_POLL_OPTION_CHOICES,
 	EDIT_POLL_OPTION_CHOICES,
-	SET_INFO_RESULT,
+	SET_POLL_RESULT,
 	RESET,
 };

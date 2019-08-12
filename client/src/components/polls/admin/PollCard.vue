@@ -130,6 +130,7 @@ export default {
 	computed: {
 		...mapGetters({
 			getPollOpts: 'admin/pollOptions/getPollOptions',
+			getPollResult: 'admin/pollOptions/getPollResult',
 		}),
 		pollOptions() {
 			return this.getPollOpts(this.poll.id);
@@ -151,7 +152,7 @@ export default {
 			setEditPollInfo: 'admin/polls/SET_EDIT_POLL_INFO',
 			delPoll: 'admin/polls/DELETE_POLL',
 			delPollOptions: 'admin/pollOptions/DELETE_POLL',
-			setInfoPollResult: 'admin/pollOptions/SET_INFO_RESULT',
+			setPollResult: 'admin/pollOptions/SET_POLL_RESULT',
 		}),
 		handleLockVote() {
 			this.setEditPollInfo({
@@ -167,8 +168,11 @@ export default {
 		},
 		handleGetPollResult() {
 			const pollResult = {};
+			if (this.getPollResult.poll && this.getPollResult.poll.id == this.poll.id) {
+				return;
+			}
 			Object.assign(pollResult, { poll: this.poll }, { pollOptions: this.pollOptions });
-			this.setInfoPollResult(pollResult);
+			this.setPollResult(pollResult);
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';

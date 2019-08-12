@@ -3,7 +3,7 @@ const getPollOptions = state => (pollId) => {
 	return pollOptions || [];
 };
 
-const getPollResult = state => state.infoResult;
+const getPollResult = state => state.pollResult;
 
 export default {
 	getPollOptions,

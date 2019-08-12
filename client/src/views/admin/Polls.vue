@@ -57,7 +57,6 @@ export default {
 			this.deletePollOption(opt);
 		},
 		new_poll_option_choices(choices) {
-			console.warn(choices);
 			this.editPollOptionChoices(choices);
 		},
 	},
