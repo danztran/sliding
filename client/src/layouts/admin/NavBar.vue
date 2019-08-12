@@ -98,6 +98,7 @@
 
 				<!-- *qrcode -->
 				<v-btn
+					v-if="!isXS"
 					class="mr-1"
 					icon
 					@click="toggleDialogQRCode">

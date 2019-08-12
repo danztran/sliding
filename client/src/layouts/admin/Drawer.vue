@@ -89,6 +89,15 @@
 				<v-list-tile-title v-t="'analytics'" />
 			</v-list-tile>
 
+			<!-- *QRCode -->
+			<v-list-tile avatar class="v-list-item" @click="toggleDialogQRCode">
+				<v-list-tile-action class="pl-1">
+					<img :src="require('@/assets/qrcode.svg')">
+				</v-list-tile-action>
+
+				<v-list-tile-title v-text="'QRCode'" />
+			</v-list-tile>
+
 			<v-divider />
 			<!-- *Homepage -->
 			<v-list-tile to="/">
@@ -221,6 +230,10 @@ export default {
 		toggleDialogUserUpdateProfile() {
 			this.drawer = false;
 			this.$root.$emit('dialog-user-update-profile');
+		},
+		toggleDialogQRCode() {
+			this.drawer = false;
+			this.$root.$emit('dialog-qrcode', this.eventInfo.code);
 		},
 	},
 };
