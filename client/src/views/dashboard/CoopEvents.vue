@@ -12,7 +12,7 @@
 
 				<!-- *Sort -->
 				<div class="d-flex">
-					<!-- @desc: button create event -->
+					<!-- @desc: button manage invites -->
 					<v-btn
 						class="px-3"
 						color="primary"
@@ -78,7 +78,7 @@
 		</v-layout>
 		<!-- *list coop events -->
 		<v-card class="list-event scrollbar-primary">
-			<event-card
+			<event--card
 				v-for="event in coopAccepted"
 				:key="event.code"
 				:coop-info="event" />
@@ -87,7 +87,20 @@
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
 			<div v-show="isEmpty" class="empty-state mt-3">
-				empty
+				<v-layout align-center justify-center column>
+					<div
+						v-t="'coop-empty'"
+						class="title font-weight-light first-letter-uppercase" />
+					<v-btn
+						class="mt-3"
+						color="primary"
+						dark
+						round
+						medium
+						@click.stop="toggleDialogInvite">
+						<span v-t="'btn-dialog-invite'" class="px-3" />
+					</v-btn>
+				</v-layout>
 			</div>
 		</div>
 	</div>
@@ -100,7 +113,7 @@ import EventCard from '@/components/dashboard/coop-events/EventCard.vue';
 export default {
 	name: 'CoopEvents',
 	components: {
-		'event-card': EventCard,
+		'event--card': EventCard,
 	},
 	data: () => ({
 		orderBy: 'desc',
