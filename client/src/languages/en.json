@@ -189,6 +189,7 @@
 		"live-view-empty-title-joincode": "with this code:",
 		"poll-list-view-title": "List",
 		"poll-empty-title": "There is no poll at the moment.",
+		"poll-empty-result": "Click to your poll for show result.",
 		"poll-allow-voting": "Voting open",
 		"poll-disable-voting": "Voting locked",
 		"poll-count": "Votes:",

@@ -78,8 +78,7 @@
 					<poll--card
 						v-for="poll in polls"
 						:key="poll.id"
-						:poll="poll"
-						@get-poll-opts="emitGetPollOpts(poll.id)" />
+						:poll="poll" />
 					<poll-card--create />
 				</v-flex>
 			</v-layout>

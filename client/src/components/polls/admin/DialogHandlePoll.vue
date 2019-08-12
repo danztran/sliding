@@ -97,7 +97,7 @@ export default {
 		},
 		handlePollID: null,
 		poll: null,
-		pollOptions: null,
+		pollOptions: [],
 	}),
 	computed: {
 		...mapGetters({
@@ -168,7 +168,7 @@ export default {
 					return;
 				}
 				this.addPollOption(poll_option);
-				this.pollOptions.push(poll_option);
+				this.pollOptions.push(Object.assign(poll_option, { choices: [] }));
 			});
 		},
 		emitEditPoll(info) {

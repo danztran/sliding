@@ -192,6 +192,7 @@
 		"live-view-empty-title-joincode": "với mã code:",
 		"poll-list-view-title": "Danh sách",
 		"poll-empty-title": "Hiện tại không có cuộc bầu chọn nào.",
+		"poll-empty-result": "Nhấn vào thẻ bầu chọn của bạn để hiện kết quả.",
 		"poll-allow-voting": "Mở bầu chọn",
 		"poll-disable-voting": "Khóa bầu chọn",
 		"poll-count": "Số phiếu:",

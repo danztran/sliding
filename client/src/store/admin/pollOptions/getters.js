@@ -3,6 +3,9 @@ const getPollOptions = state => (pollId) => {
 	return pollOptions || [];
 };
 
+const getPollResult = state => state.infoResult;
+
 export default {
 	getPollOptions,
+	getPollResult,
 };

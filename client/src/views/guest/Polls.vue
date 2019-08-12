@@ -41,17 +41,17 @@ export default {
 		new_edited_poll(newInfo) {
 			this.mergePoll(newInfo);
 		},
-		new_poll_option_choices(choices) {
-			this.editPollOptionChoices(choices);
+		new_added_poll_option(option) {
+			this.addPollOption(option);
 		},
 		new_edited_poll_option(option) {
 			this.mergePollOption(option);
 		},
-		new_added_poll_option(option) {
-			this.addPollOption(option);
-		},
 		new_deleted_poll_option(option) {
 			this.deletePollOption(option);
+		},
+		new_poll_option_choices(choices) {
+			this.editPollOptionChoices(choices);
 		},
 	},
 	methods: {
@@ -102,14 +102,8 @@ export default {
 					return;
 				}
 				// console.warn(choices);
-				// this.setOptChoice(choices);
 				this.setPollOptionChoices(choices);
 			});
-		},
-		setOptChoice(choices) {
-			for (const choice of choices) {
-				this.setPollOptChoice(choice);
-			}
 		},
 	},
 };

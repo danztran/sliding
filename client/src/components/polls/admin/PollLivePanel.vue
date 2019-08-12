@@ -7,8 +7,8 @@
 			justify-space-between
 			row
 			fill-height>
-			<!-- *title: live -->
-			<div v-t="'btn-live'" class="grey--text" />
+			<!-- *title: result -->
+			<div v-t="'btn-poll-result'" class="grey--text" />
 
 			<!-- *actions: show dialog poll result -->
 			<v-btn
@@ -22,12 +22,12 @@
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
-			<empty-state--poll />
-			<!-- <v-layout v-else row wrap>
+			<v-layout v-if="_cm.notEmpty(getPollResult)" row wrap>
 				<v-flex xs12>
-					... poll result here ...
+					<card--poll-result />
 				</v-flex>
-			</v-layout> -->
+			</v-layout>
+			<empty-state--poll v-else />
 		</v-card>
 	</v-layout>
 </template>
@@ -35,15 +35,17 @@
 <script>
 import { mapGetters } from 'vuex';
 import EmptyPoll from './EmptyPoll.vue';
+import PollResultCard from './PollResultCard.vue';
 
 export default {
 	name: 'PollLivePanel',
 	components: {
 		'empty-state--poll': EmptyPoll,
+		'card--poll-result': PollResultCard,
 	},
 	computed: {
 		...mapGetters({
-			// ....
+			getPollResult: 'admin/pollOptions/getPollResult',
 		}),
 	},
 };

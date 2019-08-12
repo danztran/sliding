@@ -2,7 +2,7 @@
 	<v-hover>
 		<v-card
 			slot-scope="{ hover }"
-			class="no-shadow card-hover"
+			class="no-shadow card-hover hover-pointer"
 			:class="{ deleting }">
 			<v-list subheader class="py-1">
 				<v-list-tile>
@@ -16,7 +16,7 @@
 							v-text="'$vuetify.icons.multiple_choice'" />
 					</v-list-tile-avatar>
 
-					<v-list-tile-content>
+					<v-list-tile-content @click="handleGetPollResult">
 						<!-- *poll type title -->
 						<span
 							v-t="'poll-multiple'"
@@ -25,7 +25,9 @@
 						<!-- *poll count -->
 						<span class="body-1 font-weight-light d-flex">
 							<span v-t="'poll-count'" />
-							&nbsp;X&nbsp;
+							&nbsp;
+							{{ countUsersChoice || 0 }}
+							&nbsp;
 							<v-icon
 								v-if="poll.is_locked"
 								color="grey"
@@ -98,7 +100,7 @@
 			</v-list>
 
 			<!-- @desc: poll name -->
-			<v-card-title class="pt-0 pb-2 px-4">
+			<v-card-title class="pt-0 pb-2 px-4" @click="handleGetPollResult">
 				<p class="body-1 mb-0 pl-1" v-text="poll.content" />
 			</v-card-title>
 		</v-card>
@@ -106,7 +108,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
 	name: 'PollCard',
@@ -125,11 +127,31 @@ export default {
 		deleting: false,
 		allow_voting: false,
 	}),
+	computed: {
+		...mapGetters({
+			getPollOpts: 'admin/pollOptions/getPollOptions',
+		}),
+		pollOptions() {
+			return this.getPollOpts(this.poll.id);
+		},
+		countUsersChoice() {
+			const users = new Set();
+			for (const opt of this.pollOptions) {
+				if (opt.choices) {
+					for (const choice of opt.choices) {
+						users.add(choice.user_id);
+					}
+				}
+			}
+			return users.size;
+		},
+	},
 	methods: {
 		...mapMutations({
 			setEditPollInfo: 'admin/polls/SET_EDIT_POLL_INFO',
 			delPoll: 'admin/polls/DELETE_POLL',
 			delPollOptions: 'admin/pollOptions/DELETE_POLL',
+			setInfoPollResult: 'admin/pollOptions/SET_INFO_RESULT',
 		}),
 		handleLockVote() {
 			this.setEditPollInfo({
@@ -142,6 +164,11 @@ export default {
 				type: 'edit',
 				id: this.poll.id,
 			});
+		},
+		handleGetPollResult() {
+			const pollResult = {};
+			Object.assign(pollResult, { poll: this.poll }, { pollOptions: this.pollOptions });
+			this.setInfoPollResult(pollResult);
 		},
 		emitDeletePoll() {
 			const emiter = 'delete-poll';

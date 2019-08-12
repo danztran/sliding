@@ -71,7 +71,7 @@
 							small
 							round
 							color="success"
-							:disabled="isValid || loadingState !== ''"
+							:disabled="selectValid || poll.is_locked || loadingState !== ''"
 							:loading="loadingState !== ''"
 							@click="submitChoices">
 							<span v-t="'btn-send'" />
@@ -121,7 +121,7 @@ export default {
 			getPollOpts: 'guest/pollOptions/getPollOptions',
 			user: 'auth/user',
 		}),
-		isValid() {
+		selectValid() {
 			if (this.poll.max_choices > 1) {
 				if (this.checkboxSelect.length > 0
 					&& this.checkboxSelect.length <= this.poll.max_choices) {

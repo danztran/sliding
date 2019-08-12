@@ -52,7 +52,7 @@
 					align-center
 					justify-center
 					fill-height>
-					<v-btn round small color="primary" type="submit">
+					<v-btn round small color="primary" class="px-3" type="submit">
 						<span v-t="'loginFormTitle'" />
 					</v-btn>
 					<span v-t="'or'" class="grey--text" />

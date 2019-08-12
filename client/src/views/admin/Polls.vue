@@ -56,17 +56,23 @@ export default {
 		new_deleted_poll_option(opt) {
 			this.deletePollOption(opt);
 		},
+		new_poll_option_choices(choices) {
+			console.warn(choices);
+			this.editPollOptionChoices(choices);
+		},
 	},
 	methods: {
 		...mapMutations({
 			setPolls: 'admin/polls/SET_POLLS',
 			addPoll: 'admin/polls/ADD_POLL',
+			mergePoll: 'admin/polls/MERGE_POLL',
+			deletePoll: 'admin/polls/DELETE_POLL',
 			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
 			addPollOption: 'admin/pollOptions/ADD_POLL_OPTION',
-			deletePoll: 'admin/polls/DELETE_POLL',
-			deletePollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
-			mergePoll: 'admin/polls/MERGE_POLL',
 			mergePollOpt: 'admin/pollOptions/MERGE_POLL_OPTION',
+			deletePollOption: 'admin/pollOptions/DELETE_POLL_OPTION',
+			setPollOptionChoices: 'admin/pollOptions/SET_POLL_OPTION_CHOICES',
+			editPollOptionChoices: 'admin/pollOptions/EDIT_POLL_OPTION_CHOICES',
 		}),
 		emitGetAllPollOpts() {
 			const emiter = 'get-all-poll-options';
@@ -78,6 +84,20 @@ export default {
 					return;
 				}
 				this.setPollOptions(poll_options);
+				this.emitGetAllOptChoices();
+			});
+		},
+		emitGetAllOptChoices() {
+			const emiter = 'get-all-poll-option-choices';
+			this.$socket.emit(emiter, ({ errmsg, choices }) => {
+				if (!choices) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
+				}
+				// console.warn(choices);
+				this.setPollOptionChoices(choices);
 			});
 		},
 	},

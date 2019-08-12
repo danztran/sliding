@@ -63,7 +63,7 @@ export default {
 			return opt.choices.some(c => c.user_id == this.user.id);
 		},
 		calPercent(opt) {
-			return (opt.choices.length / this.allChoices.length) * 100;
+			return ((opt.choices.length / this.allChoices.length) * 100).toFixed(2);
 		},
 	},
 };

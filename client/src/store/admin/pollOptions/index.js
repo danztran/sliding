@@ -14,6 +14,7 @@ import mutations from './mutations';
 
 const state = {
 	pollOptions: [],
+	infoResult: {},
 };
 
 export default {
