@@ -6,17 +6,17 @@
 		<v-layout align-center justify-space-between wrap fill-height>
 			<!-- *Active users -->
 			<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
-				<card--over-view :info="cards.activeUsers" />
+				<card--over-view :info="cards.activeUsers" icon="group_people" />
 			</v-flex>
 
 			<!-- *Questions -->
 			<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
-				<card--over-view :info="cards.questions" question />
+				<card--over-view :info="cards.questions" question icon="questions" />
 			</v-flex>
 
 			<!-- *Polls -->
 			<v-flex md4 xs12 :pl-1="!isXS">
-				<card--over-view :info="cards.polls" />
+				<card--over-view :info="cards.polls" icon="polls" />
 			</v-flex>
 		</v-layout>
 	</div>

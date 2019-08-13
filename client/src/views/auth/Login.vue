@@ -96,7 +96,6 @@ export default {
 				errmsg: '',
 			},
 		},
-		redirectWEC: null,
 		beforeAuth: true,
 	}),
 	computed: {
@@ -119,6 +118,10 @@ export default {
 			}
 		},
 	},
+	beforeRouteLeave(to, from, next) {
+		sessionStorage.removeItem('redirectToEvent');
+		next();
+	},
 	created() {
 		if (this.fillInfo.username !== '') {
 			this.form.username.value = this.fillInfo.username;
@@ -128,10 +131,10 @@ export default {
 	mounted() {
 		/*
 			@params: ecfs: event code from search
-							 redirectWEC: redirect with event code
+							 set code to session
 		*/
 		if (this.$route.params.ecfs !== undefined) {
-			this.redirectWEC = this.$route.params.ecfs;
+			sessionStorage.setItem('redirectToEvent', this.$route.params.ecfs);
 		}
 		this.$root.$emit('hide-loading-overlay');
 	},
@@ -141,6 +144,7 @@ export default {
 			this.loading = true;
 			this.errorMessage = '';
 			this.flashMessage = '';
+			const redirectWEC = sessionStorage.getItem('redirectToEvent');
 			const loginFormData = {
 				username: this.form.username.value,
 				password: this.form.password.value,
@@ -151,14 +155,14 @@ export default {
 				.then((res) => {
 					this.$store.dispatch('auth/setAuth', res.data.user);
 					this.$socket.emit('update-authen', ({ reload }) => {
-						if (this.redirectWEC !== null) {
+						if (redirectWEC !== null) {
 							if (reload) {
-								window.location.pathname = `guest/event/${this.redirectWEC}`;
+								window.location.pathname = `guest/event/${redirectWEC}`;
 								return;
 							}
 							this.$router.push({
 								name: 'guest-event',
-								params: { code: this.redirectWEC },
+								params: { code: redirectWEC },
 							});
 							return;
 						}

@@ -168,7 +168,8 @@ export default {
 		},
 		handleGetPollResult() {
 			const pollResult = {};
-			if (this.getPollResult.poll && this.getPollResult.poll.id == this.poll.id) {
+			if (this._cm.notEmpty(this.getPollResult)
+				&& this.getPollResult.poll.id == this.poll.id) {
 				return;
 			}
 			Object.assign(pollResult, { poll: this.poll }, { pollOptions: this.pollOptions });
