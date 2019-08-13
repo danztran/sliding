@@ -79,14 +79,6 @@
 						<span v-t="'polls'" class="first-letter-uppercase" />
 					</v-tab>
 
-					<!-- *Ideas -->
-					<v-tab
-						:to="{ name: 'admin-ideas' }"
-						class="font-weight-regular"
-						active-class="primary--text font-weight-bold">
-						<span v-t="'ideas'" class="first-letter-uppercase" />
-					</v-tab>
-
 					<!-- *analytics -->
 					<v-tab
 						:to="{ name: 'admin-analytics' }"

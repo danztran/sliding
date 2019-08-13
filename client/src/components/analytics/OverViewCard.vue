@@ -8,7 +8,7 @@
 			<span v-t="info.header" class="first-letter-uppercase pl-2" />
 
 			<v-layout align-center justify-end>
-				<span class="font-weight-bold title" v-text="info.headerCount" />
+				<span class="font-weight-bold title" v-text="headerCount" />
 			</v-layout>
 		</v-card-title>
 
@@ -16,13 +16,18 @@
 		<v-card-text class="pt-1">
 			<div class="d-flex">
 				<span v-t="info.fTitle" class="first-letter-uppercase grey--text text--lighten-1" />
-				<span class="text-xs-right font-weight-bold" v-text="info.fTitleCount" />
+				<span class="text-xs-right font-weight-bold">
+					{{ fTitleCount }}
+					<template v-if="question">
+						/ {{ fSubTitleCount }}
+					</template>
+				</span>
 			</div>
 
 			<v-divider class="my-1" />
 			<div class="d-flex">
 				<span v-t="info.sTitle" class="first-letter-uppercase grey--text text--lighten-1" />
-				<span class="text-xs-right font-weight-bold" v-text="info.sTitleCount" />
+				<span class="text-xs-right font-weight-bold" v-text="sTitleCount" />
 				<template v-if="question">
 					%
 				</template>
@@ -40,11 +45,8 @@ export default {
 			default: () => ({
 				color: '',
 				header: '',
-				headerCount: 0,
 				fTitle: '',
-				fTitleCount: 0,
 				sTitle: '',
-				sTitleCount: 0,
 			}),
 		},
 		question: {
@@ -54,6 +56,22 @@ export default {
 		icon: {
 			type: String,
 			default: 'group_people',
+		},
+		headerCount: {
+			type: Number,
+			default: 0,
+		},
+		fTitleCount: {
+			type: Number,
+			default: 0,
+		},
+		fSubTitleCount: {
+			type: Number,
+			default: 0,
+		},
+		sTitleCount: {
+			type: Number,
+			default: 0,
 		},
 	},
 };

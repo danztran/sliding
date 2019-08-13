@@ -63,19 +63,6 @@
 				<v-list-tile-title v-t="'polls'" />
 			</v-list-tile>
 
-			<!-- *Ideas -->
-			<v-list-tile
-				:to="{ name: 'admin-ideas' }"
-				active-class="active-tab"
-				avatar
-				class="v-list-item">
-				<v-list-tile-action>
-					<v-icon color="secondary" v-text="'$vuetify.icons.ideas'" />
-				</v-list-tile-action>
-
-				<v-list-tile-title v-t="'ideas'" />
-			</v-list-tile>
-
 			<!-- *Analytics -->
 			<v-list-tile
 				:to="{ name: 'admin-analytics' }"

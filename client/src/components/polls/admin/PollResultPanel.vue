@@ -38,7 +38,7 @@ import EmptyPoll from './EmptyPoll.vue';
 import PollResultCard from './PollResultCard.vue';
 
 export default {
-	name: 'PollLivePanel',
+	name: 'PollResultPanel',
 	components: {
 		'empty-state--poll': EmptyPoll,
 		'card--poll-result': PollResultCard,

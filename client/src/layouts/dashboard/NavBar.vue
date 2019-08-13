@@ -78,15 +78,6 @@
 						active-class="primary--text font-weight-bold">
 						<span v-t="'coop-events'" class="first-letter-uppercase" />
 					</v-tab>
-
-					<!-- *Activity-logs -->
-					<v-tab
-						:to="{ 'name': 'activity-logs' }"
-						fixed-tabs
-						class="font-weight-regular"
-						active-class="primary--text font-weight-bold">
-						<span v-t="'activity-logs'" class="first-letter-uppercase" />
-					</v-tab>
 				</v-tabs>
 			</template>
 		</v-toolbar>

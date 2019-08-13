@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import QuestionReviewPanel from '@/components/questions/admin/QuestionReviewPanel.vue';
 import QuestionMainPanel from '@/components/questions/admin/QuestionMainPanel.vue';
 import QuestionReplyDialog from '@/components/questions/admin/QuestionReplyDialog.vue';
@@ -31,18 +31,19 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			reviewQuestions: 'admin/questions/getReviewQuestions',
-			event: 'admin/event/getEventInfo',
+			questions: 'admin/questions/getQuestions',
 		}),
 	},
 	created() {
-		this.$socket.emit('get-questions', ({ errmsg, questions }) => {
-			if (errmsg) {
-				// notify
-				return;
-			}
-			this.setQuestions(questions);
-		});
+		if (this.questions.length === 0) {
+			this.$socket.emit('get-questions', ({ errmsg, questions }) => {
+				if (errmsg) {
+					this.showNotify(errmsg, 'danger');
+					return;
+				}
+				this.setQuestions(questions);
+			});
+		}
 	},
 	sockets: {
 		new_added_question(question) {

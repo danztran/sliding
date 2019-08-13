@@ -5,7 +5,7 @@
 				<poll-panel--list />
 			</v-flex>
 			<v-flex class="pl-1" xs12 md6>
-				<poll-panel--live />
+				<poll-panel--result />
 			</v-flex>
 		</v-layout>
 		<dialog--handle-poll />
@@ -13,29 +13,36 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import DialogHandlePoll from '@/components/polls/admin/DialogHandlePoll.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
-import PollLivePanel from '@/components/polls/admin/PollLivePanel.vue';
+import PollResultPanel from '@/components/polls/admin/PollResultPanel.vue';
 
 export default {
 	name: 'AdminPolls',
 	components: {
 		'dialog--handle-poll': DialogHandlePoll,
 		'poll-panel--list': PollListPanel,
-		'poll-panel--live': PollLivePanel,
+		'poll-panel--result': PollResultPanel,
+	},
+	computed: {
+		...mapGetters({
+			polls: 'admin/polls/getPolls',
+		}),
 	},
 	created() {
-		this.$socket.emit('get-polls', ({ errmsg, polls }) => {
-			if (!polls) {
-				if (errmsg) {
-					// ...
+		if (this.polls.length === 0) {
+			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
+				if (!polls) {
+					if (errmsg) {
+						this.showNotify(errmsg, 'danger');
+					}
+					return;
 				}
-				return;
-			}
-			this.setPolls(polls);
-			this.emitGetAllPollOpts();
-		});
+				this.setPolls(polls);
+				this.emitGetAllPollOpts();
+			});
+		}
 	},
 	sockets: {
 		new_added_poll(poll) {

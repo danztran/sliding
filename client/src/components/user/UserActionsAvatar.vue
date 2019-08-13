@@ -104,19 +104,6 @@
 						<v-list-tile-title v-t="'coop-events'" />
 					</v-list-tile>
 
-					<!-- *Analytic activities -->
-					<v-list-tile :to="{ name: 'activity-logs' }">
-						<v-list-tile-action>
-							<v-icon
-								class="pl-2"
-								color="red"
-								size="20"
-								v-text="'$vuetify.icons.analytics'" />
-						</v-list-tile-action>
-
-						<v-list-tile-title v-t="'activity-logs'" />
-					</v-list-tile>
-
 					<v-divider />
 					<!-- *Invite-access-request -->
 					<list-item--invites v-if="!inSearch" :user="user" in-avatar />
