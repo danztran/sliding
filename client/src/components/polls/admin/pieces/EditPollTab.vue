@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card-text class="scrollbar-primary text-xs-center content px-0">
+		<v-card-text class="scrollbar-primary text-xs-center content">
 			<v-form ref="form">
 				<v-layout row wrap :px-2="!isXS">
 					<!-- *Poll ask -->
@@ -8,37 +8,24 @@
 						<text-field :field="form.ask" />
 					</v-flex>
 
-					<template v-for="(row, idx) in optionRows">
+					<template v-for="(opt, idx) in optRows">
 						<div :key="idx" class="d-flex w-100 v-textarea-override">
 							<v-flex class="w-100" xs9>
-								<text-area :field="row" />
+								<text-area
+									:field="opt"
+									@change="opt.oldOpt
+										? checkEditOldOpt(opt.id)
+										: checkAddNewOpt(idx)" />
 							</v-flex>
 							<div>
-								<template v-if="row.editOpt">
-									<template v-if="row.editOn">
-										<!-- *edit opt content -->
-										<v-btn small class="mt-1" icon @click="emitSaveEditOpt(idx, row.id)">
-											<v-icon small color="success" v-text="'$vuetify.icons.save'" />
-										</v-btn>
-
-										<!-- *cancel edit -->
-										<v-btn small class="mt-1" icon @click="cancelEditOpt(idx)">
-											<v-icon small color="grey" v-text="'$vuetify.icons.cancel'" />
-										</v-btn>
-									</template>
-
-									<!-- *active edit opt -->
-									<v-btn v-else small class="mt-1" icon @click="enableEditOpt(idx, row.id)">
-										<v-icon small color="primary" v-text="'$vuetify.icons.edit'" />
-									</v-btn>
-								</template>
-								<!-- *emit delete opt -->
-								<v-btn v-if="row.newRow" small class="mt-1" icon @click="emitAddOpt(idx)">
-									<v-icon small color="success" v-text="'$vuetify.icons.add'" />
-								</v-btn>
-								<!-- *delete recent row -->
-								<v-btn v-if="!row.editOn" small class="mt-1" icon @click="emitDelOpt(idx, row.id)">
-									<v-icon small color="error" v-text="'$vuetify.icons.delete'" />
+								<!-- *delete opt row -->
+								<v-btn
+									v-if="!opt.editOn"
+									small
+									icon
+									class="mt-1"
+									@click="checkDelOldOpt(idx, opt.id, opt.oldOpt)">
+									<v-icon small color="grey" v-text="'$vuetify.icons.delete'" />
 								</v-btn>
 							</div>
 						</div>
@@ -88,9 +75,8 @@
 				<span v-t="'btn-cancel'" class="first-letter-uppercase" />
 			</v-btn>
 			<v-btn
-				flat
 				medium
-				color="success"
+				color="primary"
 				:disabled="sending"
 				@click="handleEdit">
 				<span v-t="'btn-save'" class="first-letter-uppercase" />
@@ -140,7 +126,10 @@ export default {
 	},
 	data: () => ({
 		form: initForm(),
-		optionRows: [],
+		optRows: [],
+		optAddNew: [],
+		optEditID: [],
+		optDelID: [],
 		selectMultiple: true,
 		sending: false,
 		dialogErrMsg: '',
@@ -174,7 +163,7 @@ export default {
 			this.$emit('close-dialog');
 		},
 		fillOpts(opts) {
-			this.optionRows = Array.from({ length: opts.length }, () => ({
+			this.optRows = Array.from({ length: opts.length }, () => ({
 				value: '',
 				errmsg: '',
 				id: null,
@@ -184,13 +173,10 @@ export default {
 				solo: true,
 				flat: true,
 				outline: true,
-				disabled: true,
-				readonly: true,
 				autogrow: true,
-				editOpt: true,
-				editOn: false,
+				oldOpt: true,
 			}));
-			this.optionRows.forEach((el, idx) => {
+			this.optRows.forEach((el, idx) => {
 				if (opts[idx] !== undefined) {
 					el.id = opts[idx].id;
 					el.value = opts[idx].content;
@@ -198,7 +184,7 @@ export default {
 			});
 		},
 		addOptionRow() {
-			this.optionRows.push({
+			this.optRows.push({
 				value: '',
 				errmsg: '',
 				placeholder: 'lb-add-option',
@@ -209,88 +195,101 @@ export default {
 				outline: true,
 				autogrow: true,
 				autofocus: true,
-				newRow: true,
 			});
 		},
-		enableEditOpt(idx, optId) {
-			if (optId) {
-				this.optionRows[idx].editOn = true;
-				this.optionRows[idx].disabled = false;
-				this.optionRows[idx].readonly = false;
+		// add id option edited
+		checkEditOldOpt(id) {
+			if (this.optEditID.indexOf(id) === -1) {
+				this.optEditID.push(id);
 			}
 		},
-		cancelEditOpt(idx) {
-			this.optionRows[idx].value = this.pollOptions[idx].content;
-			this.optionRows[idx].editOn = false;
-			this.optionRows[idx].disabled = true;
-			this.optionRows[idx].true = true;
-		},
-		emitSaveEditOpt(idx, optId) {
-			if (this.optionRows[idx].value === '') {
-				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
-				return;
+		// if new option add index of optionRows
+		checkAddNewOpt(idx) {
+			if (this.optAddNew.indexOf(idx) === -1) {
+				this.optAddNew.push(idx);
 			}
-			if (this.optionRows[idx].value === this.pollOptions[idx].content) {
-				this.cancelEditOpt(idx);
-				return;
-			}
-			this.$emit('emit-edit-poll-opt', {
-				id: optId,
-				content: this.optionRows[idx].value,
-			});
-			this.pollOptions[idx].content = this.optionRows[idx].value;
-			this.optionRows[idx].editOn = false;
-			this.optionRows[idx].disabled = true;
-			this.optionRows[idx].true = true;
 		},
-		emitDelOpt(idx, optId) {
-			if (optId) {
-				if (this.optionRows.length > 1) {
-					this.$emit('emit-del-poll-opt', {
-						id: optId,
-						poll_id: this.poll.id,
-					});
-				}
-				else {
-					this.dialogErrMsg = this.$t('poll-limit-option');
-					return;
+		// if del old option add optionID
+		checkDelOldOpt(idx, optID, oldOpt) {
+			if (oldOpt) {
+				this.optDelID.push(optID);
+				if (this.optEditID.indexOf(optID) !== -1) {
+					this.optEditID = this.optEditID.filter(id => id != optID);
 				}
 			}
-			this.optionRows.splice(idx, 1);
-		},
-		emitAddOpt(idx) {
-			if (this.optionRows[idx].value === '') {
-				this.optionRows[idx].errmsg = this.$t('poll-option-empty');
-				return;
+			else if (this.optAddNew.indexOf(idx) !== -1) {
+				this.optAddNew = this.optAddNew.filter(rowIdx => rowIdx != idx);
 			}
-			this.$emit('emit-create-poll-opt', {
-				poll_id: this.poll.id,
-				content: this.optionRows[idx].value,
-			});
+			this.optRows.splice(idx, 1);
 		},
-		handleEditPoll() {
+		checkValidPoll() {
 			if (this.form.ask.value === '') {
 				this.form.ask.errmsg = this.$t('requireField');
-				return;
+				return false;
 			}
 			if (this.selectMultiple && this.form.limit.value < 2) {
 				this.form.limit.errmsg = this.$t('poll-limit-count');
-				return;
+				return false;
 			}
-			if (this.form.ask.value === this.poll.content) {
-				if (this.form.limit.value === this.poll.max_choices) {
-					return;
-				}
+			if (this.optRows.length < 1) {
+				return false;
 			}
-			this.setEditPollInfo({
-				id: this.poll.id,
-				content: this.form.ask.value,
-				max_choices: this.form.limit.value,
-			});
+			return true;
 		},
 		handleEdit() {
-			// this.sending = true;
-			this.handleEditPoll();
+			this.dialogErrMsg = '';
+			this.sending = true;
+			if (this.checkValidPoll()) {
+				const { form } = this;
+				// check change info
+				if (form.ask.value !== this.poll.content
+					|| form.limit.value !== this.poll.max_choices) {
+					this.setEditPollInfo({
+						id: this.poll.id,
+						content: form.ask.value,
+						max_choices: form.limit.value,
+					});
+				}
+			}
+			else {
+				this.sending = false;
+				this.dialogErrMsg = this.$t('err-some-field');
+				return;
+			}
+
+			// check old option edit
+			if (this.optEditID.length !== 0) {
+				for (const optID of this.optEditID) {
+					this.$emit('emit-edit-poll-opt', {
+						id: optID,
+						content: this.optRows.find(e => e.id == optID).value,
+					});
+				}
+				this.optEditID = [];
+			}
+
+			// check del old option
+			if (this.optDelID.length !== 0) {
+				for (const optID of this.optDelID) {
+					this.$emit('emit-del-poll-opt', {
+						id: optID,
+						poll_id: this.poll.id,
+					});
+				}
+				this.optDelID = [];
+			}
+
+			if (this.optAddNew.length !== 0) {
+				for (const idxRow of this.optAddNew) {
+					this.$emit('emit-create-poll-opt', {
+						poll_id: this.poll.id,
+						content: this.optRows[idxRow].value,
+					});
+				}
+				this.optAddNew = [];
+			}
+			this.sending = false;
+			this.$emit('close-dialog');
 		},
 	},
 };

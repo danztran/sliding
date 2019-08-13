@@ -20,7 +20,8 @@
 		:disabled="disabled || field.disabled"
 		:readonly="field.readonly"
 		:single-line="field.singleLine"
-		@input="onInput" />
+		@input="onInput"
+		@change="change" />
 </template>
 
 <script>
@@ -64,6 +65,9 @@ export default {
 		},
 		onInput() {
 			this.field.errmsg = '';
+		},
+		change() {
+			this.$emit('change');
 		},
 	},
 };

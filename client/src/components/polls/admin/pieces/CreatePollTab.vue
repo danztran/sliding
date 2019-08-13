@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card-text class="scrollbar-primary text-xs-center content px-0">
+		<v-card-text class="scrollbar-primary text-xs-center content">
 			<v-form ref="form">
 				<v-layout row wrap :px-2="!isXS">
 					<!-- *Poll ask -->

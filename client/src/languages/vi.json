@@ -212,6 +212,7 @@
 		"poll-err-limit-choice": "Bạn đã chọn nhiều hơn mức cho phép",
 		"poll-create-success": "Tạo cuộc bầu chọn thành công",
 		"poll-sent": "Lựa chọn của bạn đã được gửi",
+		"poll-warning": "Bạn có muốn đóng và không lưu những chỉnh sửa ?",
 		"ana-title": "Tổng quan sự kiện",
 		"ana-users": "Người tham dự",
 		"ana-questions": "Câu hỏi",

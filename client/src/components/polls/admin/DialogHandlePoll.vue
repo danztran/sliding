@@ -8,8 +8,8 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<v-card id="dialog-handle-poll">
-			<v-container class="pb-2">
-				<v-card-title class="py-0 px-1 headline font-weight-light" primary-title>
+			<v-container class="px-0 pb-2">
+				<v-card-title class="py-0 px-4 headline font-weight-light" primary-title>
 					<!-- *create -->
 					<div
 						v-if="create"
@@ -146,7 +146,6 @@ export default {
 					return;
 				}
 				this.addPollOption(poll_option);
-				this.pollOptions.push(Object.assign(poll_option, { choices: [] }));
 			});
 		},
 		emitEditPoll(info) {

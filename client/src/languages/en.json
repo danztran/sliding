@@ -209,6 +209,7 @@
 		"poll-err-limit-choice": "You had chosen more than allowed",
 		"poll-create-success": "Create poll successfully",
 		"poll-sent": "Your choice has been sent.",
+		"poll-warning": "World you like to close without saving the poll ?",
 		"ana-title": "Event overview",
 		"ana-users": "Participants",
 		"ana-questions": "Questions",

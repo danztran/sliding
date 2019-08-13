@@ -8,7 +8,11 @@ const SET_POLL_OPTIONS = (state, options) => {
 
 
 const ADD_POLL_OPTION = (state, option) => {
-	state.pollOptions.push(Object.assign(option, { choices: [] }));
+	const newOption = Object.assign(option, { choices: [] });
+	state.pollOptions.push(newOption);
+	if (state.pollResult.poll && state.pollResult.poll.id == option.poll_id) {
+		state.pollResult.pollOptions.push(newOption);
+	}
 };
 
 
@@ -35,6 +39,12 @@ const MERGE_POLL_OPTION = (state, newOptInfo) => {
 	if (opt) {
 		Object.assign(opt, newOptInfo);
 	}
+	if (state.pollResult.poll && state.pollResult.poll.id == newOptInfo.poll_id) {
+		const optInResult = state.pollResult.pollOptions.find(el => el.id == newOptInfo.id);
+		if (optInResult) {
+			Object.assign(optInResult, newOptInfo);
+		}
+	}
 };
 
 
@@ -43,10 +53,16 @@ const MERGE_POLL_OPTION = (state, newOptInfo) => {
 	@socket: emiter 'delete-poll-option'
 	@source: cpn/polls/admin/DialogHandlePoll.vue
 ------------------------------------------------------------------------*/
-const DELETE_POLL_OPTION = (state, info) => {
-	const optIdx = state.pollOptions.findIndex(o => o.id == info.id);
+const DELETE_POLL_OPTION = (state, deleteOpt) => {
+	const optIdx = state.pollOptions.findIndex(o => o.id == deleteOpt.id);
 	if (optIdx !== -1) {
 		state.pollOptions.splice(optIdx, 1);
+	}
+	if (state.pollResult.poll && state.pollResult.poll.id == deleteOpt.poll_id) {
+		const rsOptIdx = state.pollResult.pollOptions.findIndex(o => o.id == deleteOpt.id);
+		if (rsOptIdx !== -1) {
+			state.pollResult.pollOptions.splice(rsOptIdx, 1);
+		}
 	}
 };
 
