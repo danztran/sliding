@@ -3,6 +3,7 @@ const UserModel = requireWrp('models/user');
 // const qh = requireWrp('modules/query-helper');
 
 const User = new UserModel();
+const questionName = 'question';
 
 class QuestionReplyModel extends Model {
 	constructor() {
@@ -33,6 +34,18 @@ class QuestionReplyModel extends Model {
 				reply."question_id"=${qid}
 				AND reply."is_deleted"= false
 		`);
+		return this;
+	}
+
+	getCountByEventID(eid) {
+		this.setQuery(`
+			SELECT COUNT(r.*)
+			FROM ${this.getName()} as "r", ${questionName} as "q"
+			WHERE r.question_id = q.id
+				AND q.event_id = ${eid}
+				AND r."is_deleted" != TRUE
+		`);
+		this.setRowReturn(1);
 		return this;
 	}
 

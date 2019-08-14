@@ -1,5 +1,7 @@
+const qh = requireWrp('modules/query-helper');
 const Model = requireWrp('models/model');
-// const qh = requireWrp('modules/query-helper');
+
+const questionName = 'question';
 
 class QuestionReactionModel extends Model {
 	constructor() {
@@ -13,6 +15,18 @@ class QuestionReactionModel extends Model {
 			WHERE ql."question_id" = ${qid}
 				AND ql."like" IS NOT NULL
 		`);
+		return this;
+	}
+
+	getCountByEventID(eid, like) {
+		this.setQuery(`
+			SELECT COUNT(r.*)
+			FROM ${this.getName()} as "r", ${questionName} as "q"
+			WHERE r.question_id = q.id
+				AND q.event_id = ${eid}
+				AND r."like" = ${qh.toDollarQuoted(like)}
+		`);
+		this.setRowReturn(1);
 		return this;
 	}
 

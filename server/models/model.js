@@ -70,6 +70,16 @@ class Model {
 		return this;
 	}
 
+	getCount(info) {
+		this.setQuery(`
+			SELECT COUNT(*)
+			FROM ${this.getName()}
+			${qh.toWhereClause(info)}
+		`);
+		this.setRowReturn(1);
+		return this;
+	}
+
 	createOne(object, { select = '*' } = {}) {
 		this.setQuery(`
 			INSERT INTO ${this.getName()}
