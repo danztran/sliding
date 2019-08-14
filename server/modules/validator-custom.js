@@ -22,7 +22,7 @@ function Validator(locale = defLocale, req = {}, res = {}) {
 		this._data = { ...this._data, ...req.query };
 	}
 	if (req.params) {
-		req.params = { ...this._data, ...req.params };
+		this._data = { ...this._data, ...req.params };
 	}
 	this.$v = {
 		// validate and response if fails
