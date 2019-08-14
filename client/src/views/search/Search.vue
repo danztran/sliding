@@ -81,12 +81,17 @@ export default {
 	},
 	methods: {
 		searchEvent() {
+			const invalidRegex = /\W/gi;
 			if (this.keySearch.value === '') {
 				this.keySearch.errmsg = this.$t('err-empty-inputcode');
 				return;
 			}
-			this.eventInfo = {};
+			if (invalidRegex.test(this.keySearch.value)) {
+				this.keySearch.errmsg = this.$t('err-event-not-found');
+				return;
+			}
 			this.loadingState = 'loading';
+			this.eventInfo = {};
 
 			const params = {
 				code: this.keySearch.value.toLowerCase(),

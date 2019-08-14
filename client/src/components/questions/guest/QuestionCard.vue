@@ -22,7 +22,7 @@
 					<span class="body-1 grey--text font-weight-light">
 						{{ dateQCreated }}
 						<v-chip
-							v-if="isAnswered"
+							v-if="isAnswered && !isXS"
 							v-t="'btn-answered'"
 							class="my-0 is-answered"
 							small
@@ -89,27 +89,29 @@
 		</v-card-title>
 
 		<!-- *footer: count_replies & replies dialog -->
-		<v-layout
-			align-center
-			justify-end :class="{ bganimation, isPinned }">
-			<v-card-actions v-if="!reply" class="py-0">
-				<v-list-tile class="grow">
-					<span
-						class="grey--text text-lighten-2 text-lowercase btn-replies"
-						@click="showDialogReplies(question)">
-						<v-icon size="16" v-text="'$vuetify.icons.guest_reply'" />
-						<span class="caption text-lowercase">
-							{{ question.count_replies || 0 }}&nbsp;
-						</span>
-						<span
-							v-t="question.count_replies > 2
-								? 'btn-reply'
-								: 'btn-replies'"
-							class="caption" />
-					</span>
-				</v-list-tile>
-			</v-card-actions>
-		</v-layout>
+		<v-card-actions v-if="!reply" :class="{ bganimation, isPinned }">
+			<v-chip
+				v-if="isAnswered && isXS"
+				v-t="'btn-answered'"
+				class="ml-3 is-answered"
+				small
+				outline
+				color="success" />
+			<v-spacer />
+			<div
+				class="grey--text text-lighten-2 text-lowercase btn-replies"
+				@click="showDialogReplies(question)">
+				<v-icon size="16" v-text="'$vuetify.icons.guest_reply'" />
+				<span class="caption text-lowercase">
+					{{ question.count_replies || 0 }}&nbsp;
+				</span>
+				<span
+					v-t="question.count_replies > 2
+						? 'btn-reply'
+						: 'btn-replies'"
+					class="caption" />
+			</div>
+		</v-card-actions>
 	</v-card>
 </template>
 

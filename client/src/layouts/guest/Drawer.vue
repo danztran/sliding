@@ -2,7 +2,7 @@
 	<v-navigation-drawer
 		v-model="drawer"
 		width="230"
-		:hide-overlay="!isSMnXS ? true : false"
+		:hide-overlay="!isXS && !drawer"
 		:clipped="!isSMnXS"
 		:stateless="!isSMnXS"
 		fixed
@@ -41,7 +41,7 @@
 
 				<!-- *Switch language -->
 				<v-list-group
-					v-model="dropListLang"
+					v-model="listLanguage"
 					small>
 					<template v-slot:activator>
 						<v-list-tile>
@@ -91,7 +91,7 @@ export default {
 	name: 'Drawer',
 	data: () => ({
 		drawer: true,
-		dropListLang: false,
+		listLanguage: false,
 	}),
 	computed: {
 		...mapGetters({
@@ -115,7 +115,7 @@ export default {
 	methods: {
 		changeLocale(locale) {
 			loadLanguageAsync(locale);
-			this.dropListLang = false;
+			this.listLanguage = false;
 		},
 	},
 };

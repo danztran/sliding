@@ -10,7 +10,7 @@
 				<event-setting-expand--info />
 				<event-setting-expand--privacy />
 				<event-setting-expand--question />
-				<event-setting-expand--poll />
+				<!-- <event-setting-expand--poll /> -->
 				<event-setting-expand--invite />
 			</v-window-item>
 		</template>
@@ -25,7 +25,7 @@
 				:reverse-transition="false"
 				:transition="false">
 				<event-setting-expand--question />
-				<event-setting-expand--poll />
+				<!-- <event-setting-expand--poll /> -->
 			</v-window-item>
 			<v-window-item
 				:reverse-transition="false"
@@ -40,7 +40,7 @@
 import EventSettingInfo from './EventSettingInfo.vue';
 import EventSettingPrivacy from './EventSettingPrivacy.vue';
 import EventSettingQuestion from './EventSettingQuestion.vue';
-import EventSettingPoll from './EventSettingPoll.vue';
+// import EventSettingPoll from './EventSettingPoll.vue';
 import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
 
 export default {
@@ -49,7 +49,7 @@ export default {
 		'event-setting-expand--info': EventSettingInfo,
 		'event-setting-expand--privacy': EventSettingPrivacy,
 		'event-setting-expand--question': EventSettingQuestion,
-		'event-setting-expand--poll': EventSettingPoll,
+		// 'event-setting-expand--poll': EventSettingPoll,
 		'event-setting-expand--invite': EventSettingInviteAdmin,
 	},
 	props: {

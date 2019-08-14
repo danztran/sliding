@@ -2,23 +2,13 @@
 	<v-layout row wrap>
 		<!-- @desc: header: title - show result -->
 		<v-layout
-			class="pl-3 py-2"
+			class="px-3 py-3"
 			align-center
 			justify-space-between
 			row
 			fill-height>
 			<!-- *title: result -->
-			<div v-t="'btn-poll-result'" class="grey--text" />
-
-			<!-- *actions: show dialog poll result -->
-			<v-btn
-				small
-				flat
-				round
-				outline
-				color="grey">
-				<span v-t="'btn-poll-result'" class="first-letter-uppercase" />
-			</v-btn>
+			<div v-t="'btn-poll-result'" class="grey--text pt-1" />
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
