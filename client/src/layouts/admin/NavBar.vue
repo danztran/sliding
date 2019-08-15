@@ -44,7 +44,7 @@
 				<v-spacer class="hidden-xs-only" />
 				<v-list-tile>
 					<v-icon
-						v-if="isXS && onlyHost"
+						v-if="isXS && hostOnly"
 						size="17"
 						color="white"
 						@click="toggleEventSettingDialog"
@@ -81,6 +81,7 @@
 
 					<!-- *analytics -->
 					<v-tab
+						v-if="hostOnly"
 						:to="{ name: 'admin-analytics' }"
 						class="font-weight-regular"
 						active-class="primary--text font-weight-bold">
@@ -99,7 +100,7 @@
 
 				<!-- *event setting -->
 				<v-btn
-					v-if="!isXS && onlyHost"
+					v-if="!isXS && hostOnly"
 					class="mr-1"
 					icon
 					@click="toggleEventSettingDialog">
@@ -130,7 +131,7 @@ export default {
 			eventInfo: 'admin/event/getEventInfo',
 			eventRole: 'admin/event/getRole',
 		}),
-		onlyHost() {
+		hostOnly() {
 			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
 				return true;
 			}

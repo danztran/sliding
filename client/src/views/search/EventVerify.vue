@@ -9,7 +9,10 @@
 		<div class="grey--text text--darken-1">
 			{{ startDate }}
 		</div>
-		<div v-if="eventInfo.description !== ''" class="grey--text text--darken-1 caption pt-2">
+		<div
+			v-if="eventInfo.description !== ''"
+			id="description"
+			class="grey--text text--darken-1 caption pt-2">
 			{{ eventInfo.description }}
 		</div>
 		<v-layout
@@ -20,7 +23,7 @@
 			column>
 			<text-field :field="passcode" />
 		</v-layout>
-		<div class="mt-5">
+		<div>
 			<v-btn
 				color="success"
 				medium
@@ -55,7 +58,7 @@
 		<router-link
 			tag="span"
 			to="/search"
-			class="grey--text text--lighten-1 caption bt-1 hover-pointer to-search">
+			class="grey--text text--lighten-1 caption bt-1 hover-pointer back-to-search">
 			<span v-t="'btn-back-search'" />
 		</router-link>
 
@@ -65,7 +68,6 @@
 			:size="250"
 			level="H"
 			background="transparent" />
-		<span v-t="'qrcode'" class="grey--text caption" />
 	</div>
 </template>
 
@@ -165,7 +167,14 @@ export default {
 
 <style lang="scss">
 .event-verify {
-	.to-search:hover {
+	#description {
+		height: 100px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+	}
+	.back-to-search:hover {
 		color: #777777 !important;
 	}
 	#my-input-passcode {

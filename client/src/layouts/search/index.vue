@@ -43,8 +43,9 @@ $backgroundImg: url(~@/assets/search_bg.svg);
 	max-height: 100vh;
 	overflow: hidden;
 	.search-wrapper {
-		margin-top: 20vh;
+		margin-top: 15vh;
 		width: 400px;
+		height: calc(100vh - 185px);
 	}
 	.page-enter-active, .page-leave-active {
 		transition: all .5s ease-out;

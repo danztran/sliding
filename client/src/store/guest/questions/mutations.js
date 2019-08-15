@@ -12,7 +12,7 @@ const SET_QUESTIONS = (state, questions) => {
 	@socket: emiter 'get-question-replies'
 ------------------------------------------------------------------------*/
 const SET_QUESTION_REPLIES = (state, dataReplies) => {
-	const question = state.questions.find(q => q.id === dataReplies.id);
+	const question = state.questions.find(q => q.id == dataReplies.id);
 	Object.assign(question, { replies: dataReplies.replies });
 };
 
@@ -32,7 +32,7 @@ const ADD_QUESTION = (state, question) => {
 	@source: views/guest/Question.vue
 ------------------------------------------------------------------------*/
 const EDIT_QUESTION = (state, editedQuestion) => {
-	const question = state.questions.find(q => q.id === editedQuestion.id);
+	const question = state.questions.find(q => q.id == editedQuestion.id);
 	Object.assign(question, editedQuestion);
 };
 
@@ -43,7 +43,7 @@ const EDIT_QUESTION = (state, editedQuestion) => {
 	@source: views/guest/Question.vue
 ------------------------------------------------------------------------*/
 const DELETE_QUESTION = (state, delQuestion) => {
-	state.questions = state.questions.filter(q => q.id !== delQuestion.id);
+	state.questions = state.questions.filter(q => q.id != delQuestion.id);
 };
 
 
@@ -64,7 +64,7 @@ const ADD_SUCCESS_QUESTION = (state, question) => {
 	@source: views/guest/Questions.vue
 ------------------------------------------------------------------------*/
 const ADD_QUESTION_REPLY = (state, reply) => {
-	const question = state.questions.find(q => q.id === reply.question_id);
+	const question = state.questions.find(q => q.id == reply.question_id);
 	if (question.replies) {
 		question.replies.push(reply);
 	}
@@ -80,10 +80,11 @@ const ADD_QUESTION_REPLY = (state, reply) => {
 	@source: cpn/questions/guest/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
-	const question = state.questions.find(q => q.id === tempReply.question_id);
+	const question = state.questions.find(q => q.id == tempReply.question_id);
 	if (!question) return;
 	question.replies = question.replies || [];
 	question.replies.push(tempReply.data);
+	question.count_replies = Number(question.count_replies) + 1;
 };
 
 
@@ -94,8 +95,8 @@ const ADD_TEMP_QUESTION_REPLY = (state, tempReply) => {
 	@source: cpn/questions/guest/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
-	const question = state.questions.find(q => q.id === resReply.question_id);
-	const reply = question.replies.find(rl => rl.id === resReply.temp_id);
+	const question = state.questions.find(q => q.id == resReply.question_id);
+	const reply = question.replies.find(rl => rl.id == resReply.temp_id);
 	delete resReply.temp_id;
 	Object.assign(reply, resReply);
 };
@@ -108,9 +109,9 @@ const MERGE_SUCCESS_QUESTION_REPLY = (state, resReply) => {
 	@source: views/guest/Questions.vue
 ------------------------------------------------------------------------*/
 const MERGE_EDIT_REPLY = (state, resReply) => {
-	const question = state.questions.find(q => q.id === resReply.question_id);
+	const question = state.questions.find(q => q.id == resReply.question_id);
 	if (!question.replies) return;
-	const reply = question.replies.find(rl => rl.id === resReply.id);
+	const reply = question.replies.find(rl => rl.id == resReply.id);
 	Object.assign(reply, resReply);
 };
 
@@ -121,8 +122,9 @@ const MERGE_EDIT_REPLY = (state, resReply) => {
 	@source: cpn/questions/guest/QuestionReplyDialog.vue
 ------------------------------------------------------------------------*/
 const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
-	const question = state.questions.find(q => q.id === infoErrReply.question_id);
-	question.replies = question.replies.filter(r => r.id !== infoErrReply.temp_id);
+	const question = state.questions.find(q => q.id == infoErrReply.question_id);
+	question.replies = question.replies.filter(r => r.id != infoErrReply.temp_id);
+	question.count_replies = Number(question.count_replies) - 1;
 };
 
 
@@ -133,9 +135,9 @@ const DELETE_ERROR_QUESTION_REPLY = (state, infoErrReply) => {
 	@source: views/guest/Questions.vue
 ------------------------------------------------------------------------*/
 const DELETE_QUESTION_REPLY = (state, res) => {
-	const question = state.questions.find(q => q.id === res.question_id);
+	const question = state.questions.find(q => q.id == res.question_id);
 	if (question.replies) {
-		question.replies = question.replies.filter(rl => rl.id !== res.id);
+		question.replies = question.replies.filter(rl => rl.id != res.id);
 	}
 	else {
 		question.count_replies = Number(question.count_replies) - 1;
@@ -152,13 +154,13 @@ const DELETE_QUESTION_REPLY = (state, res) => {
 	@source: views/guest/Questions.vue
 ------------------------------------------------------------------------*/
 const MERGE_QUESTION_REACTION = (state, react) => {
-	const question = state.questions.find(q => Number(q.id) === Number(react.question_id));
+	const question = state.questions.find(q => q.id == react.question_id);
 	if (!question.reactions) {
 		question.reactions = [];
 		question.reactions.push(react);
 	}
 	else {
-		const reaction = question.reactions.find(r => Number(r.user_id) === Number(react.user_id));
+		const reaction = question.reactions.find(r => r.user_id == react.user_id);
 		if (reaction) {
 			Object.assign(reaction, { like: react.like });
 		}

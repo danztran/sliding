@@ -69,7 +69,7 @@ export default {
 			delQuestion: 'guest/questions/DELETE_QUESTION',
 			addQuestionReply: 'guest/questions/ADD_QUESTION_REPLY',
 			mergeQuestionReply: 'guest/questions/MERGE_EDIT_REPLY',
-			mergeQuestionReaction: 'guest/questions/MERGE_QUESTION_REACTIONS',
+			mergeQuestionReaction: 'guest/questions/MERGE_QUESTION_REACTION',
 			deleteQuestionReply: 'guest/questions/DELETE_QUESTION_REPLY',
 		}),
 	},

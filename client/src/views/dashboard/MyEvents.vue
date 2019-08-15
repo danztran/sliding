@@ -8,7 +8,7 @@
 			align-center>
 			<template v-if="!loading && !isEmpty">
 				<!-- *event being activated -->
-				<div v-t="'event-status'" />
+				<div v-t="'event-list'" />
 
 				<div class="d-flex">
 					<!-- *button create event -->

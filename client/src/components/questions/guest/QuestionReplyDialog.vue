@@ -2,20 +2,17 @@
 	<v-dialog
 		v-model="dialogReplyQuestion"
 		max-width="550px"
-		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
 			<v-card-title class="pr-0 py-1">
-				<template v-if="isSMnXS">
-					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
-					</v-btn>
-				</template>
-				<!-- @desc: title -->
+				<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
+					<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
+				</v-btn>
+				<!-- dialog title -->
 				<span v-else v-t="'dialog-reply-question-guest-title'" />
 
 				<v-spacer />
-				<!-- @desc: button close -->
+				<!-- close dialog -->
 				<v-btn
 					v-if="!isSMnXS"
 					icon
@@ -46,7 +43,7 @@
 
 				<!-- @desc: reply field -->
 				<v-divider />
-				<v-card-actions style="padding: 5px 24px;">
+				<v-card-actions>
 					<!-- <div @keydown.enter.capture.prevent.stop> -->
 					<text-area class="field-reply"
 						:field="form.reply"
@@ -57,7 +54,7 @@
 						flat
 						icon
 						color="primary"
-						:disabled="checkValidReply || !allowQReply"
+						:disabled="isValidReply || !allowQReply"
 						@click="sendReply">
 						<v-icon v-text="'$vuetify.icons.send'" />
 					</v-btn>
@@ -120,7 +117,7 @@ export default {
 			allowQReply: 'guest/event/allowQReply',
 			user: 'auth/user',
 		}),
-		checkValidReply() {
+		isValidReply() {
 			const { reply } = this.form;
 			if (reply.value && reply.value.length > reply.counter) {
 				reply.errmsg = this.$t('err-reply-limit');
@@ -274,7 +271,7 @@ export default {
 	}
 
 	.max-height-sm-down {
-		height: calc(100vh - 52px);
+		height: calc(100vh - 60px);
 		display: flex;
 		flex-direction: column;
 	}

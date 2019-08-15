@@ -30,39 +30,6 @@
 						{{ eventDate }}
 					</v-list-tile-sub-title>
 				</v-list-tile-content>
-
-				<!-- *Actions -->
-				<v-list-tile-action>
-					<!-- *QRCode/Delete -->
-					<v-menu offset-y left>
-						<template #activator="{ on: menu }">
-							<v-tooltip top>
-								<template #activator="{ on: tooltip }">
-									<v-icon
-										class="iconHover"
-										size="23"
-										v-on="{ ...tooltip, ...menu }"
-										v-text="'$vuetify.icons.more_vert'" />
-								</template>
-								<span v-t="'action-tooltip'" />
-							</v-tooltip>
-						</template>
-
-						<!-- *delete event -->
-						<v-list class="py-0 custom-list" dense>
-							<v-list-tile @click="deleteEvent">
-								<v-list-tile-action>
-									<v-icon small v-text="'$vuetify.icons.delete'" />
-								</v-list-tile-action>
-								<v-list-tile-content>
-									<v-list-tile-title
-										v-t="'btn-delete'"
-										class="first-letter-uppercase" />
-								</v-list-tile-content>
-							</v-list-tile>
-						</v-list>
-					</v-menu>
-				</v-list-tile-action>
 			</v-list-tile>
 		</v-list>
 	</v-card>
@@ -97,9 +64,6 @@ export default {
 		toEventLive() {
 			const { code } = this.info;
 			this.$router.push({ name: 'admin-event', params: { code } });
-		},
-		deleteEvent() {
-			// ...
 		},
 	},
 };

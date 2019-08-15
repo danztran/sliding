@@ -3,24 +3,20 @@
 		id="reply-question-dialog"
 		v-model="dialogReplyQuestion"
 		max-width="550px"
-		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card>
 			<v-card-title class="pr-0 py-1">
-				<!-- @desc: show back button
-									hide title in small device -->
-				<template v-if="isSMnXS">
-					<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
-						<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
-					</v-btn>
-				</template>
-				<!-- @desc: title -->
+				<!-- close dialog in small device -->
+				<v-btn v-if="isSMnXS" icon @click="dialogReplyQuestion=false">
+					<v-icon :size="icon.sm" v-text="'$vuetify.icons.arrow_left'" />
+				</v-btn>
+				<!-- dialog title -->
 				<template v-else>
 					<span v-if="!isSMnXS" v-t="'dialog-reply-question-title'" />
 				</template>
 
 				<v-spacer />
-				<!-- @desc: button close -->
+				<!-- close dialog -->
 				<v-btn
 					v-if="!isSMnXS"
 					icon
@@ -32,7 +28,7 @@
 			</v-card-title>
 			<v-divider />
 
-			<!-- @desc: Replies message -->
+			<!-- list replies -->
 			<div class="max-height-sm-down">
 				<div
 					id="qrd"
@@ -52,19 +48,18 @@
 					</div>
 				</div>
 
-				<!-- @desc: textarea for reply -->
+				<!-- reply field -->
 				<v-divider />
 				<v-card-actions style="padding: 5px 24px;">
-					<!-- <div @keydown.enter.capture.prevent.stop> -->
 					<text-area class="field-reply"
 						:field="form.reply"
 						@keydown.native.enter.capture="onReplyEnter" />
-					<!-- </div> -->
+
 					<v-btn
 						flat
 						icon
 						color="primary"
-						:disabled="checkValidReply"
+						:disabled="isValidReply"
 						@click="sendReply">
 						<v-icon v-text="'$vuetify.icons.send'" />
 					</v-btn>
@@ -125,7 +120,7 @@ export default {
 			getQuestionReplies: 'admin/questions/getQuestionReplies',
 			user: 'auth/user',
 		}),
-		checkValidReply() {
+		isValidReply() {
 			const { reply } = this.form;
 			if (reply.value && reply.value.length > reply.counter) {
 				reply.errmsg = this.$t('err-reply-limit');

@@ -1,35 +1,68 @@
 <template>
 	<div>
-		<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
-		<div v-t="'ana-title'" class="subheading first-letter-uppercase mx-3 my-2" />
+		<template v-if="hostOnly">
+			<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
+			<div v-t="'ana-title'" class="subheading first-letter-uppercase mx-3 my-2" />
 
-		<v-layout align-center justify-space-between wrap fill-height>
-			<!-- *Active users -->
-			<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
-				<card--over-view
-					icon="group_people"
-					:info="cards.activeUsers"
-					:header-count="analytics.roles" />
+			<v-layout
+				align-center
+				justify-space-between
+				wrap
+				fill-height>
+				<!-- *Active users -->
+				<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
+					<card--over-view
+						icon="group_people"
+						:info="cards.activeUsers"
+						:header-count="analytics.roles" />
+				</v-flex>
+
+				<!-- *Questions -->
+				<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
+					<card--over-view
+						question
+						icon="questions"
+						:info="cards.questions"
+						:header-count="analytics.questions"
+						:f-title-count="analytics.likes"
+						:f-sub-title-count="analytics.dislikes"
+						:s-title-count="analytics.replies" />
+				</v-flex>
+
+				<!-- *Polls -->
+				<v-flex md4 xs12 :pl-1="!isXS">
+					<card--over-view
+						icon="polls"
+						:info="cards.polls"
+						:header-count="analytics.polls" />
+				</v-flex>
+			</v-layout>
+		</template>
+
+		<v-layout
+			v-else
+			:wrap="!isXS"
+			:column="isXS"
+			align-center
+			justify-center>
+			<v-flex xs12 md7 order-md2>
+				<img class="mt-4" :src="require('@/assets/no_data.svg')">
 			</v-flex>
-
-			<!-- *Questions -->
-			<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
-				<card--over-view
-					question
-					icon="questions"
-					:info="cards.questions"
-					:header-count="analytics.questions"
-					:f-title-count="analytics.likes"
-					:f-sub-title-count="analytics.dislikes"
-					:s-title-count="analytics.replies" />
-			</v-flex>
-
-			<!-- *Polls -->
-			<v-flex md4 xs12 :pl-1="!isXS">
-				<card--over-view
-					icon="polls"
-					:info="cards.polls"
-					:header-count="analytics.polls" />
+			<v-flex
+				class="text-xs-center"
+				xs12
+				md5
+				order-md1>
+				<div
+					v-t="'err-permission-analytic'"
+					class="headline font-weight-light" />
+				<v-btn
+					v-t="'btn-back-event'"
+					round
+					small
+					class="mt-3 px-3"
+					color="primary"
+					@click="backToEvent" />
 			</v-flex>
 		</v-layout>
 	</div>
@@ -78,12 +111,20 @@ export default {
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
+			role: 'admin/event/getRole',
 		}),
-	},
-	created() {
-		if (this.eventInfo) {
-			this.getEventAnalytic();
-		}
+		hostOnly() {
+			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
+				return true;
+			}
+			return false;
+		},
+		fetchAnalytic() {
+			if (this.hostOnly) {
+				this.getEventAnalytic();
+			}
+			return false;
+		},
 	},
 	methods: {
 		getEventAnalytic() {
@@ -94,6 +135,12 @@ export default {
 					console.warn(res.data);
 				})
 				.catch(err => console.warn(err));
+		},
+		backToEvent() {
+			this.$router.push({
+				name: 'admin-event',
+				params: { code: this.eventInfo.code },
+			});
 		},
 	},
 };

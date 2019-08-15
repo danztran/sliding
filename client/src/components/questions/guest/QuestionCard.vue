@@ -103,7 +103,9 @@
 				@click="showDialogReplies(question)">
 				<v-icon size="16" v-text="'$vuetify.icons.guest_reply'" />
 				<span class="caption text-lowercase">
-					{{ question.count_replies || 0 }}&nbsp;
+					{{ question.replies
+						? `${question.replies.length}&nbsp;`
+						: `${question.count_replies}&nbsp;` }}
 				</span>
 				<span
 					v-t="question.count_replies > 2
@@ -139,6 +141,7 @@ export default {
 					id: null,
 					name: '',
 				},
+				replies: [],
 			}),
 		},
 	},
@@ -240,7 +243,6 @@ export default {
 	}
 
 	.is-answered {
-		// font-size: 12px;
 		&::before {
 			content: '(';
 		}
@@ -262,39 +264,5 @@ export default {
 	.isPinned {
 		background: rgba(162, 209, 218, 0.231372549) !important;
 	}
-
-	// .bganimation {
-	// 	-webkit-animation-name: color-transition;
-	// 	animation-name: color-transition;
-	// 	-webkit-animation-duration: 4s;
-	// 	animation-duration: 4s;
-	// 	-webkit-animation-direction: alternate;
-	// 	animation-direction: alternate;
-	// 	-webkit-animation-iteration-count: infinite;
-	// 	animation-iteration-count: infinite;
-	// 	-webkit-animation-timing-function: linear;
-	// 	animation-timing-function: linear;
-	// }
-
-	// @-webkit-keyframes color-transition {
-	// 	0% {
-	// 		background-color: rgba(125, 209, 206, 0);
-	// 		border-color: #7dd1ce;
-	// 	}
-	// 	100% {
-	// 		background-color: rgba(125, 209, 206, 1);
-	// 		border-color: #f5feff;
-	// 	}
-	// }
-	// @keyframes color-transition {
-	// 	0% {
-	// 		background-color: rgba(125, 209, 206, 0);
-	// 		border-color: #7dd1ce;
-	// 	}
-	// 	100% {
-	// 		background-color: rgba(125, 209, 206, 1);
-	// 		border-color: #f5feff;
-	// 	}
-	// }
 }
 </style>

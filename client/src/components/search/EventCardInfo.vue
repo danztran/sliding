@@ -22,7 +22,7 @@
 
 					<v-spacer />
 
-					<v-list-tile-action v-if="hover">
+					<v-list-tile-action v-if="hover || isSMnXS">
 						<v-btn flat icon color="primary">
 							<v-icon v-text="'$vuetify.icons.arrow_forward'" />
 						</v-btn>

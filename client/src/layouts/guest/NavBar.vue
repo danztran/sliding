@@ -70,7 +70,8 @@
 			</v-container>
 		</v-toolbar>
 		<v-tabs
-			class="hidden-md-and-up"
+			v-if="isSMnXS"
+			class="mt-5"
 			color="primary"
 			centered
 			dark
