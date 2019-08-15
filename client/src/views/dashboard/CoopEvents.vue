@@ -87,20 +87,7 @@
 		<div v-if="loading || isEmpty" style="height: 70vh; width: 100%;">
 			<bouncy-loader v-show="loading" />
 			<div v-show="isEmpty" class="empty-state mt-3">
-				<v-layout align-center justify-center column>
-					<div
-						v-t="'coop-empty'"
-						class="title font-weight-light first-letter-uppercase" />
-					<v-btn
-						class="mt-3"
-						color="primary"
-						dark
-						round
-						medium
-						@click.stop="toggleDialogInvite">
-						<span v-t="'btn-dialog-invite'" class="px-3" />
-					</v-btn>
-				</v-layout>
+				<empty-state--invites />
 			</div>
 		</div>
 	</div>
@@ -108,12 +95,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import EmptyCoop from '@/components/dashboard/coop-events/EmptyCoop.vue';
 import EventCard from '@/components/dashboard/coop-events/EventCard.vue';
 
 export default {
 	name: 'CoopEvents',
 	components: {
 		'event--card': EventCard,
+		'empty-state--invites': EmptyCoop,
 	},
 	data: () => ({
 		orderBy: 'desc',
