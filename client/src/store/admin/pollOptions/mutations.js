@@ -98,6 +98,7 @@ const EDIT_POLL_OPTION_CHOICES = (state, choices) => {
 				option.choices.push(choices[choiceIdx]);
 			}
 		}
+		state.pollOptions = [...pollOptions];
 
 		// check poll result available, check result pollID same as current poll option editted
 		if (state.pollResult.poll

@@ -26,7 +26,7 @@
 						<span class="body-1 font-weight-light d-flex">
 							<span v-t="'poll-count'" />
 							&nbsp;
-							{{ countUsersChoice || 0 }}
+							{{ countUsersChoice }}
 							&nbsp;
 							<v-icon
 								v-if="poll.is_locked"
