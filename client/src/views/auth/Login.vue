@@ -56,7 +56,7 @@
 						<span v-t="'loginFormTitle'" class="px-3" />
 					</v-btn>
 					<span v-t="'or'" class="grey--text" />
-					<v-btn flat outline round small color="primary" class="px-3" href="/auth/outlook">
+					<v-btn flat outline round small color="primary" class="px-3" href="/api/auth/outlook">
 						<span v-t="'login-microsoft'" class="primary--text px-3" />
 						&nbsp;
 						<img :src="require('@/assets/microsoft_logo.svg')">
