@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import DialogHandlePoll from '@/components/polls/admin/DialogHandlePoll.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
 import PollResultPanel from '@/components/polls/admin/PollResultPanel.vue';
@@ -25,24 +25,17 @@ export default {
 		'poll-panel--list': PollListPanel,
 		'poll-panel--result': PollResultPanel,
 	},
-	computed: {
-		...mapGetters({
-			polls: 'admin/polls/getPolls',
-		}),
-	},
 	created() {
-		if (this.polls.length === 0) {
-			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
-				if (!polls) {
-					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
-					}
-					return;
+		this.$socket.emit('get-polls', ({ errmsg, polls }) => {
+			if (!polls) {
+				if (errmsg) {
+					this.showNotify(errmsg, 'danger');
 				}
-				this.setPolls(polls);
-				this.emitGetAllPollOpts();
-			});
-		}
+				return;
+			}
+			this.setPolls(polls);
+			this.emitGetAllPollOpts();
+		});
 	},
 	sockets: {
 		new_added_poll(poll) {

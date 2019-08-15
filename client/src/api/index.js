@@ -12,6 +12,7 @@ export default {
 		query: '/api/event/query',
 		create: '/api/event/create',
 		search: '/api/event/find',
+		analytic: '/api/analytic/event',
 	},
 	role: {
 		query: '/api/role/query',

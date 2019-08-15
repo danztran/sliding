@@ -8,7 +8,8 @@
 			<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
 				<card--over-view
 					icon="group_people"
-					:info="cards.activeUsers" />
+					:info="cards.activeUsers"
+					:header-count="analytics.roles" />
 			</v-flex>
 
 			<!-- *Questions -->
@@ -17,9 +18,10 @@
 					question
 					icon="questions"
 					:info="cards.questions"
-					:header-count="questions.length"
-					:f-title-count="countQuestionReactions.likes"
-					:f-sub-title-count="countQuestionReactions.dislikes" />
+					:header-count="analytics.questions"
+					:f-title-count="analytics.likes"
+					:f-sub-title-count="analytics.dislikes"
+					:s-title-count="analytics.replies" />
 			</v-flex>
 
 			<!-- *Polls -->
@@ -27,16 +29,14 @@
 				<card--over-view
 					icon="polls"
 					:info="cards.polls"
-					:header-count="countAllVotes"
-					:f-title-count="polls.length"
-					:s-title-count="votePerPoll" />
+					:header-count="analytics.polls" />
 			</v-flex>
 		</v-layout>
 	</div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters } from 'vuex';
 import OverViewCard from '@/components/analytics/OverViewCard.vue';
 const initCard = () => ({
 	activeUsers: {
@@ -49,7 +49,7 @@ const initCard = () => ({
 		color: 'orange',
 		header: 'ana-questions',
 		fTitle: 'ana-questions-react',
-		sTitle: 'ana-questions-anonymous',
+		sTitle: 'ana-questions-replies',
 	},
 	polls: {
 		color: 'green',
@@ -66,120 +66,34 @@ export default {
 	},
 	data: () => ({
 		cards: initCard(),
+		analytics: {
+			dislikes: '0',
+			likes: '0',
+			polls: '0',
+			questions: '0',
+			replies: '0',
+			roles: '0',
+		},
 	}),
 	computed: {
 		...mapGetters({
-			questions: 'admin/questions/getQuestions',
-			polls: 'admin/polls/getPolls',
-			pollOptions: 'admin/pollOptions/getAllPollOptions',
+			eventInfo: 'admin/event/getEventInfo',
 		}),
-		formatPolls() {
-			let rs = {};
-			if (this.pollOptions.length !== 0
-				&& this.pollOptions[0].choices) {
-				rs = this.pollOptions.reduce((obj, opt) => {
-					if (obj[opt.poll_id] === undefined) {
-						obj[opt.poll_id] = opt.choices.length;
-					}
-					obj[opt.poll_id] += opt.choices.length;
-					return obj;
-				}, {});
-			}
-			return rs;
-		},
-		countAllVotes() {
-			let count = 0;
-			for (const key of Object.keys(this.formatPolls)) {
-				count += this.formatPolls[key];
-			}
-			return count;
-		},
-		votePerPoll() {
-			let max = 0;
-			for (const key of Object.keys(this.formatPolls)) {
-				if (this.formatPolls[key] > max) {
-					max = this.formatPolls[key];
-				}
-			}
-			return max;
-		},
-		countQuestionReactions() {
-			let likes = 0;
-			let dislikes = 0;
-			if (this.questions.length !== 0) {
-				const listReactions = [];
-				for (const question of this.questions) {
-					if (question.reactions) {
-						listReactions.push(...question.reactions);
-					}
-				}
-				for (const reaction of listReactions) {
-					if (reaction.like) {
-						likes += 1;
-					}
-					else {
-						dislikes += 1;
-					}
-				}
-			}
-			return { likes, dislikes };
-		},
 	},
 	created() {
-		if (this.questions.length === 0) {
-			this.$socket.emit('get-questions', ({ errmsg, questions }) => {
-				if (errmsg) {
-					this.showNotify(errmsg, 'danger');
-					return;
-				}
-				this.setQuestions(questions);
-			});
-		}
-		if (this.polls.length === 0) {
-			this.$socket.emit('get-polls', ({ errmsg, polls }) => {
-				if (!polls) {
-					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
-					}
-					return;
-				}
-				this.setPolls(polls);
-				this.emitGetAllPollOpts();
-			});
+		if (this.eventInfo) {
+			this.getEventAnalytic();
 		}
 	},
 	methods: {
-		...mapMutations({
-			setQuestions: 'admin/questions/SET_QUESTIONS',
-			setPolls: 'admin/polls/SET_POLLS',
-			setPollOptions: 'admin/pollOptions/SET_POLL_OPTIONS',
-			setPollOptionChoices: 'admin/pollOptions/SET_POLL_OPTION_CHOICES',
-		}),
-		emitGetAllPollOpts() {
-			const emiter = 'get-all-poll-options';
-			this.$socket.emit(emiter, ({ errmsg, poll_options }) => {
-				if (!poll_options) {
-					if (errmsg) {
-						// ...
-					}
-					return;
-				}
-				this.setPollOptions(poll_options);
-				this.emitGetAllOptChoices();
-			});
-		},
-		emitGetAllOptChoices() {
-			const emiter = 'get-all-poll-option-choices';
-			this.$socket.emit(emiter, ({ errmsg, choices }) => {
-				if (!choices) {
-					if (errmsg) {
-						this.showNotify(errmsg, 'danger');
-					}
-					return;
-				}
-				// console.warn(choices);
-				this.setPollOptionChoices(choices);
-			});
+		getEventAnalytic() {
+			this.$axios
+				.get(`${this.$api.event.analytic}/${this.eventInfo.code}`)
+				.then((res) => {
+					Object.assign(this.analytics, res.data);
+					console.warn(res.data);
+				})
+				.catch(err => console.warn(err));
 		},
 	},
 };

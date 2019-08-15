@@ -28,9 +28,6 @@
 			<div class="d-flex">
 				<span v-t="info.sTitle" class="first-letter-uppercase grey--text text--lighten-1" />
 				<span class="text-xs-right font-weight-bold" v-text="sTitleCount" />
-				<template v-if="question">
-					%
-				</template>
 			</div>
 		</v-card-text>
 	</v-card>
@@ -58,20 +55,20 @@ export default {
 			default: 'group_people',
 		},
 		headerCount: {
-			type: Number,
-			default: 0,
+			type: String,
+			default: '0',
 		},
 		fTitleCount: {
-			type: Number,
-			default: 0,
+			type: String,
+			default: '0',
 		},
 		fSubTitleCount: {
-			type: Number,
-			default: 0,
+			type: String,
+			default: '0',
 		},
 		sTitleCount: {
-			type: Number,
-			default: 0,
+			type: String,
+			default: '0',
 		},
 	},
 };
