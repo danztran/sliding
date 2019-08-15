@@ -28,7 +28,7 @@ class EventRoleModel extends Model {
 				r.updated_at
 			FROM
 				${this.getName()} as "r",
-				${User.getName()} as "u" 
+				${User.getName()} as "u"
 			WHERE
 				r.event_id = ${qh.toDollarQuoted(eid)}
 				AND r.user_id = u.id
@@ -49,9 +49,9 @@ class EventRoleModel extends Model {
 				e.*,
 				row_to_json(r) AS "role",
 				row_to_json(u) AS "user"
-			FROM 
-				${Event.getName()} as "e", 
-				(SELECT id, name from ${User.getName()}) as "u", 
+			FROM
+				${Event.getName()} as "e",
+				(SELECT id, name from ${User.getName()}) as "u",
 				${this.getName()} as "r"
 			WHERE
 				e.id = r.event_id
@@ -78,9 +78,9 @@ class EventRoleModel extends Model {
 				r.*,
 				row_to_json(e) AS "event",
 				row_to_json(u) AS "user"
-			FROM 
-				${Event.getName()} as "e", 
-				(SELECT id, name from ${User.getName()}) as "u", 
+			FROM
+				${Event.getName()} as "e",
+				(SELECT id, name from ${User.getName()}) as "u",
 				${this.getName()} as "r"
 			WHERE
 				e.id = r.event_id
@@ -94,6 +94,20 @@ class EventRoleModel extends Model {
 			${qh.toOffsetClause(offset)}
 		`);
 		this.setRowReturn(0);
+		return this;
+	}
+
+	findByEventCode(ecode, role) {
+		this.setQuery(`
+			SELECT r.*
+			FROM ${Event.getName()} as "e",
+				${this.getName()} as "r"
+			WHERE
+				e.id = r.event_id
+				AND e.code = ${qh.toDollarQuoted(ecode)}
+				AND r.role = ${qh.toDollarQuoted(role)}
+		`);
+		this.setRowReturn(1);
 		return this;
 	}
 
