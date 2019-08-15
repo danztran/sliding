@@ -100,16 +100,16 @@ module.exports = {
 				delete io.$state.events[code];
 			},
 			removeEventIfNoClient({ code }) {
-				const event = io.$state.events[code];
-				if ((
-					event
-					&& io.sockets.adapter.rooms
-					&& !io.sockets.adapter.rooms[event.rooms.main]
-				)
-					||	!io.sockets.adapter.rooms
-				) {
-					delete io.$state.events[code];
-				}
+				// const event = io.$state.events[code];
+				// if ((
+				// 	event
+				// 	&& io.sockets.adapter.rooms
+				// 	&& !io.sockets.adapter.rooms[event.rooms.main]
+				// )
+				// 	||	!io.sockets.adapter.rooms
+				// ) {
+				// 	delete io.$state.events[code];
+				// }
 			},
 		};
 	},
