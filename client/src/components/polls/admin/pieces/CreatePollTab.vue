@@ -194,6 +194,9 @@ export default {
 				max_choices: this.form.limit.value,
 				content: this.form.ask.value,
 			};
+			if (!this.selectMultiple) {
+				pollContent.max_choices = 1;
+			}
 			this.loadingState = 'loading';
 			this.$socket.emit(emiter, pollContent, ({ errmsg, poll }) => {
 				if (!poll) {
@@ -220,6 +223,7 @@ export default {
 			}
 			this.loadingState = 'success';
 			this.showNotify(this.$t('poll-create-success'), 'success');
+			this.closeDialog();
 		},
 	},
 };

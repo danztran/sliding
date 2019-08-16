@@ -2,7 +2,18 @@
 	<div>
 		<empty--state-poll v-if="!polls.length" />
 		<template v-else>
-			<div v-t="'poll-live-title'" class="mx-3 my-2 body-1 grey--text" />
+			<div class="d-flex">
+				<span v-t="'poll-live-title'" class="mx-3 my-2 body-1 grey--text" />
+
+				<v-spacer />
+
+				<v-chip id="users-online" small label color="primary" text-color="white">
+					<span class="font-weight-bold">
+						{{ onlineUsers }}
+					</span>
+					<v-icon small right v-text="'$vuetify.icons.group_people'" />
+				</v-chip>
+			</div>
 
 			<card--poll
 				v-for="poll in polls"
@@ -26,6 +37,7 @@ export default {
 	computed: {
 		...mapGetters({
 			polls: 'guest/polls/getPolls',
+			onlineUsers: 'guest/event/getOnlineUsers',
 		}),
 	},
 	created() {

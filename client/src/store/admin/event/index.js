@@ -10,6 +10,7 @@ const state = {
 	eventInfo: null,
 	role: null,
 	tempSettings: {},
+	onlineUsers: 0,
 };
 
 export default {

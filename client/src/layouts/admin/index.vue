@@ -108,6 +108,9 @@ export default {
 		new_removed_admin(response) {
 			console.warn('remove moderator: ', response);
 		},
+		new_updated_online_users(onlineUsers) {
+			this.updateOnlineUsers(onlineUsers);
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -116,6 +119,7 @@ export default {
 			mergeAdminCurrentEvent: 'admin/event/MERGE_CURRENT_EVENT',
 			mergeResponseInvite: 'admin/event/MERGE_RESPONSE_INVITE',
 			resetEvent: 'admin/event/RESET',
+			updateOnlineUsers: 'admin/event/UPDATE_ONLINE_USERS',
 			resetQuestions: 'admin/questions/RESET',
 			resetPolls: 'admin/polls/RESET',
 			resetPollOptions: 'admin/pollOptions/RESET',

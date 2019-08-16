@@ -91,6 +91,9 @@ export default {
 		new_edited_event(newSettings) {
 			this.mergeGuestCurrentEvent(newSettings);
 		},
+		new_updated_online_users(onlineUsers) {
+			this.updateOnlineUsers(onlineUsers);
+		},
 	},
 	methods: {
 		...mapMutations({
@@ -99,6 +102,7 @@ export default {
 			setQuestions: 'guest/questions/SET_QUESTIONS',
 			mergeGuestCurrentEvent: 'guest/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'guest/event/RESET',
+			updateOnlineUsers: 'admin/event/UPDATE_ONLINE_USERS',
 			resetQuestions: 'guest/questions/RESET',
 			resetPolls: 'guest/polls/RESET',
 		}),

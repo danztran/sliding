@@ -242,12 +242,19 @@ export default {
 			if (this.checkValidPoll()) {
 				const { form } = this;
 				// check change info
+				const newInfo = {};
+				if (!this.selectMultiple) {
+					newInfo.max_choices = 1;
+				}
 				if (form.ask.value !== this.poll.content
 					|| form.limit.value !== this.poll.max_choices) {
+					newInfo.content = form.ask.value;
+					newInfo.max_choices = form.limit.value;
+				}
+				if (Object.keys(newInfo).length > 0) {
 					this.setEditPollInfo({
 						id: this.poll.id,
-						content: form.ask.value,
-						max_choices: form.limit.value,
+						...newInfo,
 					});
 				}
 			}

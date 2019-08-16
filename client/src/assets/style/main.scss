@@ -58,6 +58,10 @@ html, body {
 	cursor: pointer;
 };
 
+#users-online {
+	max-width: 50px;
+}
+
 .word-break {
 	white-space: pre-wrap;
 	white-space: -moz-pre-wrap;

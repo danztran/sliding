@@ -38,7 +38,7 @@
 
 					<v-list-tile-action>
 						<v-list-tile>
-							<template v-if="hover">
+							<template v-if="hover || isSMnXS">
 								<!-- *ops: allow voting -->
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on }">
@@ -168,6 +168,10 @@ export default {
 		},
 		handleGetPollResult() {
 			const pollResult = {};
+			// if small device show dialog result
+			if (this.isSMnXS) {
+				this.$root.$emit('dialog-poll-result');
+			}
 			if (this._cm.notEmpty(this.getPollResult)
 				&& this.getPollResult.poll.id == this.poll.id) {
 				return;

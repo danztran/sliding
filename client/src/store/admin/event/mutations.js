@@ -8,6 +8,7 @@ const SET_CURRENT_EVENT = (state, resData) => {
 	state.eventInfo = resData.event;
 	state.role = resData.role;
 	state.tempSettings = resData.event;
+	state.onlineUsers = resData.onlineUsers;
 };
 
 
@@ -61,12 +62,23 @@ const MERGE_RESPONSE_INVITE = (state, response) => {
 
 
 /* ------------------------------------------------------------------------
+	@desc: new user join, then update
+	@socket: listen 'new_updated_online_users'
+	@source: layouts/admin/index.vue
+------------------------------------------------------------------------*/
+const UPDATE_ONLINE_USERS = (state, onlUsers) => {
+	state.onlineUsers = onlUsers;
+};
+
+
+/* ------------------------------------------------------------------------
 	@desc: after leave event or logout
 ------------------------------------------------------------------------*/
 const RESET = (state) => {
 	state.eventInfo = null;
 	state.role = null;
 	state.tempSettings = {};
+	state.onlineUsers = 0;
 };
 
 export default {
@@ -76,5 +88,6 @@ export default {
 	ADD_MODERATOR,
 	DELETE_MODERATOR,
 	MERGE_RESPONSE_INVITE,
+	UPDATE_ONLINE_USERS,
 	RESET,
 };

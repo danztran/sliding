@@ -2,12 +2,24 @@
 	<v-layout row wrap>
 		<!-- @desc: title - actions create -->
 		<v-layout
-			class="pl-3 py-2"
+			class="px-3 py-2"
 			row
 			justify-space-between
 			align-center>
 			<!-- *title: List poll -->
-			<div v-t="'poll-list-view-title'" class="pt-1 body-1 grey--text" />
+			<div v-t="'poll-list-view-title'" class="pt-1 body-1 grey--text hidden-sm-and-down" />
+			<v-chip
+				id="users-online"
+				small
+				label
+				class="hidden-md-and-up"
+				color="primary"
+				text-color="white">
+				<span class="font-weight-bold">
+					{{ onlineUsers }}
+				</span>
+				<v-icon small right v-text="'$vuetify.icons.group_people'" />
+			</v-chip>
 
 			<div class="d-flex">
 				<!-- *create poll -->
@@ -102,6 +114,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			onlineUsers: 'admin/event/getOnlineUsers',
 			polls: 'admin/polls/getPolls',
 		}),
 	},

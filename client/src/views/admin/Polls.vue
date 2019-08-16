@@ -5,16 +5,18 @@
 				<poll-panel--list />
 			</v-flex>
 			<v-flex class="pl-1" xs12 md6>
-				<poll-panel--result />
+				<poll-panel--result v-if="!isSMnXS" />
 			</v-flex>
 		</v-layout>
 		<dialog--handle-poll />
+		<dialog--poll-result />
 	</div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
 import DialogHandlePoll from '@/components/polls/admin/DialogHandlePoll.vue';
+import DialogPollResult from '@/components/polls/admin/DialogPollResult.vue';
 import PollListPanel from '@/components/polls/admin/PollListPanel.vue';
 import PollResultPanel from '@/components/polls/admin/PollResultPanel.vue';
 
@@ -22,6 +24,7 @@ export default {
 	name: 'AdminPolls',
 	components: {
 		'dialog--handle-poll': DialogHandlePoll,
+		'dialog--poll-result': DialogPollResult,
 		'poll-panel--list': PollListPanel,
 		'poll-panel--result': PollResultPanel,
 	},

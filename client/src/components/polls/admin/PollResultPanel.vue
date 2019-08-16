@@ -1,14 +1,21 @@
 <template>
 	<v-layout row wrap>
-		<!-- @desc: header: title - show result -->
 		<v-layout
-			class="px-3 py-3"
+			class="px-3 pt-3 pb-2"
 			align-center
 			justify-space-between
 			row
 			fill-height>
-			<!-- *title: result -->
+			<!-- title -->
 			<div v-t="'btn-poll-result'" class="grey--text pt-1" />
+
+			<!-- count user online -->
+			<v-chip id="users-online" small label color="primary" text-color="white">
+				<span class="font-weight-bold">
+					{{ onlineUsers }}
+				</span>
+				<v-icon small right v-text="'$vuetify.icons.group_people'" />
+			</v-chip>
 		</v-layout>
 
 		<v-card class="w-100 card-wrapper list-scroll scrollbar-primary list-scroll">
@@ -35,6 +42,7 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			onlineUsers: 'admin/event/getOnlineUsers',
 			getPollResult: 'admin/pollOptions/getPollResult',
 		}),
 	},

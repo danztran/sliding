@@ -9,6 +9,7 @@ import mutations from './mutations';
 const state = {
 	eventInfo: null,
 	role: null,
+	onlineUsers: 0,
 };
 
 export default {

@@ -1,14 +1,6 @@
-<!--
-	@desc:
-		*including questions posted from the audience
-		*if (moderation) on: questions approved by Moderation
-	@contains:
-		*live/archive tabs in Medium(MD) and up devices
-		*for-review(moderation)/live/archive tabs in XS-SM devices
--->
 <template>
 	<v-layout row wrap>
-		<!-- @desc: header: title -- switch moderation mode, sorting-->
+		<!-- moderator mode - sorting -->
 		<v-layout
 			class="px-3 pt-1"
 			align-center
@@ -41,57 +33,19 @@
 				</v-tab>
 			</v-tabs>
 
-			<!-- *actions: search/archive/sort -->
+			<!--  -->
 			<div>
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn
-							v-if="!isSMnXS"
-							class="ma-0"
-							icon
-							v-on="on">
-							<v-icon
-								color="grey darken-1"
-								:size="icon.small"
-								v-text="'$vuetify.icons.search'" />
-						</v-btn>
-					</template>
-					<span v-t="'search'" />
-				</v-tooltip>
-
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn
-							v-if="currentTab === 0 && !isSMnXS"
-							class="ma-0"
-							icon
-							v-on="on">
-							<v-icon
-								color="grey darken-1"
-								:size="icon.small"
-								v-text="'$vuetify.icons.archive_all'" />
-						</v-btn>
-					</template>
-					<span v-t="'btn-archive-all'" />
-				</v-tooltip>
-
-				<v-tooltip bottom>
-					<template v-slot:activator="{ on }">
-						<v-btn class="ma-0" icon v-on="on">
-							<v-icon
-								color="grey darken-1"
-								:size="icon.small"
-								v-text="'$vuetify.icons.filter'" />
-						</v-btn>
-					</template>
-					<span v-t="'btn-filter'" />
-				</v-tooltip>
+				<v-chip id="users-online" small label color="primary" text-color="white">
+					<span class="font-weight-bold">
+						{{ onlineUsers }}
+					</span>
+					<v-icon small right v-text="'$vuetify.icons.group_people'" />
+				</v-chip>
 			</div>
 		</v-layout>
 
-		<!-- @desc: tab name -->
 		<v-tabs-items v-model="currentTab" class="w-100">
-			<!-- @tab: moderation tab in XS-SM -->
+			<!-- moderation tab in XS-SM -->
 			<v-tab-item
 				v-if="isSMnXS"
 				:transition="false"
@@ -109,7 +63,7 @@
 				</v-card>
 			</v-tab-item>
 
-			<!-- @tab: live tabs -->
+			<!-- live tab -->
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
@@ -130,7 +84,7 @@
 				</v-card>
 			</v-tab-item>
 
-			<!-- @tab: archive tab -->
+			<!-- archive tab -->
 			<v-tab-item
 				:transition="false"
 				:reverse-transition="false">
@@ -179,6 +133,7 @@ export default {
 	computed: {
 		...mapGetters({
 			onModeration: 'admin/event/onModeration',
+			onlineUsers: 'admin/event/getOnlineUsers',
 			reviewQuestions: 'admin/questions/getReviewQuestions',
 			liveQuestions: 'admin/questions/getLiveQuestions',
 			livePinnedQuestions: 'admin/questions/getLivePinnedQuestions',

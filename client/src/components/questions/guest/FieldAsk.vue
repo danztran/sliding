@@ -1,8 +1,17 @@
 <template>
 	<div>
-		<div
-			v-t="'guest-ask-title'"
-			class="ml-3 my-2 body-1 grey--text" />
+		<div class="d-flex">
+			<span
+				v-t="'guest-ask-title'"
+				class="ml-3 my-2 body-1 grey--text" />
+			<v-spacer />
+			<v-chip id="users-online" small label color="primary" text-color="white">
+				<span class="font-weight-bold">
+					{{ onlineUsers }}
+				</span>
+				<v-icon small right v-text="'$vuetify.icons.group_people'" />
+			</v-chip>
+		</div>
 		<div id="guest-ask">
 			<v-layout
 				class="pt-3 px-3"
@@ -89,9 +98,10 @@ export default {
 	}),
 	computed: {
 		...mapGetters({
+			user: 'auth/user',
 			eventInfo: 'guest/event/getEventInfo',
 			allowQuestion: 'guest/event/allowQuestion',
-			user: 'auth/user',
+			onlineUsers: 'guest/event/getOnlineUsers',
 		}),
 		checkValidLength() {
 			const { ask } = this.form;

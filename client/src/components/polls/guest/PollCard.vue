@@ -175,7 +175,7 @@ export default {
 				}
 				else {
 					this.radioSelect = val.shift();
-					this.isChoiced = this.radioSelect != 0;
+					this.isChoiced = this.radioSelect != null;
 				}
 			}
 		},
