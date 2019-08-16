@@ -34,23 +34,9 @@
 
 				<v-spacer class="hidden-xs-only" />
 
-				<!-- *Search events -->
-				<v-text-field
-					v-if="!isXS"
-					class="pt-2"
-					flat
-					solo-inverted
-					:prepend-inner-icon="'$vuetify.icons.search'"
-					:label="$t('search')" />
-
-				<v-list-tile class="hidden-sm-and-up">
-					<v-icon
-						color="whilte"
-						size="20"
-						v-text="'$vuetify.icons.search'" />
+				<v-list-tile class="no-padding">
+					<user-actions-avatar />
 				</v-list-tile>
-
-				<user-actions-avatar v-if="!isXS" />
 			</v-layout>
 
 			<!-- TAB SLIDER -->
@@ -58,7 +44,8 @@
 				<v-tabs
 					v-model="activeTab"
 					light
-					color="white">
+					color="white"
+					:grow="isSMnXS">
 					<v-tabs-slider color="primary" />
 
 					<!-- *My events -->
@@ -110,9 +97,12 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss">
 .my-toolbar {
 	width: 80%;
 	left:  10%;
+}
+.no-padding .v-list__tile {
+	padding: 0 !important;
 }
 </style>

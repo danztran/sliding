@@ -60,7 +60,8 @@
 			<template v-slot:extension>
 				<v-tabs
 					light
-					color="white">
+					color="white"
+					:grow="isSMnXS">
 					<v-tabs-slider color="primary" />
 
 					<!-- *Questions -->

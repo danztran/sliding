@@ -72,15 +72,15 @@
 		<v-tabs
 			v-if="isSMnXS"
 			class="mt-5"
-			color="primary"
-			centered
-			dark
-			slider-color="white">
+			light
+			color="white"
+			:grow="isSMnXS">
+			<v-tabs-slider color="primary" />
 			<!-- *Question -->
 			<v-tab
 				:to="{ name: 'guest-questions' }"
 				class="font-weight-regular"
-				active-class="white--text font-weight-medium">
+				active-class="primary--text font-weight-bold">
 				<span v-t="'questions'" class="first-letter-uppercase" />
 			</v-tab>
 
@@ -88,7 +88,7 @@
 			<v-tab
 				:to="{ name: 'guest-polls' }"
 				class="font-weight-regular"
-				active-class="white--text font-weight-medium">
+				active-class="primary--text font-weight-bold">
 				<span v-t="'polls'" class="first-letter-uppercase" />
 			</v-tab>
 		</v-tabs>

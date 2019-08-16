@@ -10,7 +10,7 @@
 				wrap
 				fill-height>
 				<!-- *Active users -->
-				<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
+				<v-flex sm4 xs12 :px-2="!isXS" :mb-4="isXS">
 					<card--over-view
 						icon="group_people"
 						:info="cards.activeUsers"
@@ -18,7 +18,7 @@
 				</v-flex>
 
 				<!-- *Questions -->
-				<v-flex md4 xs12 :px-2="!isXS" :mb-4="isXS">
+				<v-flex sm4 xs12 :px-2="!isXS" :mb-4="isXS">
 					<card--over-view
 						question
 						icon="questions"
@@ -30,7 +30,7 @@
 				</v-flex>
 
 				<!-- *Polls -->
-				<v-flex md4 xs12 :pl-1="!isXS">
+				<v-flex sm4 xs12 :pl-1="!isXS">
 					<card--over-view
 						icon="polls"
 						:info="cards.polls"
@@ -111,7 +111,7 @@ export default {
 	computed: {
 		...mapGetters({
 			eventInfo: 'admin/event/getEventInfo',
-			role: 'admin/event/getRole',
+			eventRole: 'admin/event/getRole',
 		}),
 		hostOnly() {
 			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
