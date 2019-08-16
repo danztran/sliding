@@ -8,7 +8,7 @@
 		fixed
 		:floating="!isSMnXS"
 		:class="{ 'transparent': !isSMnXS }">
-		<v-layout column fill-height pt-5>
+		<v-layout column pt-5>
 			<v-list two-line>
 				<!-- *Event info -->
 				<v-list-tile>

@@ -3,7 +3,6 @@
 		v-model="settingDialog"
 		width="800"
 		no-click-animation
-		:transition="false"
 		:fullscreen="isSMnXS">
 		<v-card id="my-event-setting">
 			<v-layout>

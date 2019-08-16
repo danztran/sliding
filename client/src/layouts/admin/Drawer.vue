@@ -6,8 +6,9 @@
 		temporary
 		app>
 		<v-img
+			id="bg-drawer"
 			:aspect-ratio="16/9"
-			src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+			:src="require('@/assets/drawer.svg')">
 			<v-layout
 				column
 				pa-2
@@ -34,9 +35,7 @@
 			</v-layout>
 		</v-img>
 
-		<v-layout
-			class="fill-height"
-			column>
+		<v-layout column>
 			<!-- *Questions -->
 			<v-list-tile
 				:to="{ name: 'admin-questions' }"
@@ -239,7 +238,11 @@ export default {
 
 	.lightbox {
 		box-shadow: 0 0 20px inset rgba(0, 0, 0, 0.2);
-		background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 80px);
+		background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 65px);
+	}
+
+	#bg-drawer {
+		background-color: var(--v-primary-base);
 	}
 }
 </style>
