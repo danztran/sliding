@@ -1,5 +1,5 @@
 const CryptoJS = require('crypto-js');
-const { aesKey: secretKey } = requireWrp('config');
+const { aesKey: secretKey } = require('../config');
 
 const crypto = {
 	enc(str) {

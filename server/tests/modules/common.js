@@ -80,10 +80,38 @@ const tests = {
 
 		return test.result();
 	},
+	isEmail() {
+		const test = new TestFunction('isEmail');
+
+		const inputs = [
+			'nadinh@gmail.com',
+			'khudang@gmail.com',
+			'bambaya',
+			'nosuitcase@',
+			'@nobody',
+		];
+
+		const outputs = [
+			true,
+			true,
+			false,
+			false,
+			false,
+		];
+
+		const len = inputs.length;
+		for (let i = 0; i < len; i++) {
+			const actual = _cm.isEmail(inputs[i]);
+			test.equals(inputs[i], outputs[i], actual);
+		}
+
+		return test.result();
+	},
 };
 
 testModule.add(tests.varToText());
 testModule.add(tests.replaceVars());
 testModule.add(tests.nextStringOf());
+testModule.add(tests.isEmail());
 
 module.exports = testModule.result();
