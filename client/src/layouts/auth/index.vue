@@ -44,7 +44,7 @@ export default {};
 		opacity: 0;
 	}
 	#login-form .v-card__text, #signup-form .v-card__text {
-		padding: 0 40px;
+		padding: 0 45px;
 	}
 	.back-home:hover.text--lighten-2, .login-mrs:hover {
 		color: var(--v-grey-darken3) !important;
@@ -54,7 +54,7 @@ export default {};
 		max-width: 500px;
 		height: auto;
 	}
-	background: url(~@/assets/auth_bg.jpg);;
+	background: url(~@/assets/auth_bg.jpg);
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center;

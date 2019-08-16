@@ -3,69 +3,70 @@
 		<span v-show="false">
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
-		<!--
-			@desc: Header navigator bar
-			@contains: username, change language, login, logout, signup
-		-->
+
+		<!-- header -->
 		<v-toolbar id="my-navbar" fixed flat class="nav-transparent">
 			<v-layout row align-center>
+				<!-- app title -->
 				<v-toolbar-title v-t="'app-name'" class="mx-0 font-weight-bold" />
+
 				<v-spacer />
+
+				<!-- actions -->
 				<section class="nav-btn body-2">
 					<actions-avatar--user v-if="user" in-search />
 					<template v-else>
-						<span
-							:class="{ langActive: locale === 'vi' }"
-							class="changeLang"
-							@click="changeLocale('vi')">
-							VI
-						</span> |
-						<span
-							:class="{ langActive: locale === 'en' }"
-							class="changeLang"
-							@click="changeLocale('en')">
-							EN
-						</span>
-						<v-btn flat medium>
-							<router-link
-								v-t="'loginFormTitle'"
-								class="no-underline"
-								:to="{ name: 'login' }" />
-						</v-btn>
-						<v-btn
-							flat
-							medium
-							class="primary"
-							color="white">
-							<router-link
-								v-t="'btn-signup'"
-								class="no-underline white--text"
-								:to="{ name: 'signup' }" />
-						</v-btn>
+						<div class="d-inline">
+							<span
+								:class="{ langActive: locale === 'vi' }"
+								class="changeLang"
+								@click="changeLocale('vi')"
+								v-text="'VI'" />
+							|
+							<span
+								:class="{ langActive: locale === 'en' }"
+								class="changeLang"
+								@click="changeLocale('en')"
+								v-text="'EN'" />
+						</div>
+
+						<!-- auth -->
+						<router-link class="no-underline" :to="{ name: 'login' }">
+							<v-btn flat medium>
+								<span v-t="'loginFormTitle'" />
+							</v-btn>
+						</router-link>
+						<router-link class="no-underline white--text" :to="{ name: 'signup' }">
+							<v-btn flat medium class="primary white--text">
+								<span v-t="'btn-signup'" />
+							</v-btn>
+						</router-link>
 					</template>
 				</section>
 			</v-layout>
 		</v-toolbar>
+
 		<v-content>
-			<!-- @desc: Main picture introduce, input event code -->
-			<v-parallax
-				class="pa-0"
-				height="650"
-				dark
-				:src="backgroundNav">
-				<v-layout
-					row
-					align-center
-					justify-center>
-					<v-container grid-list-xs>
+			<!-- main background -->
+			<v-img
+				height="75vh"
+				cover
+				:src="require('@/assets/asking.svg')"
+				gradient="to top, rgba(0, 0, 0, 0.5), rgba(210, 210, 210, 0)">
+				<v-layout fluid fill-height>
+					<v-container>
 						<!-- *sologan -->
 						<v-flex
 							xs12
 							text-xs-center
 							class="mb-5"
 							style="text-shadow: 0.2em 0.7em 9em #000000de">
-							<div v-t="'sologan'" class="display-3 font-weight-medium text-capitalize mb-3" />
-							<span v-t="'sub-sologan'" class="font-weight-light headline" />
+							<div
+								v-t="'sologan'"
+								class="display-3 white--text font-weight-medium text-capitalize mb-3" />
+							<span
+								v-t="'sub-sologan'"
+								class="font-weight-light headline white--text" />
 						</v-flex>
 
 						<!-- *Input code -->
@@ -83,7 +84,7 @@
 								</v-btn>
 							</div>
 							<template v-if="!user">
-								<div v-t="'or'" class="mx-4 pt-3 headline hidden-xs-only" />
+								<div v-t="'or'" class="mx-4 pt-3 headline white--text" />
 								<div>
 									<v-btn
 										outline
@@ -99,7 +100,7 @@
 						</v-layout>
 					</v-container>
 				</v-layout>
-			</v-parallax>
+			</v-img>
 
 			<!-- *3 card introduce product -->
 			<section class="white-bg">
@@ -125,8 +126,8 @@
 							<v-layout row wrap>
 								<template v-for="card in cards">
 									<v-flex :key="card.id" xs12 md4>
-										<v-card height="350">
-											<v-img :src="card.urlImg" height="230px" />
+										<v-card height="400">
+											<v-img :src="require(`@/assets/${card.url}`)" height="230px" contain />
 											<v-card-text class="text-xs-center px-4">
 												<div v-t="card.title" class="headline" />
 												<div v-t="card.description" class="pt-2" />
@@ -151,7 +152,7 @@
 						<v-container grid-list-xl>
 							<v-layout row wrap>
 								<v-flex xs12 sm8>
-									<v-img :src="phone.urlImg" aspect-ratio="2" contain />
+									<v-img :src="require(`@/assets/${phone.url}`)" aspect-ratio="2" contain />
 								</v-flex>
 								<v-flex xs12 sm4>
 									<h1 v-t="phone.title" class="display-1 font-weight-medium mb-3" />
@@ -319,23 +320,22 @@ export default {
 	},
 	data: () => ({
 		inputEventCode: '',
-		backgroundNav: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
 		cards: [
 			{
 				id: 1,
-				urlImg: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80',
+				url: 'group_meeting.svg',
 				title: 'card-intro-title1',
 				description: 'card-intro-des1',
 			},
 			{
 				id: 2,
-				urlImg: 'https://images.unsplash.com/photo-1532190795157-3f983fb7fa3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80',
+				url: 'customer_meeting.svg',
 				title: 'card-intro-title2',
 				description: 'card-intro-des2',
 			},
 			{
 				id: 3,
-				urlImg: 'https://images.unsplash.com/photo-1551731409-43eb3e517a1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2252&q=80',
+				url: 'team_meeting.svg',
 				title: 'card-intro-title3',
 				description: 'card-intro-des3',
 			},
@@ -343,7 +343,7 @@ export default {
 		phone: {
 			title: 'phone-intro-title',
 			description: 'phone-intro-description',
-			urlImg: 'https://images.unsplash.com/photo-1543582890-139a4ff9946e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1301&q=80',
+			url: 'mobile_device.svg',
 		},
 		partners: [
 			{
@@ -399,7 +399,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $primary: var(--v-primary-base);
 $navColor: #ffffff94;
 $black: #000000de;
@@ -410,9 +410,9 @@ $black: #000000de;
 	.nav-transparent {
 		background-color: $navColor !important;
 	}
-	.v-parallax .v-parallax__content {
-		background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
-	}
+	// .v-parallax .v-parallax__content {
+	// 	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
+	// }
 	.w-3 {
 		width: 300px;
 	}
@@ -423,6 +423,12 @@ $black: #000000de;
 		position: relative;
 		z-index: 10;
 		right: 0;
+		.v-input__control .v-text-field__details {
+			display: none;
+		}
+		.v-input__slot {
+			margin: 0;
+		}
 		.v-btn {
 			position: absolute;
 			top: .1em;
