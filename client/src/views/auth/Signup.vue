@@ -1,9 +1,7 @@
 <template>
-	<div id="signup-page">
+	<div id="signup-form">
 		<loading-linear :loading="loading" />
-		<!--
-			@desc: form title
-		-->
+		<!-- form title	-->
 		<v-form @submit.prevent="handleSignup">
 			<v-layout
 				row
@@ -23,11 +21,8 @@
 				</v-card-title>
 			</v-layout>
 
-			<!--
-				@desc: input field
-				@contains: name, email, username, pw, re-pw
-			-->
-			<v-card-text>
+			<!-- input field -->
+			<v-card-text class="pb-0">
 				<text-field :field="form.name" />
 				<text-field :field="form.email" />
 				<text-field :field="form.username" />
@@ -35,25 +30,32 @@
 				<text-field :field="form.rePassword" />
 			</v-card-text>
 
-			<!--
-				@desc: show errorr messange
-			-->
+			<!-- errmsg	-->
 			<div class="error--text text-xs-center">
 				{{ errorMessage }}
 			</div>
 
-			<!--
-				@desc: button submit
-			-->
+			<!-- submit -->
 			<v-card-actions class="px-3 py-2">
 				<v-layout
 					column
 					align-center
 					justify-center
 					fill-height>
-					<v-btn round small color="primary" type="submit" class="px-3">
+					<v-btn round color="primary" type="submit">
 						<span v-t="'signUp'" class="first-letter-uppercase px-3" />
 					</v-btn>
+
+					<span v-t="'or'" class="grey--text text--lighten-1 py-2" />
+					<div class="d-flex">
+						<a
+							href="/api/auth/outlook"
+							class="login-mrs grey--text text--lighten-1 no-underline d-flex align-center">
+							<img :src="require('@/assets/microsoft_logo.svg')">
+							<span v-t="'login-with'" class="pl-2" />
+							&nbsp;Microsoft
+						</a>
+					</div>
 				</v-layout>
 			</v-card-actions>
 			<slot />
@@ -67,8 +69,6 @@ const initForm = () => ({
 		value: '',
 		label: 'lb-name',
 		required: true,
-		prepend: 'tag_faces',
-		autofocus: true,
 		errmsg: '',
 	},
 	email: {
@@ -76,14 +76,12 @@ const initForm = () => ({
 		label: 'lb-email',
 		required: true,
 		type: 'email',
-		prepend: 'alternate_email',
 		errmsg: '',
 	},
 	username: {
 		value: '',
 		label: 'lb-username',
 		required: true,
-		prepend: 'person',
 		errmsg: '',
 	},
 	password: {
@@ -91,7 +89,6 @@ const initForm = () => ({
 		label: 'lb-password',
 		required: true,
 		type: 'password',
-		prepend: 'lock',
 		errmsg: '',
 	},
 	rePassword: {
@@ -99,7 +96,6 @@ const initForm = () => ({
 		label: 'lb-re-password',
 		required: true,
 		type: 'password',
-		prepend: 'lock',
 		errmsg: '',
 	},
 });

@@ -1,11 +1,9 @@
 <template>
-	<div id="login-page">
+	<div id="login-form">
 		<loading-linear :loading="loading" />
 
 		<v-form @submit.prevent="handleLogin">
-			<!--
-				@desc: form title, and link to signup
-			-->
+			<!-- form title	-->
 			<v-layout
 				row
 				align-center
@@ -24,18 +22,13 @@
 				</v-card-title>
 			</v-layout>
 
-			<!--
-				@desc: input username/password
-			-->
-			<v-card-text>
+			<!-- field input -->
+			<v-card-text class="pb-0">
 				<text-field :field="form.username" />
 				<text-field :field="form.password" />
 			</v-card-text>
 
-			<!--
-				@desc: show error message, flash message
-				@example: username wrong, pass wrong, logout msg
-			-->
+			<!-- error message -->
 			<div class="warning--text text-xs-center">
 				{{ flashMessage }}
 			</div>
@@ -43,24 +36,27 @@
 				{{ errorMessage }}
 			</div>
 
-			<!--
-				@desc: button submit
-			-->
+			<!-- submit login -->
 			<v-card-actions class="px-3 py-2">
 				<v-layout
 					column
 					align-center
 					justify-center
 					fill-height>
-					<v-btn round small color="primary" type="submit">
-						<span v-t="'loginFormTitle'" class="px-3" />
+					<v-btn round color="success" type="submit">
+						<span v-t="'loginFormTitle'" class="px-3 first-letter-uppercase" />
 					</v-btn>
-					<span v-t="'or'" class="grey--text" />
-					<v-btn flat outline round small color="primary" class="px-3" href="/api/auth/outlook">
-						<span v-t="'login-microsoft'" class="primary--text px-3" />
-						&nbsp;
-						<img :src="require('@/assets/microsoft_logo.svg')">
-					</v-btn>
+
+					<span v-t="'or'" class="grey--text text--lighten-1 py-2" />
+					<div class="d-flex">
+						<a
+							href="/api/auth/outlook"
+							class="login-mrs grey--text text--lighten-1 no-underline d-flex align-center">
+							<img :src="require('@/assets/microsoft_logo.svg')">
+							<span v-t="'login-with'" class="pl-2" />
+							&nbsp;Microsoft
+						</a>
+					</div>
 				</v-layout>
 			</v-card-actions>
 			<slot />
@@ -82,8 +78,7 @@ export default {
 				value: '',
 				label: 'lb-username',
 				type: 'text',
-				required: true,
-				prepend: 'person',
+				required: false,
 				autofocus: true,
 				errmsg: '',
 			},
@@ -91,8 +86,7 @@ export default {
 				value: '',
 				label: 'lb-password',
 				type: 'password',
-				required: true,
-				prepend: 'lock',
+				required: false,
 				errmsg: '',
 			},
 		},
@@ -129,17 +123,30 @@ export default {
 		}
 	},
 	mounted() {
-		/*
-			@params: ecfs: event code from search
-							 set code to session
-		*/
+		/* check redirect with event-code from search, login then go to event */
 		if (this.$route.params.ecfs !== undefined) {
 			sessionStorage.setItem('redirectToEvent', this.$route.params.ecfs);
 		}
 		this.$root.$emit('hide-loading-overlay');
 	},
 	methods: {
+		isValidField() {
+			let countErr = 0;
+			for (const key of Object.keys(this.form)) {
+				if (key.value === '') {
+					countErr += 1;
+					key.required = true;
+				}
+			}
+			if (countErr > 0) {
+				return false;
+			}
+			return true;
+		},
 		handleLogin() {
+			if (!this.isValidField()) {
+				return;
+			}
 			this.beforeAuth = false;
 			this.loading = true;
 			this.errorMessage = '';

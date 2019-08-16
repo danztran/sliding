@@ -5,27 +5,23 @@
 		</span>
 		<v-container
 			fluid
-			fill-height
-			pt-0
-			pb-5>
+			fill-height>
 			<v-layout
 				row
 				align-center
 				justify-center>
-				<v-flex xs12 sm6 md5 lg3 xl3 class="pb-5">
-					<v-card class="elevation-20 pa-3">
-						<transition name="page" mode="out-in">
-							<router-view />
-						</transition>
-						<div class="my-2 text-xs-center">
-							<router-link class="body-1 font-weight-medium no-underline" to="/">
-								<v-icon small color="primary" v-text="'$vuetify.icons.arrow_back'" />
-								&nbsp;
-								<span v-t="'btn-back-home'" />
-							</router-link>
-						</div>
-					</v-card>
-				</v-flex>
+				<v-card class="auth-card py-4 elevation-20">
+					<transition name="page" mode="out-in">
+						<router-view />
+					</transition>
+					<div class="my-2 text-xs-center">
+						<router-link
+							class="no-underline back-home caption grey--text text--lighten-2"
+							:to="{ name: 'home' }">
+							<span v-t="'btn-back-home'" class="font-weight-regular caption" />
+						</router-link>
+					</div>
+				</v-card>
 			</v-layout>
 		</v-container>
 	</v-content>
@@ -47,12 +43,31 @@ export default {};
 		transform: translateY(-15px);
 		opacity: 0;
 	}
-	// background: rgb(61,164,181);
-	// background: radial-gradient(circle, rgb(61,164,181) 0%, rgb(9,47,45) 100%);
-	background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0.5, 0.3)), url("https://cdn.vuetifyjs.com/images/parallax/material.jpg");
+	#login-form .v-card__text, #signup-form .v-card__text {
+		padding: 0 40px;
+	}
+	.back-home:hover.text--lighten-2, .login-mrs:hover {
+		color: var(--v-grey-darken3) !important;
+	}
+	.auth-card {
+		width: 100%;
+		max-width: 500px;
+		height: auto;
+	}
+	background: url(~@/assets/auth_bg.jpg);;
 	background-size: cover;
 	background-repeat:no-repeat;
-	@media only screen and (max-width: 960px) {
+	background-position: center;
+
+	@media (max-width: 479px) {
+		.fluid {
+			padding: 0 !important;
+		}
+		.auth-card {
+			height: 100%;
+		}
+	}
+	@media only screen and (min-width: 960px) {
 		.fluid, .v-card {
 			padding: 5px !important;
 		}
