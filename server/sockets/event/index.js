@@ -46,7 +46,9 @@ module.exports = (io) => {
 
 			socket.on('leave-event', () => {
 				const event = socket.$fn.getCurrentEvent();
-				if (event) {
+				if (event && event.rooms) {
+					const onlineUsers = socket.$fn.getCurrentEventOnlineUsers();
+					socket.to(event.rooms.main).emit('new_updated_online_users', onlineUsers - 1);
 					for (const room of Object.values(event.rooms)) {
 						socket.leave(room);
 					}

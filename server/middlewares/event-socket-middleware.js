@@ -171,6 +171,10 @@ module.exports = {
 			getCurrentEvent() {
 				return io.$fn.getEvent({ code: this.getEventCode() });
 			},
+			getCurrentEventOnlineUsers() {
+				const event = this.getCurrentEvent();
+				return event && event.rooms ? io.sockets.adapter.rooms[event.rooms.main].length : 0;
+			},
 			setUser(_user) {
 				socket.$state.user = _user !== null ? { ..._user } : null;
 			},

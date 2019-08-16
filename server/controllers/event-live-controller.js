@@ -65,6 +65,10 @@ module.exports = {
 				socket.join(ioEvent.rooms.guest);
 			}
 
+			const onlineUsers = socket.$fn.getCurrentEventOnlineUsers();
+			result.onlineUsers = onlineUsers;
+			socket.to(ioEvent.rooms.main).emit('new_updated_online_users', onlineUsers);
+
 			return socket.emit('get_event', result);
 		}
 		catch (error) {
