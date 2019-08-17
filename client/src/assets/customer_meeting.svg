@@ -10,14 +10,14 @@
 	.st3{fill:#E0AC9B;}
 	.st4{fill:url(#SVGID_1_);}
 	.st5{fill:#FFFFFF;}
-	.st6{fill:#6597EF;}
+	.st6{fill:#0C5187;}
 	.st7{fill:#AFB3BC;}
-	.st8{fill:#990000;}
+	.st8{fill:#128A9A;}
 	.st9{fill:#873F26;}
 	.st10{opacity:0.25;fill:#873F26;enable-background:new    ;}
 	.st11{fill:#D4D5D6;}
 	.st12{fill:#A380B7;}
-	.st13{fill:#4A75DD;}
+	.st13{fill:#0C5195;}
 </style>
 <title>Group chat</title>
 <g>
@@ -46,7 +46,7 @@
 			c5.5,45.3-10.6,44.3-10.6,44.3l9.6,43.1L670,257.9z"/>
 		<g>
 			
-				<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1099.7537" y1="531.7161" x2="1139.442" y2="620.618" gradientTransform="matrix(-1 0 0 -1 1790.7305 774)">
+				<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="1681.7537" y1="-243.7161" x2="1721.442" y2="-332.618" gradientTransform="matrix(-1 0 0 1 2372.7305 486)">
 				<stop  offset="0.25" style="stop-color:#FFFFFF"/>
 				<stop  offset="0.6429" style="stop-color:#C6C0B9"/>
 			</linearGradient>
@@ -84,7 +84,7 @@
 			<g>
 				<polygon class="st6" points="668.9,321.4 634,319.8 635.1,297 669.9,298.6 				"/>
 				
-					<rect x="650" y="286.4" transform="matrix(4.442213e-02 -0.999 0.999 4.442213e-02 321.2762 940.4879)" class="st8" width="4.5" height="31.9"/>
+					<rect x="650" y="286.4" transform="matrix(4.442270e-02 -0.999 0.999 4.442270e-02 321.2986 940.5455)" class="st8" width="4.5" height="31.9"/>
 			</g>
 		</g>
 		<path class="st1" d="M660.9,131.4c9.3-5.5,33.1-0.7,39.4,20.1c10.1,33.2,1.5,35.5,11.7,59.3c3,7,14,14.3,21.8,14

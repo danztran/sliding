@@ -71,7 +71,7 @@
 
 						<!-- *Input code -->
 						<v-layout row wrap justify-center>
-							<div class="my-input-code w-3">
+							<div class="my-input-code w-3 text-uppercase">
 								<v-text-field
 									v-model="inputEventCode"
 									height="60"
@@ -329,13 +329,13 @@ export default {
 			},
 			{
 				id: 2,
-				url: 'customer_meeting.svg',
+				url: 'team_meeting.svg',
 				title: 'card-intro-title2',
 				description: 'card-intro-des2',
 			},
 			{
 				id: 3,
-				url: 'team_meeting.svg',
+				url: 'customer_meeting.svg',
 				title: 'card-intro-title3',
 				description: 'card-intro-des3',
 			},
@@ -410,9 +410,6 @@ $black: #000000de;
 	.nav-transparent {
 		background-color: $navColor !important;
 	}
-	// .v-parallax .v-parallax__content {
-	// 	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ) !important;
-	// }
 	.w-3 {
 		width: 300px;
 	}
@@ -434,6 +431,11 @@ $black: #000000de;
 			top: .1em;
 			right: -.2em;
 			height: 45px;
+		}
+		input[type="text"] {
+			max-width: 55% !important;
+			font-size: 1.2em;
+			text-transform: uppercase;
 		}
 	}
 	.white-bg {
