@@ -1,5 +1,5 @@
 <template>
-	<v-expansion-panel expand>
+	<v-expansion-panel v-model="panel" expand>
 		<v-expansion-panel-content>
 			<!-- header expand -->
 			<template v-slot:header>
@@ -64,6 +64,9 @@ export default {
 			},
 		},
 	},
+	data: () => ({
+		panel: [true],
+	}),
 };
 </script>
 

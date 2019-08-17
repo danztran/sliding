@@ -1,13 +1,5 @@
 <template>
 	<event-setting--expand :info="questionExpand">
-		<!-- *Allow ask question -->
-		<template #switch-on-title>
-			<v-switch
-				v-model="questionSettings.allow_question"
-				class="right"
-				color="primary" />
-		</template>
-
 		<template #content>
 			<!-- *Allow ask question -->
 			<div class="d-flex w-100">

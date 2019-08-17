@@ -1,14 +1,6 @@
 <template>
 	<!-- @desc: Polls -->
 	<event-setting--expand :info="pollExpand">
-		<template #switch-on-title>
-			<!-- *Poll alow -->
-			<v-switch
-				v-model="pollSettings.on_poll"
-				class="right"
-				color="primary" />
-		</template>
-
 		<template #content>
 			<!-- *Poll allow-->
 			<div class="d-flex w-100">

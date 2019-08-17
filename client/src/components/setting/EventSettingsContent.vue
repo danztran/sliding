@@ -38,19 +38,19 @@
 
 <script>
 import EventSettingInfo from './EventSettingInfo.vue';
-// import EventSettingPrivacy from './EventSettingPrivacy.vue';
 import EventSettingQuestion from './EventSettingQuestion.vue';
-// import EventSettingPoll from './EventSettingPoll.vue';
 import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
+// import EventSettingPrivacy from './EventSettingPrivacy.vue';
+// import EventSettingPoll from './EventSettingPoll.vue';
 
 export default {
 	name: 'EventSettingsContent',
 	components: {
 		'event-setting-expand--info': EventSettingInfo,
-		// 'event-setting-expand--privacy': EventSettingPrivacy,
 		'event-setting-expand--question': EventSettingQuestion,
-		// 'event-setting-expand--poll': EventSettingPoll,
 		'event-setting-expand--invite': EventSettingInviteAdmin,
+		// 'event-setting-expand--privacy': EventSettingPrivacy,
+		// 'event-setting-expand--poll': EventSettingPoll,
 	},
 	props: {
 		window: {
