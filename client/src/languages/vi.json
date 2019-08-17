@@ -221,6 +221,7 @@
 		"ana-poll-votes": "Số phiếu bầu",
 		"ana-poll-created": "Số cuộc bầu chọn được tạo",
 		"ana-vote-per-poll": "Số phiếu trên mỗi bầu chọn",
+		"ana-fetching": "Đang tải dữ liệu...",
 		"err-question-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép cho câu hỏi",
 		"err-reply-limit": "Bạn đã vượt quá số lượng ký tự tối đa được phép trả lời",
 		"err-reply": "Tin nhắn của bạn chưa được gửi. Xin lỗi, bạn hãy thử lại!",

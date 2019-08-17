@@ -12,24 +12,26 @@
 			</v-layout>
 		</v-card-title>
 
-		<!-- *info analytics -->
-		<v-card-text class="pt-1">
-			<div class="d-flex">
-				<span v-t="info.fTitle" class="first-letter-uppercase grey--text text--lighten-1" />
-				<span class="text-xs-right font-weight-bold">
-					{{ fTitleCount }}
-					<template v-if="question">
-						/ {{ fSubTitleCount }}
-					</template>
-				</span>
-			</div>
+		<template v-if="!users">
+			<!-- *info analytics -->
+			<v-card-text class="pt-1">
+				<div class="d-flex">
+					<span v-t="info.fTitle" class="first-letter-uppercase grey--text text--lighten-1" />
+					<span class="text-xs-right font-weight-bold">
+						{{ fTitleCount }}
+						<template v-if="question">
+							/ {{ fSubTitleCount }}
+						</template>
+					</span>
+				</div>
 
-			<v-divider class="my-1" />
-			<div class="d-flex">
-				<span v-t="info.sTitle" class="first-letter-uppercase grey--text text--lighten-1" />
-				<span class="text-xs-right font-weight-bold" v-text="sTitleCount" />
-			</div>
-		</v-card-text>
+				<v-divider class="my-1" />
+				<div class="d-flex">
+					<span v-t="info.sTitle" class="first-letter-uppercase grey--text text--lighten-1" />
+					<span class="text-xs-right font-weight-bold" v-text="sTitleCount" />
+				</div>
+			</v-card-text>
+		</template>
 	</v-card>
 </template>
 
@@ -47,6 +49,10 @@ export default {
 			}),
 		},
 		question: {
+			type: Boolean,
+			default: false,
+		},
+		users: {
 			type: Boolean,
 			default: false,
 		},

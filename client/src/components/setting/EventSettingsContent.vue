@@ -8,7 +8,7 @@
 				:reverse-transition="false"
 				:transition="false">
 				<event-setting-expand--info />
-				<event-setting-expand--privacy />
+				<!-- <event-setting-expand--privacy /> -->
 				<event-setting-expand--question />
 				<!-- <event-setting-expand--poll /> -->
 				<event-setting-expand--invite />
@@ -19,7 +19,7 @@
 				:reverse-transition="false"
 				:transition="false">
 				<event-setting-expand--info />
-				<event-setting-expand--privacy />
+				<!-- <event-setting-expand--privacy /> -->
 			</v-window-item>
 			<v-window-item
 				:reverse-transition="false"
@@ -38,7 +38,7 @@
 
 <script>
 import EventSettingInfo from './EventSettingInfo.vue';
-import EventSettingPrivacy from './EventSettingPrivacy.vue';
+// import EventSettingPrivacy from './EventSettingPrivacy.vue';
 import EventSettingQuestion from './EventSettingQuestion.vue';
 // import EventSettingPoll from './EventSettingPoll.vue';
 import EventSettingInviteAdmin from './EventSettingInviteAdmin.vue';
@@ -47,7 +47,7 @@ export default {
 	name: 'EventSettingsContent',
 	components: {
 		'event-setting-expand--info': EventSettingInfo,
-		'event-setting-expand--privacy': EventSettingPrivacy,
+		// 'event-setting-expand--privacy': EventSettingPrivacy,
 		'event-setting-expand--question': EventSettingQuestion,
 		// 'event-setting-expand--poll': EventSettingPoll,
 		'event-setting-expand--invite': EventSettingInviteAdmin,

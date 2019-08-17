@@ -4,15 +4,12 @@
 			<span v-show="false">{{ $t('FOR_A_PURPOSE') }}</span>
 			<div v-t="'ana-title'" class="subheading first-letter-uppercase mx-3 my-2" />
 
-			<v-layout
-				align-center
-				justify-space-between
-				wrap
-				fill-height>
+			<v-layout justify-space-between wrap fill-height>
 				<!-- *Active users -->
 				<v-flex sm4 xs12 :px-2="!isXS" :mb-4="isXS">
 					<card--over-view
 						icon="group_people"
+						users
 						:info="cards.activeUsers"
 						:header-count="analytics.roles" />
 				</v-flex>
@@ -75,8 +72,6 @@ const initCard = () => ({
 	activeUsers: {
 		color: 'deep-orange',
 		header: 'ana-users',
-		fTitle: 'ana-users',
-		sTitle: 'ana-users',
 	},
 	questions: {
 		color: 'orange',
@@ -114,20 +109,23 @@ export default {
 			eventRole: 'admin/event/getRole',
 		}),
 		hostOnly() {
-			if (this.eventRole && this.eventRole.name !== undefined && this.eventRole.name === 'host') {
+			if (this.eventInfo
+				&& this.eventRole.name !== undefined
+				&& this.eventRole.name === 'host') {
 				return true;
 			}
 			return false;
 		},
-		fetchAnalytic() {
-			if (this.hostOnly) {
-				this.getEventAnalytic();
-			}
-			return false;
-		},
+	},
+	created() {
+		this.getEventAnalytic();
 	},
 	methods: {
 		getEventAnalytic() {
+			if (!this.hostOnly) {
+				return;
+			}
+			this.showNotify(this.$t('ana-fetching'), 'success');
 			this.$axios
 				.get(`${this.$api.event.analytic}/${this.eventInfo.code}`)
 				.then((res) => {

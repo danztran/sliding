@@ -218,6 +218,7 @@
 		"ana-poll-votes": "Poll votes",
 		"ana-poll-created": "Polls created",
 		"ana-vote-per-poll": "Votes per poll",
+		"ana-fetching": "Fetching data...",
 		"err-question-limit": "You have exceed the maximum number of characters allowed for question",
 		"err-reply-limit": "You have exceed the maximum number of characters allowed for reply",
 		"err-reply": "Could not send message. Sorry, try again!",

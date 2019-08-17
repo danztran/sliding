@@ -51,9 +51,9 @@
 							</v-list-tile>
 
 							<!-- *resend invite request -->
-							<v-list-tile v-if="info.is_accepted!==true" @click="resendRequest">
+							<!-- <v-list-tile v-if="info.is_accepted!==true" @click="resendRequest">
 								<v-list-tile-title v-t="'btn-resend-invite'" />
-							</v-list-tile>
+							</v-list-tile> -->
 						</v-list>
 					</v-menu>
 				</v-list-tile-action>
@@ -80,9 +80,7 @@ export default {
 		removeAccess() {
 			this.$emit('remove-moderator');
 		},
-		resendRequest() {
-			// ...
-		},
+		// resendRequest() {},
 	},
 };
 </script>
