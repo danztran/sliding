@@ -53,7 +53,7 @@ const DELETE_QUESTION = (state, delQuestion) => {
 	@source: cpn/questions/guest/FieldAsk.vue
 ------------------------------------------------------------------------*/
 const ADD_SUCCESS_QUESTION = (state, question) => {
-	state.questions.push(Object.assign(question, { reactions: null }));
+	state.questions.push(Object.assign(question, { reactions: null, replies: [] }));
 };
 
 
