@@ -18,7 +18,7 @@ const tests = {
 		const len = inputs.length;
 		for (let i = 0; i < len; i++) {
 			const actual = crypto.enc(inputs[i]);
-			test.notEquals(inputs[i], `Not ${inputs[i]}`, actual);
+			test.notEquals(inputs[i], actual, `Not ${inputs[i]}`);
 		}
 
 		return test.result();
