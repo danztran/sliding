@@ -39,7 +39,7 @@ const tests = {
 			let decrypted = '';
 			try {
 				decrypted = crypto.dec(encrypted);
-				test.equals(inputs[i], decrypted, decrypted);
+				test.equals(inputs[i], inputs[i], decrypted);
 			}
 			catch (error) {
 				test.fails(inputs[i], decrypted, '<error>');
