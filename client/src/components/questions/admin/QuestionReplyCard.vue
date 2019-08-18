@@ -7,9 +7,11 @@
 				:class="{'pl-2': isSM}"
 				xs1>
 				<v-avatar
-					:size="icon.lg"
 					class="mt-1"
-					color="grey lighten-2">
+					:size="icon.lg"
+					:color="isModerator
+						? 'primary'
+						: 'grey lighten-2'">
 					<v-icon
 						:size="icon.sm"
 						color="white"
@@ -167,7 +169,12 @@ export default {
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
+			admins: 'admin/event/getAdmins',
 		}),
+		isModerator() {
+			return this.admins
+				&& this.admins.some(el => Number(el.user_id) === Number(this.replyData.user.id));
+		},
 		checkValidEdit() {
 			const { editReply } = this.form;
 			if (editReply.value && editReply.value.length > editReply.maxLength) {

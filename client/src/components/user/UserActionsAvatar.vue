@@ -1,5 +1,6 @@
 <template>
 	<v-menu
+		id="my-avatar"
 		transition="slide-y-transition"
 		bottom
 		left
@@ -12,7 +13,10 @@
 			{{ $t('FOR_A_PURPOSE') }}
 		</span>
 		<template v-slot:activator="{ on }">
-			<v-avatar small class="hover-pointer" :class="{ 'ml-2': !inSearch }" v-on="on">
+			<v-avatar class="hover-pointer" :class="{ 'ml-2': !inSearch }" v-on="on">
+				<v-icon v-show="inviteNotResponsed" id="badge" dark size="12">
+					notifications
+				</v-icon>
 				<v-icon
 					size="20"
 					:color="_cm.resultColor(inSearch, 'grey', 'white')"
@@ -193,9 +197,13 @@ export default {
 	computed: {
 		...mapGetters({
 			user: 'auth/user',
+			invites: 'dashboard/getInvites',
 		}),
 		locale() {
 			return this.$i18n.locale;
+		},
+		inviteNotResponsed() {
+			return this.invites.some(el => el.is_accepted === null);
 		},
 	},
 	methods: {
@@ -213,10 +221,11 @@ export default {
 </script>
 
 <style lang="css">
-.notice span.v-badge__badge.red {
-	height: 7px;
-	width: 7px;
-	top: -2px;
-	right: -2px;
+i#badge {
+	position: absolute;
+	top: -8px;
+	right: -10px;
+	color: #f50000d1;
+	transform: rotate(-31deg);
 }
 </style>
