@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 const {
+	pgSSL,
 	pgHost,
 	pgPort,
 	pgDatabase,
@@ -9,7 +10,7 @@ const {
 } = requireWrp('config');
 
 const pool = new Pool({
-	ssl: true,
+	ssl: pgSSL,
 	user: pgUser,
 	host: pgHost,
 	database: pgDatabase,

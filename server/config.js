@@ -10,6 +10,7 @@ module.exports = {
 
 	// ======== DATABASE
 	// PostGreSql Connection
+	pgSSL: !!process.env.PGSSL,
 	pgHost: process.env.PGHOST,
 	pgPort: process.env.PGPORT,
 	pgDatabase: process.env.PGDATABASE,

@@ -102,7 +102,7 @@ export default {
 			setQuestions: 'guest/questions/SET_QUESTIONS',
 			mergeGuestCurrentEvent: 'guest/event/MERGE_CURRENT_EVENT',
 			resetEvent: 'guest/event/RESET',
-			updateOnlineUsers: 'admin/event/UPDATE_ONLINE_USERS',
+			updateOnlineUsers: 'guest/event/UPDATE_ONLINE_USERS',
 			resetQuestions: 'guest/questions/RESET',
 			resetPolls: 'guest/polls/RESET',
 		}),
