@@ -1,3 +1,4 @@
+const EventLiveCtlr = requireWrp('controllers/event-live-controller');
 const EventSocketMdw = requireWrp('middlewares/event-socket-middleware');
 const EventLive = require('./event-live');
 const EventRoleLive = require('./event-role-live');
@@ -28,6 +29,7 @@ module.exports = (io) => {
 			}
 		});
 
+		EventLive({ io, socket });
 		EventRoleLive({ io, socket });
 		QuestionLive({ io, socket });
 		QuestionReplyLive({ io, socket });
@@ -38,23 +40,16 @@ module.exports = (io) => {
 
 		// join event
 		socket.on('join-event', (code) => {
-			EventLive({ io, socket, code });
+			// send event and role data on joining room
+			EventLiveCtlr.getEvent({ io, socket, code });
+		});
 
-			socket.on('disconnect', () => {
-				io.$fn.removeEventIfNoClient({ code });
-			});
+		socket.on('disconnect', () => {
+			socket.$fn.leaveRoom();
+		});
 
-			socket.on('leave-event', () => {
-				const event = socket.$fn.getCurrentEvent();
-				if (event && event.rooms) {
-					const onlineUsers = socket.$fn.getCurrentEventOnlineUsers();
-					socket.to(event.rooms.main).emit('new_updated_online_users', onlineUsers - 1);
-					for (const room of Object.values(event.rooms)) {
-						socket.leave(room);
-					}
-					io.$fn.removeEventIfNoClient({ code });
-				}
-			});
+		socket.on('leave-event', () => {
+			socket.$fn.leaveRoom();
 		});
 	});
 };

@@ -62,6 +62,21 @@ module.exports = {
 				}
 				return Boolean(room);
 			},
+			getEventOnlineUsers({ id, code }) {
+				const event = this.getEvent({ id, code });
+				let roomSockets;
+				if (event && event.rooms) {
+					roomSockets = io.sockets.adapter.rooms[event.rooms.main];
+				}
+				return roomSockets ? roomSockets.length : 0;
+			},
+			updateOnlineUsers({ id, code }) {
+				const event = this.getEvent({ id, code });
+				if (event) {
+					const onlineUsers = this.getEventOnlineUsers({ id, code });
+					io.to(event.rooms.main).emit('new_updated_online_users', onlineUsers);
+				}
+			},
 			saveAdmin({ id, code }, admin) {
 				const event = this.getEvent({ id, code });
 				if (event) {
@@ -100,16 +115,14 @@ module.exports = {
 				delete io.$state.events[code];
 			},
 			removeEventIfNoClient({ code }) {
-				// const event = io.$state.events[code];
-				// if ((
-				// 	event
-				// 	&& io.sockets.adapter.rooms
-				// 	&& !io.sockets.adapter.rooms[event.rooms.main]
-				// )
-				// 	||	!io.sockets.adapter.rooms
-				// ) {
-				// 	delete io.$state.events[code];
-				// }
+				try {
+					if (this.getEventOnlineUsers({ code }) === 0) {
+						delete io.$state.events[code];
+					}
+				}
+				catch (error) {
+					console.error(error);
+				}
 			},
 		};
 	},
@@ -171,10 +184,6 @@ module.exports = {
 			getCurrentEvent() {
 				return io.$fn.getEvent({ code: this.getEventCode() });
 			},
-			getCurrentEventOnlineUsers() {
-				const event = this.getCurrentEvent();
-				return event && event.rooms ? io.sockets.adapter.rooms[event.rooms.main].length : 0;
-			},
 			setUser(_user) {
 				socket.$state.user = _user !== null ? { ..._user } : null;
 			},
@@ -195,6 +204,21 @@ module.exports = {
 			},
 			isGuest() {
 				return !this.isAdmin();
+			},
+			leaveRoom() {
+				try {
+					const event = socket.$fn.getCurrentEvent();
+					if (event && event.rooms && event.rooms.main) {
+						for (const room of Object.values(event.rooms)) {
+							socket.leave(room);
+						}
+						io.$fn.removeEventIfNoClient({ code: event.code });
+						io.$fn.updateOnlineUsers({ id: event.id });
+					}
+				}
+				catch (error) {
+					console.error(error);
+				}
 			},
 			addAdmin(admin) {
 				const event = this.getCurrentEvent();
