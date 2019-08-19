@@ -13,6 +13,7 @@ const SET_QUESTIONS = (state, questions) => {
 ------------------------------------------------------------------------*/
 const SET_QUESTION_REPLIES = (state, dataReplies) => {
 	const question = state.questions.find(q => q.id == dataReplies.id);
+	if (!question) return;
 	Object.assign(question, { replies: dataReplies.replies });
 };
 

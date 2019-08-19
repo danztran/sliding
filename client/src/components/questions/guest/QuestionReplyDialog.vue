@@ -21,6 +21,7 @@
 						:size="icon.sm"
 						v-text="'$vuetify.icons.close'" />
 				</v-btn>
+				<span v-else v-t="'dialog-reply-question-guest-title'" class="pr-2" />
 			</v-card-title>
 			<v-divider />
 

@@ -114,7 +114,8 @@ export default {
 			invites: 'dashboard/getInvites',
 		}),
 		coopAccepted() {
-			return this.invites.filter(el => el.is_accepted === true);
+			return this.invites
+				&& this.invites.filter(el => el.is_accepted === true);
 		},
 	},
 	watch: {

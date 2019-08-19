@@ -32,7 +32,7 @@
 				</v-list-tile-content>
 
 				<v-list-tile-action>
-					<v-list-tile>
+					<v-list-tile v-if="!reply">
 						<!-- *like -->
 						<v-btn
 							class="mx-1 mw-50"

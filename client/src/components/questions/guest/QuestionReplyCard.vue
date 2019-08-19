@@ -76,8 +76,7 @@ export default {
 		},
 		isModerator() {
 			return this.admins
-				? this.admins.some(el => Number(el.user_id) === Number(this.replyData.user.id))
-				: [];
+				&& this.admins.some(el => Number(el.user_id) === Number(this.replyData.user.id));
 		},
 	},
 };
