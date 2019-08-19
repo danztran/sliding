@@ -1,12 +1,13 @@
 const router = require('express').Router();
-const AuthCtlr = requireWrp('controllers/auth-controller');
+const LimitMdw = requireWrp('middlewares/api-limit-middleware');
 const AuthMdw = requireWrp('middlewares/auth-middleware');
+const AuthCtlr = requireWrp('controllers/auth-controller');
 const APIHandler = requireWrp('handlers/api-handler');
 
 router.get('/info', APIHandler(AuthCtlr.info));
-router.post('/signup', APIHandler(AuthCtlr.signup));
-router.post('/quick-signup', APIHandler(AuthCtlr.quickSignup));
-router.post('/login', AuthCtlr.login);
+router.post('/signup', LimitMdw.signup, APIHandler(AuthCtlr.signup));
+router.post('/quick-signup', LimitMdw.quickSignup, APIHandler(AuthCtlr.quickSignup));
+router.post('/login', LimitMdw.login, AuthCtlr.login);
 router.get('/logout', AuthCtlr.logout);
 
 // outlook auth
