@@ -89,11 +89,11 @@
 									<v-btn
 										outline
 										dark
-										class="w-3 h-6 ma-0">
-										<router-link
+										class="w-3 h-6 ma-0"
+										:to="{ name: 'signup' }">
+										<span
 											v-t="'btn-intro-sigup'"
-											class="no-underline white--text"
-											:to="{ name: 'signup' }" />
+											class="no-underline white--text" />
 									</v-btn>
 								</div>
 							</template>
@@ -159,18 +159,22 @@
 									<p v-t="phone.description" class="font-weight-light subheading" />
 									<div>
 										<v-btn
-											v-t="'phone-intro-start-btn'"
 											depressed
 											large
 											color="primary"
-											class="mx-0" />
+											class="mx-0"
+											:to="{ name: 'signup' }">
+											<span v-t="'phone-intro-start-btn'" />
+										</v-btn>
 										<v-btn
-											v-t="'phone-intro-findout-btn'"
 											class="underline"
 											depressed
 											large
 											flat
-											color="primary" />
+											color="primary"
+											:to="{ name: 'signup' }">
+											<span v-t="'phone-intro-start-btn'" />
+										</v-btn>
 									</div>
 								</v-flex>
 							</v-layout>
@@ -232,7 +236,8 @@
 									depressed
 									large
 									color="white"
-									class="my-3">
+									class="my-3"
+									:to="{ name: 'signup' }">
 									<span v-t="'phone-intro-start-btn'" />
 								</v-btn>
 							</div>
@@ -295,7 +300,8 @@
 											class="title" />
 										<li v-t="'footer-contact'" class="subheading font-weight-medium" />
 										<li>(+84) 123 456 789</li>
-										<li>sliding@sli.com</li>
+										<li>sliding@vanlanguni.com</li>
+										<li>ROBOKU Team</li>
 									</ul>
 								</v-flex>
 							</v-layout>

@@ -11,9 +11,9 @@
 				align-center
 				justify-center>
 				<v-card class="auth-card py-4 elevation-20">
-					<transition name="page" mode="out-in">
+					<v-slide-y-transition mode="out-in">
 						<router-view />
-					</transition>
+					</v-slide-y-transition>
 					<div class="my-2 text-xs-center">
 						<router-link
 							class="no-underline back-home caption grey--text text--lighten-2"
@@ -33,16 +33,6 @@ export default {};
 
 <style lang="scss">
 #auth-page {
-	.page-enter-active, .page-leave-active {
-		transition: all .5s ease-out;
-		overflow: hidden;
-		max-height: 580px;
-	}
-	.page-enter, .page-leave-to {
-		max-height: 320px;
-		transform: translateY(-15px);
-		opacity: 0;
-	}
 	#login-form .v-card__text, #signup-form .v-card__text {
 		padding: 0 45px;
 	}

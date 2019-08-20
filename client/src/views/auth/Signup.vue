@@ -10,7 +10,10 @@
 				fill-height>
 				<v-card-title primary-title>
 					<div class="text-xs-center">
-						<div v-t="'signUp'" class="headline font-weight-regular first-letter-uppercase" />
+						<div class="headline font-weight-regular first-letter-uppercase">
+							<span v-t="'signUp'" />
+							&nbsp;
+						</div>
 						<span v-t="'or'" class="grey--text">
 							&nbsp;
 						</span>
@@ -36,26 +39,16 @@
 			</div>
 
 			<!-- submit -->
-			<v-card-actions class="px-3 py-2">
+			<v-card-actions class="px-5 py-2">
 				<v-layout
 					column
 					align-center
 					justify-center
 					fill-height>
-					<v-btn round color="primary" type="submit">
+					<v-btn block color="primary" type="submit" class="py-2">
 						<span v-t="'signUp'" class="first-letter-uppercase px-3" />
+						&nbsp;
 					</v-btn>
-
-					<span v-t="'or'" class="grey--text text--lighten-1 py-2" />
-					<div class="d-flex">
-						<a
-							href="/api/auth/outlook"
-							class="login-mrs grey--text text--lighten-1 no-underline d-flex align-center">
-							<img :src="require('@/assets/microsoft_logo.svg')">
-							<span v-t="'login-with'" class="pl-2" />
-							&nbsp;Microsoft
-						</a>
-					</div>
 				</v-layout>
 			</v-card-actions>
 			<slot />
