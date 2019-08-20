@@ -203,8 +203,7 @@
 								<template v-for="partner in partners">
 									<v-flex :key="partner.id" xs6 sm3>
 										<v-img
-											:src="partner.urlImg"
-											:lazy-src="partner.urlImg"
+											:src="require('@/assets/VLu.png')"
 											aspect-ratio="5"
 											contain />
 									</v-flex>

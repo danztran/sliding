@@ -23,7 +23,8 @@
 				:label="$t('lb-event-link-copy')"
 				:value="basicSettings.form.link.value"
 				:append-icon="basicSettings.form.link.append"
-				@click="copyLink" />
+				@click="copyLink"
+				@click:append="copyLink" />
 
 			<v-layout row wrap>
 				<!-- *date start -->
@@ -346,10 +347,11 @@ export default {
 			this.menuTimeEnd = true;
 			this.mergeTempTimeEnd(this.timeEnd);
 		},
-		copyLink() {
+		copyLink(element) {
 			const markup = this.$refs.link;
 			markup.focus();
 			document.execCommand('selectAll', false, null);
+			document.execCommand('copy');
 			this.showNotify(this.$t('lb-event-link-copied'), 'success');
 		},
 		mergeTempTimeStart(time) {
