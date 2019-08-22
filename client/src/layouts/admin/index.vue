@@ -89,7 +89,7 @@ export default {
 	},
 	sockets: {
 		get_event(data) {
-			console.warn(data);
+			// console.warn(data);
 			if (data.role.name === 'guest') {
 				this.setGuestCurrentEvent(data);
 				this.$router.push({ name: 'guest-event', params: this.$route.params });

@@ -118,6 +118,14 @@ export default {
 			},
 		},
 	},
+	created() {
+		if (this.tempSettings) {
+			const { questionSettings, tempSettings } = this;
+			for (const s of Object.keys(questionSettings)) {
+				questionSettings[s] = tempSettings[s];
+			}
+		}
+	},
 	methods: {
 		...mapMutations({
 			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',

@@ -307,6 +307,11 @@ export default {
 			}
 		}, 500),
 	},
+	created() {
+		if (this.eventInfo) {
+			this.fillForm(this.eventInfo);
+		}
+	},
 	methods: {
 		...mapMutations({
 			mergeTempSettings: 'admin/event/MERGE_TEMP_SETTINGS',
