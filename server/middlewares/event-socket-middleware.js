@@ -237,11 +237,12 @@ module.exports = {
 			},
 			removeAdmin(admin) {
 				const event = this.getCurrentEvent();
-				const index = event.admins.findIndex(e => e.id === admin.id);
+				const index = event.admins.findIndex(e => Number(e.user_id) === Number(admin.id));
 				if (index !== -1) {
 					event.admins.splice(index, 1);
 					io.$fn.saveEvent(event);
 				}
+
 				return index !== -1;
 			},
 			// check role permissions
