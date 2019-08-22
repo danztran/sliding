@@ -198,6 +198,7 @@
 		"poll-select-multiple": "Allow attendees to select multiple options",
 		"poll-limit-count": "At least 2 select options",
 		"poll-multiple": "Multiple choice",
+		"poll-sigle": "Sigle choice",
 		"poll-edit": "Edit poll",
 		"poll-results": "Results",
 		"poll-view-results": "View results",

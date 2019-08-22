@@ -78,6 +78,7 @@ const icons = {
 	loading_fail: 'error_outline',
 	multiple: 'add_to_photos',
 	multiple_choice: 'format_list_numbered',
+	sigle_choice: 'format_list_bulleted',
 	word_cloud: 'cloud_queue',
 	pause_fill: 'pause_circle_filled',
 	result_off: 'grid_off',

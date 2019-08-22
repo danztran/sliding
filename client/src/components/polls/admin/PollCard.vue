@@ -12,14 +12,18 @@
 						small>
 						<v-icon
 							medium
-							color="primary"
-							v-text="'$vuetify.icons.multiple_choice'" />
+							:color="_cm.resultColor(poll.max_choices > 1, 'primary', 'accent darken-2')"
+							v-text="poll.max_choices > 1
+								? '$vuetify.icons.multiple_choice'
+								: '$vuetify.icons.sigle_choice'" />
 					</v-list-tile-avatar>
 
 					<v-list-tile-content @click="handleGetPollResult">
 						<!-- *poll type title -->
 						<span
-							v-t="'poll-multiple'"
+							v-t="poll.max_choices > 1
+								? 'poll-multiple'
+								: 'poll-sigle'"
 							class="body-2 first-letter-uppercase font-weight-medium grey--text" />
 
 						<!-- *poll count -->
