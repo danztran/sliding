@@ -143,6 +143,7 @@ export default {
 					this.form.limit.value = val.max_choices;
 				}
 				else {
+					this.selectMultiple = false;
 					this.form.limit.value = 2;
 				}
 			}
