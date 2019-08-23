@@ -65,13 +65,13 @@
 							:color="currentGuestReact === false
 								? 'primary'
 								: 'grey lighten-2'"
-							small>
+							small
+							@click="dislikeQuestion">
 							<v-icon
 								:color="currentGuestReact === false
 									? 'primary'
 									: 'grey lighten-2'"
 								:size="icon.sm"
-								@click="dislikeQuestion"
 								v-text="'$vuetify.icons.dislike'" />
 						</v-btn>
 					</v-list-tile>
