@@ -8,7 +8,10 @@
 		<v-toolbar id="my-navbar" fixed flat class="nav-transparent">
 			<v-layout row align-center>
 				<!-- app title -->
-				<v-toolbar-title v-t="'app-name'" class="mx-0 font-weight-bold" />
+				<div class="d-flex align-center">
+					<v-img contain height="45" width="45" max-width="45" :src="require('@/assets/VLu.png')" />
+					<v-toolbar-title v-t="'app-name'" class="mx-0 font-weight-bold" />
+				</div>
 
 				<v-spacer />
 
@@ -51,7 +54,7 @@
 			<v-img
 				height="75vh"
 				cover
-				:src="require('@/assets/asking.svg')"
+				:src="require('@/assets/home_background.jpg')"
 				gradient="to top, rgba(0, 0, 0, 0.5), rgba(210, 210, 210, 0)">
 				<v-layout fluid fill-height>
 					<v-container>
@@ -126,8 +129,8 @@
 							<v-layout row wrap>
 								<template v-for="card in cards">
 									<v-flex :key="card.id" xs12 md4>
-										<v-card height="400">
-											<v-img :src="require(`@/assets/${card.url}`)" height="230px" contain />
+										<v-card height="370">
+											<v-img :src="require(`@/assets/${card.url}`)" height="230px" />
 											<v-card-text class="text-xs-center px-4">
 												<div v-t="card.title" class="headline" />
 												<div v-t="card.description" class="pt-2" />
@@ -207,7 +210,7 @@
 								<template v-for="partner in partners">
 									<v-flex :key="partner.id" xs6 sm3>
 										<v-img
-											:src="require('@/assets/VLu.png')"
+											:src="require(`@/assets/${partner.urlImg}`)"
 											aspect-ratio="5"
 											contain />
 									</v-flex>
@@ -328,19 +331,19 @@ export default {
 		cards: [
 			{
 				id: 1,
-				url: 'group_meeting.svg',
+				url: 'group_meeting.jpg',
 				title: 'card-intro-title1',
 				description: 'card-intro-des1',
 			},
 			{
 				id: 2,
-				url: 'team_meeting.svg',
+				url: 'conference.jpg',
 				title: 'card-intro-title2',
 				description: 'card-intro-des2',
 			},
 			{
 				id: 3,
-				url: 'customer_meeting.svg',
+				url: 'customer_meeting.jpg',
 				title: 'card-intro-title3',
 				description: 'card-intro-des3',
 			},
@@ -353,19 +356,19 @@ export default {
 		partners: [
 			{
 				id: 1,
-				urlImg: 'https://www.stickpng.com/assets/images/580b57fcd9996e24bc43c516.png',
+				urlImg: 'logo.png',
 			},
 			{
 				id: 2,
-				urlImg: 'http://pluspng.com/img-png/google-logo-png-open-2000.png',
+				urlImg: 'google_logo.png',
 			},
 			{
 				id: 3,
-				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/bmw-2-logo-png-transparent.png',
+				urlImg: 'tesla.svg',
 			},
 			{
 				id: 4,
-				urlImg: 'https://cdn.freebiesupply.com/logos/large/2x/mercedes-benz-1-logo-png-transparent.png',
+				urlImg: 'microsoft_logo.svg',
 			},
 		],
 		footerProducts: [
@@ -406,7 +409,7 @@ export default {
 
 <style lang="scss">
 $primary: var(--v-primary-base);
-$navColor: #ffffff94;
+$navColor: #ffffffde;
 $black: #000000de;
 #home-page {
 	#my-navbar {
