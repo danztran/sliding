@@ -269,6 +269,9 @@
 		"footer-about-item1": "Blogs",
 		"footer-about-item2": "Events",
 		"footer-about-item3": "Contact",
-		"footer-contact": "Contact with us"
+		"footer-contact": "Contact with us",
+		"disconnected-warn": "Disconnected, please check your network connection.",
+		"reconnect-warn": "Reconnect...",
+		"reconnected-info": "Reconnected"
 	}
 }

@@ -45,6 +45,7 @@ export default {
 	mixins: [handleSockets],
 	data: () => ({
 		ready: false,
+		connected: true,
 	}),
 	computed: {
 		...mapGetters({

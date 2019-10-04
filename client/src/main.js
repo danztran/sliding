@@ -24,6 +24,7 @@ Vue.use(Vuetify);
 Vue.use(VueMixins);
 Vue.use(VueSocketio, io('', {
 	path: process.env.VUE_APP_SOCKET_IO_PATH || '/sio',
+	autoConnect: false,
 }));
 
 // Custom proptotype

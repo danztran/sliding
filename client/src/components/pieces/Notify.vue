@@ -8,7 +8,7 @@
 			:top="isSMnXS"
 			:multi-line="isSMnXS"
 			:class="type ? `snackbar-${type}` : ''"
-			:timeout="10000">
+			:timeout="9000000">
 			<span
 				class="body-1 black--text"
 				v-text="message" />
@@ -16,7 +16,7 @@
 				v-t="'btn-close'"
 				:color="type === 'danger'
 					? 'error'
-					: 'primary'"
+					: (type === 'warning' ? 'warning' : 'primary')"
 				flat
 				:ripple="false"
 				@click="show=false" />
@@ -31,12 +31,24 @@ export default {
 		show: false,
 		type: '',
 		message: '',
+		timer: null,
 	}),
 	mounted() {
-		this.$root.$on('show-noti', ({ msg, type }) => {
+		this.$root.$on('show-noti', ({ msg, type, duration }) => {
 			this.show = true;
 			this.message = msg;
 			this.type = type || '';
+			const timeout = duration || 5000;
+			if (this.timer) {
+				clearTimeout(this.timer);
+			}
+			this.timer = setTimeout(() => {
+				this.show = false;
+				this.timer = null;
+			}, timeout);
+		});
+		this.$root.$on('hide-noti', () => {
+			this.show = false;
 		});
 	},
 };
@@ -52,6 +64,11 @@ $success: var(--v-primary-base);
 	.snackbar-danger {
 		.v-snack__content::before {
 			background-color: var(--v-error-base);
+		}
+	}
+	.snackbar-warning {
+		.v-snack__content::before {
+			background-color: var(--v-warning-base);
 		}
 	}
 	.v-snack__content::before {

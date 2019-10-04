@@ -36,11 +36,15 @@ export default {
 				}
 			}
 		},
-		showNotify(msg, type) {
+		showNotify(msg, type, duration) {
 			this.$root.$emit('show-noti', {
 				msg,
 				type: type || '',
+				duration,
 			});
+		},
+		hideNotify() {
+			this.$root.$emit('hide-noti');
 		},
 	},
 };

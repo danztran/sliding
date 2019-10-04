@@ -20,12 +20,36 @@ export default {
 			user: 'auth/user',
 		}),
 	},
+	data: () => ({
+		disconnected: false,
+	}),
 	created() {
 		if (!this.user) {
 			this.checkAuth();
 		}
+		this.$socket.connect();
 	},
 	sockets: {
+		disconnect() {
+			this.disconnected = true;
+			this.showNotify(this.$t('disconnected-warn'), 'danger');
+			setTimeout(() => {
+				if (this.disconnected) {
+					this.showNotify(this.$t('reconnect-warn'), 'warning', 5000000);
+				}
+			}, 5000);
+		},
+		connect() {
+			if (this.disconnected) {
+				this.showNotify(this.$t('reconnected-info'), 'info');
+				const { path } = this.$route;
+				if (path.indexOf('/admin/event/') != -1
+					|| path.indexOf('/guest/event/') != -1) {
+					this.$root.$emit('show-loading-overlay');
+					location.reload();
+				}
+			}
+		},
 		new_invited_to_event(newInvite) {
 			this.addInvite(newInvite);
 			this.showNotify(this.$t('invite-new'), 'success');

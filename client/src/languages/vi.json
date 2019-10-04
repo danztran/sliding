@@ -272,6 +272,9 @@
 		"footer-about-item1": "Bài viết",
 		"footer-about-item2": "Sự kiện",
 		"footer-about-item3": "Liên hệ",
-		"footer-contact": "Liên hệ với chúng tôi"
+		"footer-contact": "Liên hệ với chúng tôi",
+		"disconnected-warn": "Mất kết nối! Xin hãy kiểm tra lại đường truyền mạng",
+		"reconnect-warn": "Đang thữ kết nối lại...",
+		"reconnected-info": "Kết nối thành công"
 	}
 }
